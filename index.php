@@ -130,7 +130,10 @@ function registerFb()
 	  });
 
 	  };
+}
+</script>
 
+<script>
   //1 Load the SDK asynchronously
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -140,7 +143,7 @@ function registerFb()
     fjs.parentNode.insertBefore(js, fjs);
 	
   }(document, 'script', 'facebook-jssdk'));
-} 
+
 </script>  
 
     <header id="header_main">
