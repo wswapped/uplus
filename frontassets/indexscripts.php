@@ -304,7 +304,7 @@ if(isset($_GET['getPin']))
 	$username   = "cmuhirwa";
 	$apikey     = "17700797afea22a08117262181f93ac84cdcd5e43a268e84b94ac873a4f97404";
 	$recipients = '+25'.$fundPhone;
-	$message    = 'Welcome to uPlus, Please use '.$code.' to activate your uPlus account.';// Specify your AfricasTalking shortCode or sender id
+	$message    = 'Welcome to UPLUS, please use '.$code.' to loginto your account.';// Specify your AfricasTalking shortCode or sender id
 	$from = "uplus";
 
 	$gateway    = new AfricasTalkingGateway($username, $apikey);
