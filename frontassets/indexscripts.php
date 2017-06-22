@@ -290,16 +290,19 @@ if(isset($_GET['getPin']))
 	$countPin = mysqli_num_rows($sqlcheckPin);
 	if($countPin > 0)
 	{
+		echo 'the pin was in there';
 		$rowpin = mysqli_fetch_array($sqlcheckPin);
 		 $code = $rowpin['password'];
 	}else
 	{
+		echo 'dint find a pin for this lets create one';
 		$code = rand(1000, 9999);
 		$sqlsavePin = $db->query("INSERT INTO `users`(
 		phone, active, createdDate, password,visits) 
 		VALUES('$fundPhone','0',now(),'$code','0')")or die (mysqli_error());
 	}
 	
+	echo 'went to require sms class';
 	require_once('../classes/sms/AfricasTalkingGateway.php');
 	$username   = "cmuhirwa";
 	$apikey     = "17700797afea22a08117262181f93ac84cdcd5e43a268e84b94ac873a4f97404";
