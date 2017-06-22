@@ -285,17 +285,17 @@ if(isset($_GET['savename']))
 <?php // 5 IF CHOSEN TO USE PHONE SEND PIN
 if(isset($_GET['getPin']))
 {
-	echo $fundPhone	 = $_GET['fundPhone'];
+	$fundPhone	 = $_GET['fundPhone'];
 	$sqlcheckPin = $db->query("SELECT password FROM users WHERE phone = '$fundPhone' LIMIT 1");
 	$countPin = mysqli_num_rows($sqlcheckPin);
 	if($countPin > 0)
 	{
-		echo 'the pin was in there';
+		//echo 'the pin was in there';
 		$rowpin = mysqli_fetch_array($sqlcheckPin);
 		 $code = $rowpin['password'];
 	}else
 	{
-		echo 'dint find a pin for this lets create one';
+		//echo 'dint find a pin for this lets create one';
 		$code = rand(1000, 9999);
 		$sqlsavePin = $db->query("INSERT INTO `users`(
 		phone, active, createdDate, password,visits) 
@@ -307,7 +307,7 @@ if(isset($_GET['getPin']))
 	$username   = "cmuhirwa";
 	$apikey     = "17700797afea22a08117262181f93ac84cdcd5e43a268e84b94ac873a4f97404";
 	$recipients = '+25'.$fundPhone;
-	$message    = 'Welcome to UPLUS, please use '.$code.' to loginto your account.';// Specify your AfricasTalking shortCode or sender id
+	$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';// Specify your AfricasTalking shortCode or sender id
 	$from = "uplus";
 
 	$gateway    = new AfricasTalkingGateway($username, $apikey);
@@ -322,7 +322,7 @@ if(isset($_GET['getPin']))
 			Enter a 4digit pin we sent you on '.$fundPhone.'
 			<input id="pincode" value="'.$code.'">
 			<div class="inputContainer">
-				<input name="pin" onkeyup="changePin(this);" id="pin" class="newinput" style="color: #ccc; width: 50%; text-align: unset;" placeholder="PIN"/> 	
+				<input name="pin" onkeyup="changePin(this);" id="pin" class="newinput" style="width: 30%; text-align: unset;" placeholder="PIN"/> 	
 			</div>
 		</div>';
 	}
@@ -413,9 +413,9 @@ if(isset($_GET['checkPin']))
 	{
 		echo '
 		<div style="color: #000;">
-		Ops! Pin did not much, please try again and Enter a 4digit pin we sent you on '.$fundPhone.'
+		Oops! Pin did not much, please try again and enter a 4 digit pin we sent you on '.$fundPhone.'
 		<div class="inputContainer">
-			<input name="pin" onkeyup="changePin(this);" id="pin" class="newinput" style=" width: 50%; text-align: unset;" placeholder="PIN"/> 	
+			<input name="pin" onkeyup="changePin(this);" id="pin" class="newinput" style=" width: 30%; text-align: unset;" placeholder="PIN"/> 	
 		</div>
 	</div>';
 	}
