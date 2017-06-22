@@ -357,6 +357,7 @@ if(isset($_GET['checkPin']))
 		$passworduser 	= $rowPin['password'];
 		$adminId 		= $rowPin['id'];
 		$lastvisit 		= $rowPin['visits'];
+		$adminName 		= $rowPin['name'];
 			 
 		session_start();
 		$_SESSION["id"] = $adminId;
