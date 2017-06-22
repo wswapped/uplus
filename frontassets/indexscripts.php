@@ -373,15 +373,8 @@ if(isset($_GET['checkPin']))
 		$bankaccount= $fundAccount;
 		$groupBank	= $fundBank;
 		$perPerson	= $targetPerPerson;
-		echo '<br>groupName:'.$groupName;
-		echo '<br>adminId:'.$adminId;
-		echo '<br>adminPhone:'.$adminPhone;
-		echo '<br>perPerson:'.$targetAmount;
-		echo '<br>createdDate: now()';
-		echo '<br>createdBy:'.$adminId;
-		echo '<br>state:'.$private;
-		echo '<br>groupTargetType:'.$groupTargetType;
-		echo '<br>perPersonType:'.$perPersonType;
+		$state	= 'private';
+		
 		//groupTargetType,  perPersonType,
 		// 1 add the account with the phone
 		$sql = $db->query("INSERT INTO groups
@@ -390,7 +383,7 @@ if(isset($_GET['checkPin']))
 		 groupTargetType, perPersonType)
 		VALUES
 		('$groupName', '$adminId', '$adminPhone', 
-		'$targetAmount','$perPerson', now(), '$adminId', 'private', '$groupTargetType', '$perPersonType')
+		'$targetAmount','$perPerson', now(), '$adminId', '$state', '$groupTargetType', '$perPersonType')
 		") or die (mysqli_error());
 		
 		// 2 GRAB ACCONT ID

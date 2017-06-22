@@ -842,7 +842,7 @@ function raiseBack(){
 	{
 		var fundPhone	 = document.getElementById('fundPhone').value;
 		//alert(fundPhone);
-		alert('sending an sms pin');
+		//alert('sending an sms pin');
 		document.getElementById('makegroupBody').innerHTML = '<div class="loader"></div>';
 		var getPin = 'yes';
 		$.ajax({
@@ -855,7 +855,7 @@ function raiseBack(){
 				fundPhone: fundPhone,
 				},
 				success : function(html, textStatus){
-					alert('getting the result back after sending the sms');
+					//alert('getting the result back after sending the sms');
 				$('#makegroupBody').html(html);
 				},
 				error : function(xht, textStatus, errorThrown){
