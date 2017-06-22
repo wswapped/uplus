@@ -368,11 +368,20 @@ if(isset($_GET['checkPin']))
 		
 		// CREAT THE GROUP
 
-		echo $groupName 	= $fundName;
-		echo '<br>'.$adminPhone = $phoneuser;
-		echo '<br>'.$bankaccount= $fundAccount;
-		echo '<br>'.$groupBank	= $fundBank;
-		echo '<br>'.$perPerson	= $targetPerPerson;
+		$groupName 	= $fundName;
+		$adminPhone = $phoneuser;
+		$bankaccount= $fundAccount;
+		$groupBank	= $fundBank;
+		$perPerson	= $targetPerPerson;
+		echo '<br>groupName:'.$groupName;
+		echo '<br>adminId:'.$adminId;
+		echo '<br>adminPhone:'.$adminPhone;
+		echo '<br>perPerson:'.$targetAmount;
+		echo '<br>createdDate: now()';
+		echo '<br>createdBy:'.$adminId;
+		echo '<br>state:'.$private;
+		echo '<br>groupTargetType:'.$groupTargetType;
+		echo '<br>perPersonType:'.$perPersonType;
 		//groupTargetType,  perPersonType,
 		// 1 add the account with the phone
 		$sql = $db->query("INSERT INTO groups
