@@ -285,7 +285,7 @@ if(isset($_GET['savename']))
 <?php // 5 IF CHOSEN TO USE PHONE SEND PIN
 if(isset($_GET['getPin']))
 {
-	$fundPhone	 = $_GET['fundPhone'];
+	echo $fundPhone	 = $_GET['fundPhone'];
 	$sqlcheckPin = $db->query("SELECT password FROM users WHERE phone = '$fundPhone' LIMIT 1");
 	$countPin = mysqli_num_rows($sqlcheckPin);
 	if($countPin > 0)
