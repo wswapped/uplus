@@ -1,0 +1,298 @@
+.newinput {
+	width: 55%;
+	font-size: 18px;
+	border-color: #eee;
+    height: 45px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+}
+@media (max-width: 800px) {
+	.newinput {
+		width:100%;
+}
+}
+.overlay{
+	top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .6;
+    position: absolute;
+    pointer-events: none;
+    background-color: #000; 
+}
+#slide_content_a{
+	margin: 50px 0 0 640px;
+	position: relative;
+	background-color: white;
+    border-radius: 5px;
+}
+@media (max-width: 800px) {
+  #slide_content_a{
+	margin: 25px 0
+}}
+#slide_header{
+	color: #007569;
+    text-align: center;
+    font-weight: 900;
+}
+.makegroupHeader{
+	padding: 20px 30px 0px 30px;
+}.makegroupBody{
+	padding: 0px 30px 30px 30px;
+	min-height: 170px;
+}
+@media (max-width: 800px) {
+  #slide_header{
+	color: #007569;
+    text-align: center;
+    font-weight: 900;
+}}
+#selectCurrency{
+	width: 44%;
+}
+@media (max-width: 800px) {
+  #selectCurrency{
+	width: 100%;
+    margin-top: 10px;
+}}
+.inputContainer{
+	display: block;
+	margin: 0 0 20px;
+}
+.customheader{
+	padding: 50px;
+	font: 300 42px / 48px "Roboto", sans-serif;
+    text-align: center;
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+	cursor: pointer;
+}
+.uncurrentHeader{
+	background-color: #00897b;
+	z-index: 200;
+	color: #eee;
+}
+
+.uncurrentHeader:hover {
+	background-color: #008274;
+	color: ffffff;
+}
+.currentHeader{
+	z-index: 100;
+	background-color: #007569;
+	cursor: unset;
+}
+.currentSpan{
+	width: 50%;
+    background: #7cb342;
+    height: 5px;
+    position: absolute;
+    margin: 93px 0;
+}
+.likes{
+	vertical-align: middle;
+    position: relative;
+    color: #8c8c8c;
+    margin: initial;
+    font-size: 50%;
+    cursor: pointer;
+    text-shadow: unset;
+}
+.likesCount{
+	top: -35px;
+    position: relative;
+    text-align: center;
+}
+ div#heart2 {
+    font-size: 120%;
+    padding: 2px;
+}
+.heart{
+	z-index: 100;
+    margin: initial;
+    opacity: 0.8;
+    position: absolute;    
+	top: 10px;
+    right: 5%;
+    text-shadow: 2px 2px 14px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.fundtitle{
+	text-transform: capitalize;
+	width: 100%;
+    position: absolute;
+    margin: 198px 0;
+    text-align: center;
+    z-index: 100;
+    color: #fff;
+    font-size: 20px;
+	text-shadow: 2px 2px 14px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.overlaytitle{
+    height: 40px;
+    background: #001b18;
+    opacity: 0.4;
+    width: 100%;
+    position: absolute;
+    margin: 189px 0
+}
+.fundPhoto{
+	border-radius: 5px 5px 0px 0px;
+}
+.progress{
+	border-radius:unset; 
+	margin-bottom: unset;
+}
+.raisedNow{
+	padding: 3px 0px 0px 18px;
+    font-size: 18px;
+    color: #007569;
+    font-weight: 600;
+    text-align: left;
+}
+.md-card-content{
+	padding: 2px 16px 15px 16px;
+}
+.awardspan{
+	height: 88px;
+	width: 260px;
+	position: absolute;
+	background: #eceff1;
+	margin: 19px 0 0 80px;
+	z-index: -1;
+	border-radius: 0 10px 10px 0;
+	color: #000;
+}
+.awardh3{
+	margin: 10px 0 0 10px;
+	font-size: 20px;
+	text-align: center;
+}
+.awardh5{
+	margin: 9px 1px 0 21px;
+	text-align: center;
+}
+.awardimg{
+	height:100%
+}
+
+/* code for animated blinking cursor */
+        .typed-cursor{
+            opacity: 1;
+            font-weight: 100;
+            -webkit-animation: blink 0.7s infinite;
+            -moz-animation: blink 0.7s infinite;
+            -ms-animation: blink 0.7s infinite;
+            -o-animation: blink 0.7s infinite;
+            animation: blink 0.7s infinite;
+        }
+        @-keyframes blink{
+            0% { opacity:1; }
+            50% { opacity:0; }
+            100% { opacity:1; }
+        }
+        @-webkit-keyframes blink{
+            0% { opacity:1; }
+            50% { opacity:0; }
+            100% { opacity:1; }
+        }
+        @-moz-keyframes blink{
+            0% { opacity:1; }
+            50% { opacity:0; }
+            100% { opacity:1; }
+        }
+        @-ms-keyframes blink{
+            0% { opacity:1; }
+            50% { opacity:0; }
+            100% { opacity:1; }
+        }
+        @-o-keyframes blink{
+            0% { opacity:1; }
+            50% { opacity:0; }
+            100% { opacity:1; }
+        }
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500);
+
+#typed{
+	font-family: "Ubuntu", sans-serif;
+	line-height: 2em;
+	margin:0 0 20px;
+	text-align: center;
+}
+
+.loader {
+	margin: 0 auto;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #007569; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.customheader {
+    	padding: 10px;
+    	font: 300 100% / 10px "Roboto", sans-serif;
+    	width: 98%;
+    	margin-left: 2%;
+ }
+.customheader:not(:last-child){
+ 	margin-bottom:1px;
+ }
+.cont-image{
+ 	background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 200px;
+    width: 100%;
+ }
+ .fundtitle{
+ 	position: initial;
+ 	margin: 0;
+ }
+ a.fundname {
+    display: block;
+    background: rgba(0, 0, 0, 0.38);
+    position: relative;
+    bottom: 30px;
+    padding: 3px 5px 5px 5px;
+    margin-bottom: -30px;
+}
+ @media screen and (min-width:  360px){
+	.customheader {
+		padding: 10px;
+		width: 33.333%;
+		margin-left: 0px;
+		font: 300 100% / 48px "Roboto", sans-serif;
+		}
+	.customheader:not(:last-child){
+ 		margin-bottom: 0px;
+ 	}
+}
+@media screen and (min-width:  992px){
+	.customheader {
+     padding: 50px; 
+     font: 300 42px / 48px "Roboto", sans-serif; 
+	}
+}

@@ -1,0 +1,154 @@
+.invoice {
+    position: relative;
+    background: #fff;
+}
+.page-header {
+    margin: 10px 0 20px 0;
+    font-size: 22px;
+}
+.row{
+	margin-right: 0;
+    margin-left: 0;
+}
+body{
+	background: #E5E5E5;
+}
+.content_content{
+	width: 60%;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+@media print {
+  @page { margin: 0; }
+  body { margin: 1.6cm; }
+}
+.content{
+	 box-shadow: 0 16px 38px -12px rgba(0,0,0,.56), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2); 
+	 margin: 30px auto;
+}
+.invoice{
+	border-radius: 4px;
+}
+.titleRow{
+	 background: #019083; 
+	 border-radius: 4px 4px 0 0;
+}
+.titleCol{
+	text-align: center; 
+	padding: 15px;
+}
+.logo{
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;margin: auto;
+	background-color: #fff;
+	cursor: pointer
+}
+.companyTytle{
+	text-align: center;
+	font-size: 18px;
+	padding: 15px;
+	font-weight: 900
+}
+.subTytle{
+	color: #eee; 
+	font-size:16px;
+}
+.receiptFor{
+	color: #eee; 
+	font-size:16px;
+}
+.receiptDate{
+	color: #fff;
+    text-transform: uppercase;
+	text-align: right
+}
+.receiptAmount{
+	font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 15px;
+}
+.receiptStatus{
+	font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 15px;
+	text-align: right;
+}
+.toFrom{
+	padding-bottom: 15px; background: #007569;
+    min-height: 40px;
+    color: #fff;
+    text-transform: uppercase;
+}
+.qr{
+	border: 1px solid #E3E3E3;
+	width: 100px;
+}
+.total{
+	background: #007569; height: 100%;
+	width: 100%;
+	padding: 0 15px;
+}
+@media (max-width: 900px){
+	.content_content{
+		width: 70%;
+	}
+	.content{
+		margin: 25px auto;
+	}
+}
+@media (max-width: 800px){
+	.content_content{
+		width: 75%;
+	}
+	.content{
+		margin: 20px auto;
+	}
+}
+@media (max-width: 700px){
+	.content_content{
+		width: 80%;
+	}
+	.content{
+		margin: 15px auto;
+	}
+}
+@media (max-width: 600px){
+	.content_content{
+		width: 85%;
+	}
+	.content{
+		margin: 10px auto;
+	}
+}
+@media (max-width: 500px){
+	.content_content{
+		width: 100%;
+	}
+	.content{
+		margin: 0px auto;
+	}
+	.invoice{
+		border-radius: 0px;
+	}
+	.titleRow {
+		border-radius: 0px;
+	}
+}
+@media (max-width: 400px){
+	.content_content{
+		width: 100%;
+	}
+	.content{
+		margin: 0px auto;
+	}
+}

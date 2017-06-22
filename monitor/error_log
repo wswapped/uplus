@@ -1,0 +1,4 @@
+[23-Feb-2017 15:32:27 America/New_York] PHP Notice:  Undefined variable: transactions in /home/uplus/public_html/3rdparty/rtgs/account.php on line 109
+[23-Feb-2017 15:33:21 America/New_York] PHP Notice:  Undefined variable: page in /home/uplus/public_html/3rdparty/rtgs/bankClient.php on line 99
+[23-Feb-2017 15:33:21 America/New_York] PHP Notice:  Undefined variable: clientId1 in /home/uplus/public_html/3rdparty/rtgs/bankClient.php on line 99
+[23-Feb-2017 15:33:21 America/New_York] PHP Notice:  Undefined variable: transactions in /home/uplus/public_html/3rdparty/rtgs/bankClient.php on line 123
