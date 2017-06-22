@@ -302,7 +302,7 @@ if(isset($_GET['getPin']))
 		VALUES('$fundPhone','0',now(),'$code','0')")or die (mysqli_error());
 	}
 	
-	echo 'went to require sms class';
+	// 'went to require sms class';
 	require_once('../classes/sms/AfricasTalkingGateway.php');
 	$username   = "cmuhirwa";
 	$apikey     = "17700797afea22a08117262181f93ac84cdcd5e43a268e84b94ac873a4f97404";
@@ -320,7 +320,7 @@ if(isset($_GET['getPin']))
 		ECHO'
 		<div style="color: #000;">
 			Enter a 4digit pin we sent you on '.$fundPhone.'
-			<input id="pincode" value="'.$code.'">
+			<input hidden id="pincode" value="'.$code.'">
 			<div class="inputContainer">
 				<input name="pin" onkeyup="changePin(this);" id="pin" class="newinput" style="width: 30%; text-align: unset;" placeholder="PIN"/> 	
 			</div>
@@ -368,11 +368,11 @@ if(isset($_GET['checkPin']))
 		
 		// CREAT THE GROUP
 
-		$groupName 	= $fundName;
-		$adminPhone = $phoneuser;
-		$bankaccount= $fundAccount;
-		$groupBank	= $fundBank;
-		$perPerson	= $targetPerPerson;
+		echo $groupName 	= $fundName;
+		echo '<br>'.$adminPhone = $phoneuser;
+		echo '<br>'.$bankaccount= $fundAccount;
+		echo '<br>'.$groupBank	= $fundBank;
+		echo '<br>'.$perPerson	= $targetPerPerson;
 		//groupTargetType,  perPersonType,
 		// 1 add the account with the phone
 		$sql = $db->query("INSERT INTO groups
