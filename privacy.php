@@ -46,18 +46,16 @@ if (isset($_POST['fullname'])) {
     </div>
     <div class="page-main">
       <div class="page-header">
-        <h1 class="page-title">Privacy</h1><h6 class="visible-xs">Slide on the side to check on your performance</h6>
+        <h1 class="page-title">Settings</h1><h6 class="visible-xs">Slide on the side to modifiy your Settings</h6>
       </div>
     <div class="page-content">
 		<div class="row">
-		<?php include"template/info.php"?>
-		<div class="col-lg-8">
+		<div class="col-lg-12">
 			<div class="panel panel-bordered"> 
 				<div class="panel-heading">
 				  <h3 class="panel-title">Setup your privacy on uPlus</h3>
 				  <div class="panel-actions">
-                <a class="panel-action icon md-floppy" style="font-size: 26px;" aria-hidden="true"></a>
-              </div>
+				</div>
 				</div>
 				<div class="panel-body">
 					<h4 class="example-title">Link your Groups with financial Accounts</h4>

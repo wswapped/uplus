@@ -19,6 +19,11 @@ if ($existCount > 0) {
 			 $thisid = $row["id"];
 			 //$dateJoin = strftime("%b %d, %Y", strtotime($row["joinedDate"]));			 
 			 $name = $row["name"];
+			 $email = $row["email"];
+			 $phone = $row["phone"];
+			 $gender = $row["gender"];
+			 $profession = $row["profession"];
+			 $bio = $row["bio"];
 			 }
 			if($name == ""){
 				 $label.='Your Name Please?';
@@ -204,9 +209,8 @@ if ($existCount > 0) {
                 <h4 class="widget-title">How to use Uplus</h4>
                 <p>UPlus is a Social contribution platform, to help you collect money 
 				around the world instantly into your local currency.</p>
-                 <a href="javascript:void(0)" onclick="videoinfo()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Intro</a> <em style="font-size: 11px;">(00:30)</em><br>
                  <a href="javascript:void(0)" onclick="videosavings()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Create a contribution</a> <em style="font-size: 11px;">(0:45)</em><br>
-                 <a href="javascript:void(0)" onclick="videocontribution()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Send bulk SMS for free</a> <em style="font-size: 11px;">(00:30)</em><br>
+                 <a href="javascript:void(0)" onclick="videoinfo()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Send bulk SMS for free</a> <em style="font-size: 11px;">(00:30)</em><br>
                  <a href="javascript:void(0)" onclick="videocontribution()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Receive money</a> <em style="font-size: 11px;">(01:05)</em><br>
                  
                 <div class="widget-body-footer">
@@ -445,10 +449,13 @@ if ($existCount > 0) {
 	<a  href="javascript:void()"><i class="icon md-apple"></i></a>&nbsp;&nbsp;/&nbsp;&nbsp;
 	<a  href="javascript:void()"><i class="icon md-windows"></i></a>
     <div class="site-footer-right">
-      Collect money from friends and family <i class="red-600 wb wb-globe"></i> WorldWide
+      Powering collective investments <i class="red-600 wb wb-globe"></i> Worldwide
     </div>
   </footer>
-  
+ 
+   
+<?php include('template/notifications.php');?>
+ 
   
 	<script src="assets/js/ajax_call.js"></script>
 

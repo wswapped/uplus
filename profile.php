@@ -1,13 +1,14 @@
 <?php
 if (isset($_POST['fullname'])) {
 	$fullname = $_POST['fullname'];
+	$thisid = $_POST['thisid'];
 	include"db.php";
 	$sql = $db->query("UPDATE `users` SET `name`= '$fullname' WHERE `id` ='$thisid'")or die (mysql_error());
 	
-	echo'done';
+	//echo'done';
 	if ($_FILES['fileField']['tmp_name'] != "") {																	 										 
 	$newname = ''.$thisid.'.jpg';
-	move_uploaded_file( $_FILES['fileField']['tmp_name'], "../profiles/$newname");
+	move_uploaded_file( $_FILES['fileField']['tmp_name'], "proimg/$newname");
 	}
 	header("location: profile.php");
 	exit();
@@ -34,13 +35,6 @@ if (isset($_POST['fullname'])) {
             <a class="list-group-item" href="privacy.php"><i class="icon md-lock" aria-hidden="true"></i>Privacy</a>
           </div>
         </section>
-        <!--<section class="page-aside-section">
-          <h5 class="page-aside-title">History</h5>
-          <div class="list-group">
-            <a class="list-group-item" href="javascript:void(0)"><i class="icon md-time-interval" aria-hidden="true"></i>Performance</a>
-            <a class="list-group-item" href="javascript:void(0)"><i class="icon md-calendar" aria-hidden="true"></i>Timeline</a>
-		  </div>
-        </section>-->
       </div>
     </div>
     <div class="page-main">
@@ -49,7 +43,38 @@ if (isset($_POST['fullname'])) {
       </div>
     <div class="page-content">
 		<div class="row">
-		<?php include "template/info.php"?>
+			<div class="col-lg-4">
+			  <form action="profile.php" enctype="multipart/form-data" name="myForm" id="myform" method="post">
+			   <ul class="blocks blocks-100 blocks-xlg-12 blocks-md-12 blocks-sm-12" data-plugin="masonry">
+				<li class="masonry-item">
+				  <div class="widget widget-article widget-shadow">
+					<div class="widget-header cover">
+						<img class="cover-image" src="proimg/<?php echo $thisid;?>.jpg" alt="...">
+						<input type="file" name="fileField" id="fileField" />
+					</div>
+					<div class="widget-body" style="padding: 0px 15px 15px 15px;">
+					  <h3 class="widget-title">
+						<div class="form-group form-material floating">
+						  <input type="text" class="form-control input-lg empty" name="fullname" required value="<?php echo $name;?>" id="fullname">
+						  <input type="text" name="thisid" hidden value="<?php echo $thisid;?>">
+						  <label class="floating-label"><?php echo $label;?></label>
+						</div>
+					  </h3>
+					  <p class="widget-metas ">
+						Joined uPlus on
+						<?php echo $dateJoin;?>
+					  </p>
+					  <i class="icon fa-phone" aria-hidden="true"></i> +25<?php echo $phone;?>
+					  <div class="widget-body-footer">
+						<input type="submit" value="Change" class="btn btn-outline btn-success"/>
+					  </div>
+					</div>
+				  </div>
+				</li>
+			   </ul>  
+			  </form>
+			</div>
+		
 		<div class="col-lg-8">
 			<div class="panel panel-bordered"> 
 				<div class="panel-heading">
@@ -63,13 +88,13 @@ if (isset($_POST['fullname'])) {
                     <div class="form-group form-material">
                       <label class="col-sm-3 control-label">Bio: </label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" placeholder="Briefly Describe Yourself"></textarea>
+                        <textarea class="form-control" placeholder="Briefly Describe Yourself"><?php echo $bio;?></textarea>
                       </div>
                     </div>
                     <div class="form-group form-material">
                       <label class="col-sm-3 control-label">Profession: </label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" name="profession" placeholder="Student, Artist, BusinessMan, Doctor etc..."/>
+                        <input type="text" class="form-control" value="<?php echo $profession;?>" name="profession" placeholder="Student, Artist, BusinessMan, Doctor etc..."/>
                       </div>
                     </div>
                     <div class="form-group form-material">
@@ -92,8 +117,10 @@ if (isset($_POST['fullname'])) {
 						<div class="counter-label">TOTAL TARGET</div>
 						<div class="counter-number red-600">
 						<?PHP 
-							$investment = RAND(100000, 900000);
-							$return = RAND(500, 80000);
+							$sqlTarget = $db->query("SELECT SUM(`targetAmount`) totalTarget FROM `groups` WHERE `adminId` = '$thisid'");
+							$rowTarget = mysqli_fetch_array($sqlTarget);
+							$investment = $rowTarget['totalTarget'];
+							$return = 0;
 							echo number_format($investment);
 							$percent = $return * 100 / $investment;
 							$remain  = 100 - $percent;
@@ -147,22 +174,7 @@ if (isset($_POST['fullname'])) {
   <script src="assets/global/vendor/screenfull/screenfull.js"></script>
   <script src="assets/global/vendor/slidepanel/jquery-slidePanel.min.js"></script>
 
-  <!-- Plugins For This Page -->
-  <script src="assets/global/vendor/footable/footable.all.min.js"></script>
   
-    <!-- Plugins For This Page -->
-  <script src="assets/global/vendor/jquery-ui/jquery-ui.min.js"></script>
-  <script src="assets/global/vendor/blueimp-tmpl/tmpl.min.js"></script>
-  <script src="assets/global/vendor/blueimp-canvas-to-blob/canvas-to-blob.min.js"></script>
-  <script src="assets/global/vendor/blueimp-load-image/load-image.all.min.js"></script>
-  <script src="assets/global/vendor/blueimp-file-upload/jquery.fileupload.js"></script>
-  <script src="assets/global/vendor/blueimp-file-upload/jquery.fileupload-process.js"></script>
-  <script src="assets/global/vendor/blueimp-file-upload/jquery.fileupload-image.js"></script>
- <script src="assets/global/vendor/blueimp-file-upload/jquery.fileupload-validate.js"></script>
-  <script src="assets/global/vendor/blueimp-file-upload/jquery.fileupload-ui.js"></script>
-  <script src="assets/global/vendor/dropify/dropify.min.js"></script>
-
-
   <!-- Scripts -->
   <script src="assets/global/js/core.min.js"></script>
   <script src="assets/js/site.min.js"></script>
@@ -171,9 +183,7 @@ if (isset($_POST['fullname'])) {
   <script src="assets/js/sections/menubar.min.js"></script>
   <script src="assets/js/sections/sidebar.min.js"></script>
 
-  <script src="assets/global/js/configs/config-colors.min.js"></script>
-  <script src="assets/js/configs/config-tour.min.js"></script>
-
+  
   <script src="assets/global/js/components/asscrollable.min.js"></script>
   <script src="assets/global/js/components/animsition.min.js"></script>
   <script src="assets/global/js/components/slidepanel.min.js"></script>
@@ -181,16 +191,6 @@ if (isset($_POST['fullname'])) {
 
 
   <script src="assets/examples/js/tables/footable.min.js"></script>
-  
-  <script src="assets/global/js/components/dropify.min.js"></script>
-
-
-  <script src="assets/examples/js/forms/uploads.min.js"></script>
-
-<!-- Plugins For This Page -->
-  <script src="assets/global/vendor/d3/d3.min.js"></script>
-  <script src="assets/global/vendor/c3/c3.min.js"></script>
-  <script src="assets/examples/js/charts/c3.min.js"></script>
 
   
   
