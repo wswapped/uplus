@@ -1,7 +1,7 @@
 <!-- PENDINGS Alert -->
 <?php 
 	$n=0;
-	$sql4 = $db->query("SELECT * FROM users WHERE name ='' OR name = NULL AND id ='$thisid'");
+	$sql4 = $db->query("SELECT * FROM users WHERE name ='' OR name IS NULL AND id ='$thisid'");
 	$count_profile_alerts = mysqli_num_rows($sql4);
   
 	if($count_profile_alerts >0){
