@@ -10,20 +10,20 @@ ini_set('display_errors', 0);
 include "db.php";
 if (isset($_GET['sentAmount'])) 
 {
-	$forGroupId			= 	$_GET['forGroupId'];		// COmpanyID
-	$amount				= 	$_GET['sentAmount'];		// Amount
-	$pushAccountNumber 	= 	'0'.$_GET['sendFromAccount'];	// From account
-	$pushName			= 	$_GET['sendFromName'];		// From Name
-	$pullName			= 	$_GET['sendToName'];		// From Name
-	$pushBankId			= 	$_GET['sendFromBank'];		// To Bank
-	$pullBankId			=	$_GET['sendToBank'];		// To Bank
-	$pullAccountNumber	=	$_GET['sendToAccount'];		// To Phone1
+	$forGroupId			= 	mysqli_real_escape_string($db, $_GET['forGroupId']);		// COmpanyID
+	$amount				= 	mysqli_real_escape_string($db, $_GET['sentAmount']);		// Amount
+	$pushAccountNumber 	= 	'0'.mysqli_real_escape_string($db, $_GET['sendFromAccount']);	// From account
+	$pushName			= 	mysqli_real_escape_string($db, $_GET['sendFromName']);		// From Name
+	$pullName			= 	mysqli_real_escape_string($db, $_GET['sendToName']);		// From Name
+	$pushBankId			= 	mysqli_real_escape_string($db, $_GET['sendFromBank']);		// To Bank
+	$pullBankId			=	mysqli_real_escape_string($db, $_GET['sendToBank']);		// To Bank
+	$pullAccountNumber	=	mysqli_real_escape_string($db, $_GET['sendToAccount']);		// To Phone1
 	
 	
 	
 	// For API
-	$phone1 = $_GET['phone1'];
-	$phone2 = $_GET['phone2'];
+	$phone1 = mysqli_real_escape_string($db,$_GET['phone1']);
+	$phone2 = mysqli_real_escape_string($db,$_GET['phone2']);
 	// For API
 
 	// START DEBIT AND CREDIT

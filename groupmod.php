@@ -560,9 +560,9 @@ else{
 									INVITE by <?php echo $sms;?> SMS
 									</button>
 								
-								<button class="btn btn-primary fbShare" id="shareBtn" style="background-color: #225ca0; border-color: #1b4c9c;">Invite with Facebook</button>
+								<button class="btn btn-primary fbShare" id="shareBtn" style="background-color: #225ca0; border-color: #1b4c9c;"><i class="icon md-share"></i>Invite Facebook</button>
 								<!--<button class="btn btn-primary">Share on Whatsapp</button>-->
-								<button class="btn btn-primary" onclick="javascript:window.open('http://twitter.com/share?url=http://uplus.rw/f/i<?php echo $groupID;?>;text=<?php echo $adminName;?> Is rasing <?php echo number_format($saving);?>Rwf for <?php echo $groupName;?>. You can contribute using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" style="background-color: #03A9F4; border-color: #2196F3;">Invite with Twitter</button>
+								<button class="btn btn-primary" onclick="javascript:window.open('http://twitter.com/share?url=http://uplus.rw/f/i<?php echo $groupID;?>;text=<?php echo $adminName;?> Is rasing <?php echo number_format($saving);?>Rwf for <?php echo $groupName;?>. You can contribute using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" style="background-color: #03A9F4; border-color: #2196F3;"><i class="icon md-share"></i>Share on Twitter</button>
 								<!--<div><hr/></div>
 								<div class="row">
 									<div class="col-md-5">

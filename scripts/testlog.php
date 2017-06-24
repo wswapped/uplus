@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 if(isset($_POST['profileName']))
 {
 	echo $profileName = $_POST['profileName'];
@@ -21,9 +22,5 @@ if(isset($_POST['profileName']))
 	email='$profileEmail', profession='$profileProfession', bio='$profileBio'
 	WHERE id = 	'$profileId'
 	")or die (mysqli_error());
-	
-	
-	header("location: ../home");
-	exit();
-}
-?>
+	header("location: ../home");exit();}
+	ob_end_flush();?>

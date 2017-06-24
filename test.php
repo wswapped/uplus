@@ -1,4 +1,5 @@
 <?php // Get me backif i havent logedin
+@ob_start();
 session_start();
 	if (!isset($_SESSION["phone1"])) {
 		header("location: logout.php"); 
@@ -207,8 +208,7 @@ if ($existCount > 0) {
 				  </div>
 				<div class="widget-body" style="background-color: #fff;">
                 <h4 class="widget-title">How to use Uplus</h4>
-                <p>UPlus is a Social contribution platform, to help you collect money 
-				around the world instantly into your local currency.</p>
+                <p>This videos will take you through how to use uplus, efectivly by raising money from any country, any currency instantly into rwf.</p>
                  <a href="javascript:void(0)" onclick="videosavings()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Create a contribution</a> <em style="font-size: 11px;">(0:45)</em><br>
                  <a href="javascript:void(0)" onclick="videoinfo()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Send bulk SMS for free</a> <em style="font-size: 11px;">(00:30)</em><br>
                  <a href="javascript:void(0)" onclick="videocontribution()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Receive money</a> <em style="font-size: 11px;">(01:05)</em><br>
@@ -220,7 +220,7 @@ if ($existCount > 0) {
                     </a>
                    
                   </div>
-                  <a class="btn btn-warning pull-right" href="learn">
+                  <a style="display: none;" class="btn btn-warning pull-right" href="learn">
                     <i class="icon md-chevron-right"></i> Learn More
                   </a>
                 </div>
@@ -321,7 +321,7 @@ if ($existCount > 0) {
                 </div>
               </div>
               <div class="qa-message-content">
-				To test, Creat your fund,
+				To test, After you created your conrtibution group,
 				Verify your withdraw account,
 				Share your fund on facebook,
 				And get the first 5,000 Rwf contribution (free) from uPlus.
@@ -333,7 +333,7 @@ if ($existCount > 0) {
     </div>
   </div>
   
-<button class="site-action btn-raised btn btn-success btn-floating" data-target="#addTopicForm" data-toggle="modal" type="button" id="add">
+<button style="display: none;" class="site-action btn-raised btn btn-success btn-floating" data-target="#addTopicForm" data-toggle="modal" type="button" id="add">
 	<span style="
     position: absolute;
     background: #4caf50;

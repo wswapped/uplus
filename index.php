@@ -52,7 +52,7 @@
 <link rel="stylesheet" href="frontassets/css/login.css" />
 	<link rel="stylesheet" href="frontassets/css/bootstrap.css">
 </head>
-<body>
+<body >
     <!-- navigation -->
 <script>// Facebook
 function registerFb()
@@ -260,12 +260,13 @@ function registerFb()
 								<div class="makegroupBody" id="makegroupBody">
 									<table  width="100%" cellpadding="100px">
 										<tr>
-											<td width="33.3%"><label>Chose a Reason: </label></td>
+											<td width="33.3%"><label>Choose a Reason: </label></td>
 											<td width="33.3%">
 											<select style="width: 100%;" id="fundTag" placeholder="for">
 												<option></option>
 												<option>Wedding</option>
 												<option>Party</option>
+												<option>Event</option>
 												<option>Picnic</option>
 												<option>Bithday Surprise</option>
 												<option>Medecine</option>
@@ -526,6 +527,7 @@ function registerFb()
     <!-- altair common functions/helpers -->
     <script src="frontassets/js/altair_lp_common.js"></script>
     
+	   
 	<script>
 	function changeTarget(){
 		
@@ -590,9 +592,7 @@ function registerFb()
 		var groupTargetType = document.getElementById('targeted').value;
 		var perPersonType 	= document.getElementById('perPerson').value;
 	
-		document.getElementById('passage1').innerHTML = 
-		'<input hidden id="groupTargetType" value="'+groupTargetType+'">'
-		+'<input hidden id="perPersonType" value="'+perPersonType+'">';
+		
 		
 		var isTargetChanged 	= document.getElementById('isTargetChanged').value;
 		var isTargetPPChanged 	= document.getElementById('isTargetPPChanged').value;
@@ -601,9 +601,10 @@ function registerFb()
 		var fundTag				= document.getElementById('fundTag').value;
 		
 		
+		
 	// Check the groupname
 		if(fundTag == "" || fundTag == null){
-			document.getElementById('fundTagError').innerHTML = 'Please chose the fund type';
+			document.getElementById('fundTagError').innerHTML = 'Please choose the fund type';
 			return false;
 		}
 		if(isTargetChanged == 'yes' && (fundAmount == "" || fundAmount == null)){
@@ -614,6 +615,16 @@ function registerFb()
 			document.getElementById('amountPerPersonError').innerHTML = 'Please fill in the amount minimum per person';
 			return false;
 		}
+		
+		document.getElementById('passage1').innerHTML = 
+		'<input hidden id="groupTargetType" value="'+groupTargetType+'">'
+		+'<input hidden id="perPersonType" value="'+perPersonType+'">'
+		+'<input hidden id="isTargetChanged" value="'+isTargetChanged+'">'
+		+'<input hidden id="isTargetPPChanged" value="'+isTargetPPChanged+'">'
+		+'<input hidden id="fundAmount" value="'+fundAmount+'">'
+		+'<input hidden id="amountPerPerson" value="'+amountPerPerson+'">'
+		+'<input hidden id="fundTag" value="'+fundTag+'">';
+		
 		document.getElementById('makegroupBody').innerHTML = '<div class="loader"></div>';
 		document.getElementById('makegroupFooter').innerHTML = '';
 		$.ajax({
@@ -643,13 +654,31 @@ function registerFb()
 	
 function raiseBack(){
 	var raiseBack = 1;
+	var groupTargetType 	= document.getElementById('groupTargetType').value;
+	var perPersonType 	= document.getElementById('perPersonType').value;
+	var isTargetChanged 	= document.getElementById('isTargetChanged').value;
+	var isTargetPPChanged 	= document.getElementById('isTargetPPChanged').value;
+	var fundAmount 			= document.getElementById('fundAmount').value;
+	var amountPerPerson 	= document.getElementById('amountPerPerson').value;
+	var fundTag 			= document.getElementById('fundTag').value;
+	
+	//alert();
+	
 	$.ajax({
 		type : "GET",
 		url : "frontassets/indexscripts.php",
 		dataType : "html",
 		cache : "false",
 		data : {
-			raiseBack	: raiseBack,	
+			raiseBack				: raiseBack,
+			backgroupTargetType 	: groupTargetType,	
+			backperPersonType 		: perPersonType,	
+			backisTargetChanged 	: isTargetChanged,	
+			backisTargetPPChanged 	: isTargetPPChanged, 	
+			backfundAmount 			: fundAmount,		
+			backamountPerPerson 	: amountPerPerson, 	
+			backfundTag 			: fundTag,
+			
 		},
 		success : function(html, textStatus){
 		$('#makegroupBody').html(html);
@@ -694,7 +723,7 @@ function raiseBack(){
 			if(tab == 1)
 			{
 				var calltab = '1';
-				document.getElementById('sect-dothis').innerHTML = '<div class="uk-grid"><div class="uk-width-1-3 currentHeader customheader"><span class="currentSpan" style="left:0;"></span>FUNDRAISE</div><div class="uk-width-1-3 uncurrentHeader customheader" style="color: #eee;" onclick="changeserv(tab=2)">SAVE</div><div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=3)">INVEST</div></div>';
+				document.getElementById('sect-dothis').innerHTML = '<div class="uk-grid"><div class="uk-width-1-3 currentHeader customheader"><span class="currentSpan" style="left:0;"></span>CONTRIBUTE</div><div class="uk-width-1-3 uncurrentHeader customheader" style="color: #eee;" onclick="changeserv(tab=2)">SAVE</div><div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=3)">INVEST</div></div>';
 				$.ajax({
 				type		:"GET",
 				url			:"frontassets/indexscripts.php",
@@ -714,12 +743,12 @@ function raiseBack(){
 			}
 			else if(tab == 2)
 			{
-				document.getElementById('sect-dothis').innerHTML = '<div class="uk-grid"><div class="uk-width-1-3 uncurrentHeader customheader " onclick="changeserv(tab=1)">FUNDRAISE</div><div class="uk-width-1-3 currentHeader customheader"><span class="currentSpan" style="margin: 93px -170px"></span>SAVE</div><div class="uk-width-1-3 uncurrentHeader customheader"  onclick="changeserv(tab=3)">INVEST</div></div>';
+				document.getElementById('sect-dothis').innerHTML = '<div class="uk-grid"><div class="uk-width-1-3 uncurrentHeader customheader " onclick="changeserv(tab=1)">CONTRIBUTE</div><div class="uk-width-1-3 currentHeader customheader"><span class="currentSpan" style="margin: 93px -170px"></span>SAVE</div><div class="uk-width-1-3 uncurrentHeader customheader"  onclick="changeserv(tab=3)">INVEST</div></div>';
 				document.getElementById('actions').innerHTML = '<h1 class="text-center">Savings service, Coming Soon!</h1>';
 			}
 			else if(tab == 3)
 			{
-				document.getElementById('sect-dothis').innerHTML = '<div class="uk-grid"><div class="uk-width-1-3 uncurrentHeader customheader " onclick="changeserv(tab=1)">FUNDRAISE</div><div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=2)">SAVE</div><div class="uk-width-1-3 customheader currentHeader" ><div style="float: right;"><span class="currentSpan" style=" right: 0;margin: 93px 0;"></span></div>INVEST</div></div>';
+				document.getElementById('sect-dothis').innerHTML = '<div class="uk-grid"><div class="uk-width-1-3 uncurrentHeader customheader " onclick="changeserv(tab=1)">CONTRIBUTE</div><div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=2)">SAVE</div><div class="uk-width-1-3 customheader currentHeader" ><div style="float: right;"><span class="currentSpan" style=" right: 0;margin: 93px 0;"></span></div>INVEST</div></div>';
 				document.getElementById('actions').innerHTML = '<h1 class="text-center">Investments opportunities are Coming Soon!</h1>';
 			var calltab = '3';
 			$.ajax({
@@ -888,6 +917,7 @@ function raiseBack(){
 				document.getElementById('makegroupBody').innerHTML ='<div font-size: 20px;">Lets Check this pin <div class="inputContainer">'
 				+'<input disabled value="'+pin+'" style="color: #000; font-size: 25px; border-radius: 4px; width: 50%; text-align: unset;"/></div></div>';
 				var checkPin = 1;
+				//alert('going to create');
 				$.ajax({
 					type : "GET",
 					url : "frontassets/indexscripts.php",
@@ -907,6 +937,7 @@ function raiseBack(){
 						perPersonType	: perPersonType
 					},
 					success : function(html, textStatus){
+						//alert('reslut back');
 					$('#makegroupBody').html(html);
 					},
 					error : function(xht, textStatus, errorThrown){

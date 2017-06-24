@@ -1,21 +1,31 @@
 <?php
+@ob_start();
+session_start();
 include("../db.php");
 ?>
 <?php
 if(isset($_GET['raiseBack'])){ 
+$backgroupTargetType 	= mysqli_real_escape_string($db, $_GET['backgroupTargetType']);	
+$backisTargetChanged 	= mysqli_real_escape_string($db, $_GET['backisTargetChanged']); 	
+$backperPersonType	 	= mysqli_real_escape_string($db, $_GET['backperPersonType']); 	
+$backisTargetPPChanged 	= mysqli_real_escape_string($db, $_GET['backisTargetPPChanged']);	
+$backfundAmount 		= mysqli_real_escape_string($db, $_GET['backfundAmount']);		
+$backamountPerPerson 	= mysqli_real_escape_string($db, $_GET['backamountPerPerson']);	
+$backfundTag 			= mysqli_real_escape_string($db, $_GET['backfundTag']);
+
 ?>
 <table  width="100%" cellpadding="100px">
 	<tr>
-		<td width="33.3%"><label>Chose a Reason: </label></td>
+		<td width="33.3%"><label>Choose a Reason: </label></td>
 		<td width="33.3%">
 		<select style="width: 100%;" id="fundTag" placeholder="for">
-			<option></option>
+			<option><?php echo $backfundTag;?></option>
 			<option>Wedding</option>
-			<option>Medecine</option>
+			<option>Party</option>
+			<option>Event</option>
 			<option>Funeral</option>
 			<option>School Fees</option>
 			<option>Picnic</option>
-			<option>Party</option>
 			<option>Bithday Surprise</option>
 			<option>Other</option>
 		</select>
@@ -29,14 +39,23 @@ if(isset($_GET['raiseBack'])){
 		<td width="33.3%">Target Amount</td>
 		<td width="33.3%">
 			<select style="width: 100%;"  id="targeted" onchange="changeTarget()">
+				<option value="<?php echo $backgroupTargetType;?>"><?php echo $backgroupTargetType;?></option>
 				<option value="target">Exactly</option>
 				<option value="atleast">Atleast</option>
 				<option value="any">Any Amount</option>
 			</select>
 		</td>
 		<td width="33.3%" id="changeTargetd">
-			<input id="isTargetChanged" hidden value="yes">
-			<input id="raiseAmount" type="number" placeholder="0.00"/> 
+			<?php 
+			if($backgroupTargetType =='any')
+			{
+				echo '<input hidden id="isTargetChanged" value="no">
+				<input disabled style="width: 100%;" type="number" placeholder="Any"/>
+				<input hidden id="raiseAmount" type="number" value="0"/>';
+			}else{
+			?><input id="isTargetChanged" hidden value="yes">
+			<input id="raiseAmount" type="number" value="<?php echo $backfundAmount;?>" placeholder="0.00"/>
+			<?php }?>
 		</td>
 	</tr>
 	<tr>
@@ -46,14 +65,24 @@ if(isset($_GET['raiseBack'])){
 		<td width="33.3%">Amount per person</td>
 		<td width="33.3%">
 			<select style="width: 100%;" id="perPerson" onchange="changeTargetPerPerson()">
+				<option value="<?php echo $backperPersonType;?>"><?php echo $backperPersonType;?></option>
 				<option value="target">Exactly</option>
 				<option value="atleast">Atleast</option>
 				<option value="any">Any Amount</option>
 			</select>
 		</td>
 		<td width="33.3%" id="changePerPerson">
+		<?php 
+			if($backperPersonType =='any')
+			{
+				echo '<input hidden id="isTargetPPChanged" value="no">
+			<input disabled style="width: 100%;" type="number" placeholder="Any"/>
+			<input hidden id="amountPerPerson" type="number" value="0"/>';
+			}else{
+			?>
 			<input id="isTargetPPChanged" hidden value="yes">
-			<input id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/> 
+			<input id="amountPerPerson" value="<?php echo $backamountPerPerson;?>" style="width: 100%;" type="number" placeholder="0.00"/> 
+			<?php }?>
 		</td>
 	</tr>
 	<tr>
@@ -69,29 +98,33 @@ if(isset($_GET['raiseBack'])){
 <?PHP // 1 START HOLD: FOR, AMOUNT RWF && PROMPT THE  PHONE AND DESC
 	
 if(isset($_GET['fundTag'])){ // HOLD THE DATA IN VARIABLE
-	$groupName	= $_GET['fundTag'];
-	$fundAmount 	= $_GET['fundAmount'];
-	$amountPerPerson	= $_GET['amountPerPerson'];
+	$groupName			= mysqli_real_escape_string($db, $_GET['fundTag']);
+	$fundAmount 		= mysqli_real_escape_string($db, $_GET['fundAmount']);
+	$amountPerPerson	= mysqli_real_escape_string($db, $_GET['amountPerPerson']);
 ?>
 <input type="hidden" id="targetAmount" value="<?php echo $fundAmount;?>"/>
 <input type="hidden" id="targetPerPerson" value="<?php echo $amountPerPerson;?>"/>
 
-	<table border="0">
+	<table border="0" style="width: 100%;">
 		<tr>
-			<td>Group Title:<input id="fundName" /><td>
-			<td>Contact Phone:<input id="fundPhone"></td>
+			<td>Group Title:<td>
+			<td>Contact Phone:</td>
+		</tr>
+		<tr>
+			<td><input id="fundName" style="width: 100%;" /><td>
+			<td><input id="fundPhone" style="width: 100%;"></td>
 		</tr>
 	</table>
 	
 	Collection Account:<br/>
-	<table border="0">
+	<table border="0" style="width: 100%;">
 		<tr>
 			<td>Bank/ Telcom</td>
 			<td>Account</td>
 		</tr>
 		<tr>
 			<td>
-				<select id="fundBank">
+				<select style="width: 76%;" id="fundBank">
 					<option></option>
 					<?php $sqlListBanks = $outCon->query("SELECT * FROM banks");
 							while($rowBanks = mysqli_fetch_array($sqlListBanks))
@@ -175,17 +208,17 @@ function changedesc (el)
 <?php // 4 SAVE FACEBOOK DATA
 if(isset($_GET['savename']))
 {
-	$savename 	= $_GET['savename'];
-	$rdpartyId  = $_GET['rdpartyId'];
-	$rdparty 	= $_GET['rdparty'];
-	$gender 	= $_GET['gender'];
-	$picture 	= $_GET['picture'];
+	$savename 	= mysqli_real_escape_string($db, $_GET['savename']);
+	$rdpartyId  = mysqli_real_escape_string($db, $_GET['rdpartyId']);
+	$rdparty 	= mysqli_real_escape_string($db, $_GET['rdparty']);
+	$gender 	= mysqli_real_escape_string($db, $_GET['gender']);
+	$picture 	= mysqli_real_escape_string($db, $_GET['picture']);
 	
-	$fundName	 = $_GET['fundName'];
-	$fundAmount	 = $_GET['fundAmount'];
-	$fundCurrency= $_GET['fundCurrency'];
-	$fundPhone	 = $_GET['fundPhone'];
-	$fundDesc	 = $_GET['fundDesc'];
+	$fundName	 = mysqli_real_escape_string($db, $_GET['fundName']);
+	$fundAmount	 = mysqli_real_escape_string($db, $_GET['fundAmount']);
+	$fundCurrency= mysqli_real_escape_string($db, $_GET['fundCurrency']);
+	$fundPhone	 = mysqli_real_escape_string($db, $_GET['fundPhone']);
+	$fundDesc	 = mysqli_real_escape_string($db, $_GET['fundDesc']);
 	
 	// Check if fb is new
 	$sqlCheckFb = $db->query("SELECT * FROM users WHERE 3rdpartyId = '$rdpartyId' LIMIT 1");
@@ -198,7 +231,7 @@ if(isset($_GET['savename']))
 		$lastvisit = $rowUserFbs['visits'];
 		$phoneuser = $rowUserFbs['phone'];
 			
-			session_start();
+			//session_start();
 			$_SESSION["id"] = $iduser;
 			$_SESSION["phone1"] = $phoneuser;
 			$_SESSION["password"] = $passworduser;
@@ -223,7 +256,7 @@ if(isset($_GET['savename']))
 		$iduser = $rowUserLast['id'];
 		$lastvisit = $rowUserLast['visits'];
 			 
-		session_start();
+		//session_start();
 		$_SESSION["id"] = $iduser;
 		$_SESSION["phone1"] = $phoneuser;
 		$_SESSION["password"] = $passworduser;
@@ -285,7 +318,7 @@ if(isset($_GET['savename']))
 <?php // 5 IF CHOSEN TO USE PHONE SEND PIN
 if(isset($_GET['getPin']))
 {
-	$fundPhone	 = $_GET['fundPhone'];
+	$fundPhone	 = mysqli_real_escape_string($db, $_GET['fundPhone']);
 	$sqlcheckPin = $db->query("SELECT password FROM users WHERE phone = '$fundPhone' LIMIT 1");
 	$countPin = mysqli_num_rows($sqlcheckPin);
 	if($countPin > 0)
@@ -312,10 +345,10 @@ if(isset($_GET['getPin']))
 
 	$gateway    = new AfricasTalkingGateway($username, $apikey);
 
-	try 
+	/*try 
 	{
 		$results = $gateway->sendMessage($recipients, $message, $from);
-		
+	*/	
 		
 		ECHO'
 		<div style="color: #000;">
@@ -325,26 +358,26 @@ if(isset($_GET['getPin']))
 				<input name="pin" onkeyup="changePin(this);" id="pin" class="newinput" style="width: 30%; text-align: unset;" placeholder="PIN"/> 	
 			</div>
 		</div>';
-	}
+	/*}
 	catch (AfricasTalkingGatewayException $e)
 	{
 		$results.="Encountered an error while sending: ".$e->getMessage();
-	}
+	/*}*/
 }
 ?>
 
 <?PHP // 6 VERIFY THE PIN
 if(isset($_GET['checkPin']))
 {
-	$pin		= $_GET['pin'];
-	$fundPhone	 	= $_GET['fundPhone'];
-	$targetAmount	= $_GET['targetAmount'];
-	$targetPerPerson= $_GET['targetPerPerson'];
-	$fundName		= $_GET['fundName'];
-	$fundBank	 	= $_GET['fundBank'];
-	$fundAccount	= $_GET['fundAccount'];
-	$groupTargetType= $_GET['groupTargetType'];
-	$perPersonType	= $_GET['perPersonType'];
+	$pin		= mysqli_real_escape_string($db, $_GET['pin']);
+	$fundPhone	 	= mysqli_real_escape_string($db, $_GET['fundPhone']);
+	$targetAmount	= mysqli_real_escape_string($db, $_GET['targetAmount']);
+	$targetPerPerson= mysqli_real_escape_string($db, $_GET['targetPerPerson']);
+	$fundName		= mysqli_real_escape_string($db, $_GET['fundName']);
+	$fundBank	 	= mysqli_real_escape_string($db, $_GET['fundBank']);
+	$fundAccount	= mysqli_real_escape_string($db, $_GET['fundAccount']);
+	$groupTargetType= mysqli_real_escape_string($db, $_GET['groupTargetType']);
+	$perPersonType	= mysqli_real_escape_string($db, $_GET['perPersonType']);
 	
 	
 	$sqlcheckPin 	= $db->query("SELECT * FROM users WHERE phone = '$fundPhone' LIMIT 1");
@@ -359,7 +392,7 @@ if(isset($_GET['checkPin']))
 		$lastvisit 		= $rowPin['visits'];
 		$adminName 		= $rowPin['name'];
 			 
-		session_start();
+		//session_start();
 		$_SESSION["id"] = $adminId;
 		$_SESSION["phone1"] = $phoneuser;
 		$_SESSION["password"] = $passworduser;
@@ -631,8 +664,8 @@ elseif($_GET['calltab'] == 3){
 <?php // 8 LIKE THE FUND
 // Check if the method exists
 if(isset($_GET['newlikes'])){
-	$newlikes 	=$_GET['newlikes'];
-	$likeId 	=$_GET['likeId'];
+	$newlikes 	= mysqli_real_escape_string($db, $_GET['newlikes']);
+	$likeId 	= mysqli_real_escape_string($db, $_GET['likeId']);
 	
 	$sql = $db->query("UPDATE groups SET likes='$newlikes' WHERE id = '$likeId'");
 	echo 'yes';

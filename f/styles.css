@@ -50,7 +50,8 @@
 	height: 40px;
 }
 html, body {
-  font-family: 'Open Sans',Helvetica,Arial,sans-serif;
+  /*font-family: 'Open Sans',Helvetica,Arial,sans-serif;*/
+  font-family: "Helvetica Neue",HelveticaNeueRoman,Helvetica,Arial,sans-serif!important;
   margin: 0;
   padding: 0;
 }
