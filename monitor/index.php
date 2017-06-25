@@ -233,11 +233,11 @@ function kwishura(){
 		alert("You must fill in the amount");
 		return false;
 	}
-	if (sentAmount < 500 ) 
+	/*if (sentAmount < 500 ) 
 	{
 		alert("The minimum amount we can send is 500 Rwf");
 		return false;
-	}
+	}*/
 	var sendFromAccount		= document.getElementById('mtnnumber').value;
 	var sendFromName		= '<?php echo $name;?>';
 	var sendToAccount		= document.getElementById('sendToAccount').value;

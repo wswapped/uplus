@@ -302,7 +302,7 @@ else{
 					<div onclick="javascript:window.open('http://twitter.com/share?url=https://www.uplus.rw/f/i<?php echo $groupID;?>;text=<?php echo $adminName;?> Is rasing <?php echo number_format($targetAmount);?>Rwf for <?php echo $groupName;?>. You can contribute using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
 						share Twitter</div>
 				</section>
-				<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin-bottom: 30px; max-width: 730px;">
+				<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
 					<div id="1" class="tabcontent">
 						<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: 80px;">
 								<?php echo $groupStory;?>
