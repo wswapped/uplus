@@ -345,10 +345,10 @@ if(isset($_GET['getPin']))
 
 	$gateway    = new AfricasTalkingGateway($username, $apikey);
 
-	/*try 
+	try 
 	{
 		$results = $gateway->sendMessage($recipients, $message, $from);
-	*/	
+		
 		
 		ECHO'
 		<div style="color: #000;">
@@ -358,11 +358,11 @@ if(isset($_GET['getPin']))
 				<input name="pin" onkeyup="changePin(this);" id="pin" class="newinput" style="width: 30%; text-align: unset;" placeholder="PIN"/> 	
 			</div>
 		</div>';
-	/*}
+	}
 	catch (AfricasTalkingGatewayException $e)
 	{
 		$results.="Encountered an error while sending: ".$e->getMessage();
-	/*}*/
+	}
 }
 ?>
 
