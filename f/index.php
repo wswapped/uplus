@@ -303,8 +303,8 @@ else{
 						share Twitter</div>
 				</section>
 				<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
-					<div id="1" class="tabcontent">
-						<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: 80px;">
+					<div id="1" class="tabcontent mdl-card" style="min-height: 80px;    width: 100%;">
+						<div id="tabsCont" style="padding: 12px; ">
 								<?php echo $groupStory;?>
 								
 							</div> 
