@@ -12,7 +12,8 @@ WHILE($group = mysqli_fetch_array($sqlgroups))
        "targetAmount"   => $group['targetAmount'],
        "perPerson"      => $group['perPerson'],
        "expirationDate" => $group['expirationDate'],
-       "likes"          => $group['likes']
+       "likes"          => $group['likes'],
+       "groupImage"     => 'http://www.uplus.rw/temp/group'.$group['id'].'.jpeg'
     );
 
 }
