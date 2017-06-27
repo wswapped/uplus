@@ -52,7 +52,7 @@ else{
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+<!---->
 	<meta property="fb:app_id"             content="1822800737957483">
 	<meta property="og:url"                content="https://www.uplus.rw/f/i<?php echo $groupID?>" >
 	<meta property="og:type"               content="article" >
