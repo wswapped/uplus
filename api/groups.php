@@ -1,5 +1,8 @@
 <?php
+
 include("../db.php");
+error_reporting(E_ALL); 
+ini_set('display_errors', 1);
 $sqlgroups = $db->query("SELECT * FROM groups WHERE 1");
 $groups = array();
 WHILE($group = mysqli_fetch_array($sqlgroups))
@@ -12,10 +15,13 @@ WHILE($group = mysqli_fetch_array($sqlgroups))
        "targetAmount"   => $group['targetAmount'],
        "perPerson"      => $group['perPerson'],
        "expirationDate" => $group['expirationDate'],
-       "likes"          => $group['likes']
+       "likes"          => $group['likes'],
+       "groupImage"     => 'http://www.uplus.rw/temp/group'.$group['id'].'.jpeg'
+
     );
 
 }
+
 foreach ($groups as $i => $group) {
 $gAdminId = $groups[$i]['adminId'];
     $users = array();
@@ -32,5 +38,5 @@ $gAdminId = $groups[$i]['adminId'];
 unset($groups[$i]['adminId']);
 
 $groups = json_encode($groups);
-echo '{ "groups" : '.$groups.' }";
+echo '{ "groups" : '.$groups.' }';
 ?>
