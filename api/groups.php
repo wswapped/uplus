@@ -12,8 +12,7 @@ WHILE($group = mysqli_fetch_array($sqlgroups))
        "targetAmount"   => $group['targetAmount'],
        "perPerson"      => $group['perPerson'],
        "expirationDate" => $group['expirationDate'],
-       "likes"          => $group['likes'],
-       "groupImage"     => 'http://www.uplus.rw/temp/group'.$group['id'].'.jpeg'
+       "likes"          => $group['likes']
     );
 
 }
@@ -33,5 +32,5 @@ $gAdminId = $groups[$i]['adminId'];
 unset($groups[$i]['adminId']);
 
 $groups = json_encode($groups);
-echo '{ "groups" : '.$groups.' }';
+echo '{ "groups" : '.$groups.' }";
 ?>
