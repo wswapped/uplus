@@ -18,7 +18,7 @@ $backfundTag 			= mysqli_real_escape_string($db, $_GET['backfundTag']);
 	<tr>
 		<td width="33.3%"><label>Choose a Reason: </label></td>
 		<td width="33.3%">
-		<select style="width: 100%;" id="fundTag" placeholder="for">
+		<select class="newinput" style="width: 100%;" id="fundTag" placeholder="for">
 			<option><?php echo $backfundTag;?></option>
 			<option>Wedding</option>
 			<option>Party</option>
@@ -38,7 +38,7 @@ $backfundTag 			= mysqli_real_escape_string($db, $_GET['backfundTag']);
 	<tr>
 		<td width="33.3%">Target Amount</td>
 		<td width="33.3%">
-			<select style="width: 100%;"  id="targeted" onchange="changeTarget()">
+			<select class="newinput" style="width: 100%;"  id="targeted" onchange="changeTarget()">
 				<option value="<?php echo $backgroupTargetType;?>"><?php echo $backgroupTargetType;?></option>
 				<option value="target">Exactly</option>
 				<option value="atleast">Atleast</option>
@@ -50,11 +50,11 @@ $backfundTag 			= mysqli_real_escape_string($db, $_GET['backfundTag']);
 			if($backgroupTargetType =='any')
 			{
 				echo '<input hidden id="isTargetChanged" value="no">
-				<input disabled style="width: 100%;" type="number" placeholder="Any"/>
+				<input class="newinput" disabled style="width: 100%;" type="number" placeholder="Any"/>
 				<input hidden id="raiseAmount" type="number" value="0"/>';
 			}else{
 			?><input id="isTargetChanged" hidden value="yes">
-			<input id="raiseAmount" type="number" value="<?php echo $backfundAmount;?>" placeholder="0.00"/>
+			<input class="newinput" class="newinput" id="raiseAmount" type="number" value="<?php echo $backfundAmount;?>" placeholder="0.00"/>
 			<?php }?>
 		</td>
 	</tr>
@@ -64,7 +64,7 @@ $backfundTag 			= mysqli_real_escape_string($db, $_GET['backfundTag']);
 	<tr>
 		<td width="33.3%">Amount per person</td>
 		<td width="33.3%">
-			<select style="width: 100%;" id="perPerson" onchange="changeTargetPerPerson()">
+			<select  class="newinput"style="width: 100%;" id="perPerson" onchange="changeTargetPerPerson()">
 				<option value="<?php echo $backperPersonType;?>"><?php echo $backperPersonType;?></option>
 				<option value="target">Exactly</option>
 				<option value="atleast">Atleast</option>
@@ -76,12 +76,12 @@ $backfundTag 			= mysqli_real_escape_string($db, $_GET['backfundTag']);
 			if($backperPersonType =='any')
 			{
 				echo '<input hidden id="isTargetPPChanged" value="no">
-			<input disabled style="width: 100%;" type="number" placeholder="Any"/>
+			<input class="newinput" disabled style="width: 100%;" type="number" placeholder="Any"/>
 			<input hidden id="amountPerPerson" type="number" value="0"/>';
 			}else{
 			?>
 			<input id="isTargetPPChanged" hidden value="yes">
-			<input id="amountPerPerson" value="<?php echo $backamountPerPerson;?>" style="width: 100%;" type="number" placeholder="0.00"/> 
+			<input class="newinput" id="amountPerPerson" value="<?php echo $backamountPerPerson;?>" style="width: 100%;" type="number" placeholder="0.00"/> 
 			<?php }?>
 		</td>
 	</tr>
@@ -108,11 +108,11 @@ if(isset($_GET['fundTag'])){ // HOLD THE DATA IN VARIABLE
 	<table border="0" style="width: 100%;">
 		<tr>
 			<td>Group Title:<td>
-			<td>Contact Phone:</td>
+			<td>Login Phone:</td>
 		</tr>
 		<tr>
-			<td><input id="fundName" style="width: 100%;" /><td>
-			<td><input id="fundPhone" style="width: 100%;"></td>
+			<td><input class="newinput" id="fundName" style="width: 100%;" /><td>
+			<td><input class="newinput" id="fundPhone" style="width: 100%;"></td>
 		</tr>
 	</table>
 	
@@ -124,7 +124,7 @@ if(isset($_GET['fundTag'])){ // HOLD THE DATA IN VARIABLE
 		</tr>
 		<tr>
 			<td>
-				<select style="width: 76%;" id="fundBank">
+				<select class="newinput" style="width: 76%;" id="fundBank">
 					<option></option>
 					<?php $sqlListBanks = $outCon->query("SELECT * FROM banks");
 							while($rowBanks = mysqli_fetch_array($sqlListBanks))
@@ -133,7 +133,7 @@ if(isset($_GET['fundTag'])){ // HOLD THE DATA IN VARIABLE
 							}?>
 				</select>
 			</td>
-			<td><input id="fundAccount"></td>
+			<td><input class="newinput" id="fundAccount"></td>
 		</tr>
 	</table>
 

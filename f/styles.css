@@ -337,18 +337,23 @@ background-color: unset;
 @media (max-width: 839px){
 	.twtShare{
 		opacity: 0;
+		display: none;
     }
 	.profileInfo{
 		opacity: 0;
+		display: none;
     }
 	.leftSidePanel{
 		opacity: 0;
+		display: none;
     }
 	.fbShare{
 		opacity: 0;
+		display: none;
     }
 	.rightSidePanel{
 		opacity: 0;
+		display: none;
     }
 	.mdl-dialog{
 		width: 100%;
@@ -585,18 +590,38 @@ background-color: unset;
 .titleOverlay{
 	background: linear-gradient(to bottom,transparent 0,rgba(0,0,0,.82) 100%);
     text-shadow: 2px 2px 14px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    top: 289px;
+    top: 255px;
     padding: 0 15px;
     position: absolute;
     width: 100%;
     height: 33%;
 	z-index: 10;
 }
+
+.midlePage{
+	width: 60%;
+	margin-left: 0px; 
+	float: left;
+	padding-top: 50px; 
+}
+.navDiv{
+	height: 64px;
+	padding-top: 7px;
+}
+.mdl-layout__header{
+	background: #007569;
+}
+
+
 @media (max-width: 839px) {
+	.uk-navbar{
+		text-align: center;
+	}
 	#contbtn{
 	font-size: 20px;
     height: 100%;
 	margin:0;
+	padding-top: 0px;
     }
 	.contSection{
 		margin: -82px 0 0 0 !important;
@@ -618,7 +643,8 @@ background-color: unset;
 		position: relative;
 	}
 	.titleOverlay{
-		top: 303px;
+		top: 255px;
+		height: 37%;
 	}
 	#tabing{
 		margin-bottom: 0px;
@@ -630,6 +656,17 @@ background-color: unset;
 		position: fixed;
 		bottom: 0;
 	}
+	.midlePage{
+		width: 100%;
+	}
 
 }
-
+.logo{
+	    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    margin: auto;
+    background-color: #fff;
+    cursor: pointer;
+}

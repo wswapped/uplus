@@ -158,11 +158,10 @@ else{
 </script>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	<header  class="mdl-layout__header mdl-layout__header--scroll" style="height: 64px;background: #fff; position: fixed;box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);  transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);">
+	<header  class="mdl-layout__header mdl-layout__header--scroll" style="height: 64px;background: #007569; position: fixed;box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);  transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);">
 		<nav class="uk-navbar">
 			<div class="navDiv">
-				<a href="../index.php" ><img src="../frontassets/img/logo_main.png" alt="" width="71" style="height: 100%;" class="dense-image dense-loading"></a>
-				<a href="../home" class="signinBtn">SIGN IN</a>
+				<a href="../index.php" ><img src="../frontassets/img/logo_main_3.png" class="logo" alt="" width="71" class="dense-image dense-loading"></a>
 			</div>
 		</nav>
 	</header>
@@ -170,199 +169,204 @@ else{
 	<main class="mdl-layout__content" style="" >
 		<div class="mdl-layout__tab-panel is-active" id="overview" style="padding: unset; padding-top: unset;">
 			
-				<section class="section--center">
-					<div class="leftSidePanel">
-						<div>Group Admin</div>
-						<div class="profile" style="background-image: url(../proimg/<?php echo $adminId;?>.jpg);"></div>
-						<div style="padding: 15px 0;">
-							<table border="0">
-								<tr style="border-bottom: 1px #ccc solid;">
-									<td>
-										<b><?php echo  $adminName;?></b>
-									</td>
-								</tr>
-								<tr style="border-bottom: 1px #ccc solid;">
-									<td>
-										<b style="
-											color: #000;
-											opacity: 0.5;
-										"><i class="fa fa-facebook-square"></i> Facebook Verified</b>
-									</td>
-								</tr>
-								<tr >	
-									<td onclick="alert('We are still working on this module.')" style="cursor: pointer;">
-									 <i  class="fa fa-envelope"></i>
-										Contact <?php if($adminGender == 'male'){echo 'him';}else{echo 'her';}?>
-									</td>
-								</tr>
-							</table>	
-						</div>
-						<div class="groupMedia">
-							<div class="groupMediaTitle">
-								<span style="text-align: left;"><i class="fa fa-camera"></i></span>
-								<span style="text-align: left;"><a href="javascript:void()" style="font-size: 13px; font-weight: 400;">3 Pictures and Videos</a></span>
-							</div>
-							<div style="margin: -5px 0 0 -5px; max-height: 176px;overflow: hidden;">
-							<p>
-								<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper<?php echo $groupID;?>.jpg"><span style="background-image: url(../temp/group<?php echo $groupID;?>.jpeg);" class="gallery"></span></a>
-								<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper15.jpg"><span style="background-image: url(../temp/group15.jpeg);" class="gallery"></span></a>
-								<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper7.jpg"><span style="background-image: url(../temp/group7.jpeg);" class="gallery"></span></a>
-							</p>
-							</div>
-						</div>
-					</div>
 
-					<div class="rightSidePanel">
-						<h5 style="text-align: center; font-size: 17px;"><i class="fa fa-group"></i> <?php 
-												$sqlcountcontr = $outCon->query("SELECT `amount` FROM `transactionsview` WHERE `operation` = 'debit' and `forGroupId` = '$groupID' AND status = 'Approved' OR 'COMPLITEAAA'");
-												echo $countContr = mysqli_num_rows($sqlcountcontr);
-												?> Contributors</h5><hr style="margin-top: 18px;margin-bottom: 20px;border: 0; border-top: 1px solid #616161;">
+				<div style="width: 100%;height: 100%;max-width: 1200px;margin: 0 auto; ">
+					<div class="leftSidePanel" style="position: relative; width: 20%; margin-left: 0px;float: left; padding-top: 80px;">
 						<div>
-						<?php 
-							$sqlcontributors = $outCon->query("SELECT `amount`, actorName FROM `transactionsview` WHERE `operation` = 'debit' and`forGroupId` = '$groupID' AND status = 'Approved' ORDER BY amount DESC limit 5");
-							$ncontrib = 0;
-							while($row = mysqli_fetch_array($sqlcontributors))
-							{
-								$ncontrib++;
-								echo '<div style="padding-bottom: 15px;">
-								<i class="fa fa-user-circle" style="
-								color: #007569;
-								float: left;
-								font-size: 32px;
-								"></i>
-								<div style="padding-top: 5px;padding-left: 40px;">'.$ncontrib.' <a style="
-								font-weight: 400;
-								">'.$row['actorName'].'</a>: '.number_format($row['amount']).' Rwf</div>
-								</div>';
-							}
-							if($countContr > 5)
-							{
-								$leftmore = $countContr - 5;
-								echo'
-								<div style="text-align: center"><a style="
-								font-weight: 400;
-								"href="#">Show me other '.$leftmore.' more</a></div>';
-							}
-						?>
-						</div>
-					</div>
-				</section>
-
-				<section class="section--center mdl-grid mdl-grid--no-spacing" style="margin-bottom: 95px; max-width: 730px; padding-top: 50px;">
-					<div class="titleOverlay">
-						<div class="fundTitle">
-							<h4 class="fundName"><?php echo $groupName;?></h4>
-							<h6 class="fundDesc"><?php echo $groupDesc;?><br><br></h6>
-						</div>
-					</div>
-					<div class="fundImg" style="background-image: url(../temp/group<?php echo $groupID;?>.jpeg);"></div>
-				</section>
-		        <section class="section--center contSection">
-					<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
-						<div class="mdl-cell mdl-cell--8-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
-							To date<i style="float: right;">Target</i>
-							<div style="font-size: 20px; font-weight: 800;">
-								<?php 
-									echo number_format($currentAmount);
-								?>RWF
-								<b style="float: right;">
-									<?php 
-									if($currentAmount > 0){
-										echo number_format($targetAmount).'Rwf';
-										}
-									else{
-										echo 'any amount';
-										}
-									?></b>
+							<div>Group Admin</div>
+							<div class="profile" style="background-image: url(../proimg/<?php echo $adminId;?>.jpg);"></div>
+							<div style="padding: 15px 0;">
+								<table border="0">
+									<tr style="border-bottom: 1px #ccc solid;">
+										<td>
+											<b><?php echo  $adminName;?></b>
+										</td>
+									</tr>
+									<tr style="border-bottom: 1px #ccc solid;">
+										<td>
+											<b style="
+												color: #000;
+												opacity: 0.5;
+											"><i class="fa fa-facebook-square"></i> Facebook Verified</b>
+										</td>
+									</tr>
+									<tr>	
+										<td onclick="alert('We are still working on this module.')" style="cursor: pointer;">
+										 <i  class="fa fa-envelope"></i>
+											Contact <?php if($adminGender == 'male'){echo 'him';}else{echo 'her';}?>
+										</td>
+									</tr>
+								</table>	
 							</div>
-							<div class="progress" style="background-color: #e1eae9;">
-							
-								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="<?php echo $prog;?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php if($prog < 10){echo 10;} else{echo $prog;}?>%">
-								  <?php echo number_format($prog);?>%
+							<div class="groupMedia">
+								<div class="groupMediaTitle">
+									<span style="text-align: left;"><i class="fa fa-camera"></i></span>
+									<span style="text-align: left;"><a href="javascript:void()" style="font-size: 13px; font-weight: 400;">3 Pictures and Videos</a></span>
+								</div>
+								<div style="margin: -5px 0 0 -5px; max-height: 176px;overflow: hidden;">
+								<p>
+									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper<?php echo $groupID;?>.jpg"><span style="background-image: url(../temp/group<?php echo $groupID;?>.jpeg);" class="gallery"></span></a>
+									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper15.jpg"><span style="background-image: url(../temp/group15.jpeg);" class="gallery"></span></a>
+									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper7.jpg"><span style="background-image: url(../temp/group7.jpeg);" class="gallery"></span></a>
+								</p>
 								</div>
 							</div>
-							<span style="float: right" id="countDown"></span>
-						</div>
-						<div class="mdl-cell mdl-cell--4-col contribution2" id="contdiv">
-							<button  href="#sendMoney" class="mdl-button mdl-button--raised fancybox" id="contbtn">Contribute Now</button>
-						</div>
 						</div>	
-		        </section>
-				
-				<section id="tabing" class="section--center mdl-grid mdl-grid--no-spacing ">
-					<div onclick="openCity(event, '1')" id="defaultOpen" class="mdl-card mdl-cell mdl-cell--3-col activeTab">
-						<span class="currentSpan" style="height: 20%"></span>
-						Story 
 					</div>
-					<div onclick="openCity(event, '2'), changeTab(tab=2)" class=" mdl-card mdl-cell mdl-cell--3-col otherTab">
-						<span class="updatesLogo"><i class="fa fa-globe"></i></span>
-						UPdates
-					</div>
-					<div class="mdl-card mdl-cell mdl-cell--3-col fbShare" id="shareBtn">Share facebook</div>
-					<div onclick="javascript:window.open('http://twitter.com/share?url=https://www.uplus.rw/f/i<?php echo $groupID;?>;text=<?php echo $adminName;?> Is rasing <?php echo number_format($targetAmount);?>Rwf for <?php echo $groupName;?>. You can contribute using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
-						share Twitter</div>
-				</section>
-				<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
-					<div id="1" class="tabcontent mdl-card" style="min-height: 80px;    width: 100%;">
-						<div id="tabsCont" style="padding: 12px; ">
-								<?php echo $groupStory;?>
-								
-							</div> 
-					</div>
-					<div id="2" class="tabcontent">
-						<?php
-							$sqlgetUpdates = $db->query("SELECT * FROM updatestransaction WHERE groupId = '$groupID' ORDER  BY id DESC");
-							 $countUpdates = mysqli_num_rows($sqlgetUpdates);
-							if($countUpdates > 0){
-								while($rowUpdates = mysqli_fetch_array($sqlgetUpdates)){
-						?>
-						<section class="section--center mdl-grid mdl-grid--no-spacing" style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
-			            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: unset;">
-								<table>
-									<tr>
-										<td style=" padding-right: 8px;">
-											<img src=""></td>
-										<td>
-											<small style="#657786">On (<?php echo strftime("%d %b", strtotime($rowUpdates['createdDate']));?>)</small>
-											<p style="font-size: 16px; font-weight: normal;line-height: 1.38;"><?php echo $rowUpdates['body'];?>.</p> 
-										</td> 
-									</tr>
-								</table>
-								<textarea hidden><iframe src="https://www.uplus.rw/f/embed<?php echo $groupID;?>" width="300px" height="445px" frameborder="0" scrolling="no"></iframe></textarea>
-							</div> 
-							
+					<div class="midlePage">
+						<section class="section--center mdl-grid mdl-grid--no-spacing" style="margin-bottom: 95px; max-width: 730px;">
+							<div class="titleOverlay">
+								<div class="fundTitle">
+									<h4 class="fundName"><?php echo $groupName;?></h4>
+									<h6 class="fundDesc"><?php echo $groupDesc;?><br><br></h6>
+								</div>
+							</div>
+							<div class="fundImg" style="background-image: url(../temp/group<?php echo $groupID;?>.jpeg);"></div>
 						</section>
-						<?php }
-							}?>
-					
-	          
-						<section class="section--center mdl-grid mdl-grid--no-spacing " style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
-			            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: unset;">
-								<table>
-									<tr>
-										<td style=" padding-right: 8px;">
+				        <section class="section--center contSection">
+							<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
+								<div class="mdl-cell mdl-cell--8-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
+									To date<i style="float: right;">Target</i>
+									<div style="font-size: 20px; font-weight: 800;">
+										<?php 
+											echo number_format($currentAmount);
+										?>RWF
+										<b style="float: right;">
+											<?php 
+											if($currentAmount > 0){
+												echo number_format($targetAmount).'Rwf';
+												}
+											else{
+												echo 'any amount';
+												}
+											?></b>
+									</div>
+									<div class="progress" style="background-color: #e1eae9;">
+									
+										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="<?php echo $prog;?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php if($prog < 10){echo 10;} else{echo $prog;}?>%">
+										  <?php echo number_format($prog);?>%
+										</div>
+									</div>
+									<span style="float: right" id="countDown"></span>
+								</div>
+								<div class="mdl-cell mdl-cell--4-col contribution2" id="contdiv">
+									<button  href="#sendMoney" class="mdl-button mdl-button--raised fancybox" id="contbtn">Contribute Now</button>
+								</div>
+								</div>	
+				        </section>
+						
+						<section id="tabing" class="section--center mdl-grid mdl-grid--no-spacing ">
+							<div onclick="openCity(event, '1')" id="defaultOpen" class="mdl-card mdl-cell mdl-cell--3-col activeTab">
+								<span class="currentSpan" style="height: 20%"></span>
+								Story 
+							</div>
+							<div onclick="openCity(event, '2'), changeTab(tab=2)" class=" mdl-card mdl-cell mdl-cell--3-col otherTab">
+								<span class="updatesLogo"><i class="fa fa-globe"></i></span>
+								UPdates
+							</div>
+							<div class="mdl-card mdl-cell mdl-cell--3-col fbShare" id="shareBtn">Share facebook</div>
+							<div onclick="javascript:window.open('http://twitter.com/share?url=https://www.uplus.rw/f/i<?php echo $groupID;?>;text=<?php echo $adminName;?> Is rasing <?php echo number_format($targetAmount);?>Rwf for <?php echo $groupName;?>. You can contribute using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
+								share Twitter</div>
+						</section>
+						<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
+							<div id="1" class="tabcontent mdl-card" style="min-height: 80px;    width: 100%;">
+								<div id="tabsCont" style="padding: 12px; ">
+										<?php echo $groupStory;?>
+										
+									</div> 
+							</div>
+							<div id="2" class="tabcontent">
+								<?php
+									$sqlgetUpdates = $db->query("SELECT * FROM updatestransaction WHERE groupId = '$groupID' ORDER  BY id DESC");
+									 $countUpdates = mysqli_num_rows($sqlgetUpdates);
+									if($countUpdates > 0){
+										while($rowUpdates = mysqli_fetch_array($sqlgetUpdates)){
+								?>
+								<section class="section--center mdl-grid mdl-grid--no-spacing" style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
+					            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: unset;">
+										<table>
+											<tr>
+												<td style=" padding-right: 8px;">
 													<img src=""></td>
-										<td>
-											<p style="font-size: 14px;font-weight: normal;line-height: 1.38;">On (<?php echo '<small>'.$createdDate.'</small>) <br/>'; if($adminGender == 'male'){echo '<a href="javascript:void()" style="color: #006157;">Mr. ';}else{echo '<a href="javascript:void()" style="color: #006157;">Mrs. ';} echo ''.$adminName.'</a>';?>.<span style="color:#90949c">Created this contribution group.</span><p> 
-										</td> 
-									</tr>
-								</table>
-							</div> 
+												<td>
+													<small style="#657786">On (<?php echo strftime("%d %b", strtotime($rowUpdates['createdDate']));?>)</small>
+													<p style="font-size: 16px; font-weight: normal;line-height: 1.38;"><?php echo $rowUpdates['body'];?>.</p> 
+												</td> 
+											</tr>
+										</table>
+										<textarea hidden><iframe src="https://www.uplus.rw/f/embed<?php echo $groupID;?>" width="300px" height="445px" frameborder="0" scrolling="no"></iframe></textarea>
+									</div> 
+									
+								</section>
+								<?php }
+									}?>
+							
+			          
+								<section class="section--center mdl-grid mdl-grid--no-spacing " style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
+					            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: unset;">
+										<table>
+											<tr>
+												<td style=" padding-right: 8px;">
+															<img src=""></td>
+												<td>
+													<p style="font-size: 14px;font-weight: normal;line-height: 1.38;">On (<?php echo '<small>'.$createdDate.'</small>) <br/>'; if($adminGender == 'male'){echo '<a href="javascript:void()" style="color: #006157;">Mr. ';}else{echo '<a href="javascript:void()" style="color: #006157;">Mrs. ';} echo ''.$adminName.'</a>';?>.<span style="color:#90949c">Created this contribution group.</span><p> 
+												</td> 
+											</tr>
+										</table>
+									</div> 
+								</section>
+							</div>
+						</section>
+						<section class="section--center mdl-grid mdl-grid--no-spacing" style="margin-bottom: 30px; max-width: 730px;">
+							<div class="fb-comments" data-href="https://www.uplus.rw/f/index.php?groupId=<?php echo $groupID;?>" data-width="650" data-numposts="5"></div>
+							<div class="tab">
+							</div>
 						</section>
 					</div>
-				</section>
-				<section class="section--center mdl-grid mdl-grid--no-spacing" style="margin-bottom: 30px; max-width: 730px;">
-					<div class="fb-comments" data-href="https://www.uplus.rw/f/index.php?groupId=<?php echo $groupID;?>" data-width="650" data-numposts="5"></div>
-					<div class="tab">
+					<div class="rightSidePanel" style="width: 20%; float: left; padding-top: 80px;">
+						<div>
+							<h5 style="text-align: center; font-size: 17px;"><i class="fa fa-group"></i> <?php 
+													$sqlcountcontr = $outCon->query("SELECT `amount` FROM `transactionsview` WHERE `operation` = 'debit' and `forGroupId` = '$groupID' AND status = 'Approved' OR 'COMPLITEAAA'");
+													echo $countContr = mysqli_num_rows($sqlcountcontr);
+													?> Contributors</h5><hr style="margin-top: 18px;margin-bottom: 20px;border: 0; border-top: 1px solid #616161;">
+							<div>
+								<?php 
+									$sqlcontributors = $outCon->query("SELECT `amount`, actorName FROM `transactionsview` WHERE `operation` = 'debit' and`forGroupId` = '$groupID' AND status = 'Approved' ORDER BY amount DESC limit 5");
+									$ncontrib = 0;
+									while($row = mysqli_fetch_array($sqlcontributors))
+									{
+										$ncontrib++;
+										echo '<div style="padding-bottom: 15px;">
+										<i class="fa fa-user-circle" style="
+										color: #007569;
+										float: left;
+										font-size: 32px;
+										"></i>
+										<div style="padding-top: 5px;padding-left: 40px;">'.$ncontrib.' <a style="
+										font-weight: 400;
+										">'.$row['actorName'].'</a>: '.number_format($row['amount']).' Rwf</div>
+										</div>';
+									}
+									if($countContr > 5)
+									{
+										$leftmore = $countContr - 5;
+										echo'
+										<div style="text-align: center"><a style="
+										font-weight: 400;
+										"href="#">Show me other '.$leftmore.' more</a></div>';
+									}
+								?>
+							</div>
+						</div>
 					</div>
-				</section>
-		        <footer class="mdl-mega-footer" style="background: #007569 !important;z-index: 50;position: relative;">
+				</div>
+		        <!--<footer class="mdl-mega-footer" style="background: #007569 !important;z-index: 50;position: relative;">
 		          <div class="mdl-mega-footer--bottom-section">
 		            <div class="mdl-logo">
 		              Copyright © 2016 uplus mutual partner, All rights reserved.
 		            </div>
 		          </div>
-		        </footer>
+		        </footer>-->
 		      </main>
 		    </div>
 			<div id="sendMoney">

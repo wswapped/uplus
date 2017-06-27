@@ -179,7 +179,7 @@ function registerFb()
                         </li>
                         <li>
                             <a href="#sect-team">
-                                in-Media
+                                How it works?
                             </a>
                         </li>
                     </ul>
@@ -211,7 +211,7 @@ function registerFb()
 				<li>
 					<a href="#sect-team" data-uk-smooth-scroll="{offset: 48}">
 						<span class="menu_icon"><i class="material-icons">&#xE7FB;</i></span>
-						<span class="menu_title">Partners</span>
+						<span class="menu_title">How it works?</span>
 					</a> 
 				</li>
             </ul>
@@ -262,7 +262,7 @@ function registerFb()
 										<tr>
 											<td width="33.3%"><label>Choose a Reason: </label></td>
 											<td width="33.3%">
-											<select style="width: 100%;" id="fundTag" placeholder="for">
+											<select class="newinput" style="width: 100%;" id="fundTag" placeholder="for">
 												<option></option>
 												<option>Wedding</option>
 												<option>Party</option>
@@ -283,14 +283,14 @@ function registerFb()
 										<tr>
 											<td width="33.3%">Target Amount</td>
 											<td width="33.3%">
-												<select style="width: 100%;"  id="targeted" onchange="changeTarget()">
+												<select class="newinput" style="width: 100%;"  id="targeted" onchange="changeTarget()">
 													<option value="target">Exactly</option>
 													<option value="any">Any Amount</option>
 												</select>
 											</td>
 											<td width="33.3%" id="changeTargetd">
 												<input id="isTargetChanged" hidden value="yes">
-												<input id="raiseAmount" type="number" placeholder="0.00"/> 
+												<input class="newinput" id="raiseAmount" type="number" placeholder="0.00"/> 
 											</td>
 										</tr>
 										<tr>
@@ -299,7 +299,7 @@ function registerFb()
 										<tr>
 											<td width="33.3%">Amount per person</td>
 											<td width="33.3%">
-												<select style="width: 100%;" id="perPerson" onchange="changeTargetPerPerson()">
+												<select class="newinput" style="width: 100%;" id="perPerson" onchange="changeTargetPerPerson()">
 													<option value="target">Exactly</option>
 													<option value="atleast">Atleast</option>
 													<option value="any">Any Amount</option>
@@ -307,7 +307,7 @@ function registerFb()
 											</td>
 											<td width="33.3%" id="changePerPerson">
 												<input id="isTargetPPChanged" hidden value="yes">
-												<input id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/> 
+												<input class="newinput" id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/> 
 											</td>
 										</tr>
 										<tr>
@@ -538,17 +538,17 @@ function registerFb()
 		if(targeted =='target')
 		{
 			document.getElementById('changeTargetd').innerHTML = '<input hidden id="isTargetChanged" value="yes">'
-			+'<input id="raiseAmount" style="width: 100%;" type="number" placeholder="0.00"/>';
+			+'<input class="newinput" id="raiseAmount" style="width: 100%;" type="number" placeholder="0.00"/>';
 		}
 		else if(targeted =='atleast')
 		{
 			document.getElementById('changeTargetd').innerHTML = '<input hidden id="isTargetChanged" value="yes">'
-			+'<input id="raiseAmount" style="width: 100%;" type="number" placeholder="0.00"/>';
+			+'<input class="newinput" id="raiseAmount" style="width: 100%;" type="number" placeholder="0.00"/>';
 		}
 		else if(targeted =='any')
 		{
 			document.getElementById('changeTargetd').innerHTML = '<input hidden id="isTargetChanged" value="no">'
-			+'<input disabled style="width: 100%;" type="number" placeholder="Any"/>'
+			+'<input class="newinput" disabled style="width: 100%;" type="number" placeholder="Any"/>'
 			+'<input hidden id="raiseAmount" type="number" value="0"/>';
 		}
 		
@@ -566,17 +566,17 @@ function registerFb()
 		if(targetedPerPerson =='target')
 		{
 			document.getElementById('changePerPerson').innerHTML = '<input hidden id="isTargetPPChanged" value="yes">'
-			+'<input id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/>';
+			+'<input class="newinput" id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/>';
 		}
 		else if(targetedPerPerson =='atleast')
 		{
 			document.getElementById('changePerPerson').innerHTML = '<input hidden id="isTargetPPChanged" value="yes">'
-			+'<input id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/>';
+			+'<input class="newinput" id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/>';
 		}
 		else if(targetedPerPerson =='any')
 		{
 			document.getElementById('changePerPerson').innerHTML = '<input hidden id="isTargetPPChanged" value="no">'
-			+'<input disabled style="width: 100%;" type="number" placeholder="Any"/>'
+			+'<input class="newinput" disabled style="width: 100%;" type="number" placeholder="Any"/>'
 			+'<input hidden id="amountPerPerson" type="number" value="0"/>';
 		}
 		

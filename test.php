@@ -107,10 +107,16 @@ if ($existCount > 0) {
       data-toggle="collapse">
         <i class="icon md-more" aria-hidden="true"></i>
       </button>
-      <a href="index.php"><div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-        <img class="navbar-brand-logo" src="assets/images/logo.png" title="Uplus">
-        <span class="navbar-brand-text hidden-xs"> Uplus</span>
-      </div></a>
+      <a href="index.php">
+        <div style="padding: 12px 50px;" class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+          <img style="    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    /* margin: auto; */
+    background-color: #fff;
+    cursor: pointer;" class="navbar-brand-logo" src="frontassets/img/logo_main_3.png" title="Uplus">
+        </div></a>
       <button type="button" class="navbar-toggle collapsed" data-target="#site-navbar-search"
       data-toggle="collapse">
         <span class="sr-only">Toggle Search</span>
