@@ -31,9 +31,5 @@ class DB_Connect{
 	}
 }
 
-$sidedb = new mysqli("localhost", "clement", "clement123" , "test_offline");
-	
-	if($sidedb->connect_errno){
-		die('Sorry we have some problem with the General Database!');
-	}
+
 ?>

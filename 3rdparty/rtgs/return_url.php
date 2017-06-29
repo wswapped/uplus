@@ -1,6 +1,6 @@
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+<?php ob_start(); session_start(); include('../../db.php');?>
+
+<?php 
 $firstDates = strftime("%d%m", strtotime("now"));
 $secondDates = date('y');
 $firstInvoice = $firstDates.''.$secondDates;
@@ -28,13 +28,11 @@ $transaction['cardNum'] = getInput('vpc_CardNum');
 	$transaction['merchant'];
 	$transactionId1 = $transaction['key'];
 	$transaction['orderInfo'];
-	session_start();
 	$pushTransactionId	= $_SESSION['pushTransactionId'];
 	$pullTransactionId	= $_SESSION['pullTransactionId'];
 	$phone2				= '25'.$_SESSION['phone2'];
 	$invoiceNumber = 'U'.$firstInvoice.'000'.$pushTransactionId;
 
-	include('../../db.php');
 	$Update1= $outCon->query("UPDATE transactions SET status='$check1', 3rdpartyId='$transactionId1', accountNumber='$cardNum', cardType ='$pushMethod', invoiceNumber='$invoiceNumber' WHERE id = '$pushTransactionId'")or Die(mysqli_error());
 
 ///////////////
