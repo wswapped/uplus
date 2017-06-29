@@ -81,12 +81,42 @@ if (isset($_GET['sentAmount']))
 	
 		// FROM JSON TO PHP
 		$firstcheck 	= json_decode($server_output);
-		$agentName 		= $firstcheck->{'agentName'};
-		$balance 		= $firstcheck->{'balance'};
 		$check1 		= $firstcheck->{'information'};
 		$check2 		= $firstcheck->{'information2'};
 		$transactionId1 = $firstcheck->{'transactionId'};
+
+		$time 			= $firstcheck->{'time'};
+		$transactionId 	= $firstcheck->{'transactionId'};
+		$policyNumber 	= $firstcheck->{'policyNumber'};
+		$invoiceNumber 	= $firstcheck->{'invoiceNumber'};
+		$phone 			= $firstcheck->{'phone'};
+		$phone2 		= $firstcheck->{'phone2'};
+		$amount 		= $firstcheck->{'amount'};
+		$fname 			= $firstcheck->{'fname'};
+		$lname 			= $firstcheck->{'lname'};
+		$nationalId 	= $firstcheck->{'nationalId'};
+		$information 	= $firstcheck->{'information'};
+		$information2 	= $firstcheck->{'information2'};
+		$agentName 		= $firstcheck->{'agentName'};
+		$agentId 		= $firstcheck->{'agentId'};
+		$feedback 		= $firstcheck->{'feedback'};
+		$balance 		= $firstcheck->{'balance'};
 		
+		$outCon->query("INSERT INTO 
+			mnoapi(
+			`time`, `transactionId`, `policyNumber`, `invoiceNumber`,
+			 `phone`, `phone2`, `amount`, `fname`, 
+			 `lname`, `nationalId`, `information`, `information2`, 
+			 `agentName`, `agentId`, `feedback`, `balance`)
+			VALUES(
+			'$time', '$transactionId', '$policyNumber', '$invoiceNumber',
+			'$phone', '$phone2', '$amount', '$fname', 
+			'$lname', '$nationalId', '$information', '$information2', 
+			'$agentName', '$agentId', '$feedback', '$balance'
+			)
+		");
+
+
 		// PUT THE RESPONSE IN SESSION SO THAT I CAN CALL IT'S STATUS
 		$_SESSION["notifyBank"] 		= $notifyBank;
 		$_SESSION["server_output"] 		= $server_output;
@@ -126,11 +156,11 @@ if (isset($_GET['sentAmount']))
 // CHECK IF THE RESPONSE IS BACK
 if(isset($_GET['check']))
 {
-	$server_output = $_SESSION["server_output"];
+	$server_output 		= $_SESSION["server_output"];
 	$forGroupId			= $_SESSION["forGroupId"];
     $pushTransactionId 	= $_SESSION["pushTransactionId"];
 	$pullTransactionId 	= $_SESSION["pullTransactionId"];
-	$notifyBank			=	$_SESSION["notifyBank"];
+	$notifyBank			= $_SESSION["notifyBank"];
 
     $data = json_decode($server_output);
 	$url = 'https://lightapi.torque.co.rw/requestpayment/';
@@ -154,13 +184,45 @@ if(isset($_GET['check']))
 	$_SESSION["server_output"] = $server_results;
 		// DECODE THE RETURNED STATUS FROM PHONE 1 AND 2
 	$obj = json_decode($server_results);
-	$agentName 	= $obj->{'agentName'};
 	$info1 	= $obj->{'information'};
 	$info2 	= $obj->{'information2'};
-	$amount	= $obj->{'amount'};
-	$phone	= $obj->{'phone'};
-	$phone2	= $obj->{'phone2'};
 	$tosendtransid	= $obj->{'transactionId'};
+
+	$time 			= $obj->{'time'};
+	$transactionId 	= $obj->{'transactionId'};
+	$policyNumber 	= $obj->{'policyNumber'};
+	$invoiceNumber 	= $obj->{'invoiceNumber'};
+	$phone 			= $obj->{'phone'};
+	$phone2 		= $obj->{'phone2'};
+	$amount 		= $obj->{'amount'};
+	$fname 			= $obj->{'fname'};
+	$lname 			= $obj->{'lname'};
+	$nationalId 	= $obj->{'nationalId'};
+	$information 	= $obj->{'information'};
+	$information2 	= $obj->{'information2'};
+	$agentName 		= $obj->{'agentName'};
+	$agentId 		= $obj->{'agentId'};
+	$feedback 		= $obj->{'feedback'};
+	$balance 		= $obj->{'balance'};
+	
+	$outCon->query("INSERT INTO 
+			mnoapi(
+			`time`, `transactionId`, `policyNumber`, `invoiceNumber`,
+			 `phone`, `phone2`, `amount`, `fname`, 
+			 `lname`, `nationalId`, `information`, `information2`, 
+			 `agentName`, `agentId`, `feedback`, `balance`)
+			VALUES(
+			'$time', '$transactionId', '$policyNumber', '$invoiceNumber',
+			'$phone', '$phone2', '$amount', '$fname', 
+			'$lname', '$nationalId', '$information', '$information2', 
+			'$agentName', '$agentId', '$feedback', '$balance'
+			)
+		");
+
+
+
+
+
 	$Update1= $outCon->query("UPDATE `transactions` SET status='$info1' WHERE id = '$pushTransactionId'");
 	$Update2= $outCon->query("UPDATE `transactions` SET status='$info2' WHERE id = '$pullTransactionId'");
 	
@@ -303,20 +365,20 @@ if(isset($_GET['check']))
 <?php // BK VISA AND MASTER CARDS TRANSFERS
 if(isset($_POST['bkVisa'])){
 	
-	$forGroupId			= 	$_POST['forGroupId'];		// COmpanyID
-	$amount				= 	$_POST['sentAmount'];		// Amount
-	$pushAccountNumber 	= 	$_POST['sendFromAccount'];	// From account
-	$pushName			= 	$_POST['sendFromName'];		// From Name
-	$pullName			= 	$_POST['sendToName'];		// From Name
-	$pushBankId			= 	$_POST['sendFromBank'];		// To Bank
-	$pullBankId			=	$_POST['sendToBank'];		// To Bank
-	$pullAccountNumber	=	$_POST['sendToAccount'];	// To Phone1
-	$pushEmail			=	$_POST['senderEmail'];		// FROM email
-	$pullEmail			=	$_POST['receiverEmail'];	// To email 
-	$pushContacts		=	$_POST['contactPhone'];		// From ContactPhone
+	$forGroupId			= 	mysqli_real_escape_string($db, $_POST['forGroupId']);		// COmpanyID
+	$amount				= 	mysqli_real_escape_string($db, $_POST['sentAmount']);		// Amount
+	$pushAccountNumber 	= 	mysqli_real_escape_string($db, $_POST['sendFromAccount']);	// From account
+	$pushName			= 	mysqli_real_escape_string($db, $_POST['sendFromName']);		// From Name
+	$pullName			= 	mysqli_real_escape_string($db, $_POST['sendToName']);		// From Name
+	$pushBankId			= 	mysqli_real_escape_string($db, $_POST['sendFromBank']);		// To Bank
+	$pullBankId			=	mysqli_real_escape_string($db, $_POST['sendToBank']);		// To Bank
+	$pullAccountNumber	=	mysqli_real_escape_string($db, $_POST['sendToAccount']);	// To Phone1
+	$pushEmail			=	mysqli_real_escape_string($db, $_POST['senderEmail']);		// FROM email
+	$pullEmail			=	mysqli_real_escape_string($db, $_POST['receiverEmail']);	// To email 
+	$pushContacts		=	mysqli_real_escape_string($db, $_POST['contactPhone']);		// From ContactPhone
 	$pushPrivate		=	'no';
 	if(isset($_POST['senderPrivacy'])){
-		$pushPrivate		=	$_POST['senderPrivacy']; // From privacy
+		$pushPrivate		=	mysqli_real_escape_string($db, $_POST['senderPrivacy']); // From privacy
 	}		
 	
 

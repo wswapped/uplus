@@ -231,7 +231,6 @@ if(isset($_GET['savename']))
 		$lastvisit = $rowUserFbs['visits'];
 		$phoneuser = $rowUserFbs['phone'];
 			
-			//session_start();
 			$_SESSION["id"] = $iduser;
 			$_SESSION["phone1"] = $phoneuser;
 			$_SESSION["password"] = $passworduser;
@@ -256,7 +255,6 @@ if(isset($_GET['savename']))
 		$iduser = $rowUserLast['id'];
 		$lastvisit = $rowUserLast['visits'];
 			 
-		//session_start();
 		$_SESSION["id"] = $iduser;
 		$_SESSION["phone1"] = $phoneuser;
 		$_SESSION["password"] = $passworduser;
@@ -369,7 +367,7 @@ if(isset($_GET['getPin']))
 <?PHP // 6 VERIFY THE PIN
 if(isset($_GET['checkPin']))
 {
-	$pin		= mysqli_real_escape_string($db, $_GET['pin']);
+	$pin			= mysqli_real_escape_string($db, $_GET['pin']);
 	$fundPhone	 	= mysqli_real_escape_string($db, $_GET['fundPhone']);
 	$targetAmount	= mysqli_real_escape_string($db, $_GET['targetAmount']);
 	$targetPerPerson= mysqli_real_escape_string($db, $_GET['targetPerPerson']);
@@ -392,7 +390,6 @@ if(isset($_GET['checkPin']))
 		$lastvisit 		= $rowPin['visits'];
 		$adminName 		= $rowPin['name'];
 			 
-		//session_start();
 		$_SESSION["id"] = $adminId;
 		$_SESSION["phone1"] = $phoneuser;
 		$_SESSION["password"] = $passworduser;

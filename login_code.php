@@ -6,7 +6,7 @@ if (isset($_POST['phone3'])){
 	$code = $_POST['code'];
 	require_once('classes/sms/AfricasTalkingGateway.php');
 $username   = "cmuhirwa";
-$apikey     = "17700797afea22a08117262181f93ac84cdcd5e43a268e84b94ac873a4f97404";
+$apikey     = "7ffaed2780ff7d179d4ebe07ecabc8ba857dd04ab0c1cc406be7ca2596d3824a";
 $recipients = '+25'.$phone3;
 $message    = 'Wellcome to uPlus, Please use '.$code.' to activate your uPlus account.';// Specify your AfricasTalking shortCode or sender id
 $from = "UPLUS";
