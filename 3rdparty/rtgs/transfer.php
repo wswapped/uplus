@@ -1,7 +1,9 @@
 <?php ob_start(); session_start(); include('../../db.php');?>
 
 <div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 3px #000000">
-
+<script type="text/javascript">
+	var M = 0;
+</script>
 <h5>
 <?php 
 // MTN AND TIGO TRANSFERS
@@ -52,12 +54,13 @@ if (isset($_GET['sentAmount']))
 	$url = 'https://lightapi.torque.co.rw/requestpayment/';
 	
 	$data = array();
-	$data["agentName"] = "UPLUS";
-	$data["agentId"] = "0784848236";
-	$data["phone"] = $phone1;
-    $data["phone2"] = $phone2;
-	$data["amount"] = $amount;
-	$data["policyNumber"] = ''.$pullName.' / '.$pushName.'';
+	$data["agentName"] 		= "UPLUS";
+	$data["agentId"] 		= "0784848236";
+	$data["phone"] 			= $phone1;
+    $data["phone2"] 		= $phone2;
+	$data["amount"] 		= $amount;
+	$data["fname"] 			= $pushName;
+	$data["policyNumber"]	= ''.$pullName.' / '.$pushName.'';
     $options = array(
 		'http' => array(
 			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -85,36 +88,36 @@ if (isset($_GET['sentAmount']))
 		$check2 		= $firstcheck->{'information2'};
 		$transactionId1 = $firstcheck->{'transactionId'};
 
-		$time 			= $firstcheck->{'time'};
-		$transactionId 	= $firstcheck->{'transactionId'};
-		$policyNumber 	= $firstcheck->{'policyNumber'};
-		$invoiceNumber 	= $firstcheck->{'invoiceNumber'};
-		$phone 			= $firstcheck->{'phone'};
-		$phone2 		= $firstcheck->{'phone2'};
-		$amount 		= $firstcheck->{'amount'};
-		$fname 			= $firstcheck->{'fname'};
-		$lname 			= $firstcheck->{'lname'};
-		$nationalId 	= $firstcheck->{'nationalId'};
-		$information 	= $firstcheck->{'information'};
-		$information2 	= $firstcheck->{'information2'};
-		$agentName 		= $firstcheck->{'agentName'};
-		$agentId 		= $firstcheck->{'agentId'};
-		$feedback 		= $firstcheck->{'feedback'};
-		$balance 		= $firstcheck->{'balance'};
+		$time 			= mysqli_real_escape_string($db,$firstcheck->{'time'});
+		$transactionId 	= mysqli_real_escape_string($db,$firstcheck->{'transactionId'});
+		$policyNumber 	= mysqli_real_escape_string($db,$firstcheck->{'policyNumber'});
+		$invoiceNumber 	= mysqli_real_escape_string($db,$firstcheck->{'invoiceNumber'});
+		$phone 			= mysqli_real_escape_string($db,$firstcheck->{'phone'});
+		$phone2 		= mysqli_real_escape_string($db,$firstcheck->{'phone2'});
+		$amount 		= mysqli_real_escape_string($db,$firstcheck->{'amount'});
+		$fname 			= mysqli_real_escape_string($db,$firstcheck->{'fname'});
+		$lname 			= mysqli_real_escape_string($db,$firstcheck->{'lname'});
+		$nationalId 	= mysqli_real_escape_string($db,$firstcheck->{'nationalId'});
+		$information 	= mysqli_real_escape_string($db,$firstcheck->{'information'});
+		$information2 	= mysqli_real_escape_string($db,$firstcheck->{'information2'});
+		$agentName 		= mysqli_real_escape_string($db,$firstcheck->{'agentName'});
+		$agentId 		= mysqli_real_escape_string($db,$firstcheck->{'agentId'});
+		$feedback 		= mysqli_real_escape_string($db,$firstcheck->{'feedback'});
+		$balance 		= mysqli_real_escape_string($db,$firstcheck->{'balance'});
 		
 		$outCon->query("INSERT INTO 
 			mnoapi(
 			`time`, `transactionId`, `policyNumber`, `invoiceNumber`,
 			 `phone`, `phone2`, `amount`, `fname`, 
 			 `lname`, `nationalId`, `information`, `information2`, 
-			 `agentName`, `agentId`, `feedback`, `balance`)
+			 `agentName`, `agentId`, `feedback`, `balance`, myid)
 			VALUES(
 			'$time', '$transactionId', '$policyNumber', '$invoiceNumber',
 			'$phone', '$phone2', '$amount', '$fname', 
 			'$lname', '$nationalId', '$information', '$information2', 
-			'$agentName', '$agentId', '$feedback', '$balance'
+			'$agentName', '$agentId', '$feedback', '$balance', '$pushTransactionId'
 			)
-		");
+")or die(mysqli_error());
 
 
 		// PUT THE RESPONSE IN SESSION SO THAT I CAN CALL IT'S STATUS
@@ -123,6 +126,8 @@ if (isset($_GET['sentAmount']))
 		$_SESSION["forGroupId"]			= $forGroupId;
 		$_SESSION["pushTransactionId"] 	= $pushTransactionId;
 		$_SESSION["pullTransactionId"] 	= $pullTransactionId;
+		$_SESSION["pullName"] 			= $pullName;
+		$_SESSION["notifyTitle"] 		= $notifyTitle;
 
 		if($check1 == 'You sent invalid amounts. Error: 404.')
 		{
@@ -161,6 +166,8 @@ if(isset($_GET['check']))
     $pushTransactionId 	= $_SESSION["pushTransactionId"];
 	$pullTransactionId 	= $_SESSION["pullTransactionId"];
 	$notifyBank			= $_SESSION["notifyBank"];
+	$pullName 			= $_SESSION["pullName"];
+	$notifyTitle 		= $_SESSION["notifyTitle"];
 
     $data = json_decode($server_output);
 	$url = 'https://lightapi.torque.co.rw/requestpayment/';
@@ -188,40 +195,36 @@ if(isset($_GET['check']))
 	$info2 	= $obj->{'information2'};
 	$tosendtransid	= $obj->{'transactionId'};
 
-	$time 			= $obj->{'time'};
-	$transactionId 	= $obj->{'transactionId'};
-	$policyNumber 	= $obj->{'policyNumber'};
-	$invoiceNumber 	= $obj->{'invoiceNumber'};
-	$phone 			= $obj->{'phone'};
-	$phone2 		= $obj->{'phone2'};
-	$amount 		= $obj->{'amount'};
-	$fname 			= $obj->{'fname'};
-	$lname 			= $obj->{'lname'};
-	$nationalId 	= $obj->{'nationalId'};
-	$information 	= $obj->{'information'};
-	$information2 	= $obj->{'information2'};
-	$agentName 		= $obj->{'agentName'};
-	$agentId 		= $obj->{'agentId'};
-	$feedback 		= $obj->{'feedback'};
-	$balance 		= $obj->{'balance'};
+	$time 			= mysqli_real_escape_string($db,$obj->{'time'});
+	$transactionId 	= mysqli_real_escape_string($db,$obj->{'transactionId'});
+	$policyNumber 	= mysqli_real_escape_string($db,$obj->{'policyNumber'});
+	$invoiceNumber 	= mysqli_real_escape_string($db,$obj->{'invoiceNumber'});
+	$phone 			= mysqli_real_escape_string($db,$obj->{'phone'});
+	$phone2 		= mysqli_real_escape_string($db,$obj->{'phone2'});
+	$amount 		= mysqli_real_escape_string($db,$obj->{'amount'});
+	$fname 			= mysqli_real_escape_string($db,$obj->{'fname'});
+	$lname 			= mysqli_real_escape_string($db,$obj->{'lname'});
+	$nationalId 	= mysqli_real_escape_string($db,$obj->{'nationalId'});
+	$information 	= mysqli_real_escape_string($db,$obj->{'information'});
+	$information2 	= mysqli_real_escape_string($db,$obj->{'information2'});
+	$agentName 		= mysqli_real_escape_string($db,$obj->{'agentName'});
+	$agentId 		= mysqli_real_escape_string($db,$obj->{'agentId'});
+	$feedback 		= mysqli_real_escape_string($db,$obj->{'feedback'});
+	$balance 		= mysqli_real_escape_string($db,$obj->{'balance'});
 	
 	$outCon->query("INSERT INTO 
 			mnoapi(
 			`time`, `transactionId`, `policyNumber`, `invoiceNumber`,
 			 `phone`, `phone2`, `amount`, `fname`, 
 			 `lname`, `nationalId`, `information`, `information2`, 
-			 `agentName`, `agentId`, `feedback`, `balance`)
+			 `agentName`, `agentId`, `feedback`, `balance`, myid)
 			VALUES(
 			'$time', '$transactionId', '$policyNumber', '$invoiceNumber',
 			'$phone', '$phone2', '$amount', '$fname', 
 			'$lname', '$nationalId', '$information', '$information2', 
-			'$agentName', '$agentId', '$feedback', '$balance'
+			'$agentName', '$agentId', '$feedback', '$balance', '$pushTransactionId'
 			)
 		");
-
-
-
-
 
 	$Update1= $outCon->query("UPDATE `transactions` SET status='$info1' WHERE id = '$pushTransactionId'");
 	$Update2= $outCon->query("UPDATE `transactions` SET status='$info2' WHERE id = '$pullTransactionId'");
@@ -231,10 +234,26 @@ if(isset($_GET['check']))
 	$apikey     = "17700797afea22a08117262181f93ac84cdcd5e43a268e84b94ac873a4f97404";
 	$recipients = '+250'.$phone;
 	$from = "uplus";
-	$sqlsmsget = $db->query("SELECT replymessage FROM accounts WHERE `id` = '$forGroupId'");
+	$sqlsmsget = $db->query("SELECT successNotificationSms FROM groups WHERE `id` = '$forGroupId'");
 	$rowsms = mysqli_fetch_array($sqlsmsget);
-	$tosendsms = $rowsms['replymessage'];
-	if($info1 == 'REQUESTED')
+	//$successNotificationSms = $rowsms['replymessage'];
+	$successNotificationSms = 'Thanks '.$pullName.' for contribuing '.number_format($amount).' Rwf to '.$notifyTitle;
+	if($info1 == 'PENDING')
+	{
+		echo 'You are going to send '.number_format($amount).' Rwf to '.$pullName.' for '.$notifyTitle.'
+				<br><br><b>Still Connecting ...
+				</div>';
+		$sqlcountlotations = $outCon->query("SELECT count(id) count FROM mnoapi PARTITION (p0) WHERE information ='$info1' AND transactionId = '$transactionId'")or die(mysqli_error());
+		$fetchcount = mysqli_fetch_array($sqlcountlotations);
+		$newK = $fetchcount['count'];
+		?>
+		<script type="text/javascript">
+		var M = <?php echo $newK;?>;
+		M = M - 2;
+			var reason = 'We havent been able to connect to <?php echo $notifyBank;?>';
+		</script>
+		<?php
+	}elseif($info1 == 'REQUESTED')
 	{
 		?>
 		Please approve a request on your Phone</br>
@@ -262,6 +281,7 @@ if(isset($_GET['check']))
 				  +'</div>'
 				+'</div>';
 			}
+			var reason = 'We havent been able to connect to <?php echo $notifyBank;?>';
 		</script>
 		<?php
 	}
@@ -269,8 +289,9 @@ if(isset($_GET['check']))
 	{
 		?>
 		<script>
-		var k=10;
-		console.log('user canceled the request');
+			var k=10;
+			console.log('user canceled the request');
+			var reason = 'You canceled you request';
 		</script>
 		Sorry you just canceled, but its okay you can try again.
 				
@@ -297,7 +318,7 @@ if(isset($_GET['check']))
 			</script> 
 				Thanks The money has been deposited into the <b>'.$agentName.'</b> Pull account';
 		}
-		$message    = $tosendsms.', transaction id: '.$tosendtransid;// Specify your AfricasTalking shortCode or sender id
+		$message    = $successNotificationSms.', transaction id: '.$tosendtransid;// Specify your AfricasTalking shortCode or sender id
 		$gateway    = new AfricasTalkingGateway($username, $apikey);
 		try 
 		{

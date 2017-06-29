@@ -361,7 +361,7 @@ elseif($method == '6'){?>
 <script>
 // Display a recurrunf Invitation
 function kwishura(){
-
+console.clear()
 
 	
 	var forGroupId			= document.getElementById('forGroupId').value;
@@ -449,12 +449,17 @@ function kwishura(){
 <!--AJAX CALL THE STATUS-->
 <script>
 var k =0;
+var M =0;
 function checking(){
 	var check =1;
-	k++;
+	if(M > 0){ 
+		console.log('Status Change 1');
+		K = M;
+	}
 	if(k<=6)
 	{
-		console.log('Request -> ('+k+')');
+		var pre_query = new Date().getTime();
+		console.log('Request -> ('+k+') at: '+pre_query);
 		$.ajax({
 			type : "GET",
 			url : "../3rdparty/rtgs/transfer.php",
@@ -465,10 +470,15 @@ function checking(){
 				check : check,
 			},
 			success : function(html, textStatus){
-				console.log('Response <- ('+k+')');
+				
+				var post_query = new Date().getTime();
+				var duration = (post_query - pre_query) / 1000;
+				console.log('Response <- ('+k+') at: '+post_query);
+				console.log('('+k+') took: '+duration);
+				console.log('');
 				setTimeout(function() { checking(); }, 10000);
 				$("#donetransfer").html(html);
-				
+				k++;
 			},
 			error : function(xht, textStatus, errorThrown){
 				alert("Error : " + errorThrown);
@@ -483,7 +493,7 @@ function checking(){
 	{
 		console.log('timeout after '+k+'0 seconds');
 		document.getElementById('donetransfer').innerHTML = '<div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 3px #000000">'
-		+'<h5>Timeout</h5></div>';
+		+'<h5>Timeout, '+reason+'</h5></div>';
 	}
 }
 function stopit()
