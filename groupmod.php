@@ -326,7 +326,8 @@ else{
 			  <div class="widget widget-article widget-shadow"" id="widgetUserList">
 				<div class="widget-header cover -hover overlay">
 					<div  id="cropContainerModal">
-						<img class="cover-image overlay-spin" src="temp/group<?php echo $groupID;?>.jpeg"/>
+						<img style="background-image: url(temp/group1.jpeg);
+    height: 100%;" class="cover-image overlay-spin" src="temp/group<?php echo $groupID;?>.jpeg"/>
 						
 					</div>
 				</div>
@@ -535,23 +536,75 @@ else{
 						<div class="tab-content padding-20">
 							<div class="tab-pane animation-slide-right active" id="exampleTabsSettings" role="tabpanel">
 								<form action="scripts/updateGroup.php" method="post">
-									<div style="">Make your contribution visible to the public:
-										<?php
-											$sqllevel = $db->query("SELECT state FROM groups WHERE id='$groupID'");
-											$stateRow = mysqli_fetch_array($sqllevel);
-											$state = $stateRow['state'];
-											if($state == 'public')
-											{
-												echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" checked data-toggle="toggle"  data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
-											}
-											elseif($state == 'private')
-											{	
-												echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" data-toggle="toggle" data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
-											}
-										?>
-										<div id="console-event"></div>
+									<div class="row">
+										<div class="col-md-12">
+											Make your contribution visible to the public:
+											<?php
+												$sqllevel = $db->query("SELECT state FROM groups WHERE id='$groupID'");
+												$stateRow = mysqli_fetch_array($sqllevel);
+												$state = $stateRow['state'];
+												if($state == 'public')
+												{
+													echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" checked data-toggle="toggle"  data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
+												}
+												elseif($state == 'private')
+												{	
+													echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" data-toggle="toggle" data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
+												}
+											?>
+											<div id="console-event">
+											</div>
+										</div>
 									</div>
-									Target amount<br>
+									<br>
+									<div class="row">	
+										<div class="col-md-3">
+											Target amount:
+										</div>
+										<div class="col-md-4">
+											<select class="form-control" disabled><option><?php echo $bank;?></option></select>
+										</div>
+										<div class="col-md-5">
+											<input class="form-control" disabled value="<?php echo $saving;?>" />
+										</div>
+									</div>
+									<br>
+									<div class="row">	
+										<div class="col-md-3">
+											Perperson:
+										</div>
+										<div class="col-md-4">
+											<select class="form-control" disabled><option><?php echo $bank;?></option></select>
+										</div>
+										<div class="col-md-5">
+											<input class="form-control" disabled value="<?php echo $saving;?>" />
+										</div>
+									</div>
+									<br>
+									<div class="row">	
+										<div class="col-md-3">
+											Exp date:
+										</div>
+										<div class="col-md-4">
+											<select class="form-control" disabled><option><?php echo $bank;?></option></select>
+										</div>
+										<div class="col-md-5">
+											<input class="form-control" disabled value="<?php echo $saving;?>" />
+										</div>
+									</div>
+									<div class="row">	
+										<div class="col-md-3">
+											Tagline:
+										</div>
+										<div class="col-md-4">
+											<select class="form-control" disabled><option><?php echo $bank;?></option></select>
+										</div>
+										<div class="col-md-5">
+											<input class="form-control" disabled value="<?php echo $saving;?>" />
+										</div>
+									</div>
+
+									<br>
 									PerPerson amount<br>
 									Expiration date<br>
 									Tagline<br>
