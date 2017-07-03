@@ -1,4 +1,8 @@
 <?php
+require_once 'System.php';
+var_dump(class_exists('System', false));
+?>
+<?php
 error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 if (isset($_GET['groupId'])){	
@@ -13,9 +17,13 @@ if (isset($_GET['groupId'])){
 			$targetAmount 	= round($row['targetAmount']);
 			$perPersonType 	= $row['perPersonType'];
 			$perPerson 		= round($row['perPerson']);
-			$adminPhone 	= $row['adminPhone'];
 			$adminId 		= $row['adminId'];
-			$adminName 		= $row['adminName'];
+
+			$sql3 = $db->query("SELECT * FROM users WHERE id='$adminId' "); 
+			$rowAdmin = mysqli_fetch_array($sql3); 
+
+			$adminPhone 	= $rowAdmin['phone'];
+			$adminName 		= $rowAdmin['name'];
 			$groupDesc 		= $row["groupDesc"];
 			$groupStory 	= $parsedown->text($row["groupStory"]);
 			$createdDate 	= $row["createdDate"];
@@ -179,7 +187,7 @@ else{
 								<table border="0">
 									<tr style="border-bottom: 1px #ccc solid;">
 										<td>
-											<b><?php echo  $adminName;?></b>
+											<b><?php echo $adminName;?></b>
 										</td>
 									</tr>
 									<tr style="border-bottom: 1px #ccc solid;">
@@ -193,7 +201,7 @@ else{
 									<tr>	
 										<td onclick="alert('We are still working on this module.')" style="cursor: pointer;">
 										 <i  class="fa fa-envelope"></i>
-											Contact <?php if($adminGender == 'male'){echo 'him';}else{echo 'her';}?>
+											Contact <?php if($adminGender == 'male' || $adminGender == 'MALE'){echo 'him';}else{echo 'her';}?>
 										</td>
 									</tr>
 								</table>	
@@ -232,11 +240,12 @@ else{
 											echo number_format($currentAmount);
 										?>RWF
 										<b style="float: right;">
+
 											<?php 
-											if($currentAmount > 0){
+											if($groupTargetType == 'target'){
 												echo number_format($targetAmount).'Rwf';
 												}
-											else{
+											elseif($groupTargetType == 'any'){
 												echo 'any amount';
 												}
 											?></b>
@@ -250,8 +259,16 @@ else{
 									<span style="float: right" id="countDown"></span>
 								</div>
 								<div class="mdl-cell mdl-cell--4-col contribution2" id="contdiv">
-									<button  href="#sendMoney" class="mdl-button mdl-button--raised fancybox" id="contbtn">Contribute Now</button>
-								</div>
+    <span class="sharing">
+		<i class="fa fa-share shareicon"></i>
+	</span>	
+	<span class="contshare">
+    		<button  href="#sendMoney" class="mdl-button mdl-button--raised fancybox" id="contbtn">Contribute Now</button>
+								</span>
+								<span class="sharing">
+    	<i class="fa fa-comment shareicon"></i>
+    </span>
+</div>
 								</div>	
 				        </section>
 						
@@ -401,9 +418,10 @@ else{
 						<span style="font-size: 14px; ">Amount <span class="required">*</span>
 						</span>
 						<?php 
-						if($perPersonType=='min')
+
+						if($perPersonType=='atleast')
 						{	?>
-							<input min="<?php echo $perPerson;?>" class="form-control input-field" name="field1" type="number" id="contributedAmount">
+							<input min="<?php echo $perPerson;?>" value="<?php echo $perPerson;?>" class="form-control input-field" name="field1" type="number" id="contributedAmount">
 							<?php 
 						}
 						elseif($perPersonType=='fixed')
@@ -557,10 +575,10 @@ function frontpayement2(method)
 	var minAmount = <?php echo $perPerson;?>;
 	var perPersonType = '<?php echo $perPersonType;?>';
 	
-	if(perPersonType == 'min'){
+	if(perPersonType == 'atleast'){
 		if (contributedAmount < minAmount) 
 			{
-				document.getElementById('amountError').innerHTML = 'The minimum contribution allowed is 500 Rwf';
+				document.getElementById('amountError').innerHTML = 'The minimum contribution for this group is '+minAmount+'Rwf';
 				return false;
 			}
 	}

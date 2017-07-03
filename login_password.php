@@ -1,5 +1,5 @@
-<?php // 1 Redirect if already loged in
-session_start();
+<?php ob_start(); session_start(); include('db.php');?>
+<?php
 if (isset($_SESSION["phone1"])) {
     header("location: index.php"); 
     exit();
@@ -11,7 +11,6 @@ if (isset($_POST['phone'])){
 	$phone = $_POST['phone'];
 	$results="";
 	$code="";
-	include('db.php');
 	$sql = $db->query("SELECT * FROM users WHERE phone='$phone' AND password != 0");
 	$count_sql = mysqli_num_rows($sql);
 	if($count_sql > 0){ 
@@ -61,7 +60,6 @@ if (isset($_POST['password'])){
 	$results ="";
 	$phone2 = $_POST['phone2'];
 	$password = $_POST['password'];
-	require 'db.php';
 	$help ="";
 	$sql_check_phone = $db->query("SELECT * FROM users WHERE phone = '$phone2' AND password = '$password' limit 1");
 	$existCount= mysqli_num_rows($sql_check_phone);

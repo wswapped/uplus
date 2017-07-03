@@ -107,16 +107,17 @@ if(isset($_GET['fundTag'])){ // HOLD THE DATA IN VARIABLE
 
 	<table border="0" style="width: 100%;">
 		<tr>
-			<td>Group Title:<td>
-			<td>Login Phone:</td>
+			<td><?php echo $groupName;?> Title:<td>
+			<td>Login <em>(admin)</em> Phone:</td>
 		</tr>
 		<tr>
 			<td><input class="newinput" id="fundName" style="width: 100%;" /><td>
 			<td><input class="newinput" id="fundPhone" style="width: 100%;"></td>
 		</tr>
 	</table>
-	
-	Collection Account:<br/>
+	<hr style="margin-top: 10px;
+    margin-bottom: 15px;" />
+	<div style="text-align: center;">Collection Account:</div>
 	<table border="0" style="width: 100%;">
 		<tr>
 			<td>Bank/ Telcom</td>
@@ -124,7 +125,7 @@ if(isset($_GET['fundTag'])){ // HOLD THE DATA IN VARIABLE
 		</tr>
 		<tr>
 			<td>
-				<select class="newinput" style="width: 76%;" id="fundBank">
+				<select class="newinput" style="width: 100%;" id="fundBank">
 					<option></option>
 					<?php $sqlListBanks = $outCon->query("SELECT * FROM banks");
 							while($rowBanks = mysqli_fetch_array($sqlListBanks))
@@ -133,7 +134,7 @@ if(isset($_GET['fundTag'])){ // HOLD THE DATA IN VARIABLE
 							}?>
 				</select>
 			</td>
-			<td><input class="newinput" id="fundAccount"></td>
+			<td><input class="newinput" id="fundAccount" style="width: 100%;" ></td>
 		</tr>
 	</table>
 
@@ -332,11 +333,11 @@ if(isset($_GET['getPin']))
 		phone, active, createdDate, password,visits) 
 		VALUES('$fundPhone','0',now(),'$code','0')")or die (mysqli_error());
 	}
-	
+	$results="";
 	// 'went to require sms class';
 	require_once('../classes/sms/AfricasTalkingGateway.php');
 	$username   = "cmuhirwa";
-	$apikey     = "17700797afea22a08117262181f93ac84cdcd5e43a268e84b94ac873a4f97404";
+	$apikey     = "7ffaed2780ff7d179d4ebe07ecabc8ba857dd04ab0c1cc406be7ca2596d3824a";
 	$recipients = '+25'.$fundPhone;
 	$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';// Specify your AfricasTalking shortCode or sender id
 	$from = "uplus";

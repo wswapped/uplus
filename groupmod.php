@@ -1,5 +1,5 @@
-<?php // Get me backif i havent logedin
-session_start();
+<?php ob_start(); session_start(); include('db.php');?>
+<?php
 if (!isset($_SESSION["phone1"])) 
 {
 	header("location: logout.php"); 
@@ -9,8 +9,7 @@ if (!isset($_SESSION["phone1"]))
 <?php // If loged in get me all info
 $session_id = preg_replace('#[^0-9]#i', '', $_SESSION["id"]); // filter everything but numbers and letters
 $phone = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["phone1"]); // filter everything but numbers and letters
-$password = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["password"]); // filter everything but numbers and letters
-include "db.php"; 
+$password = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["password"]); // filter everything but numbers and letters 
 $sql = $db->query("SELECT * FROM users WHERE phone='$phone' AND password='$password' LIMIT 1"); // query the person
 // ------- MAKE SURE PERSON EXISTS IN DATABASE ---------
 $existCount = mysqli_num_rows($sql); // count the row nums
@@ -34,7 +33,6 @@ exit();
 if (isset($_GET['groupId']))
 {	
 	$groupID = $_GET['groupId'];
-	//include "db.php"; 
 	$sql2 = $db->query("SELECT * FROM groups WHERE id='$groupID'"); 
 	while($row = mysqli_fetch_array($sql2)){ 
 		$groupName 		= $row["groupName"];
@@ -327,22 +325,6 @@ else{
 			  <!-- Widget User list -->
 			  <div class="widget widget-article widget-shadow"" id="widgetUserList">
 				<div class="widget-header cover -hover overlay">
-					<div style="position: absolute; margin: 5px 0px 0 5px;">
-						<?php
-							$sqllevel = $db->query("SELECT state FROM groups WHERE id='$groupID'");
-							$stateRow = mysqli_fetch_array($sqllevel);
-							$state = $stateRow['state'];
-							if($state == 'public')
-							{
-								echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" checked data-toggle="toggle"  data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
-							}
-							elseif($state == 'private')
-							{	
-								echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" data-toggle="toggle" data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
-							}
-						?>
-						<div id="console-event"></div>
-					</div>
 					<div  id="cropContainerModal">
 						<img class="cover-image overlay-spin" src="temp/group<?php echo $groupID;?>.jpeg"/>
 						
@@ -442,13 +424,13 @@ else{
 					<div class="nav-tabs-horizontal nav-tabs-inverse nav-tabs-animate">
 						<ul class="nav nav-tabs" data-plugin="nav-tabs" role="tablist">
 							
-							<li role="presentation">
-								<a data-toggle="tab" href="#exampleTabsInverseZero" aria-controls="exampleTabsInverseOne" role="tab" aria-expanded="true">
+							<li class="active" role="presentation">
+								<a data-toggle="tab" href="#exampleTabsSettings" aria-controls="exampleTabsSettings" role="tab" aria-expanded="true">
 									 <i class="icon md-settings"></i>
 									 Setings
 								</a>
 							</li>
-							<li class="active" role="presentation">
+							<li role="presentation">
 								<a data-toggle="tab" href="#exampleTabsInverseOne" aria-controls="exampleTabsInverseOne" role="tab" aria-expanded="true">
 									<span class="badge badge-default">
 									  <?php echo $sms;?>
@@ -551,6 +533,32 @@ else{
 						</ul>
 							
 						<div class="tab-content padding-20">
+							<div class="tab-pane animation-slide-right active" id="exampleTabsSettings" role="tabpanel">
+								<form action="scripts/updateGroup.php" method="post">
+									<div style="">Make your contribution visible to the public:
+										<?php
+											$sqllevel = $db->query("SELECT state FROM groups WHERE id='$groupID'");
+											$stateRow = mysqli_fetch_array($sqllevel);
+											$state = $stateRow['state'];
+											if($state == 'public')
+											{
+												echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" checked data-toggle="toggle"  data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
+											}
+											elseif($state == 'private')
+											{	
+												echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" data-toggle="toggle" data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
+											}
+										?>
+										<div id="console-event"></div>
+									</div>
+									Target amount<br>
+									PerPerson amount<br>
+									Expiration date<br>
+									Tagline<br>
+					
+								</form>
+								<br>
+							</div>
 							<div class="tab-pane animation-slide-right " id="exampleTabsInverseZero" role="tabpanel">
 								<form action="scripts/updateGroup.php" method="post">
 								  <div class="input-search-dark">
@@ -561,9 +569,8 @@ else{
 								  </div>
 								</form>
 								<br>
-							
 							</div>
-							<div class="tab-pane animation-slide-left active" id="exampleTabsInverseOne" role="tabpanel">
+							<div class="tab-pane animation-slide-left" id="exampleTabsInverseOne" role="tabpanel">
 								<p>Invite your friends and family to contribute to <?php echo $groupName;?>, 
 								You have <?php echo $sms?> free SMS left, or Share on Facebook and Twitter.</p>
 								<button class="btn btn-warning" href="javascript:void()" data-target="#exampleNiftyFadeScale" data-toggle="modal">

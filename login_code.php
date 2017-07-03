@@ -1,3 +1,4 @@
+<?php ob_start(); session_start(); include('db.php');?>
 <?php // 1 Get the sent password and code from login_password 2.2 and save them into the db
 if (isset($_POST['phone3'])){	
 	$results = "";
@@ -30,7 +31,6 @@ $from = "UPLUS";
     $results.="Encountered an error while sending: ".$e->getMessage();
   }
 	
-	include('db.php');
 	$sql = $db->query("SELECT * FROM users WHERE phone='$phone3'");
 	$count_sql = mysqli_num_rows($sql);
 	// 1.1 maybe your password was 0 and the system needs a real password
@@ -69,7 +69,6 @@ if (isset($_POST['vcode'])){
 	$code2 = $_POST['code2'];
 	if ($vcode == $code2){ // 2.1 Verify if the use uses the code sent on his her phone, if yes then activate the account.
 		
-		include"db.php";
 		$sql = $db->query("UPDATE users SET active ='1' WHERE phone = '$phone4' and code = '$code2'")
 		or die (mysqli_error());
 		
@@ -83,7 +82,6 @@ if (isset($_POST['vcode'])){
 				$id = $row["id"];
 			}
 		
-		session_start();
 			$_SESSION["id"] = $id;
 			//$_SESSION["id"] = 'cat';
 			$_SESSION["phone1"] = $phone4;

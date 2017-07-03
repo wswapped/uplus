@@ -1,8 +1,8 @@
+<?php ob_start(); session_start(); include('db.php');?>
 <?php
 if (isset($_POST['fullname'])) {
 	$fullname = $_POST['fullname'];
 	$thisid = $_POST['thisid'];
-	include"db.php";
 	$sql = $db->query("UPDATE `users` SET `name`= '$fullname' WHERE `id` ='$thisid'")or die (mysql_error());
 	
 	//echo'done';

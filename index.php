@@ -51,6 +51,11 @@
 	</script>
 <link rel="stylesheet" href="frontassets/css/login.css" />
 	<link rel="stylesheet" href="frontassets/css/bootstrap.css">
+	<style type="text/css">
+		#header_main .uk-navbar-nav > li > a {
+			color: #fff;
+		}
+	</style>
 </head>
 <body >
     <!-- navigation -->
@@ -64,6 +69,7 @@ function registerFb()
 	var fundBank	 	= document.getElementById('fundBank').value;
 	var fundAccount	 	= document.getElementById('fundAccount').value;
 	
+
 	
 	
 	document.getElementById('passage').innerHTML =''
@@ -86,6 +92,10 @@ function registerFb()
 		+'<br/><button class="btn btn-block btn-social btn-google btn-flat" data-onsuccess="onSignIn" data-gapiscan="true" data-onload="true"><i class="fa fa-google-plus"></i> Sign in using Google+</button><br>'
 		+'<button  onclick="getPin()" class="btn btn-block btn-social btn-mobile btn-flat"><i class="fa fa-mobile"></i> Sign in using SMS</button>'
 	+'</div>';
+	
+	document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #007569;float: left;border-left: 1px solid #fff;"></span>';
 	
 	function statusChangeCallback(response) 
 	{
@@ -147,13 +157,21 @@ function registerFb()
 </script>  
 
     <header id="header_main">
-        <nav class="uk-navbar">
+        <nav class="uk-navbar" style="background-color: #007569">
             <div class="uk-container uk-container-center">
-                <a href="#" class="uk-float-left" id="mobile_navigation_toggle" data-uk-offcanvas="{target:'#mobile_navigation'}"><i class="material-icons">&#xE5D2;</i></a>
-                <a href="index.php" class="uk-navbar-brand">
-                    <img src="frontassets/img/logo_main.png" alt="" width="71" height="15">
-                </a>
-                <a href="login.php" class="md-btn md-btn-primary uk-navbar-flip header_cta uk-margin-left">SIGN IN</a>
+                <a href="#" class="uk-float-left" id="mobile_navigation_toggle" data-uk-offcanvas="{target:'#mobile_navigation'}"><i class="material-icons" style="color: #fff;">&#xE5D2;</i></a>
+                <div class="homelogocont">
+					<a href="javascript:void()" >
+						<img src="frontassets/img/logo_main_3.png" alt="" width="71" style="box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    margin: auto;
+    background-color: #fff;
+    cursor: pointer;" class="dense-image dense-loading">
+					</a>
+				</div>
+                <span class="loginspan"><a href="login.php" class="md-btn md-btn-primary uk-navbar-flip header_cta uk-margin-left">SIGN IN</a></span>
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav" id="main_navigation">
                         <li>
@@ -161,11 +179,11 @@ function registerFb()
                                 Overview
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#sect-dothis">
                                 What can u Do?
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="#sect-fund" class="uk-navbar-nav-subtitle">
                                 <?php 
@@ -195,13 +213,13 @@ function registerFb()
 						<span class="menu_icon"><i class="material-icons">&#xE417;</i></span>
 						<span class="menu_title">Overview</span>
 					</a>
-				</li>
+				</li><!-- 
 				<li>
 					<a href="#dothis" data-uk-smooth-scroll="{offset: 48}">
 						<span class="menu_icon"><i class="material-icons">&#xE896;</i></span>
 						<span class="menu_title">What can u Do?</span>
 					</a>
-				</li>
+				</li> -->
 				<li>
 					<a href="#raised" class="uk-navbar-nav-subtitle" data-uk-smooth-scroll="{offset: 48}">
 						<span class="menu_icon"><i class="material-icons">&#xE227;</i></span>
@@ -318,7 +336,12 @@ function registerFb()
 										</tr>
 									</table>
 								</div>
-								<div class="makegroupFooter" id="makegroupFooter" style="border-top: 1px solid #a6d2ce; height: 70px;
+								<div style="width: 100%;height: 1px;" id="raiseprog">
+									<span style="width: 33.33%;height: 100%;background: #007569;float: left;"></span>
+									<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>
+									<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>
+								</div>
+								<div class="makegroupFooter" id="makegroupFooter" style="height: 70px;
     border-radius: 0 0 4px 4px; padding: 10px 25px 10px 25px;">
 									
 									<span style="float: right">
@@ -333,6 +356,33 @@ function registerFb()
         </div>
     </section>
 
+    <section id="sect-fund" class="section" style="padding: 48px 0px 0px 0;">
+        <div class="uk-container uk-container-center">
+			<h4 class="heading_b" style="padding: 0px 0 15px 0px;">
+					Public Contributions  <input style="float: right;
+    width: 322px;    border-radius: 30px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    padding: 0 15px;
+    color: #000;
+    font-weight: 100;
+    outline: none;
+    margin: 10px auto;
+    " type="" name="" placeholder="Search For your Contribution">
+			</h4>
+			<div>
+				<ul class="uk-navbar-nav">
+					<li class="categoriesa">Featured</li>
+					<li class="categoriesa">Events</li>
+					<li class="categoriesa">Fundraisers</li>
+					<li class="categoriesa">Non Profits</li>
+					<li class="categoriesa">Others</li>
+				</ul>
+			</div>
+        </div>
+    </section>
+
+<!--
     <section id="sect-dothis" onclick="smoothScroll(document.getElementById('sect-dothis'))"" class="section section_dark" style="padding: unset;">
         <div class="uk-grid">
             <div class="uk-width-1-3 currentHeader customheader">
@@ -341,13 +391,10 @@ function registerFb()
             <div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=3)">INVEST</div>
         </div>
     </section>
-
+-->
 	<section id="sect-fund" class="section section_gallery md-bg-blue-grey-50">
         <div id="actions" class="uk-container uk-container-center uk-invisible" data-uk-scrollspy="{cls:'uk-animation-fade uk-invisible',delay:300,topoffset:-150}">
-            <h2 class="heading_c uk-margin-medium-bottom uk-text-center-medium">
-               Public Contributions
-            </h2>
-			
+           
 			
 			
 				<?php
@@ -407,8 +454,8 @@ function registerFb()
 									</a>
 									
 								</div>
-								<div class="progress">
-									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="'.$prog.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$size.'%">
+								<div class="progress" style="border-radius: 0px;">
+									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="'.$prog.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$size.'%;">
 									  '.$prog.'%
 									</div>
 								</div>
@@ -444,10 +491,193 @@ function registerFb()
 		
     </section>
 
-	<section id="sect-team"class="section">
+    <section  id="sect-team" class="section">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-large-2-4 uk-invisible" data-uk-scrollspy="{cls:'uk-animation-slide-left uk-invisible',delay:400,topoffset:-100}">
+                    <h3 class="heading_c"><i class="material-icons md-36 md-color-red-500">&#xE88F;</i> HOW TO USE UPLUS?</h3>
+                    <iframe src="https://www.youtube.com/embed/_QoR_i0IIfY" frameborder="0" allowfullscreen width="100%" height="300px"></iframe>
+                    
+                </div>
+                <div class="uk-width-large-2-4 uk-invisible" data-uk-scrollspy="{cls:'uk-animation-slide-right uk-invisible',delay:800,topoffset:-100}">
+                    <div class="uk-accordion" data-uk-accordion>
+                        <h3 class="uk-accordion-title">WHAT ARE THE CHARGES?</h3>
+                        <div class="uk-accordion-content">
+                            <p>UPLUS  Charges 5% on the total amount transferd to the receiver, 
+                            including 2.5 visa transfer charges and 2 for MTN, TIGO or AIRTEL fee.
+                            </p>
+                        </div>
+                        <h3 class="uk-accordion-title">WHAT IF I'M USING VISA CARD</h3>
+                        <div class="uk-accordion-content">
+                            <p>Lets say you are contributing $100 using visa or master card on a group which uses RWF.
+                            <br>$100 is converted into RWF, for now it will be 84,000Rwf,
+                            Bank of kigali Takes 2.5% Visa Processing Fee = 81,900 Rwf, and uPlus will take 2.5% 
+                            for the service and send 79,800Rwf to the group admin who uses Mobile money 
+                            </p>
+                        </div>
+                        <h3 class="uk-accordion-title">WHAT IF I'M USING MTN MOBILE MONEY</h3>
+                        <div class="uk-accordion-content">
+                            <p>Let's say you are contributing 10,000RWF using MTN Mobile Money to a group withdrawing using tigo cash 
+                            	MTN will take 2% transfer fee to and uPlus will take 2.5 transfer fee and tigo 0.5%
+                            </p>
+                        </div>
+                        <h3 class="uk-accordion-title">IS UPLUS A BANK OR FINANCIAL INSTITUTION?</h3>
+                        <div class="uk-accordion-content">
+                            <p></p>
+                        </div>
+                        <h3 class="uk-accordion-title">WHAT HAPPENS IF I NEED A REFUND</h3>
+                        <div class="uk-accordion-content">
+                            <p></p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- 
+    <section class="section md-bg-blue-grey-50" id="sect-team">
+        <div class="uk-container uk-container-center uk-invisible" data-uk-scrollspy="{cls:'uk-animation-scale-up uk-invisible',delay:300,topoffset:-100}">
+            <div class="uk-grid uk-margin-large-bottom">
+                <div class="uk-width-large-3-5 uk-container-center uk-text-center">
+                    <h2 class="heading_b">
+                        Our Team
+                        <span class="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                    </h2>
+                </div>
+            </div>
+            <div class="uk-tab-center uk-margin-medium-bottom">
+                <ul class="uk-tab uk-tab-large" data-uk-tab="{connect:'#team_tabbed',animation: 'slide-bottom'}">
+                    <li class="uk-active"><a href="#">Developers</a></li>
+                    <li><a href="#">Sales</a></li>
+                    <li><a href="#">Marketing</a></li>
+                </ul>
+            </div>
+            <ul id="team_tabbed" class="uk-switcher uk-margin">
+                <li>
+                    <div class="uk-grid uk-grid-medium uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4" data-uk-grid-margin>
+                        <div>
+                            <div class="md-card">
+                                <div class="md-card-head md-bg-light-blue-600">
+                                    <div class="uk-text-center">
+                                        <img class="md-card-head-avatar" src="assets/img/avatars/avatar_07.png" alt=""/>
+                                    </div>
+                                    <h3 class="md-card-head-text uk-text-center md-color-white">
+                                        Darion Brekke
+                                        <span class="uk-text-truncate">PHP, MYSQL, NODEJS</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="md-card">
+                                <div class="md-card-head">
+                                    <div class="uk-text-center">
+                                        <img class="md-card-head-avatar" src="assets/img/avatars/avatar_05.png" alt=""/>
+                                    </div>
+                                    <h3 class="md-card-head-text uk-text-center">
+                                        Charles Lesch
+                                        <span class="uk-text-truncate">HTML, CSS, JS</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="md-card">
+                                <div class="md-card-head">
+                                    <div class="uk-text-center">
+                                        <img class="md-card-head-avatar" src="assets/img/avatars/avatar_09.png" alt=""/>
+                                    </div>
+                                    <h3 class="md-card-head-text uk-text-center">
+                                        Viva Ankunding
+                                        <span class="uk-text-truncate">JAVA, C++, ANDROID</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-grid uk-grid-medium uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4" data-uk-grid-margin>
+                        <div>
+                            <div class="md-card">
+                                <div class="md-card-head">
+                                    <div class="uk-text-center">
+                                        <img class="md-card-head-avatar" src="assets/img/avatars/avatar_06.png" alt=""/>
+                                    </div>
+                                    <h3 class="md-card-head-text uk-text-center">
+                                        Randi Tromp
+                                        <span class="uk-text-truncate"><i class="material-icons">&#xE0CD;</i> 123-456-789</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="md-card">
+                                <div class="md-card-head">
+                                    <div class="uk-text-center">
+                                        <img class="md-card-head-avatar" src="assets/img/avatars/avatar_10.png" alt=""/>
+                                    </div>
+                                    <h3 class="md-card-head-text uk-text-center">
+                                        Felix Wiza Jr.
+                                        <span class="uk-text-truncate"><i class="material-icons">&#xE0CD;</i> 123-456-789</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="md-card">
+                                <div class="md-card-head">
+                                    <div class="uk-text-center">
+                                        <img class="md-card-head-avatar" src="assets/img/avatars/avatar_12.png" alt=""/>
+                                    </div>
+                                    <h3 class="md-card-head-text uk-text-center">
+                                        Libby Harvey Sr.
+                                        <span class="uk-text-truncate"><i class="material-icons">&#xE0CD;</i> 123-456-789</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-grid uk-grid-medium uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4" data-uk-grid-margin>
+                        <div>
+                            <div class="md-card">
+                                <div class="md-card-head">
+                                    <div class="uk-text-center">
+                                        <img class="md-card-head-avatar" src="assets/img/avatars/avatar_01.png" alt=""/>
+                                    </div>
+                                    <h3 class="md-card-head-text uk-text-center">
+                                        Dora Lemke
+                                        <span class="uk-text-truncate">Lorem Ipsum</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="md-card">
+                                <div class="md-card-head">
+                                    <div class="uk-text-center">
+                                        <img class="md-card-head-avatar" src="assets/img/avatars/avatar_08.png" alt=""/>
+                                    </div>
+                                    <h3 class="md-card-head-text uk-text-center">
+                                        Vernice Willms
+                                        <span class="uk-text-truncate">Lorem Ipsum</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section> -->
+	<!-- <section class="section">
         <div class="uk-container uk-container-center uk-invisible" data-uk-scrollspy="{cls:'uk-animation-scale-up uk-invisible',delay:300,topoffset:-100}">
 			<h4 class="heading_b uk-text-center">
-					inMedia
+					how it works
 			</h4>
 			<div style="height: 126px;" class="uk-grid uk-grid-medium uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-3" data-uk-grid-margin="">
 				<a target="bank" href="http://www.newtimes.co.rw/section/article/2017-02-20/208173/">
@@ -459,7 +689,7 @@ function registerFb()
 					<img src="frontassets/img/avatars/trophy.png" class="awardimg">
 				</a>
 			</div>
-			
+			 -->
 			 <div id="passage1"></div>
 			 <div id="passage"></div>
             <div id="typed-strings">
@@ -474,9 +704,9 @@ function registerFb()
 								<p>And Receive it all in <span style="color: #13a89e;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">RWF</span></p>
 							</div>
       	
-        </div>
+       <!--  </div>
     </section>
-
+ -->
     <section class="section section_dark md-bg-blue-grey-700" style="background:#007569 !important">
         <div class="uk-container uk-container-center">
             <div class="uk-grid" data-uk-grid-margin>
@@ -605,14 +835,28 @@ function registerFb()
 	// Check the groupname
 		if(fundTag == "" || fundTag == null){
 			document.getElementById('fundTagError').innerHTML = 'Please choose the fund type';
+			document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: red;float: left;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #007569;float: left;border-left: 1px solid #fff;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>';
+				
 			return false;
 		}
 		if(isTargetChanged == 'yes' && (fundAmount == "" || fundAmount == null)){
 			document.getElementById('amountError').innerHTML = 'Please fill in the amount you need to raise';
+			document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: red;float: left;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #007569;float: left;border-left: 1px solid #fff;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>';
+				
+			
 			return false;
 		}
 		if(isTargetPPChanged == 'yes' && (amountPerPerson == "" || amountPerPerson == null)){
 			document.getElementById('amountPerPersonError').innerHTML = 'Please fill in the amount minimum per person';
+			document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: red;float: left;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #007569;float: left;border-left: 1px solid #fff;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>';
+				
+			
 			return false;
 		}
 		
@@ -639,6 +883,9 @@ function registerFb()
 				},
 				success : function(html, textStatus){
 				$('#makegroupBody').html(html);
+				document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #007569;float: left;border-left: 1px solid #fff;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>';
 				document.getElementById('makegroupFooter').innerHTML = '<span style="float: left">'
 										+'<a href="javascript:void()" onclick="raiseBack()" class="md-btn md-btn-large md-btn-default">Back</a>'
 									+'</span>'
@@ -662,6 +909,10 @@ function raiseBack(){
 	var amountPerPerson 	= document.getElementById('amountPerPerson').value;
 	var fundTag 			= document.getElementById('fundTag').value;
 	
+	document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: #007569;float: left;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>'
+									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>';
+				
 	//alert();
 	
 	$.ajax({

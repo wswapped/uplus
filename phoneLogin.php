@@ -1,5 +1,5 @@
+<?php ob_start(); session_start(); include('db.php');?>
 <?php 
-session_start();
 if (isset($_SESSION["phone1"])) {
     header("location: home.php"); 
     exit();

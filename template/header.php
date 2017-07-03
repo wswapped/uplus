@@ -1,43 +1,45 @@
-<?php // Get me backif i havent logedin
-@ob_start();
-session_start();
-	if (!isset($_SESSION["phone1"])) {
-		header("location: logout.php"); 
+<?php ob_start(); session_start(); include('db.php');?>
+
+<?php
+ if (!isset($_SESSION["phone1"])) {
+    header("location: logout.php"); 
     exit();
 }
-?>
-<?php 
-$session_id = preg_replace('#[^0-9]#i', '', $_SESSION["id"]); // filter everything but numbers and letters
-$phone = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["phone1"]); // filter everything but numbers and letters
-$password = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["password"]); // filter everything but numbers and letters
-include "db.php"; 
-$sql = $db->query("SELECT * FROM users WHERE phone='$phone' AND password='$password' LIMIT 1"); // query the person
-// ------- MAKE SURE PERSON EXISTS IN DATABASE ---------
-$existCount = mysqli_num_rows($sql); // count the row nums
-$label="";
-if ($existCount > 0) { 
-	while($row = mysqli_fetch_array($sql)){ 
-			 $thisid = $row["id"];
-			 $dateJoin = strftime("%b %d, %Y", strtotime($row["createdDate"]));			 
-			 $name = $row["name"];
-			 $email = $row["email"];
-			 }
-			if($name == ""){
-				 $label.='Your Name Please?';
-			 }else{
-				 $label.='';
-			 
-}} 
-		else{
-		echo "
-		
-		<br/><br/><br/><h3>Your account has been temporally deactivated</h3>
-		<p>Please contact: <br/><em>(+25) 078 484-8236</em><br/><b>muhirwaclement@gmail.com</b></p>		
-		Or<p><a href='logout'>Click Here to login again</a></p>
-		
-		";
-	    exit();
-	}
+
+  $session_id = preg_replace('#[^0-9]#i', '', $_SESSION["id"]); // filter everything but numbers and letters
+  $phone = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["phone1"]); // filter everything but numbers and letters
+  $password = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["password"]); // filter everything but numbers and letters
+  $sql = $db->query("SELECT * FROM users WHERE phone='$phone' AND password='$password' LIMIT 1"); // query the person
+  // ------- MAKE SURE PERSON EXISTS IN DATABASE ---------
+  $existCount = mysqli_num_rows($sql); // count the row nums
+  $label="";
+  if ($existCount > 0) { 
+    while($row = mysqli_fetch_array($sql)){ 
+         $thisid = $row["id"];
+         //$dateJoin = strftime("%b %d, %Y", strtotime($row["joinedDate"]));       
+         $name = $row["name"];
+         $email = $row["email"];
+         $phone = $row["phone"];
+         $gender = $row["gender"];
+         $profession = $row["profession"];
+         $bio = $row["bio"];
+         }
+        if($name == ""){
+           $label.='Your Name Please?';
+         }else{
+           $label.='';
+         
+  }} 
+    else{
+    echo "
+    
+    <br/><br/><br/><h3>Your account has been temporally deactivated</h3>
+    <p>Please contact: <br/><em>(+25) 078 484-8236</em><br/><b>muhirwaclement@gmail.com</b></p>   
+    Or<p><a href='logout'>Click Here to login again</a></p>
+    
+    ";
+      exit();
+  }
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +55,7 @@ if ($existCount > 0) {
 
   <link rel="icon" type="image/png" href="frontassets/img/favicon-16x16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="frontassets/img/favicon-32x32.png" sizes="32x32">
-	
+  
   <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/global/css/bootstrap.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/css/bootstrap-extend.min3f0d.css?v2.2.0">
@@ -63,61 +65,10 @@ if ($existCount > 0) {
   <link rel="stylesheet" href="assets/global/vendor/animsition/animsition.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/vendor/asscrollable/asScrollable.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/vendor/switchery/switchery.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/intro-js/introjs.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/slidepanel/slidePanel.min3f0d.css?v2.2.0">
+   <link rel="stylesheet" href="assets/global/vendor/slidepanel/slidePanel.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/vendor/flag-icon-css/flag-icon.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/vendor/waves/waves.min3f0d.css?v2.2.0">
 
-
-  <!-- Plugins For This Page -->
-  <link rel="stylesheet" href="assets/global/vendor/footable/footable.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/chartist-js/chartist.min3f0d.css?v2.2.0">
-  <!-- Plugins For This Page -->
-  <link rel="stylesheet" href="assets/global/vendor/bootstrap-sweetalert/sweet-alert.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/toastr/toastr.min3f0d.css?v2.2.0">
-  <!-- Page -->
-  <link rel="stylesheet" href="assets/examples/css/advanced/alertify.min3f0d.css?v2.2.0">
-
-   <!-- Page -->
-  <link rel="stylesheet" href="assets/examples/css/widgets/chart.min3f0d.css?v2.2.0">
-
-
-  <!-- Plugins For Form Wizard -->
-  <link rel="stylesheet" href="assets/global/vendor/jquery-wizard/jquery-wizard.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/formvalidation/formValidation.min3f0d.css?v2.2.0">
-
-  
-  
-  
-  <!-- Plugins For This Page -->
-  <link rel="stylesheet" href="assets/global/vendor/select2/select2.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/bootstrap-tokenfield/bootstrap-tokenfield.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/bootstrap-select/bootstrap-select.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/icheck/icheck.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/switchery/switchery.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/asrange/asRange.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/asspinner/asSpinner.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/clockpicker/clockpicker.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/ascolorpicker/asColorPicker.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/bootstrap-touchspin/bootstrap-touchspin.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/card/card.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/jquery-labelauty/jquery-labelauty.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/bootstrap-datepicker/bootstrap-datepicker.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/bootstrap-maxlength/bootstrap-maxlength.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/jt-timepicker/jquery-timepicker.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/jquery-strength/jquery-strength.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/multi-select/multi-select.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/vendor/typeahead-js/typeahead.min3f0d.css?v2.2.0">
-
-  <!-- Page -->
-  <link rel="stylesheet" href="assets/examples/css/forms/advanced.min3f0d.css?v2.2.0">
-
-  
-  
-  
-  
-  
   <!-- Fonts 
   <link rel="stylesheet" href="assets/global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0">-->
   <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0">
@@ -133,16 +84,8 @@ if ($existCount > 0) {
   <script>
     Breakpoints();
   </script>
-  
-  <script src="assets/js/jquery.js"></script>
-   <script src="assets/js/uploadFile.js"></script>
-
-  <script src="assets/js/ajax_call.js"></script>
 </head>
 <body >
-  <!--[if lt IE 8]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
 
   <nav class="site-navbar navbar navbar-inverse navbar-fixed-top navbar-mega" role="navigation">
     <div class="navbar-header">
@@ -155,10 +98,16 @@ if ($existCount > 0) {
       data-toggle="collapse">
         <i class="icon md-more" aria-hidden="true"></i>
       </button>
-      <a href="index.php"><div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-        <img class="navbar-brand-logo" src="assets/images/logo.png" title="Uplus">
-        <span class="navbar-brand-text hidden-xs"> Uplus</span>
-      </div></a>
+      <a href="index.php">
+        <div style="padding: 12px 50px;" class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+          <img style="    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    /* margin: auto; */
+    background-color: #fff;
+    cursor: pointer;" class="navbar-brand-logo" src="frontassets/img/logo_main_3.png" title="Uplus">
+        </div></a>
       <button type="button" class="navbar-toggle collapsed" data-target="#site-navbar-search"
       data-toggle="collapse">
         <span class="sr-only">Toggle Search</span>
@@ -169,7 +118,7 @@ if ($existCount > 0) {
     <div class="navbar-container container-fluid">
       <!-- Navbar Collapse -->
       <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
-		<!-- Navbar Toolbar -->
+    <!-- Navbar Toolbar -->
         <ul class="nav navbar-toolbar">
           <li class="hidden-float">
             <a class="icon md-search" data-toggle="collapse" href="#" data-target="#site-navbar-search"
@@ -178,8 +127,8 @@ if ($existCount > 0) {
             </a>
           </li>
         </ul>
-	  
-	  
+    
+    
         <!-- Navbar Toolbar Right -->
         <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
           <li class="dropdown" id="profile">
@@ -200,7 +149,7 @@ if ($existCount > 0) {
               <li class="divider" role="presentation"></li>
               <li role="presentation" >
                 <a href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
-</li>
+      </li>
             </ul>
           </li>
         </ul>
@@ -231,8 +180,7 @@ if ($existCount > 0) {
         <li class="site-menu-item has-sub active open">
           <a href="home">
       <i class="site-menu-icon md-home" aria-hidden="true"></i>
-            <span class="site-menu-title">Dash</span>
-            
+            <span class="site-menu-title">Home</span>
           </a>
         </li> 
     </ul>
