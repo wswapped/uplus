@@ -1,6 +1,6 @@
 <?php
-require_once 'System.php';
-var_dump(class_exists('System', false));
+//require_once 'System.php';
+//var_dump(class_exists('System', false));
 ?>
 <?php
 error_reporting(E_ALL); 
