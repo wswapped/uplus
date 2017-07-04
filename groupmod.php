@@ -36,7 +36,10 @@ if (isset($_GET['groupId']))
 	$sql2 = $db->query("SELECT * FROM groups WHERE id='$groupID'"); 
 	while($row = mysqli_fetch_array($sql2)){ 
 		$groupName 		= $row["groupName"];
+		$groupTargetType= $row['groupTargetType'];
 		$saving 		= round($row['targetAmount']);
+		$perPersonType 	= $row['perPersonType'];
+		$perPerson 		= round($row['perPerson']);
 		$adminPhone 	= $row['adminPhone'];
 		$adminName 		= $row['adminName'];
 		$groupDesc 		= $row["groupDesc"];
@@ -534,26 +537,24 @@ else{
 						</ul>
 							
 						<div class="tab-content padding-20">
-							<div class="tab-pane animation-slide-right active" id="exampleTabsSettings" role="tabpanel">
+							<div class="tab-pane animation-slide-left active" id="exampleTabsSettings" role="tabpanel">
 								<form action="scripts/updateGroup.php" method="post">
 									<div class="row">
 										<div class="col-md-12">
-											Make your contribution visible to the public:
 											<?php
 												$sqllevel = $db->query("SELECT state FROM groups WHERE id='$groupID'");
 												$stateRow = mysqli_fetch_array($sqllevel);
 												$state = $stateRow['state'];
 												if($state == 'public')
 												{
-													echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" checked data-toggle="toggle"  data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
+													echo'<span id="console-event">Hide this contribution to the public: </span><input id="toggle-event" data-toggle="toggle" type="checkbox" checked data-toggle="toggle"  data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
 												}
 												elseif($state == 'private')
 												{	
-													echo'<input id="toggle-event" data-toggle="toggle" type="checkbox" data-toggle="toggle" data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
+													echo'<span id="console-event">Make this contribution visible to the public: </span><input id="toggle-event" data-toggle="toggle" type="checkbox" data-toggle="toggle" data-on="Private" data-off="Publish" data-onstyle="danger" data-offstyle="success">';
 												}
 											?>
-											<div id="console-event">
-											</div>
+											
 										</div>
 									</div>
 									<br>
@@ -562,7 +563,7 @@ else{
 											Target amount:
 										</div>
 										<div class="col-md-4">
-											<select class="form-control" disabled><option><?php echo $bank;?></option></select>
+											<select class="form-control" disabled><option><?php echo $groupTargetType;?></option></select>
 										</div>
 										<div class="col-md-5">
 											<input class="form-control" disabled value="<?php echo $saving;?>" />
@@ -574,10 +575,10 @@ else{
 											Perperson:
 										</div>
 										<div class="col-md-4">
-											<select class="form-control" disabled><option><?php echo $bank;?></option></select>
+											<select class="form-control" disabled><option><?php echo $perPersonType;?></option></select>
 										</div>
 										<div class="col-md-5">
-											<input class="form-control" disabled value="<?php echo $saving;?>" />
+											<input class="form-control" disabled value="<?php echo $perPerson;?>" />
 										</div>
 									</div>
 									<br>
@@ -592,6 +593,7 @@ else{
 											<input class="form-control" disabled value="<?php echo $saving;?>" />
 										</div>
 									</div>
+									<br>
 									<div class="row">	
 										<div class="col-md-3">
 											Tagline:
@@ -603,12 +605,6 @@ else{
 											<input class="form-control" disabled value="<?php echo $saving;?>" />
 										</div>
 									</div>
-
-									<br>
-									PerPerson amount<br>
-									Expiration date<br>
-									Tagline<br>
-					
 								</form>
 								<br>
 							</div>
@@ -800,7 +796,7 @@ Your Contribution Made <?php echo $groupName;?> Move up to <?php echo number_for
 		
 		if(rebaneza == true)
 		{
-			alert('This group is going public to anybody!');
+			//alert('This group is going public to anybody!');
 			var state = 'public';
 			
 			$.ajax(
@@ -814,7 +810,7 @@ Your Contribution Made <?php echo $groupName;?> Move up to <?php echo number_for
 					groupId		:   groupId,		
 				},
 				success : function(html, textStatus){
-					$('#console-event').html('This Fundraiser is now Public');
+					$('#console-event').html('This contribution is now visible to the public, make it pivate: ');
 					//document.getElementById('levelpub').innerHTML ='make it private:<input type="checkbox" checked onclick="makeitpublic(pub=0)">';
 				},
 				error : function(xht, textStatus, errorThrown){
@@ -824,7 +820,7 @@ Your Contribution Made <?php echo $groupName;?> Move up to <?php echo number_for
 		}
 		else if(rebaneza == false)
 		{
-			alert('This group is going private, None is going to see it!');
+			//alert('This group is going private, None is going to see it!');
 			var state = 'private';
 			
 			$.ajax(
@@ -838,7 +834,7 @@ Your Contribution Made <?php echo $groupName;?> Move up to <?php echo number_for
 					groupId		:   groupId,		
 				},
 				success : function(html, textStatus){
-					$('#console-event').html('This Fundraiser is now Pivate');
+					$('#console-event').html('This contribution is now pivate, make it visible to the public: ');
 					//document.getElementById('levelpub').innerHTML ='make it public:<input type="checkbox" onclick="makeitpublic(pub=1)">';
 				},
 				error : function(xht, textStatus, errorThrown){
