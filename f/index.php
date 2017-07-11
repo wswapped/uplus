@@ -10,7 +10,9 @@ if (isset($_GET['groupId'])){
 		require_once "parsedown/Parsedown.php";
 		$parsedown = new parsedown();
 		include "../db.php"; 
-		$sql2 = $db->query("SELECT * FROM groups WHERE id='$groupID' "); 
+		$sql2 = $db->query("SELECT * FROM groups WHERE archive is null AND id='$groupID' "); 
+		$countAvail = mysqli_num_rows($sql2);
+		if($countAvail > 0){
 		while($row = mysqli_fetch_array($sql2)){ 
 			$groupName = $row["groupName"];
 			$groupTargetType= $row['groupTargetType'];
@@ -48,6 +50,12 @@ if (isset($_GET['groupId'])){
 		
 		if($currentAmount == ''){
 			$currentAmount = 0;
+		}
+		}
+		else
+		{
+			echo 'This Group Does Not Exist';
+			exit();
 		}
 	}
 else{

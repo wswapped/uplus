@@ -37,6 +37,9 @@ $gAdminId = $groups[$i]['adminId'];
 }
 unset($groups[$i]['adminId']);
 
+header('Content-Type: application/json');
+
 $groups = json_encode($groups);
+
 echo '{ "groups" : '.$groups.' }';
 ?>

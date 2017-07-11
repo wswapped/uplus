@@ -402,8 +402,8 @@ function registerFb()
 						
 					include 'db.php';
 					$n="";
-					$sql = $db->query("SELECT * FROM groups WHERE state = 'public' ORDER BY rand() limit 9");
-					$sqlres = $db->query("SELECT * FROM groups WHERE state = 'public'");
+					$sql = $db->query("SELECT * FROM groups WHERE archive is null AND state = 'public' ORDER BY rand() limit 9");
+					$sqlres = $db->query("SELECT * FROM groups WHERE archive is null AND state = 'public'");
 					$countresults = mysqli_num_rows($sqlres);
 					while($row = mysqli_fetch_array($sql))
 					{

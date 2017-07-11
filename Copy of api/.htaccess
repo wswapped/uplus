@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule ^newgroup newgroup.php [NC,L]
+RewriteRule ^groups groups.php [NC,L]

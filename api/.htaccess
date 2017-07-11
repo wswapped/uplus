@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteRule ^group group.php [NC,L]
+RewriteRule ^member member.php [NC,L]
+RewriteRule ^money money.php [NC,L]
+RewriteRule ^profile profile.php [NC,L]
