@@ -224,4 +224,24 @@ function inviteMember()
 		'The user is not invited';
 	}
 }
+
+function listMembers(){
+	require('../db.php');
+	$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
+	$sqlMembers = $db->query("SELECT * FROM members WHERE groupId = '$groupId'") or die(mysqli_error());
+	$members = array();
+	WHILE($member = mysqli_fetch_array($sqlMembers))
+	{
+		$members[] = array(
+		   "memberId"        => $member['memberId'],
+		   "memberPhone"        => $member['memberPhone'],
+		   "memberName"        	=> $member['memberName'],
+		   "groupId"        	=> $member['groupId']
+		   );
+		
+	}	
+	header('Content-Type: application/json');
+	$members = json_encode($members);
+	echo '{ "members" : '.$members.' }';
+}
 ?>
