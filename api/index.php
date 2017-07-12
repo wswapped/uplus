@@ -1,3 +1,4 @@
+
 <?php
 if ($_SERVER["REQUEST_METHOD"]=="POST") 
 {
@@ -217,7 +218,25 @@ function inviteMember()
 
 	if($db)
 	{
-		listGroups();
+		require_once('../classes/sms/AfricasTalkingGateway.php');
+		$username   = "cmuhirwa";
+		$apikey     = "2b11603e7dc4c35a64bfdda3ad8d78e48db8a4afc9032a2a57209ba902a21154";
+		$recipients = '+25'.$invitedPhone;
+		$message    = 'You have been invited to join a contribution group on uplus. Install uplus to start.';// Specify your AfricasTalking shortCode or sender id
+		$from = "uplus";
+
+		$gateway    = new AfricasTalkingGateway($username, $apikey);
+
+		try 
+		{
+			$results = $gateway->sendMessage($recipients, $message, $from);
+			listGroups();
+		}
+		catch (AfricasTalkingGatewayException $e)
+		{
+			$results.="Encountered an error while sending: ".$e->getMessage();
+			echo 'error';
+		}
 	}
 	else
 	{
