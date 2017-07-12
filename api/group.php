@@ -1,12 +1,20 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"]=="POST") 
 {
-	$_POST['action']();
+	if(isset($_POST['action']))
+	{
+		$_POST['action']();
+	}
+	else
+	{
+		echo 'Please Read the API documentation';
+	}
 }
 else
 {
 	echo 'UPLUS API V01';
 }
+
 function listGroups()
 {
 	include("../db.php");
@@ -15,15 +23,15 @@ function listGroups()
 	WHILE($group = mysqli_fetch_array($sqlgroups))
 	{
 		$groups[] = array(
-		   "groupId"        => $group['id'],
-		   "adminId"        => $group['adminId'],
-		   "groupName"      => $group['groupName'],
-		   "groupDesc"      => $group['groupDesc'],
-		   "groupStory"     => $group['groupStory'],
-		   "targetAmount"   => $group['targetAmount'],
-		   "perPerson"      => $group['perPerson'],
-		   "expirationDate" => $group['expirationDate'],
-		   "likes"          => $group['likes'],
+		   "groupId"        => mysqli_real_escape_string($db, $group['id']),
+		   "adminId"        => mysqli_real_escape_string($db, $group['adminId']),
+		   "groupName"      => mysqli_real_escape_string($db, $group['groupName']),
+		   "groupDesc"      => mysqli_real_escape_string($db, $group['groupDesc']),
+		   "groupStory"     => mysqli_real_escape_string($db, $group['groupStory']),
+		   "targetAmount"   => mysqli_real_escape_string($db, $group['targetAmount']),
+		   "perPerson"      => mysqli_real_escape_string($db, $group['perPerson']),
+		   "expirationDate" => mysqli_real_escape_string($db, $group['expirationDate']),
+		   "likes"          => mysqli_real_escape_string($db, $group['likes']),
 		   "groupImage"     => 'http://www.uplus.rw/temp/group'.$group['id'].'.jpeg'
 
 		);
@@ -55,15 +63,15 @@ function listGroups()
 function createGroup()
 {
 	require('../db.php');
-	$groupName			= $_POST['groupName'];
-	$groupTargetType	= $_POST['groupTargetType'];
-	$targetAmount		= $_POST['targetAmount'];
-	$perPersonType		= $_POST['perPersonType'];
-	$perPerson			= $_POST['perPerson'];
-	$adminId			= $_POST['adminId'];
-	$adminPhone			= $_POST['adminPhone'];
-	$accountNumber		= $_POST['accountNumber'];
-	$bankId				= $_POST['bankId'];
+	$groupName			= mysqli_real_escape_string($db, $_POST['groupName']);
+	$groupTargetType	= mysqli_real_escape_string($db, $_POST['groupTargetType']);
+	$targetAmount		= mysqli_real_escape_string($db, $_POST['targetAmount']);
+	$perPersonType		= mysqli_real_escape_string($db, $_POST['perPersonType']);
+	$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
+	$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
+	$adminPhone			= mysqli_real_escape_string($db, $_POST['adminPhone']);
+	$accountNumber		= mysqli_real_escape_string($db, $_POST['accountNumber']);
+	$bankId				= mysqli_real_escape_string($db, $_POST['bankId']);
 	
 	$db->query("INSERT INTO groups
 		(groupName, adminId, adminPhone, 
@@ -109,17 +117,17 @@ function createGroup()
 function modifyGroup()
 {
 	require('../db.php');
-	$groupName			= $_POST['groupName'];
-	$groupTargetType	= $_POST['groupTargetType'];
-	$targetAmount		= $_POST['targetAmount'];
-	$perPersonType		= $_POST['perPersonType'];
-	$perPerson			= $_POST['perPerson'];
-	$adminId			= $_POST['adminId'];
-	$adminPhone			= $_POST['adminPhone'];
-	$accountNumber		= $_POST['accountNumber'];
-	$bankId				= $_POST['bankId'];
-	$groupId			= $_POST['groupId'];
-	$state				= $_POST['state'];
+	$groupName			= mysqli_real_escape_string($db, $_POST['groupName']);
+	$groupTargetType	= mysqli_real_escape_string($db, $_POST['groupTargetType']);
+	$targetAmount		= mysqli_real_escape_string($db, $_POST['targetAmount']);
+	$perPersonType		= mysqli_real_escape_string($db, $_POST['perPersonType']);
+	$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
+	$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
+	$adminPhone			= mysqli_real_escape_string($db, $_POST['adminPhone']);
+	$accountNumber		= mysqli_real_escape_string($db, $_POST['accountNumber']);
+	$bankId				= mysqli_real_escape_string($db, $_POST['bankId']);
+	$groupId			= mysqli_real_escape_string($db, $_POST['groupId']);
+	$state				= mysqli_real_escape_string($db, $_POST['state']);
 	
 	$db->query("UPDATE groups SET 
 		groupName ='$groupName', adminId=$adminId, adminPhone='$adminPhone', 
@@ -154,12 +162,12 @@ function modifyGroup()
 function deleteGroup()
 {
 	require('../db.php');
-	$groupId			= $_POST['groupId'];
-	$adminId			= $_POST['adminId'];
+	$groupId			= mysqli_real_escape_string($db, $_POST['groupId']);
+	$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
 	$db->query("UPDATE groups SET 
 		archive ='yes'
 		WHERE id='$groupId' AND adminId=$adminId
-	") or die (mysqli_error());
+		") or die (mysqli_error());
 	
 	if($db)
 	{
@@ -169,7 +177,42 @@ function deleteGroup()
 	{
 		'you cant delete this group';
 	}
-		
+}
+
+function inviteMember()
+{
+	require('../db.php');
+	$groupId			= mysqli_real_escape_string($db, $_POST['groupId']);
+	$invitorId			= mysqli_real_escape_string($db, $_POST['invitorId']);
+	$invitedPhone		= mysqli_real_escape_string($db, $_POST['invitedPhone']);
+	$sql = $db->query("SELECT id FROM users WHERE phone =  $invitedPhone");
+	$countUsers = mysqli_num_rows($sql);
+	if($countUsers > 0)
+	{
+		$invitedArray = mysqli_fetch_array($sql);
+		$invitedId = $invitedArray['id'];
+	}
+	else
+	{
+		$db->query("INSERT INTO users (phone,createdBy,createdDate) VALUES  ('$invitedPhone', '$invitorId', now())");
+		if($db)
+		{
+			$sql = $db->query("SELECT id FROM users ORDER BY id DESC LIMIT 1");
+			$invitedArray = mysqli_fetch_array($sql);
+			$invitedId = $invitedArray['id'];
+
+		}
+	}
 	
+	$db->query("INSERT INTO groupuser (joined, groupId, userId, createdBy, createdDate) VALUES ('yes','$groupId','$invitedId','$invitorId', now())");
+
+	if($db)
+	{
+		listGroups();
+	}
+	else
+	{
+		'The user is not invited';
+	}
 }
 ?>
