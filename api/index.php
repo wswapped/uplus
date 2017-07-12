@@ -69,10 +69,19 @@ function createGroup()
 	$perPersonType		= mysqli_real_escape_string($db, $_POST['perPersonType']);
 	$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
 	$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
-	$adminPhone			= mysqli_real_escape_string($db, $_POST['adminPhone']);
 	$accountNumber		= mysqli_real_escape_string($db, $_POST['accountNumber']);
 	$bankId				= mysqli_real_escape_string($db, $_POST['bankId']);
 	
+	$sqliAdmin = $db->query("SELECT phone FROM users WHERE id = '$adminId'");
+	$countAdmins = mysqli_num_rows($sqliAdmin);
+	if($countAdmins > 0)
+	{
+		$rowid = mysqli_fetch_array($sqlid);
+		$adminPhone = $rowid['phone'];
+	}
+
+
+
 	$db->query("INSERT INTO groups
 		(groupName, adminId, adminPhone, 
 		 targetAmount, perPerson, createdDate,
