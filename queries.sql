@@ -10,3 +10,10 @@ from groups g
 SELECT G.groupId, G.accountNumber,
 IFNULL((SELECT SUM(T.amount) FROM transactions T WHERE T.`status`='APPROVED' AND T.`forGroupId` = G.`groupId`),0) BALANCE
 FROM groups G
+
+
+CREATE VIEW invitations AS 
+SELECT gu.groupId, u.id AS memberId, u.phone AS memberPhone, u.name AS memberName
+FROM groupuser gu
+INNER JOIN users u
+ON u.id = gu.userId
