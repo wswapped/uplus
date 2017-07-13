@@ -39,21 +39,6 @@ function listGroups()
 
 	}
 
-	foreach ($groups as $i => $group) {
-	$gAdminId = $groups[$i]['adminId'];
-		$users = array();
-		$sqlusers = $db->query("SELECT * FROM users WHERE id = '$gAdminId'");
-		WHILE($user = mysqli_fetch_array($sqlusers))
-		{
-			$users[] = array(
-				"adminName" => $user['name'],
-				"adminPhone" => $user['phone']
-				 );
-		}
-		$groups[$i]['groupAdmin'] = $users;
-	}
-	unset($groups[$i]['adminId']);
-
 	header('Content-Type: application/json');
 
 	$groups = json_encode($groups);
@@ -106,7 +91,7 @@ function createGroup()
 			VALUES('yes','$lastid','$adminId','$adminId', now())")or die(mysqli_error());
 			if($db)
 			{
-				listGroups();
+				//listGroups();
 			}
 			else
 			{
@@ -156,7 +141,7 @@ function modifyGroup()
 		
 		if($outCon)
 		{ 
-			listGroups();
+			//listGroups();
 		}
 		else
 		{
@@ -181,7 +166,7 @@ function deleteGroup()
 	
 	if($db)
 	{
-		listGroups();
+		//listGroups();
 	}
 	else
 	{
@@ -230,7 +215,7 @@ function inviteMember()
 		try 
 		{
 			$results = $gateway->sendMessage($recipients, $message, $from);
-			listGroups();
+			//listGroups();
 		}
 		catch (AfricasTalkingGatewayException $e)
 		{
@@ -244,7 +229,8 @@ function inviteMember()
 	}
 }
 
-function listMembers(){
+function listMembers()
+{
 	require('../db.php');
 	$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
 	$sqlMembers = $db->query("SELECT * FROM members WHERE groupId = '$groupId'") or die(mysqli_error());
