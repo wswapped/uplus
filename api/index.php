@@ -51,8 +51,6 @@ function createGroup()
 		$adminPhone = $rowid['phone'];
 	}
 
-
-
 	$db->query("INSERT INTO groups
 		(groupName, adminId, adminPhone, 
 		 targetAmount, perPerson, createdDate,
