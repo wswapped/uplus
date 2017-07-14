@@ -19,31 +19,16 @@ else
 function listGroups()
 {
 	include("../db.php");
-	$sqlgroups = $db->query("SELECT * FROM groups WHERE archive is null ORDER BY id DESC");
+	$sqlgroups = $db->query("SELECT groupName, targetAmount, perPerson, adminId, adminName, groupDesc FROM groups WHERE archive is null ORDER BY id DESC");
 	$groups = array();
 	WHILE($group = mysqli_fetch_array($sqlgroups))
 	{
-		$groups[] = array(
-		   "groupId"        => mysqli_real_escape_string($db, $group['id']),
-		   "adminId"        => mysqli_real_escape_string($db, $group['adminId']),
-		   "groupName"      => mysqli_real_escape_string($db, $group['groupName']),
-		   "groupDesc"      => mysqli_real_escape_string($db, $group['groupDesc']),
-		   "groupStory"     => mysqli_real_escape_string($db, $group['groupStory']),
-		   "targetAmount"   => mysqli_real_escape_string($db, $group['targetAmount']),
-		   "perPerson"      => mysqli_real_escape_string($db, $group['perPerson']),
-		   "expirationDate" => mysqli_real_escape_string($db, $group['expirationDate']),
-		   "likes"          => mysqli_real_escape_string($db, $group['likes']),
-		   "groupImage"     => 'http://www.uplus.rw/temp/group'.$group['id'].'.jpeg'
-
-		);
-
+		$groups[] = $group;
 	}
 
 	header('Content-Type: application/json');
-
 	$groups = json_encode($groups);
-
-	echo '{ "groups" : '.$groups.' }';
+	echo $groups;
 }
 
 function createGroup()
@@ -62,7 +47,7 @@ function createGroup()
 	$countAdmins = mysqli_num_rows($sqliAdmin);
 	if($countAdmins > 0)
 	{
-		$rowid = mysqli_fetch_array($sqlid);
+		$rowid = mysqli_fetch_array($sqliAdmin);
 		$adminPhone = $rowid['phone'];
 	}
 
@@ -92,6 +77,7 @@ function createGroup()
 			if($db)
 			{
 				//listGroups();
+				echo 'group Created';
 			}
 			else
 			{
