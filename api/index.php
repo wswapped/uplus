@@ -25,7 +25,7 @@ function listGroups()
 	WHILE($group = mysqli_fetch_array($sqlgroups))
 	{
 		$groups[] = $group;
-		$groupId = $group[groupId];
+		$groupId = $group['groupId'];
 		$sychronize = $db->query("UPDATE groups SET syncstatus = 'Yes' WHERE id ='$groupId' AND syncstatus = 'No'");
 	}
 
