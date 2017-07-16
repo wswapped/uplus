@@ -19,7 +19,8 @@ else
 function listGroups()
 {
 	include("../db.php");
-	$sqlgroups = $db->query("SELECT groupId, syncstatus, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc FROM members");
+	$memberId			= mysqli_real_escape_string($db, $_POST['memberId']);
+	$sqlgroups = $db->query("SELECT groupId, syncstatus, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc FROM members WHERE memberId = '$memberId'");
 	$groups = array();
 	WHILE($group = mysqli_fetch_array($sqlgroups))
 	{
