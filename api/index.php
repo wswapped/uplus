@@ -18,14 +18,17 @@ else
 
 function listGroups()
 {
-	include("../db.php");
+		include("../db.php");
 	$memberId			= mysqli_real_escape_string($db, $_POST['memberId']);
 	$sqlgroups = $db->query("SELECT groupId, syncstatus, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc FROM members WHERE memberId = '$memberId'");
 	$groups = array();
 	WHILE($group = mysqli_fetch_array($sqlgroups))
 	{
 		$groups[] = $group;
+		$groupId = $group[groupId];
+		$sychronize = $db->query("UPDATE groups SET syncstatus = 'Yes' WHERE id ='$groupId' AND syncstatus = 'No'");
 	}
+
 
 	header('Content-Type: application/json');
 	$groups = json_encode($groups);
