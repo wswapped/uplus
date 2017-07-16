@@ -19,7 +19,7 @@ else
 function listGroups()
 {
 	include("../db.php");
-	$sqlgroups = $db->query("SELECT id AS groupId, groupName,groupTargetType, perPersonType targetAmount, perPerson, adminId, adminName, groupDesc FROM groups WHERE archive is null ORDER BY id DESC");
+	$sqlgroups = $db->query("SELECT id AS groupId, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc FROM groups WHERE archive is null ORDER BY id DESC");
 	$groups = array();
 	WHILE($group = mysqli_fetch_array($sqlgroups))
 	{
