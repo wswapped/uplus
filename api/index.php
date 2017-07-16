@@ -34,14 +34,14 @@ function listGroups()
 function createGroup()
 {
 	require('../db.php');
-	echo " -groupName :".$groupName			= mysqli_real_escape_string($db, $_POST['groupName']);
-	echo " -groupTargetType :".$groupTargetType	= mysqli_real_escape_string($db, $_POST['groupTargetType']);
-	echo " -targetAmount :".$targetAmount		= mysqli_real_escape_string($db, $_POST['targetAmount']);
-	echo " -perPersonType :".$perPersonType		= mysqli_real_escape_string($db, $_POST['perPersonType']);
-	echo " -perPerson :".$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
-	echo " -adminId :".$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
-	echo " -accountNumber :".$accountNumber		= mysqli_real_escape_string($db, $_POST['accountNumber']);
-	echo " -bankId :".$bankId				= mysqli_real_escape_string($db, $_POST['bankId']);
+	$groupName			= mysqli_real_escape_string($db, $_POST['groupName']);
+	$groupTargetType	= mysqli_real_escape_string($db, $_POST['groupTargetType']);
+	$targetAmount		= mysqli_real_escape_string($db, $_POST['targetAmount']);
+	$perPersonType		= mysqli_real_escape_string($db, $_POST['perPersonType']);
+	$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
+	$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
+	$accountNumber		= mysqli_real_escape_string($db, $_POST['accountNumber']);
+	$bankId				= mysqli_real_escape_string($db, $_POST['bankId']);
 	
 	$sqliAdmin = $db->query("SELECT phone FROM users WHERE id = '$adminId'");
 	$countAdmins = mysqli_num_rows($sqliAdmin);
