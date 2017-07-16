@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST")
 	}
 	else
 	{
-		echo 'Please Read the API documentation';
+		echo $_POST['action'].'Please Read the API documentation';
 	}
 }
 else
@@ -75,7 +75,7 @@ function createGroup()
 			if($db)
 			{
 				//listGroups();
-				echo 'group Created';
+				echo "".$lastid."";
 			}
 			else
 			{
