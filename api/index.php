@@ -235,6 +235,6 @@ function listMembers()
 	}	
 	header('Content-Type: application/json');
 	$members = json_encode($members);
-	echo '{ "members" : '.$members.' }';
+	echo $members;
 }
 ?>
