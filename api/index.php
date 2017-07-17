@@ -25,8 +25,8 @@ function listGroups()
 	WHILE($group = mysqli_fetch_array($sqlgroups))
 	{
 		$groups[] = $group;
-		$groupId = $group['groupId'];
-		$sychronize = $db->query("UPDATE groups SET syncstatus = 'Yes' WHERE id ='$groupId' AND syncstatus = 'No'");
+		//$groupId = $group['groupId'];
+		//$sychronize = $db->query("UPDATE groups SET syncstatus = 'Yes' WHERE id ='$groupId' AND syncstatus = 'No'");
 	}
 
 
@@ -235,6 +235,6 @@ function listMembers()
 	}	
 	header('Content-Type: application/json');
 	$members = json_encode($members);
-	echo $members;
+	echo '{ "members" : '.$members.' }';
 }
 ?>
