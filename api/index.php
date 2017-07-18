@@ -283,7 +283,7 @@ function signup()
 
 	try 
 	{
-		$results = $gateway->sendMessage($recipients, $message, $from);
+		//$results = $gateway->sendMessage($recipients, $message, $from);
 		
 		header('Content-Type: application/json');
 		$signInfo = json_encode($signInfo);
