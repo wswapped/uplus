@@ -236,4 +236,65 @@ function listMembers()
 	header('Content-Type: application/json');
 	echo $members = json_encode($members);
 }
+
+function signup()
+{
+	require('../db.php');
+	$phoneNumber	= mysqli_real_escape_string($db, $_POST['phoneNumber']);
+	$sqlcheckPin = $db->query("SELECT *  FROM users WHERE phone = '$phoneNumber' LIMIT 1");
+	$countPin = mysqli_num_rows($sqlcheckPin);
+	$signInfo = array();
+	if($countPin > 0)
+	{
+		while ($rowpin = mysqli_fetch_array($sqlcheckPin)) {
+			$code = $rowpin['password'];
+			$signInfo = array(
+		   		"pin"        => $rowpin['password'],
+		   		"userId"     => $rowpin['id'],
+		   		"userName"   => $rowpin['name']
+		   );
+		}
+	}else
+	{
+		$code = rand(1000, 9999);
+		$sqlsavePin = $db->query("INSERT INTO `users`(
+		phone, active, createdDate, password,visits) 
+		VALUES('$phoneNumber','0',now(),'$code','0')")or die (mysqli_error());
+
+		$sqlcheckPin = $db->query("SELECT *  FROM users ORDER BY id DESC LIMIT 1");
+		while ($rowpin = mysqli_fetch_array($sqlcheckPin)) {
+			$code = $rowpin['password'];
+			$signInfo = array(
+		   		"pin"        => $rowpin['password'],
+		   		"userId"     => $rowpin['id'],
+		   		"userName"   => $rowpin['name']
+		   );
+		}
+	}
+	$results="";
+	// 'went to require sms class';
+	require_once('../classes/sms/AfricasTalkingGateway.php');
+	$username   = "cmuhirwa";
+	$apikey     = "2b11603e7dc4c35a64bfdda3ad8d78e48db8a4afc9032a2a57209ba902a21154";
+	$recipients = '+25'.$phoneNumber;
+	$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';// Specify your AfricasTalking shortCode or sender id
+	$from = "uplus";
+
+	$gateway    = new AfricasTalkingGateway($username, $apikey);
+
+	try 
+	{
+		$results = $gateway->sendMessage($recipients, $message, $from);
+		
+		header('Content-Type: application/json');
+		$signInfo = json_encode($signInfo);
+		echo '['.$signInfo.']';
+
+	}
+	catch (AfricasTalkingGatewayException $e)
+	{
+		$results.="Encountered an error while sending: ".$e->getMessage();
+		echo $results;
+	}
+}
 ?>
