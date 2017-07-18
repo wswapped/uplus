@@ -297,4 +297,19 @@ function signup()
 		echo $results;
 	}
 }
+
+function updateProfile(){
+	require('../db.php');
+	$userId				= mysqli_real_escape_string($db, $_POST['userId']);
+	$userName			= mysqli_real_escape_string($db, $_POST['userName']);
+	$db->query("UPDATE users SET name = '$userName', active = 1, last_visit = now(), visits = 1 WHERE id = '$userId'")or die(mysqli_error());
+	if($db)
+	{
+		echo 1;
+	}
+	else
+	{
+		echo 0;
+	}
+}
 ?>
