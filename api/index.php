@@ -19,16 +19,15 @@ else
 function listGroups()
 {
 		include("../db.php");
-	$memberId			= mysqli_real_escape_string($db, $_POST['memberId']);
-	$sqlgroups = $db->query("SELECT groupId, syncstatus, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc FROM members WHERE memberId = '$memberId'");
-	$groups = array();
-	WHILE($group = mysqli_fetch_array($sqlgroups))
+	$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
+	$sqlgroups 		= $db->query("SELECT groupId, syncstatus, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc FROM members WHERE memberId = '$memberId'")or die(mysqli_error());
+	$groups 		= array();
+	WHILE($group 	= mysqli_fetch_array($sqlgroups))
 	{
-		$groups[] = $group;
-		//$groupId = $group['groupId'];
-		//$sychronize = $db->query("UPDATE groups SET syncstatus = 'Yes' WHERE id ='$groupId' AND syncstatus = 'No'");
+		$groups[] 	= $group;
+		$groupId 	= $group['groupId'];
+		$sychronize = $db->query("UPDATE groups SET syncstatus = 'Yes' WHERE id ='$groupId' AND syncstatus = 'No'")or die(mysqli_error());
 	}
-
 
 	header('Content-Type: application/json');
 	$groups = json_encode($groups);
@@ -300,9 +299,9 @@ function signup()
 
 function updateProfile(){
 	require('../db.php');
-	$userId				= mysqli_real_escape_string($db, $_POST['userId']);
-	$userName			= mysqli_real_escape_string($db, $_POST['userName']);
-	$db->query("UPDATE users SET name = '$userName', active = 1, last_visit = now(), visits = 1 WHERE id = '$userId'")or die(mysqli_error());
+	echo $userId				= mysqli_real_escape_string($db, $_POST['userId']);
+	echo $userName			= mysqli_real_escape_string($db, $_POST['userName']);
+	/*$db->query("UPDATE users SET name = '$userName', active = 1, last_visit = now(), visits = 1 WHERE id = '$userId'")or die(mysqli_error());
 	if($db)
 	{
 		echo 1;
@@ -310,6 +309,8 @@ function updateProfile(){
 	else
 	{
 		echo 0;
-	}
+	}*/
 }
+
+
 ?>
