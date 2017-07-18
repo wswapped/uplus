@@ -221,7 +221,7 @@ function listMembers()
 {
 	require('../db.php');
 	$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
-	$sqlMembers = $db->query("SELECT * FROM members WHERE groupId = '$groupId'") or die(mysqli_error());
+	$sqlMembers = $db->query("SELECT `groupId`, `syncstatus`, `groupName`, `groupTargetType`, `perPersonType`, `targetAmount`, `perPerson`, `adminId`, `adminName`, `groupDesc`, `memberId`, `memberPhone`, COALESCE(`memberName`, `memberPhone`) `memberName` FROM `members` WHERE groupId = '$groupId'") or die(mysqli_error());
 	$members = array();
 	WHILE($member = mysqli_fetch_array($sqlMembers))
 	{
