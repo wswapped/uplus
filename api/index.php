@@ -16,6 +16,7 @@ else
 {
 	echo 'UPLUS API V01';
 }
+
 //START ACCOUNTS
 	function signup()
 	{
@@ -24,6 +25,7 @@ else
 		//CLEAN PHONE
 		$phoneNumber 	= preg_replace( '/[^0-9]/', '', $phoneNumber );
 		$phoneNumber 	= substr($phoneNumber, -10); 
+
 		//CHECK IF THE USER ALREADY EXISTS
 		$sqlcheckPin 	= $db->query("SELECT *  FROM users WHERE phone = '$phoneNumber' LIMIT 1");
 		$countPin 		= mysqli_num_rows($sqlcheckPin);
@@ -44,6 +46,7 @@ else
 			$sqlsavePin = $db->query("INSERT INTO `users`(
 			phone, active, createdDate, password, visits, updatedBy, updatedDate) 
 			VALUES('$phoneNumber', '0', now(), '$code', '0', '1', now())")or die (mysqli_error());
+
 			$sqlcheckPin = $db->query("SELECT * FROM users ORDER BY id DESC LIMIT 1");
 			while ($rowpin = mysqli_fetch_array($sqlcheckPin)) {
 				$code = $rowpin['password'];
@@ -80,6 +83,7 @@ else
 			echo 'System error';
 		}
 	}
+
 	function updateProfile()
 	{
 		require('db.php');
@@ -91,19 +95,25 @@ else
 		$rowVisit = mysqli_fetch_array($sql);
 		$visits = $rowVisit['visits'];
 		$newVisits = $visits + 1;
+
+
 		$db->query("UPDATE users SET name = '$userName', userImage = '$userImage', active = 1, last_visit = now(), visits = '$newVisits' WHERE id = '$userId'")or die(mysqli_error());
 		if($db)
 		{
+
 			echo $userImage;
 		}
 		else
 		{
 			echo 0;
 		}
+
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
 //END ACCOUNTS
+
+
 //START GROUPS 
 	function listGroups()
 	{
@@ -138,12 +148,14 @@ else
 				"groupBalance"		=> $gBalanceRow['groupBalance']
 			);
 		}
+
 		mysqli_close($db);
 		mysqli_close($outCon);
 		header('Content-Type: application/json');
 		$groups = json_encode($groups);
 		echo $groups;
 	}
+
 	function createGroup()
 	{
 		require('db.php');
@@ -162,6 +174,7 @@ else
 			$rowid = mysqli_fetch_array($sqliAdmin);
 			$adminPhone = $rowid['phone'];
 		}
+
 		$db->query("INSERT INTO groups
 			(groupName, groupImage, adminId, adminPhone, 
 			 targetAmount, perPerson, createdDate,
@@ -169,11 +182,13 @@ else
 			VALUES('$groupName', '$groupImage',$adminId,'$adminPhone',
 				$targetAmount, $perPerson,now(),
 				$adminId,'private','$groupTargetType','$perPersonType', '$adminId', now())") or die (mysqli_error($db));
+
 		if($db)
 		{
 			$sqlid = $db->query("SELECT id FROM groups ORDER BY id DESC LIMIT 1") or die (mysqli_error());
 			$rowid = mysqli_fetch_array($sqlid);
 			$lastid = $rowid['id'];
+
 			//ADD MEMBER TYPE
 			$getMemberType= $db->query("SELECT * FROM groupuser WHERE groupId='$lastid'");
 			$countTres = mysqli_num_rows($getMemberType);
@@ -189,6 +204,7 @@ else
 			$db->query("INSERT INTO groupuser
 			(`joined`, `groupId`, `userId`, type ,`createdBy`, `createdDate`, updatedBy, updatedDate)
 			VALUES('yes','$lastid','$adminId','$memberType', '$adminId', now(), '$adminId', now())")or die(mysqli_error());
+
 			
 			if($db)
 			{
@@ -214,9 +230,11 @@ else
 		{
 			echo 'Group not created';
 		}
+
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
 	function createcollection()
 	{
 		require('db.php');
@@ -227,6 +245,7 @@ else
 		//CLEAN PHONE
 		$accountNumber 	= preg_replace( '/[^0-9]/', '', $accountNumber );
 		$accountNumber 	= substr($accountNumber, -10); 
+
 		//CHECH IF THE ACCOUNT WASENT THERE BEFORE:
 		$sql = $outCon->query("SELECT id FROM groups WHERE groupId= '$groupId' LIMIT 1");
 		$check = mysqli_num_rows($sql);
@@ -251,9 +270,11 @@ else
 				echo 'Collection account is not created';
 			}
 		}
+
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
 	function modifyGroup()
 	{
 		require('db.php');
@@ -294,19 +315,25 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
+
 	function inviteMember()
 	{
 		require('db.php');
 		$groupId			= mysqli_real_escape_string($db, $_POST['groupId']);
 		$invitorId			= mysqli_real_escape_string($db, $_POST['invitorId']);
 		$invitedPhone		= mysqli_real_escape_string($db, $_POST['invitedPhone']);
+
+
 		//CLEAN PHONE
 		$invitedPhone 	= preg_replace( '/[^0-9]/', '', $invitedPhone );
 		$invitedPhone 	= substr($invitedPhone, -10); 
+
 		//CHECK FOR POISON
 		$sqlPoison = $db->query("SELECT id FROM groups WHERE id =  '$groupId'") or (mysqli_error());
 		if(mysqli_num_rows($sqlPoison) > 0)
 		{
+
 			$sql = $db->query("SELECT id FROM users WHERE phone =  $invitedPhone") or (mysqli_error());
 			$countUsers = mysqli_num_rows($sql);
 			if($countUsers > 0)
@@ -326,10 +353,12 @@ else
 					$sql 			= $db->query("SELECT id FROM users ORDER BY id DESC LIMIT 1");
 					$invitedArray 	= mysqli_fetch_array($sql);
 					$invitedId 		= $invitedArray['id'];
+
 					// CEATE THE MONEY ACCOUNT FOR THE PERSON
 					//$sqlmoney = $outCon->query("INSERT INTO members ");
 				}
 			}
+
 			// CHECK IF THE USER IS ALREADY IN THE GROUP
 			$sql = $db->query("SELECT * FROM groupuser WHERE groupId ='$groupId' AND userId='$invitedId'");
 			$checkExits = mysqli_num_rows($sql);
@@ -368,8 +397,10 @@ else
 					$memberType = 'Group treasurer';
 				}
 				
+
 				$sql = $db->query("INSERT INTO groupuser (joined, groupId, userId, type, createdBy, createdDate, updatedBy, updatedDate) 
 					VALUES ('yes','$groupId','$invitedId','$memberType','$invitorId', now(), '$invitorId', now())")or die(mysqli_error($db));
+
 				if($db)
 				{
 					$gnamesql = $db->query("SELECT groupName FROM groups WHERE id = '$groupId' LIMIT 1");
@@ -406,6 +437,7 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);		
 	}
+
 	function exitGroup()
 	{
 		include "db.php";
@@ -438,6 +470,7 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
 	function listMembers()
 	{
 		require('db.php');
@@ -460,6 +493,7 @@ else
 						),0
 						) AS memberContribution 
 					FROM uplus.members m")	or die(mysql_error($sqlContribution));
+
 			$contributionRow = mysqli_fetch_array($sqlContribution);
 			
 			$members[] = array(
@@ -478,19 +512,25 @@ else
 		header('Content-Type: application/json');
 		echo $members = json_encode($members);
 	}
+
 	function contribute()
 	{
 		require('db.php');
+
 		$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
 		$groupId		= mysqli_real_escape_string($db, $_POST['groupId']);
 		$amount 		= mysqli_real_escape_string($db, $_POST['amount']);
 		$pushNumber 	= mysqli_real_escape_string($db, $_POST['pushnumber']);
 		$pushBank		= mysqli_real_escape_string($db, $_POST['senderBank']);
+
 		//CLEAN PHONE
 		$pushNumber 	= preg_replace( '/[^0-9]/', '', $pushNumber );
 		$pushNumber 	= substr($pushNumber, -10); 
+
 		//CLEAN AMOUNT
 		$amount	= floor($amount/100)*100;
+
+
 		// GET USER'S INFROMATION
 		$sql = $db->query("SELECT groupName, memberName FROM members WHERE groupId = '$groupId' AND memberId = '$memberId' LIMIT 1");
 		
@@ -501,6 +541,7 @@ else
 				$groupName 		= $row['groupName'];
 				$memberName		= $row['memberName'];
 			}
+
 			// SAVE THE TRANSACTION TO THE UPLUS DATABASE
 			$sql = $outCon->query("INSERT INTO grouptransactions(
 				memberId, groupId, amount, fromPhone, 
@@ -508,12 +549,14 @@ else
 			 	VALUES ('$memberId', '$groupId', '$amount', '$pushNumber', 
 			 	'$pushBank', 'DEBIT', 'CALLED', '1', now())")
 			 	 or mysqli_error($outCon);
+
 			if($outCon)
 			{
 				// GET THE TRANSACTION ID
 				$sqlRemovedId		= $outCon->query("SELECT id FROM grouptransactions ORDER BY id DESC LIMIT 1");
 				$remId 				= mysqli_fetch_array($sqlRemovedId);
 				$pushTransactionId 	= $remId['id'];
+
 				//CALL THE API
 				$url = 'https://www.intouchpay.co.rw/api/requestpayment/';
 		
@@ -532,6 +575,7 @@ else
 				$data["mobilephone"] 			= $phone;
 				$data["requesttransactionid"]	= $txt_id;
 				$data["accountid"] 				= '250150000003';
+
 			    $options = array(
 					'http' => array(
 						'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -560,6 +604,7 @@ else
 				else
 				{
 					$result = json_decode($result);
+
 					//Prepare data for db
 					$status 				= $result->{'status'};
 					$requesttransactionid   		= $result->{'requesttransactionid'};
@@ -582,12 +627,14 @@ else
 					")or die(mysqli_error($outCon));
 					// UPDATE MY DB
 					$sql2 = $outCon->query("UPDATE grouptransactions SET status='$status' WHERE id = '$pushTransactionId'") or die(mysql_error($outCon));
+
 					$returnedinformation    = array();   
 					$returnedinformation[] = array(
 					       		"transactionId" => $pushTransactionId,
 							"status" => $status,
 							"memberId"	=> $memberId
 					    );
+
 					header('Content-Type: application/json');
 					$returnedinformation = json_encode($returnedinformation);
 					echo $returnedinformation;
@@ -604,8 +651,10 @@ else
 		
 	function checkcontributionstatus()
 	{
+
 		require('db.php');
 		$myId = mysqli_real_escape_string($db, $_POST['transactionId']);
+
 		
 		// Get the transfer id
 		//sleep(5);
@@ -616,7 +665,9 @@ else
 		$pushNumber 			= $transactionIdArray['pushnumber'];
 		$amount 				= $transactionIdArray['amount'];
 		$newCheckCount 			= $checkCount + 1;
+
 		$sql2 = $outCon->query("UPDATE intouchapi SET checkCount= '$newCheckCount' WHERE requesttransactionid = '$requesttransactionid'");
+
 		// Check if the transfer status is back
 		$sql3a = $outCon->query("SELECT id, status FROM intouchResponses WHERE requesttransactionid = '$requesttransactionid' LIMIT 1");
 		$checkingCounts = mysqli_num_rows($sql3a);
@@ -627,7 +678,9 @@ else
 			$transId = $dataarray['id'];
 			$status = $dataarray['status'];
 			$outCon->query("UPDATE intouchResponses SET statusStatus= 'seen' WHERE id = '$transId'");
+
 			$sql2 = $outCon->query("UPDATE grouptransactions SET status='$status' WHERE id = '$myId'") or die(mysql_error($outCon));
+
 			if($outCon)
 			{
 				if($status == 'Successfull')
@@ -643,15 +696,18 @@ else
 					
 					// UPDATE THE MEMBER UPDATEDATE
 					$sql4 = $db->query("UPDATE users SET updatedBy = '1', updatedDate = now(), WHERE id = '$memberId'");
+
 					// Bwiuld the answel
 					$returnedinformation    = array();   
 					$returnedinformation[] 	= array(
 							"status" 		=> $status,
 					        "transactionId" => $myId
 					    );
+
 					header('Content-Type: application/json');
 					$returnedinformation = json_encode($returnedinformation);
 					echo $returnedinformation;
+
 				}
 				else
 				{
@@ -661,6 +717,7 @@ else
 						"status" => $status,
 					        "transactionId" => $myId
 					    );
+
 					header('Content-Type: application/json');
 					$returnedinformation = json_encode($returnedinformation);
 					echo $returnedinformation;
@@ -674,6 +731,7 @@ else
 							"status" => "Server Error",
 					        "transactionId" => $myId
 					    );
+
 					header('Content-Type: application/json');
 					$returnedinformation = json_encode($returnedinformation);
 					echo $returnedinformation;
@@ -718,6 +776,7 @@ else
 			    );
 			}
 			
+
 			header('Content-Type: application/json');
 			$returnedinformation = json_encode($returnedinformation);
 			echo $returnedinformation;
@@ -725,6 +784,7 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);	
 	}
+
 	function withdrawrequest()
 	{
 		include('db.php');
@@ -733,8 +793,10 @@ else
 		$memberId 			= mysqli_real_escape_string($db, $_POST['memberId']);
 		$withdrawAccount 	= mysqli_real_escape_string($db, $_POST['withdrawAccount']);
 		$withdrawBank 		= mysqli_real_escape_string($db, $_POST['withdrawBank']);
+
 		//CLEAN AMOUNT
 		$amount	= floor($amount/100)*100;
+
 		$sqlCheck 	= $outCon->query("SELECT id FROM withdrowrequests WHERE userId = '$memberId' AND (groupId = '$groupId' AND status = 'PENDING')");
 		$counted 	= mysqli_num_rows($sqlCheck);
 		if(!$counted > 0)
@@ -761,6 +823,7 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
 	function withdrawlist()
 	{
 		include("db.php");
@@ -782,6 +845,7 @@ else
 		$withdraws = json_encode($withdraws);
 		echo $withdraws;
 	}									
+
 	function withdrawvote()
 	{
 		include("db.php");
@@ -800,6 +864,7 @@ else
 			$counted 	= mysqli_num_rows($sqlCheck);
 			if(!$counted > 0)
 			{
+
 				$sqlNmofTrs = $db->query("SELECT * FROM members WHERE groupId = '$groupId' AND memberType = 'Group treasurer'");
 				$countNoT	= mysqli_num_rows($sqlNmofTrs);
 				$neededNoT	= $countNoT / 2;
@@ -817,14 +882,17 @@ else
 						if($countApprovals >= $neededNoT)
 						{
 							//APPROVE THE REQUEST
+
 							// GET THE USER NUMBER TO SEND THE MONEY TO
 							$sqlwithdrawInfo 	= $outCon->query("SELECT * FROM withdrowrequests WHERE id = '$requestId'");
 							$withdraw 			= mysqli_fetch_array($sqlwithdrawInfo);
 							$amount 			= $withdraw['amount'];
 							$pullNumber 		= $withdraw['withdrawAccount'];
+
 							//CLEAN PHONES
 							$pullNumber 		= preg_replace( '/[^0-9]/', '', $pullNumber );
 							$pullNumber 		= substr($pullNumber, -10);
+
 							// CALL THE API
 							
 							// SENDING PAYMENT REQUEST
@@ -848,6 +916,7 @@ else
 							$data["password"] 				= $generate_hash;
 							$data["mobilephone"] 			= $phone;
 							$data["requesttransactionid"]	= $txt_id;
+
 						    $options = array(
 								'http' => array(
 									'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -871,6 +940,7 @@ else
 								$requesttransactionid   = $result->{'requesttransactionid'};
 								$responsecode   		= $result->{'responsecode'};
 								$referenceid   			= $result->{'referenceid'};
+
 								// if the user recieved money
 								if($success == true)
 								{
@@ -939,6 +1009,7 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
 	function vote()
 	{
 		$groupId 	= $_POST['groupId'];
@@ -946,7 +1017,9 @@ else
 		$votedId1 	= $_POST['votedId1'];
 		$votedId2 	= $_POST['votedId2'];
 		$votedId3 	= $_POST['votedId3'];
+
 		// INSERT A VOTE
+
 		/* CHECK IF VOTERS OF SAME ID ARE 50% THAN THE TOTAL NUMBER OF MEMBERS
 			IF YES 
 				THEN GET THE
@@ -956,15 +1029,19 @@ else
 		mysqli_close($outCon);
 	}
 //END GROUPS
+
+
 //START TRANSFERS
 	function directtransfer()
 	{
 		require('db.php');
+
 		$amount 		= mysqli_real_escape_string($db, $_POST['amount']);
 		$pushId			= mysqli_real_escape_string($db, $_POST['senderId']);
 		$pushName		= mysqli_real_escape_string($db, $_POST['senderName']);
 		$pushNumber		= mysqli_real_escape_string($db, $_POST['senderPhone']);
 		$pushBank		= mysqli_real_escape_string($db, $_POST['senderBank']);
+
 		$pullName		= mysqli_real_escape_string($db, $_POST['receiverName']);
 		$pullNumber		= mysqli_real_escape_string($db, $_POST['receiverPhone']);
 		$pullBank		= mysqli_real_escape_string($db, $_POST['receiverBank']);
@@ -975,8 +1052,10 @@ else
 		
 		$pushNumber = substr($pushNumber, -10); 
 		$pullNumber = substr($pullNumber, -10);
+
 		//CLEAN AMOUNT
 		$amount	= floor($amount/100)*100; 
+
 		
 		//GET RECIEVER'S ID IF EXISTS
 		$sql = $db->query("SELECT name, id FROM users WHERE phone = '$pullNumber' LIMIT 1");
@@ -999,13 +1078,16 @@ else
 			('$pullId', '$pullName','$pullNumber', '$pullBank', 'CALLED','DEBIT', '$amount')
 		
 			") or mysqli_error($outCon);
+
 		if($outCon)
 		{
 			$sqlRemovedId= $outCon->query("SELECT id FROM directtransfers ORDER BY id DESC LIMIT 1");
 			$remId = mysqli_fetch_array($sqlRemovedId);
 			$pullTransactionId = $remId['id'];
 			$pushTransactionId = $pullTransactionId - 1;
+
 			
+
 			$url = 'https://www.intouchpay.co.rw/api/requestpayment/';
 		
 			$phone = '25'.$pushNumber;
@@ -1023,6 +1105,7 @@ else
 			$data["mobilephone"] 			= $phone;
 			$data["requesttransactionid"]	= $txt_id;
 			$data["accountid"] 				= '250150000003';
+
 		    $options = array(
 				'http' => array(
 					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -1049,6 +1132,7 @@ else
 			else
 			{
 				$result = json_decode($result);
+
 				//Prepare data for db
 				$status 				= $result->{'status'};
 				$requesttransactionid   = $result->{'requesttransactionid'};
@@ -1071,11 +1155,13 @@ else
 				")or die(mysqli_error($outCon));
 				// UPDATE MY DB
 				$sql2 = $outCon->query("UPDATE directtransfers SET status='$status' WHERE id = '$pushTransactionId'") or die(mysql_error($outCon));
+
 				$returnedinformation    = array();   
 				$returnedinformation[] = array(
 						"status" => $status,
 				        "transactionId" => $pushTransactionId
 				    );
+
 				header('Content-Type: application/json');
 				$returnedinformation = json_encode($returnedinformation);
 				echo $returnedinformation;
@@ -1088,6 +1174,7 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
 	function checktransferstatus()
 	{	
 		require('db.php');
@@ -1103,18 +1190,25 @@ else
 		$pullNumber = $transactionIdArray['pullnumber'];
 		$amount 	= $transactionIdArray['amount'];
 		$newCheckCount = $checkCount + 1;
+
 		$sql2 = $outCon->query("UPDATE intouchapi SET checkCount= '$newCheckCount' WHERE requesttransactionid = '$requesttransactionid'");
+
+
+
 		// Check if the transfer status is back
 		$sql3a = $outCon->query("SELECT id, status FROM intouchResponses WHERE requesttransactionid = '$requesttransactionid' LIMIT 1");
 		$checkingCounts = mysqli_num_rows($sql3a);
 		if($checkingCounts > 0)
 		{
 			// update the db to seen the answel
+
 			$dataarray = mysqli_fetch_array($sql3a);
 			$transId = $dataarray['id'];
 			$status = $dataarray['status'];
 			$outCon->query("UPDATE intouchResponses SET statusStatus= 'seen' WHERE id = '$transId'");
+
 			$sql2 = $outCon->query("UPDATE directtransfers SET status='$status' WHERE id = '$myId'") or die(mysql_error($outCon));
+
 			if($outCon)
 			{
 				if($status == 'Successfull')
@@ -1122,6 +1216,7 @@ else
 					
 					sleep(3);
 					// SENDING PAYMENT REQUEST
+
 					$url = 'https://www.intouchpay.co.rw/api/requestdeposit/';
 		
 					$phone = '25'.$pullNumber;
@@ -1141,6 +1236,7 @@ else
 					$data["password"] 				= $generate_hash;
 					$data["mobilephone"] 			= $phone;
 					$data["requesttransactionid"]	= $txt_id;
+
 				    $options = array(
 						'http' => array(
 							'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -1169,6 +1265,7 @@ else
 						$requesttransactionid   = $result->{'requesttransactionid'};
 						$responsecode   		= $result->{'responsecode'};
 						$referenceid   			= $result->{'referenceid'};
+
 						
 						// if the user recieved money
 						if($success == true)
@@ -1178,6 +1275,7 @@ else
 									"status" => "Successfull",
 							        "transactionId" => $myId
 							    );
+
 							header('Content-Type: application/json');
 							$returnedinformation = json_encode($returnedinformation);
 							echo $returnedinformation;
@@ -1190,6 +1288,7 @@ else
 									"status" => "Refund",
 							        "transactionId" => $myId
 							    );
+
 							header('Content-Type: application/json');
 							$returnedinformation = json_encode($returnedinformation);
 							echo $returnedinformation;
@@ -1224,6 +1323,7 @@ else
 							);
 							$context  = stream_context_create($options);
 							$result = file_get_contents($url, false, $context);
+
 							// WE SHALL Bwiuld the answel
 						}
 					}
@@ -1236,6 +1336,7 @@ else
 							"status" => $status,
 					        "transactionId" => $myId
 					    );
+
 					header('Content-Type: application/json');
 					$returnedinformation = json_encode($returnedinformation);
 					echo $returnedinformation;
@@ -1247,6 +1348,7 @@ else
 							"status" => "Server Error",
 					        "transactionId" => $myId
 					    );
+
 					header('Content-Type: application/json');
 					$returnedinformation = json_encode($returnedinformation);
 					echo $returnedinformation;
@@ -1291,6 +1393,7 @@ else
 			    );
 			}
 			
+
 			header('Content-Type: application/json');
 			$returnedinformation = json_encode($returnedinformation);
 			echo $returnedinformation;
@@ -1299,6 +1402,7 @@ else
 		mysqli_close($outCon);
 		
 	}
+
 	/*
 	function requestmoney()
 	{
@@ -1307,6 +1411,7 @@ else
 		$pushName	= $_POST['senderName'];
 		$pushNumber	= $_POST['senderPhone'];
 		$pushBank	= $_POST['senderBank'];
+
 		$pullName	= $_POST['receiverName'];
 		$pullNumber	= $_POST['receiverPhone'];
 		$pullBank	= $_POST['receiverBank'];
@@ -1314,7 +1419,9 @@ else
 		//CLEAN PHONES
 		$pushNumber = substr($pushNumber, -10); 
 		$pullNumber = substr($pullNumber, -10); 
+
 		require('db.php');
+
 		//GET RECIEVER'S ID IF EXISTS
 		$sql = $db->query("SELECT name, id FROM users WHERE phone = '$pullNumber' LIMIT 1");
 		$checkAvailb = mysqli_num_rows($sql);
@@ -1328,6 +1435,7 @@ else
 		{
 			$pullId = 0;
 		}
+
 		$sql = $db->query("INSERT INTO requestandpay(
 		requestor, responder, amount, account1,
 		account2, status, createdDate, createdBy,
@@ -1336,8 +1444,10 @@ else
 		'$pushId', '$pullId', '$amount', '$pushNumber',
 		'$pullNumber', 'PENDING', now(),'$pushId', now(), '$pushId'
 			)")or die error($db);
+
 		// SEND AN SMS THAT YOU HAVE A PENDING INVOICE
 	}
+
 	function responsmoney()
 	{
 		$answer		= $_POST['answer'];
@@ -1348,6 +1458,7 @@ else
 			$pushName	= $_POST['senderName'];
 			$pushNumber	= $_POST['senderPhone'];
 			$pushBank	= $_POST['senderBank'];
+
 			$pullName	= $_POST['receiverName'];
 			$pullNumber	= $_POST['receiverPhone'];
 			$pullBank	= $_POST['receiverBank'];
@@ -1355,6 +1466,7 @@ else
 			//CLEAN PHONES
 			$pushNumber = substr($pushNumber, -10); 
 			$pullNumber = substr($pullNumber, -10);
+
 			echo '$name, approved your request';
 		}
 		else
@@ -1364,6 +1476,8 @@ else
 	}
 	*/
 //END TRANSFERS
+
+
 //STAR FINANCE
 	function topup()
 		{
@@ -1496,16 +1610,21 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
 	function liquidate()
 	{
 		require('db.php');
 		$pullNumber 	= mysqli_real_escape_string($db, $_POST['pullNumber']);
 		$amount 		= mysqli_real_escape_string($db, $_POST['amount']);
+
 		//CLEAN PHONES
 		$pullNumber 	= preg_replace( '/[^0-9]/', '', $pullNumber );
 		$pullNumber = substr($pullNumber, -10);
+
 		//CLEAN AMOUNT
 		$amount	= floor($amount/100)*100; 
+
+
 		$url = 'https://www.intouchpay.co.rw/api/requestdeposit/';
 		//$amount 			=	100;
 		$phone 				=	'25'.$pullNumber;
@@ -1552,11 +1671,15 @@ else
 			$success   					= $result->{'success'};
 			$requesttransactionid   	= $result->{'requesttransactionid'};
 			$responsecode   			= $result->{'responsecode'};
+
 			
 			// if the use recieved money
 			if($success == true)
 			{
+
 					$referenceid   				= $result->{'referenceid'};
+
+
 				$returnedinformation    = array();   
 				$returnedinformation[] = array(
 						"success" => $success,
@@ -1564,12 +1687,14 @@ else
 						"responsecode" => $responsecode,
 						"referenceid" => $referenceid 
 				    );
+
 				header('Content-Type: application/json');
 				$returnedinformation = json_encode($returnedinformation);
 				echo $returnedinformation;
 			}
 			elseif($success == false)
 			{
+
 				echo 'Refund proccess';
 				$returnedinformation    = array();   
 				$returnedinformation[] = array(
@@ -1577,6 +1702,7 @@ else
 						"requesttransactionid" => $requesttransactionid,
 						"responsecode" => $responsecode
 				    );
+
 				header('Content-Type: application/json');
 				$returnedinformation = json_encode($returnedinformation);
 				echo $returnedinformation;
@@ -1585,12 +1711,15 @@ else
 			}
 		}
 	}
+
 	function balance()
 	{
 		$account = mysqli_real_escape_string($db, $_POST['account']);
 		// CHECK BALLANCE ON THIS ACCOUNT
 	}
 //END FINANCE
+
+
 function notification()
 {
 	function send_notification ($tokens, $message)
@@ -1600,10 +1729,12 @@ function notification()
 			 'registration_ids' => $tokens,
 			 'data' => $message
 			);
+
 		$headers = array(
 			'Authorization:key = AIzaSyCVsbSeN2qkfDfYq-IwKrnt05M1uDuJxjg',
 			'Content-Type: application/json'
 			);
+
 	   $ch = curl_init();
        curl_setopt($ch, CURLOPT_URL, $url);
        curl_setopt($ch, CURLOPT_POST, true);
@@ -1619,23 +1750,31 @@ function notification()
        curl_close($ch);
        return $result;
 	}	
+
 	$conn = mysqli_connect("localhost","clement","clement123","fcm");
+
 	$sql = "Select Token From users";
+
 	$result = mysqli_query($conn,$sql);
 	$tokens = array();
+
 	if(mysqli_num_rows($result) > 0 ){
 		while ($row = mysqli_fetch_assoc($result)) {
 			$tokens[] = $row["Token"];
 		}
 	}
+
 	mysqli_close($conn);
+
 	$message = array("message" => $_POST['message']);
 	$message_status = send_notification($tokens, $message);
 	header('Content-Type: application/json');
 	echo $message_status;
 }
+
 function clean()
 {
+
 	function cleangroups()
 	{
 		include"db.php";
@@ -1653,6 +1792,7 @@ function clean()
 			//   if(is_file($file))
 			//     unlink($file); // delete file
 			// }
+
 			echo 'GROUPS CLEAN SUCCESSFULLY';
 		}
 		else
@@ -1677,6 +1817,7 @@ function clean()
 			// }
 			cleangroups();
 		}
+
 		else
 		{
 			echo 'USERS DID NOT CLEAN';
@@ -1687,18 +1828,22 @@ function clean()
 	if(isset($_POST['cleaner']))
 	{
 		//BACKUP THE INTIRE DATABASE
+
 		$_POST['cleaner']();
 	}
 }
+
 function sms()
 {
 	$phone 		= $_POST['phone'];
 	$sender 	= $_POST['sender'];
 	$message 	= $_POST['message'];
 		
+
 	//CLEAN PHONE
 	$phone 	= preg_replace( '/[^0-9]/', '', $phone );
 	$phone 	= substr($phone, -10); 
+
 	$recipients = '+25'.$phone;
 	//$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
 	$data = array(
