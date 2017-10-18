@@ -512,15 +512,13 @@ function registerFb()
                         <div class="uk-accordion-content">
                             <p>Lets say you are contributing $100 using visa or master card on a group which uses RWF.
                             <br>Uplus instantly converts $100 into RWF, for now it will be 85,000Rwf,
-                             sends it into the group. At a time the group wishes to withdraw using eather MTN mobile money, Tigo Cash orany Bank account in Rwanda the total amount collected
+                             sends it into the group. At a time the group wishes to withdraw using eather MTN mobile money, Tigo Cash or any Bank account in Rwanda the total amount collected
                              in the group including your $100 will be charged 5%. 
                             </p>
                         </div>
                         <h3 class="uk-accordion-title">WHAT IF I'M USING MTN MOBILE MONEY</h3>
                         <div class="uk-accordion-content">
-                            <p>Let's say you are contributing 10,000RWF using MTN Mobile Money to a group withdrawing using tigo cash 
-                            	MTN will take 2% transfer fee to and uPlus will take 2.5 transfer fee and tigo 0.5%
-                            </p>
+                            <p></p>
                         </div>
                         <h3 class="uk-accordion-title">IS UPLUS A BANK OR FINANCIAL INSTITUTION?</h3>
                         <div class="uk-accordion-content">
