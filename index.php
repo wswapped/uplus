@@ -188,7 +188,8 @@ function registerFb()
                             <a href="#sect-fund" class="uk-navbar-nav-subtitle">
                                 <?php 
 								include('db.php');
-								$sql= $outCon->query("SELECT sum(balance) totalbalance FROM `groupbalance`");
+								//$sql= $outCon->query("SELECT sum(balance) totalbalance FROM `groupbalance`");
+								$sql= $outCon->query("SELECT sum(amount) totalbalance FROM `directtransfers`");
 								$balancerow = mysqli_fetch_array($sql);
 								echo number_format($balancerow['totalbalance']);?>
 								Rwf
