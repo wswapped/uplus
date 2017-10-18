@@ -449,7 +449,7 @@ function registerFb()
 									
 									
 									<a class="fundname" href="f/i'.$row['id'].'">
-										<h4 class="fundtitle">'.$groupName.'</h4>
+										<h4 class="fundtitle">'.$groupName.' </h4>
 									</a>
 									
 								</div>
