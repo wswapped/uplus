@@ -237,7 +237,7 @@ else{
 									<h6 class="fundDesc"><?php echo $groupDesc;?><br><br></h6>
 								</div>
 							</div>
-							<div class="fundImg" style="background-image: url(../temp/group<?php echo $groupID;?>.jpeg);"></div>
+							<div class="fundImg" style="background-image: url(<?php echo $row['groupImage'];?>);"></div>
 						</section>
 				        <section class="section--center contSection">
 							<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
