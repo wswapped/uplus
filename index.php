@@ -511,9 +511,9 @@ function registerFb()
                         <h3 class="uk-accordion-title">WHAT IF I'M USING VISA CARD</h3>
                         <div class="uk-accordion-content">
                             <p>Lets say you are contributing $100 using visa or master card on a group which uses RWF.
-                            <br>$100 is converted into RWF, for now it will be 84,000Rwf,
-                            Bank of kigali Takes 2.5% Visa Processing Fee = 81,900 Rwf, and uPlus will take 2.5% 
-                            for the service and send 79,800Rwf to the group admin who uses Mobile money 
+                            <br>Uplus instantly converts $100 into RWF, for now it will be 85,000Rwf,
+                             sends it into the group. At a time the group wishes to withdraw using eather MTN mobile money, Tigo Cash orany Bank account in Rwanda the total amount collected
+                             in the group including your $100 will be charged 5%. 
                             </p>
                         </div>
                         <h3 class="uk-accordion-title">WHAT IF I'M USING MTN MOBILE MONEY</h3>
