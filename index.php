@@ -192,7 +192,7 @@ function registerFb()
 								$balancerow = mysqli_fetch_array($sql);
 								echo number_format($balancerow['totalbalance']);?>
 								Rwf
-                                <div>Now Raised on Uplus</div>
+                                <div>Now Collected on Uplus</div>
                             </a>
                         </li>
                         <li>
@@ -223,7 +223,7 @@ function registerFb()
 				<li>
 					<a href="#raised" class="uk-navbar-nav-subtitle" data-uk-smooth-scroll="{offset: 48}">
 						<span class="menu_icon"><i class="material-icons">&#xE227;</i></span>
-						<span class="menu_title"><?php echo number_format($balancerow['totalbalance']);?> Rwf<small>Now Raised on Uplus</small></span>
+						<span class="menu_title"><?php echo number_format($balancerow['totalbalance']);?> Rwf<small>Now Collected on Uplus</small></span>
 					</a>
 				</li>
 				<li>
@@ -253,7 +253,7 @@ function registerFb()
 						<h1 class="heading text-uppercase" style='color: #fff;
 							margin: 0 0 18px;
 							font: 700 45px/60px "Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif;'><br>
-											Raise money<br>
+											Collect money<br>
 							
 							<span id="typed" style="white-space:pre;"></span></h1>
 						<span class="divider white"></span>
@@ -272,7 +272,7 @@ function registerFb()
 								<div class="makegroupHeader">
 									<h2 class="slide_header" id="slide_header">UPLUS</h2>
 									<h4 class="text-center" style="color: #696969;margin: 0 0 30px;">
-										Raise money from friends and family here!
+										Collect money from friends and family here!
 									</h4>
 								</div>
 								<div class="makegroupBody" id="makegroupBody">
@@ -345,7 +345,7 @@ function registerFb()
     border-radius: 0 0 4px 4px; padding: 10px 25px 10px 25px;">
 									
 									<span style="float: right">
-										<a href="javascript:void()" onclick="raise()" class="md-btn md-btn-large md-btn-warning">Raise</a>
+										<a href="javascript:void()" onclick="raise()" class="md-btn md-btn-large md-btn-warning">Collect</a>
 									</span>
 								</div>
 							</div>
@@ -459,7 +459,7 @@ function registerFb()
 									  '.$prog.'%
 									</div>
 								</div>
-								<div class="raisedNow">Raised '.number_format($currentAmount).' Rwf </div> 
+								<div class="raisedNow">Collected '.number_format($currentAmount).' Rwf </div> 
 								<div class="md-card-content" style="min-height: 74px;">
 									';?>
 								<!--<script>
@@ -842,7 +842,7 @@ function registerFb()
 			return false;
 		}
 		if(isTargetChanged == 'yes' && (fundAmount == "" || fundAmount == null)){
-			document.getElementById('amountError').innerHTML = 'Please fill in the amount you need to raise';
+			document.getElementById('amountError').innerHTML = 'Please fill in the amount you need to collect';
 			document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: red;float: left;"></span>'
 									+'<span style="width: 33.33%;height: 100%;background: #007569;float: left;border-left: 1px solid #fff;"></span>'
 									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>';
@@ -890,7 +890,7 @@ function registerFb()
 										+'<a href="javascript:void()" onclick="raiseBack()" class="md-btn md-btn-large md-btn-default">Back</a>'
 									+'</span>'
 									+'<span style="float: right">'
-										+'<a href="javascript:void()" onclick="registerFb()" class="md-btn md-btn-large md-btn-warning">Raise</a>'
+										+'<a href="javascript:void()" onclick="registerFb()" class="md-btn md-btn-large md-btn-warning">Collect</a>'
 									+'</span>';
 				},
 				error : function(xht, textStatus, errorThrown){
@@ -934,7 +934,7 @@ function raiseBack(){
 		success : function(html, textStatus){
 		$('#makegroupBody').html(html);
 		document.getElementById('makegroupFooter').innerHTML = '<span style="float: right">'
-										+'<a href="javascript:void()" onclick="raise()" class="md-btn md-btn-large md-btn-warning">Raise</a>'
+										+'<a href="javascript:void()" onclick="raise()" class="md-btn md-btn-large md-btn-warning">Collect</a>'
 									+'</span>';
 		},
 		error : function(xht, textStatus, errorThrown){
