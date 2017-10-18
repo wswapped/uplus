@@ -15,6 +15,7 @@ if (isset($_GET['groupId'])){
 		if($countAvail > 0){
 		while($row = mysqli_fetch_array($sql2)){ 
 			$groupName = $row["groupName"];
+			$groupImage = $row["groupImage"];
 			$groupTargetType= $row['groupTargetType'];
 			$targetAmount 	= round($row['targetAmount']);
 			$perPersonType 	= $row['perPersonType'];
@@ -74,7 +75,7 @@ else{
 	<meta property="og:type"               content="article" >
 	<meta property="og:title"              content="<?php echo $groupName?> (<?php echo number_format($targetAmount);?> Rwf)">
 	<meta property="og:description"        content="<?php echo $groupDesc?>">
-	<meta property="og:image"              content="https://www.uplus.rw/temp/group<?php echo $groupID;?>.jpeg" >
+	<meta property="og:image"              content="<?php echo $groupImage;?>" >
 
 	<meta name="description" content="<?php echo $groupDesc?>">
 
@@ -237,7 +238,7 @@ else{
 									<h6 class="fundDesc"><?php echo $groupDesc;?><br><br></h6>
 								</div>
 							</div>
-							<div class="fundImg" style="background-image: url(<?php echo $row['groupImage'];?>);"></div>
+							<div class="fundImg" style="background-image: url(<?php echo $groupImage;?>);"></div>
 						</section>
 				        <section class="section--center contSection">
 							<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
