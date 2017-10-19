@@ -1760,7 +1760,8 @@ else
 
 	function balance()
 	{
-		$url = 'https://www.intouchpay.co.rw/api/requestpayment/';
+
+		$url = 'https://www.intouchpay.co.rw/api/getbalance/';
 		
 		$username="muhirwa.clement";
 		$var_time = time();
