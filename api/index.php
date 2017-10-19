@@ -32,15 +32,21 @@ else
 		$signInfo 		= array();
 		if($countPin > 0)
 		{
-			while ($rowpin = mysqli_fetch_array($sqlcheckPin)) {
+			while ($rowpin = mysqli_fetch_array($sqlcheckPin)) 
+			{
 				$code = $rowpin['password'];
+				$profileName	= $rowpin['name'];
+				if($profileName == "NULL" || $profileName == "null"){
+					$profileName == "";
+				}
 				$signInfo = array(
 			   		"pin"        => $rowpin['password'],
 			   		"userId"     => $rowpin['id'],
-			   		"userName"   => $rowpin['name']
+			   		"userName"   => $profileName
 			   );
 			}
-		}else
+		}
+		else
 		{
 			$code = rand(1000, 9999);
 			$sqlsavePin = $db->query("INSERT INTO `users`(
@@ -1075,7 +1081,7 @@ else
 			(userId, actorName, accountNumber, bank, status, operation, amount) 
 			VALUES 
 			('$pushId', '$pushName','$pushNumber', '$pushBank', 'CALLED','DEBIT', '$amount'),
-			('$pullId', '$pullName','$pullNumber', '$pullBank', 'CALLED','DEBIT', '$amount')
+			('$pullId', '$pullName','$pullNumber', '$pullBank', 'CALLED','CREDIT', '$amount')
 		
 			") or mysqli_error($outCon);
 
@@ -1270,45 +1276,53 @@ else
 						// if the user recieved money
 						if($success == true)
 						{
+							// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
+
+							$recipients = '+25'.$pushNumber;
+							$message    = 'Hi, '.$amount.' has been received by user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
+							$data = array(
+								"sender"		=>'UPLUS',
+								"recipients"	=>$recipients,
+								"message"		=>$message,
+							);
+							include 'sms.php';
+							// TELL THE RECEIVER THAT HE/SHE HAS RECEIVED MONEY
+							$recipients = '+25'.$pullNumber;
+							$message    = 'Hi, You have reived '.$amount.' from a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
+							$data = array(
+								"sender"		=>'UPLUS',
+								"recipients"	=>$recipients,
+								"message"		=>$message,
+							);
+							include 'sms.php';
+
 							$returnedinformation    = array();   
 							$returnedinformation[] = array(
 									"status" => "Successfull",
 							        "transactionId" => $myId
 							    );
-
 							header('Content-Type: application/json');
 							$returnedinformation = json_encode($returnedinformation);
 							echo $returnedinformation;
 						}
 						elseif($success == false)
 						{
-							// Bwiuld the answel
-							$returnedinformation    = array();   
-							$returnedinformation[] 	= array(
-									"status" => "Refund",
-							        "transactionId" => $myId
-							    );
-
-							header('Content-Type: application/json');
-							$returnedinformation = json_encode($returnedinformation);
-							echo $returnedinformation;
-							
 							
 							$url = 'https://www.intouchpay.co.rw/api/requestdeposit/';
 		
 							$phone 			= '25'.$pushNumber;
-							$userName 		="testa";
+							$userName 		= "muhirwa.clement";
 							$var_time 		= time();
-							$generate 		=  $username.'250160000011'.'pass123456789'.$var_time;
-							$generate_hash 	=  hash('sha256', $generate);
+							$generate 		= $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+							$generate_hash 	= hash('sha256', $generate);
 							$txt_id 		= md5(time());
 							$data 			= array();
 							
 							$data["username"] 				= $username;
 							$data["timestamp"] 				= $var_time;
 							$data["amount"] 				= $amount;
-						   	$data["withdrawcharge"] 		= 1;
-							$data["reason"] 				= "xxxxxxxxxx ";
+						   	$data["withdrawcharge"] 		= 0;
+							$data["reason"] 				= "Refund";
 							$data["sid"] 					= "1";
 							$data["password"] 				= $generate_hash;
 							$data["mobilephone"] 			= $phone;
@@ -1325,6 +1339,29 @@ else
 							$result = file_get_contents($url, false, $context);
 
 							// WE SHALL Bwiuld the answel
+							// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
+
+							$recipients = '+25'.$pushNumber;
+							$message    = 'Hi, We are very sorry, The transaction did not succeed, we have refunded you your '.$amount.' Rwf. If there is any problem, please call 0784848236, Intouch is the Uplus agent in MTN Mobile Money.';
+							$data = array(
+								"sender"		=>'UPLUS',
+								"recipients"	=>$recipients,
+								"message"		=>$message,
+							);
+							include 'sms.php';
+
+
+							// Bwiuld the answel
+							$returnedinformation    = array();   
+							$returnedinformation[] 	= array(
+									"status" 		=> "Refund",
+							        "transactionId" => $myId
+							    );
+
+							header('Content-Type: application/json');
+							$returnedinformation = json_encode($returnedinformation);
+							echo $returnedinformation;
+							
 						}
 					}
 				}
