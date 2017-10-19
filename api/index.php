@@ -1763,10 +1763,19 @@ else
 
 		$url = 'https://www.intouchpay.co.rw/api/getbalance/';
 
-		$data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
+		$username="muhirwa.clement";
+		$var_time = time();
+		$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+		$generate_hash =  hash('sha256', $generate);
+		$txt_id = md5(time());
+		$data = array();
+		$data["username"] 				= $username;
+		//$data["password"] 				= $generate_hash;
+		$data["timestamp"] 				= $var_time;
+		$data["accountid"] 				= '250150000003';
+	    $data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
 		$options = array(
 			'http' => array(
-				'header'  => "Accept: application/json\r\n",
 				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 				'method'  => 'POST',
 				'content' => http_build_query($data)
@@ -1952,10 +1961,7 @@ function sms()
 	include 'sms.php';
 	if($httpcode == 200)
 	{
-		
-		header('Content-Type: application/json');
-		$signInfo = json_encode($signInfo);
-		echo '['.$signInfo.']';
+		echo 'done';
 	}
 	else
 	{
