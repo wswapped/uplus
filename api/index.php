@@ -124,7 +124,7 @@ else
 		$userId				= mysqli_real_escape_string($db, $_POST['userId']);
 		
 		// GET THE USER TRANSATIONS
-		
+
 	}
 //END ACCOUNTS
 
@@ -1760,8 +1760,50 @@ else
 
 	function balance()
 	{
-		$account = mysqli_real_escape_string($db, $_POST['account']);
-		// CHECK BALLANCE ON THIS ACCOUNT
+		$username="muhirwa.clement";
+		$var_time = time();
+		$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+		$generate_hash =  hash('sha256', $generate);
+		$txt_id = md5(time());
+		$data = array();
+		$data["username"] 				= $username;
+		$data["timestamp"] 				= $var_time;
+		$data["password"] 				= $generate_hash;
+		//$data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
+		//$data["accountid"] 				= '250150000003';
+	    $options = array(
+			'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => http_build_query($data)
+			)
+		);
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);
+		if ($result === FALSE) 
+		{ 
+			$returnedinformation	= array();
+			
+			$returnedinformation[] = array(
+		       		"status" => "NETWORK ERROR"
+		    	);
+			header('Content-Type: application/json');
+			$returnedinformation = json_encode($returnedinformation);
+			echo $returnedinformation;
+		}
+		else
+		{
+			$result = json_decode($result);
+			//Prepare data for db
+			$balance 				= $result->{'balance'};
+			$returnedinformation    = array();   
+			$returnedinformation[] = array(
+					"status" => $balance
+			    );
+			header('Content-Type: application/json');
+			$returnedinformation = json_encode($returnedinformation);
+			echo $returnedinformation;
+		}
 	}
 //END FINANCE
 
