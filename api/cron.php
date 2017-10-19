@@ -1,5 +1,5 @@
 <?php
-$phone 		= 0784848236;
+$phone 		= '0784848236';
 $sender 	= "CRONNER";
 $message 	= "The cron is just launched";
 	
@@ -18,10 +18,7 @@ $data = array(
 include 'sms.php';
 if($httpcode == 200)
 {
-	
-	header('Content-Type: application/json');
-	$signInfo = json_encode($signInfo);
-	echo '['.$signInfo.']';
+	echo "yes";
 }
 else
 {
