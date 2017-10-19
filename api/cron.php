@@ -13,7 +13,7 @@ function status(){
 	$balance 		= $balancerow['todaybalance'];
 	$transactions 	= $balancerow2['todaytransactions'];
 	$phone 		= '0784848236';
-	$sender 	= "CRONNER";
+	$sender 	= "UPLUS SERVER";
 	$message 	= 'Hello Uplus manager, Today we had '.$balance.' Rwf through UPLUS, from '.$transactions .' transactions.';
 		
 
