@@ -1762,23 +1762,11 @@ else
 	{
 
 		$url = 'https://www.intouchpay.co.rw/api/getbalance/';
-		
-		$username="muhirwa.clement";
-		$var_time = time();
-		$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
-		$generate_hash =  hash('sha256', $generate);
-		$txt_id = md5(time());
-		$data = array();
-		$data["username"] 				= $username;
-		$data["timestamp"] 				= $var_time;
-		//$data["amount"] 				= $amount;
-	    $data["password"] 				= $generate_hash;
+
 		$data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
-		//$data["mobilephone"] 			= $phone;
-		$data["requesttransactionid"]	= $txt_id;
-		$data["accountid"] 				= '250150000003';
-	    $options = array(
+		$options = array(
 			'http' => array(
+				'header'  => "Accept: application/json\r\n",
 				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 				'method'  => 'POST',
 				'content' => http_build_query($data)
