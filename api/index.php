@@ -117,6 +117,15 @@ else
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
+
+	function trnsactions()
+	{
+		require('db.php');
+		$userId				= mysqli_real_escape_string($db, $_POST['userId']);
+		
+		// GET THE USER TRANSATIONS
+
+	}
 //END ACCOUNTS
 
 
@@ -1056,11 +1065,11 @@ else
 		$pushNumber 	= preg_replace( '/[^0-9]/', '', $pushNumber );
 		$pullNumber 	= preg_replace( '/[^0-9]/', '', $pullNumber );
 		
-		$pushNumber = substr($pushNumber, -10); 
-		$pullNumber = substr($pullNumber, -10);
+		echo $pushNumber = substr($pushNumber, -10); 
+		echo $pullNumber = substr($pullNumber, -10);
 
 		//CLEAN AMOUNT
-		$amount	= floor($amount/100)*100; 
+		echo $amount	= floor($amount/100)*100; 
 
 		
 		//GET RECIEVER'S ID IF EXISTS
@@ -1085,6 +1094,7 @@ else
 		
 			") or mysqli_error($outCon);
 
+		/*
 		if($outCon)
 		{
 			$sqlRemovedId= $outCon->query("SELECT id FROM directtransfers ORDER BY id DESC LIMIT 1");
@@ -1179,6 +1189,7 @@ else
 		}
 		mysqli_close($db);
 		mysqli_close($outCon);
+		*/
 	}
 
 	function checktransferstatus()
