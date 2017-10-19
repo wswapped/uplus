@@ -1,0 +1,170 @@
+UPLUS API V1.0 DOCUMENTATION
+
+--START ACCOUNTS--
+	signup
+		->
+			phoneNumber
+		<-
+			pin
+			userId
+			userName
+
+	updateProfile
+		->
+			userId
+			userName
+			userImage
+		<-
+			1 (success)/ 0 (fail)
+--END ACCOUNTS--
+
+--START GROUPS--
+	listGroups
+		->
+			memberId
+		<-
+			groupId
+			groupImage
+			updatedDate
+			syncstatus
+			groupName
+			groupTargetType
+			perPersonType
+			targetAmount
+			perPerson
+			adminId
+			adminName
+			groupDesc
+			groupBalance
+
+	createGroup
+		->
+			groupName
+			groupImage
+			groupTargetType
+			targetAmount
+			perPersonType
+			perPerson
+			adminId
+		<-
+			msg (string[groupId])
+
+	createCollection
+		->
+			groupId	
+			accountNumber
+			bankId
+		<-
+			msg (string[info])
+
+	modifyGroup
+		->
+			groupName
+			groupImage
+			groupTargetType
+			targetAmount
+			perPersonType
+			perPerson
+			adminId
+			groupId
+			
+		<-
+			msg (string[info])
+
+	inviteMember
+		->
+			groupId
+			invitorId
+			invitedPhone
+		<-
+			msg (string[info])
+
+	exitGroup
+		->
+			groupId	
+			memberId
+		<-
+			msg (string[info])
+
+	listMembers
+		->
+			groupId	
+		<-
+			memberId
+			memberPhone
+			memberName
+			groupId
+			updatedDate
+			contributionDate
+			memberType
+			memberContribution
+
+	contribute
+		->
+			memberId
+			groupId
+			amount
+			pushnumber
+			senderBank
+		<-
+			transactionId
+			status
+
+	checkcontributionstatus
+		->
+			transactionId
+		<-
+			transactionId
+			status
+
+	withdrawrequest
+		->
+			groupId
+			amount
+			memberId
+			withdrawAccount
+			withdrawBank
+		<-
+			msg (string[info])
+
+	withdrawlist
+		->
+			groupId
+		<-
+			requestId
+			groupId
+			amount
+			memberName
+
+	withdrawvote
+		->
+			requestId
+			groupId
+			treasurerId
+			vote
+		<-
+			msg (string[info])
+--END GROUPS--
+
+--START TRANSFERS--
+	directtransfer
+		->
+			amount
+			senderId
+			senderName
+			senderPhone
+			senderBank
+			receiverName
+			receiverPhone
+			receiverBank
+		<-
+			transactionId
+			status
+
+	checktransferstatus
+		->
+			transactionId
+		<-
+			transactionId
+			status
+--END TRANSFERS--	
