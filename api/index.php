@@ -1797,10 +1797,18 @@ else
 		{
 			$result = json_decode($result);
 			//Prepare data for db
-			$balance 				= $result->{'balance'};
+			$success 				= $result->{'success'};
+			if($success == true)
+			{
+				$status = $result->{'balance'};
+			}
+			else
+			{
+				$status = $result->{'message'};
+			}
 			$returnedinformation    = array();   
 			$returnedinformation[] = array(
-					"status" => $balance
+					"status" => $status
 			    );
 			header('Content-Type: application/json');
 			$returnedinformation = json_encode($returnedinformation);
