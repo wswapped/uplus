@@ -1,11 +1,5 @@
 <?php
-if(isset($_GET['action']))
-{
-	$_GET['action']();
-}
-
-function status(){
-	include 'db.php';
+include 'db.php';
 	$sql= $outCon->query("SELECT sum(amount) todaybalance FROM directtransfers WHERE transaction_date > DATE_SUB(NOW(), INTERVAL 1 DAY)");
 	$sql2= $outCon->query("SELECT count(id) todaytransactions FROM directtransfers WHERE transaction_date > DATE_SUB(NOW(), INTERVAL 1 DAY)");
 	$balancerow = mysqli_fetch_array($sql);
@@ -37,5 +31,5 @@ function status(){
 	{
 		echo 'System error';
 	}
-}
+
 ?>
