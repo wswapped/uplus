@@ -1772,8 +1772,8 @@ else
 		$data["username"] 				= $username;
 		$data["timestamp"] 				= $var_time;
 		$data["password"] 				= $generate_hash;
-		$data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
-		$data["accountid"] 				= '250150000003';
+		//$data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
+		//$data["accountid"] 				= '250150000003';
 	    $options = array(
 			'http' => array(
 				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
