@@ -1798,18 +1798,26 @@ else
 			$result = json_decode($result);
 			//Prepare data for db
 			$success 				= $result->{'success'};
+			$returnedinformation    = array();   
+			
 			if($success == true)
 			{
-				$status = $result->{'balance'};
+				$balance = $result->{'balance'};
+				$returnedinformation[] = array(
+					"balance" => $balance
+			    );
 			}
 			else
 			{
-				$status = $result->{'message'};
-			}
-			$returnedinformation    = array();   
-			$returnedinformation[] = array(
-					"status" => $status
+				$responsecode = $result->{'responsecode'};
+				$message = $result->{'message'};
+				$returnedinformation[] = array(
+					"responsecode" => $responsecode,
+					"message" => $message
+
 			    );
+			}
+			
 			header('Content-Type: application/json');
 			$returnedinformation = json_encode($returnedinformation);
 			echo $returnedinformation;
