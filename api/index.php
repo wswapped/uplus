@@ -205,6 +205,10 @@ else
 		$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
 		$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
 		
+		if ($perPerson = "") {
+			$perPerson = 500;
+		}
+
 		$sqliAdmin = $db->query("SELECT phone FROM users WHERE id = '$adminId'");
 		$countAdmins = mysqli_num_rows($sqliAdmin);
 		if($countAdmins > 0)
