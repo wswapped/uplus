@@ -205,7 +205,7 @@ else
 		$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
 		$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
 		
-		if ($perPerson = "") {
+		if ($perPerson == "") {
 			$perPerson = 500;
 		}
 
