@@ -129,19 +129,21 @@ else
 			$pushId 	= $row['id'];
 			$pullId 	= $pushId + 1;
 			$amount 	= $row['amount'];
-			$sql2 		= $outCon->query("SELECT accountNumber, actorName FROM `directtransfers` WHERE `id` = $pullId");
+			$sql2 		= $outCon->query("SELECT accountNumber, actorName FROM `directtransfers` WHERE `id` = '$pullId' LIMIT 1");
 			$row2 		= mysqli_fetch_array($sql2);
 			$pullName 	= $row2['actorName'];
 			$pullPhone 	= $row2['accountNumber'];
-		}
 
-		// GET THE USER TRANSATIONS
-		$returnedinformation   = array();   
-		$returnedinformation[] = array(
-				"amount" 	=> $amount,
-		        "pullName" 	=> $pullName,
-		        "phone" 	=> $phone
-		    );
+			// GET THE USER TRANSATIONS
+			$returnedinformation   = array();   
+			$returnedinformation[] = array(
+					"amount" 	=> $amount,
+			        "pullName" 	=> $pullName,
+			        "phone" 	=> $phone
+			    );
+			
+		}
+		
 		header('Content-Type: application/json');
 		$returnedinformation = json_encode($returnedinformation);
 		echo $returnedinformation;
