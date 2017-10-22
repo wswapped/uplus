@@ -470,7 +470,7 @@ else
 		}
 		else
 		{
-			echo "Poison Detected";
+			echo "Poison Detected: ".$groupId;
 		}
 		mysqli_close($db);
 		mysqli_close($outCon);		
