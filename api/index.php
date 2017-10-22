@@ -118,13 +118,33 @@ else
 		mysqli_close($outCon);
 	}
 
-	function trnsactions()
+	function transactions()
 	{
 		require('db.php');
-		$userId				= mysqli_real_escape_string($db, $_POST['userId']);
-		
-		// GET THE USER TRANSATIONS
+		$userId	= mysqli_real_escape_string($db, $_POST['userId']);
+		$sql 	= $outCon->query("SELECT id, amount FROM `directtransfers` WHERE (`id` % 2) = 1 AND `userId` = '$userId' ORDER BY id DESC");
 
+		while ($row = mysqli_fetch_array($sql)
+		{
+			$pushId 	= $row['id'];
+			$pullId 	= $pushId + 1;
+			$amount 	= $row['amount'];
+			$sql2 		= $outCon->query("SELECT accountNumber, actorName FROM `directtransfers` WHERE `id` = $pullId");
+			$row2 		= mysqli_fetch_array($sql2);
+			$pullName 	= $row2['actorName'];
+			$pullPhone 	= $row2['phone'];
+		}
+
+		// GET THE USER TRANSATIONS
+		$returnedinformation   = array();   
+		$returnedinformation[] = array(
+				"amount" 	=> $amount,
+		        "pullName" 	=> $pullName,
+		        "phone" 	=> $phone
+		    );
+		header('Content-Type: application/json');
+		$returnedinformation = json_encode($returnedinformation);
+		echo $returnedinformation;
 	}
 //END ACCOUNTS
 
