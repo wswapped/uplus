@@ -132,7 +132,7 @@ else
 			$sql2 		= $outCon->query("SELECT accountNumber, actorName FROM `directtransfers` WHERE `id` = $pullId");
 			$row2 		= mysqli_fetch_array($sql2);
 			$pullName 	= $row2['actorName'];
-			$pullPhone 	= $row2['phone'];
+			$pullPhone 	= $row2['accountNumber'];
 		}
 
 		// GET THE USER TRANSATIONS
