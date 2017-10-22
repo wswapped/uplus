@@ -197,14 +197,14 @@ else
 	function createGroup()
 	{
 		require('db.php');
-		$groupName			= mysqli_real_escape_string($db, $_POST['groupName']);
-		$groupImage			= mysqli_real_escape_string($db, $_POST['groupImage']);
-		$groupTargetType	= mysqli_real_escape_string($db, $_POST['groupTargetType']);
-		$targetAmount		= mysqli_real_escape_string($db, $_POST['targetAmount']);
-		$perPersonType		= mysqli_real_escape_string($db, $_POST['perPersonType']);
-		$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
-		$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
-		
+		echo "/ ".$groupName			= mysqli_real_escape_string($db, $_POST['groupName']);
+		echo "/ ".$groupImage			= mysqli_real_escape_string($db, $_POST['groupImage']);
+		echo "/ ".$groupTargetType	= mysqli_real_escape_string($db, $_POST['groupTargetType']);
+		echo "/ ".$targetAmount		= mysqli_real_escape_string($db, $_POST['targetAmount']);
+		echo "/ ".$perPersonType		= mysqli_real_escape_string($db, $_POST['perPersonType']);
+		echo "/ ".$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
+		echo "/ ".$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
+/*		
 		$sqliAdmin = $db->query("SELECT phone FROM users WHERE id = '$adminId'");
 		$countAdmins = mysqli_num_rows($sqliAdmin);
 		if($countAdmins > 0)
@@ -268,7 +268,7 @@ else
 		{
 			echo 'Group not created';
 		}
-
+*/
 		mysqli_close($db);
 		mysqli_close($outCon);
 	}
