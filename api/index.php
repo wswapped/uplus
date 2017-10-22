@@ -124,7 +124,7 @@ else
 		$userId	= mysqli_real_escape_string($db, $_POST['userId']);
 		$sql 	= $outCon->query("SELECT id, amount FROM `directtransfers` WHERE (`id` % 2) = 1 AND `userId` = '$userId' ORDER BY id DESC");
 
-		while ($row = mysqli_fetch_array($sql)
+		while ($row = mysqli_fetch_array($sql))
 		{
 			$pushId 	= $row['id'];
 			$pullId 	= $pushId + 1;
