@@ -139,7 +139,7 @@ else
 			$returnedinformation[] = array(
 					"amount" 	=> $amount,
 			        "pullName" 	=> $pullName,
-			        "phone" 	=> $phone
+			        "phone" 	=> $pullPhone
 			    );
 			
 		}
