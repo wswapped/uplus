@@ -37,8 +37,8 @@ else
 			while ($rowpin = mysqli_fetch_array($sqlcheckPin)) 
 			{
 				$profileName	= $rowpin['name'];
-				$userId			=$rowpin['id']
-				if($profileName == "NULL" || $profileName == "null"){
+				$userId			= $rowpin['id'];
+				if($profileName == "NULL" || $profileName == "null" || $profileName == null){
 					$profileName == "";
 				}
 				$sql 			= $db->query("UPDATE users SET password = '$code' WHERE id = '$userId'")or die(mysqli_error($db));
