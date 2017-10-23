@@ -7,7 +7,7 @@ include 'db.php';
 	$balance 		= $balancerow['todaybalance'];
 	$transactions 	= $balancerow2['todaytransactions'];
 	$phone 		= '0784848236';
-	$sender 	= "UPLUS SERVER";
+	$sender 	= "UPLUS CLOUD";
 	$message 	= 'Hello Uplus manager, Today we had '.$balance.' Rwf through UPLUS, from '.$transactions .' transactions.';
 		
 
