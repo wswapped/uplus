@@ -39,7 +39,7 @@ else
 				$profileName	= $rowpin['name'];
 				$userId			= $rowpin['id'];
 				if($profileName == "NULL" || $profileName == "null" || $profileName == null){
-					$profileName == "";
+					$profileName = "";
 				}
 				$sql 			= $db->query("UPDATE users SET password = '$code' WHERE id = '$userId'")or die(mysqli_error($db));
 				$signInfo = array(
