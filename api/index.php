@@ -29,26 +29,29 @@ else
 		//CHECK IF THE USER ALREADY EXISTS
 		$sqlcheckPin 	= $db->query("SELECT *  FROM users WHERE phone = '$phoneNumber' LIMIT 1");
 		$countPin 		= mysqli_num_rows($sqlcheckPin);
+		$code = rand(1000, 9999);
 		$signInfo 		= array();
 		if($countPin > 0)
 		{
+			
 			while ($rowpin = mysqli_fetch_array($sqlcheckPin)) 
 			{
-				$code = $rowpin['password'];
 				$profileName	= $rowpin['name'];
-				if($profileName == "NULL" || $profileName == "null"){
+				$userId			=$rowpin['id']
+				if($profileName == "NULL" || $profileName == "null" || $profileName == null){
 					$profileName == "";
 				}
+				$sql = $db->query("UPDATE users SET password = '$code' WHERE id = '$userId'")or die(mysqli_error($db));
 				$signInfo = array(
-			   		"pin"        => $rowpin['password'],
-			   		"userId"     => $rowpin['id'],
+			   		"pin"        => $code,
+			   		"userId"     => $userId,
 			   		"userName"   => $profileName
 			   );
 			}
 		}
 		else
 		{
-			$code = rand(1000, 9999);
+			
 			$sqlsavePin = $db->query("INSERT INTO `users`(
 			phone, active, createdDate, password, visits, updatedBy, updatedDate) 
 			VALUES('$phoneNumber', '0', now(), '$code', '0', '1', now())")or die (mysqli_error());
