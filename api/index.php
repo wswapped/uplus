@@ -29,7 +29,7 @@ else
 		//CHECK IF THE USER ALREADY EXISTS
 		$sqlcheckPin 	= $db->query("SELECT *  FROM users WHERE phone = '$phoneNumber' LIMIT 1");
 		$countPin 		= mysqli_num_rows($sqlcheckPin);
-		$code = rand(1000, 9999);
+		$code 			= rand(1000, 9999);
 		$signInfo 		= array();
 		if($countPin > 0)
 		{
@@ -38,10 +38,10 @@ else
 			{
 				$profileName	= $rowpin['name'];
 				$userId			=$rowpin['id']
-				if($profileName == "NULL" || $profileName == "null" || $profileName == null){
+				if($profileName == "NULL" || $profileName == "null"){
 					$profileName == "";
 				}
-				$sql = $db->query("UPDATE users SET password = '$code' WHERE id = '$userId'")or die(mysqli_error($db));
+				$sql 			= $db->query("("UPDATE users SET password = '$code' WHERE id = '$userId'")or die(mysqli_error($db));
 				$signInfo = array(
 			   		"pin"        => $code,
 			   		"userId"     => $userId,
