@@ -41,7 +41,7 @@ else
 				if($profileName == "NULL" || $profileName == "null"){
 					$profileName == "";
 				}
-				$sql 			= $db->query("("UPDATE users SET password = '$code' WHERE id = '$userId'")or die(mysqli_error($db));
+				$sql 			= $db->query("UPDATE users SET password = '$code' WHERE id = '$userId'")or die(mysqli_error($db));
 				$signInfo = array(
 			   		"pin"        => $code,
 			   		"userId"     => $userId,
