@@ -189,7 +189,7 @@ function registerFb()
                                 <?php 
 								include('db.php');
 								//$sql= $outCon->query("SELECT sum(balance) totalbalance FROM `groupbalance`");
-								$sql= $outCon->query("SELECT sum(amount) totalbalance FROM `directtransfers`");
+								$sql= $outCon->query("SELECT sum(amount) totalbalance FROM `directtransfers` WHERE (`id` % 2) = 1");
 								$balancerow = mysqli_fetch_array($sql);
 								echo number_format($balancerow['totalbalance']);?>
 								Rwf
