@@ -1876,6 +1876,10 @@ else
 
 function notification()
 {
+	require('db.php');
+	$selection 		= mysqli_real_escape_string($db, $_POST['selection']);
+	$message 		= mysqli_real_escape_string($db, $_POST['message']);
+		
 	function send_notification ($tokens, $message)
 	{
 		$url = 'https://fcm.googleapis.com/fcm/send';
@@ -1905,22 +1909,26 @@ function notification()
        return $result;
 	}	
 
-	$conn = mysqli_connect("localhost","clement","clement123","fcm");
-
-	$sql = "Select Token From users";
-
-	$result = mysqli_query($conn,$sql);
+	if($selection == "single")
+	{
+		$userId 		= mysqli_real_escape_string($db, $_POST['userId']);
+		$sql = $db->query("SELECT token FROM users WHERE id = '$userId'");
+	}
+	elseif($selection == "all")
+	{
+		$sql = $db->query("SELECT token FROM users");
+	}
+	
 	$tokens = array();
 
-	if(mysqli_num_rows($result) > 0 ){
-		while ($row = mysqli_fetch_assoc($result)) {
-			$tokens[] = $row["Token"];
+	if(mysqli_num_rows($sql) > 0 ){
+		while ($row = mysqli_fetch_assoc($sql)) {
+			$tokens[] = $row["token"];
 		}
 	}
 
-	mysqli_close($conn);
+	mysqli_close($db);
 
-	$message = array("message" => $_POST['message']);
 	$message_status = send_notification($tokens, $message);
 	header('Content-Type: application/json');
 	echo $message_status;
