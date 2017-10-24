@@ -125,9 +125,17 @@ else
 		require('db.php');
 		$userId				= mysqli_real_escape_string($db, $_POST['userId']);
 		$token				= mysqli_real_escape_string($db, $_POST['Token']);
-		$db->query("UPDATE users SET token = '$token' WHERE id = '$userId'")or die(mysqli_error($db));
+		$db->query("UPDATE users SET token = '$token' WHERE id = '$userId'");
 		if($db){
-			echo "Device attached to the user";
+			$returnedinformation->message = "yes";
+			$returnedinformation = json_encode($returnedinformation);
+			header('Content-Type: application/json');
+			echo $returnedinformation;
+		}else{
+			$returnedinformation->message = "no";
+			$returnedinformation = json_encode($returnedinformation);
+			header('Content-Type: application/json');
+			echo $returnedinformation;
 		}
 	}
 
