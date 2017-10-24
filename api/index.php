@@ -123,9 +123,9 @@ else
 
 	function attachdvc(){
 		require('db.php');
-		$userId				= mysqli_real_escape_string($db, $_POST['userId']);
-		$token				= mysqli_real_escape_string($db, $_POST['Token']);
-		$db->query("UPDATE users SET token = '$token' WHERE id = '$userId'");
+		echo $userId				= mysqli_real_escape_string($db, $_POST['userId']);
+		echo $token				= mysqli_real_escape_string($db, $_POST['Token']);
+		/*$db->query("UPDATE users SET token = '$token' WHERE id = '$userId'");
 		if($db){
 			$returnedinformation->message = "yes";
 			$returnedinformation = json_encode($returnedinformation);
@@ -136,7 +136,7 @@ else
 			$returnedinformation = json_encode($returnedinformation);
 			header('Content-Type: application/json');
 			echo $returnedinformation;
-		}
+		}*/
 	}
 
 	function transactions()
