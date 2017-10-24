@@ -121,6 +121,16 @@ else
 		mysqli_close($outCon);
 	}
 
+	function attachdvc(){
+		require('db.php');
+		$userId				= mysqli_real_escape_string($db, $_POST['userId']);
+		$token				= mysqli_real_escape_string($db, $_POST['token']);
+		$db->query("UPDATE users SET token = '$token' WHERE id = '$userId'")or die(mysqli_error($db));
+		if($db){
+			echo "Device attached to the user";
+		}
+	}
+
 	function transactions()
 	{
 		require('db.php');
