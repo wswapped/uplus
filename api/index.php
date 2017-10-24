@@ -1878,7 +1878,6 @@ function notification()
 {
 	require('db.php');
 	$selection 		= mysqli_real_escape_string($db, $_POST['selection']);
-	$message 		= mysqli_real_escape_string($db, $_POST['message']);
 		
 	function send_notification ($tokens, $message)
 	{
@@ -1909,6 +1908,7 @@ function notification()
        return $result;
 	}	
 
+
 	if($selection == "single")
 	{
 		$userId 		= mysqli_real_escape_string($db, $_POST['userId']);
@@ -1927,8 +1927,9 @@ function notification()
 		}
 	}
 
-	mysqli_close($db);
+	mysqli_close($conn);
 
+	$message = array("message" => $_POST['message']);
 	$message_status = send_notification($tokens, $message);
 	header('Content-Type: application/json');
 	echo $message_status;
