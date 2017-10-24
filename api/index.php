@@ -127,13 +127,11 @@ else
 		$token				= mysqli_real_escape_string($db, $_POST['Token']);
 		$db->query("UPDATE users SET token = '$token' WHERE id = '$userId'");
 		if($db){
-			$returnedinformation->message = "yes";
+			echo "yes";
 		}else{
-			$returnedinformation->message = "no";
+			echo "no";
 		}
-		$returnedinformation = json_encode($returnedinformation);
-		header('Content-Type: application/json');
-		echo $returnedinformation;
+		
 	}
 
 	function transactions()
