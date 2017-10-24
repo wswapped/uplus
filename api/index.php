@@ -1916,7 +1916,7 @@ function notification()
 	}
 	elseif($selection == "all")
 	{
-		$sql = $db->query("SELECT token FROM users");
+		$sql = $db->query("SELECT token FROM users WHERE token IS NOT NULL");
 	}
 	
 	$tokens = array();
