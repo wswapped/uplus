@@ -1927,7 +1927,7 @@ function notification()
 		}
 	}
 
-	mysqli_close($conn);
+	mysqli_close($db);
 
 	$message = array("message" => $_POST['message']);
 	$message_status = send_notification($tokens, $message);
