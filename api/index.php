@@ -1120,13 +1120,14 @@ else
 
 		
 		//GET RECIEVER'S ID IF EXISTS
-		$sql = $db->query("SELECT name, id, token FROM users WHERE phone = '$pullNumber' LIMIT 1");
+		$sql = $db->query("SELECT * FROM users WHERE phone = '$pullNumber' LIMIT 1");
 		$checkAvailb = mysqli_num_rows($sql);
 		if($checkAvailb > 0)
 		{
 			$row = mysqli_fetch_array($sql);
 			$pullName	= $row['name'];
 			$pullId		= $row['id'];
+			$token		= $row['token'];
 
 			function send_notification ($tokens, $message)
 			{
@@ -1157,7 +1158,7 @@ else
 		       return $result;
 			}	
 			$message 	= array("message" => "Hey! ".$pushName." is sending you ".number_format($amount)." Rwf");
-			$tokens		= array("tokens" => $row['token']);
+			$tokens		= array("tokens" => $token);
 			send_notification($tokens, $message);
 		}
 		else
