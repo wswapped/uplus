@@ -1333,6 +1333,14 @@ else
 						if($success == true)
 						{
 							// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
+							$sql1	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pushNumber' ORDER BY id desc LIMIT 1");
+							$sql2	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pullNumber' ORDER BY id desc LIMIT 1");
+							$row1	=mysqli_fetch_array($sql1);
+							$row2	=mysqli_fetch_array($sql2);
+							$pushName	= $row1['actorName'];
+							$pullName	= $row2['actorName'];
+
+
 
 							$recipients = '+25'.$pushNumber;
 							$message    = 'Hi, '.$amount.' has been received by user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
