@@ -1129,8 +1129,8 @@ else
 			$pullName	= $row['name'];
 			$pullId	= $row['id'];
 
-			//$_POST['selection'] = 'single';
-			//$_POST['userId'] 	= $pullId;
+			$_POST['selection'] = 'single';
+			$_POST['userId'] 	= $pullId;
 			//notification();
 			//include 'db.php';
 		}
