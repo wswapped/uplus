@@ -1157,7 +1157,7 @@ else
 		       return $result;
 			}	
 			$message 	= array("message" => "Hey! ".$pushName." is sending you ".number_format($amount)." Rwf");
-			$tokens		= array("tokens" => $row['token'];);
+			$tokens		= array("tokens" => $row['token']);
 			send_notification($tokens, $message);
 		}
 		else
@@ -1367,8 +1367,8 @@ else
 							// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
 							$sql1	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pushNumber' ORDER BY id desc LIMIT 1");
 							$sql2	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pullNumber' ORDER BY id desc LIMIT 1");
-							$row1	=mysqli_fetch_array($sql1);
-							$row2	=mysqli_fetch_array($sql2);
+							$row1	= mysqli_fetch_array($sql1);
+							$row2	= mysqli_fetch_array($sql2);
 							$pushName	= $row1['actorName'];
 							$pullName	= $row2['actorName'];
 
