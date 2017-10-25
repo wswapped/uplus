@@ -1172,9 +1172,8 @@ else
 
 			
 			$message = array("message" => "Test");
-			$message_status = send_notification($tokens, $message);
-			header('Content-Type: application/json');
-			echo $message_status;
+			send_notification($tokens, $message);
+
 
 		}
 		else
