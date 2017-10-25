@@ -1120,45 +1120,13 @@ else
 
 		
 		//GET RECIEVER'S ID IF EXISTS
-		$sql = $db->query("SELECT name, id, token FROM users WHERE phone = '$pullNumber' LIMIT 1");
+		$sql = $db->query("SELECT name, id FROM users WHERE phone = '$pullNumber' LIMIT 1");
 		$checkAvailb = mysqli_num_rows($sql);
 		if($checkAvailb > 0)
 		{
 			$row = mysqli_fetch_array($sql);
 			$pullName	= $row['name'];
 			$pullId		= $row['id'];
-
-			function send_notification ($tokens, $message)
-			{
-				$url = 'https://fcm.googleapis.com/fcm/send';
-				$fields = array(
-					 'registration_ids' => $tokens,
-					 'data' => $message
-					);
-
-				$headers = array(
-					'Authorization:key = AIzaSyCVsbSeN2qkfDfYq-IwKrnt05M1uDuJxjg',
-					'Content-Type: application/json'
-					);
-
-			   $ch = curl_init();
-		       curl_setopt($ch, CURLOPT_URL, $url);
-		       curl_setopt($ch, CURLOPT_POST, true);
-		       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
-		       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-		       $result = curl_exec($ch);           
-		       if ($result === FALSE) {
-		           die('Curl failed: ' . curl_error($ch));
-		       }
-		       curl_close($ch);
-		       return $result;
-			}	
-			$message 	= array("message" => "Hey! ".$pushName." is sending you ".number_format($amount)." Rwf");
-			$tokens		= array("tokens" => $row['token'];);
-			send_notification($tokens, $message);
 		}
 		else
 		{
@@ -1367,16 +1335,15 @@ else
 							// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
 							$sql1	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pushNumber' ORDER BY id desc LIMIT 1");
 							$sql2	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pullNumber' ORDER BY id desc LIMIT 1");
-							$row1	= mysqli_fetch_array($sql1);
-							$row2	= mysqli_fetch_array($sql2);
+							$row1	=mysqli_fetch_array($sql1);
+							$row2	=mysqli_fetch_array($sql2);
 							$pushName	= $row1['actorName'];
 							$pullName	= $row2['actorName'];
 
 
 
 							$recipients = '+25'.$pushNumber;
-							//$message    = 'Hi,'.$pushName.', '.number_format($amount).' Rwf has been received by '.$pullName.' user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
-							$message = "test";
+							$message    = 'Hi, '.$amount.' has been received by user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
 							$data = array(
 								"sender"		=>'UPLUS',
 								"recipients"	=>$recipients,
@@ -1385,8 +1352,7 @@ else
 							include 'sms.php';
 							// TELL THE RECEIVER THAT HE/SHE HAS RECEIVED MONEY
 							$recipients = '+25'.$pullNumber;
-							//$message    = 'Hi,'.$pullName.' You have reived '.number_format($amount).' Rwf from '.$pushName.' a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money. Download uplus and send money for free: https://xms9d.app.goo.gl/PeSx';
-							$message = "test";
+							$message    = 'Hi, You have reived '.$amount.' from a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
 							$data = array(
 								"sender"		=>'UPLUS',
 								"recipients"	=>$recipients,
