@@ -1120,7 +1120,7 @@ else
 
 		
 		//GET RECIEVER'S ID IF EXISTS
-		$pullNumber = '0784848236';
+		
 		$sql = $db->query("SELECT * FROM users WHERE phone = '$pullNumber' LIMIT 1");
 		$checkAvailb = mysqli_num_rows($sql);
 		if($checkAvailb > 0)
