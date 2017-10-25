@@ -1131,7 +1131,7 @@ else
 
 			$_POST['selection'] = 'single';
 			$_POST['userId'] 	= $pullId;
-			//notification();
+			notification();
 			//include 'db.php';
 		}
 		else
