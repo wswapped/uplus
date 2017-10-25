@@ -1343,7 +1343,7 @@ else
 
 
 							$recipients = '+25'.$pushNumber;
-							$message    = 'Hi, '.$amount.' has been received by user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
+							$message    = 'Hi,'.$pushName.', '.$amount.' has been received by '.$pullName.' user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
 							$data = array(
 								"sender"		=>'UPLUS',
 								"recipients"	=>$recipients,
@@ -1352,7 +1352,7 @@ else
 							include 'sms.php';
 							// TELL THE RECEIVER THAT HE/SHE HAS RECEIVED MONEY
 							$recipients = '+25'.$pullNumber;
-							$message    = 'Hi, You have reived '.$amount.' from a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
+							$message    = 'Hi,'.$pullName.' You have reived '.$amount.' from '.$pushName' a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money. Download uplus and send money for free: https://xms9d.app.goo.gl/PeSx';
 							$data = array(
 								"sender"		=>'UPLUS',
 								"recipients"	=>$recipients,
