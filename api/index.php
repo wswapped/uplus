@@ -1129,8 +1129,7 @@ else
 			 $pullName	= $row['name'];
 			 $pullId	= $row['id'];
 			 $token		= $row['token'];
-		}
-			function send_notification ($tokens, $message)
+			 function send_notification ($tokens, $message)
 			{
 				$url = 'https://fcm.googleapis.com/fcm/send';
 				$fields = array(
@@ -1162,6 +1161,8 @@ else
 			$tokens		= array("tokens" => $token);
 			send_notification($tokens, $message);
 		}
+			
+	
 		else
 		{
 			$pullId = 0;
