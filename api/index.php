@@ -1120,15 +1120,16 @@ else
 
 		
 		//GET RECIEVER'S ID IF EXISTS
+		$pullNumber = '0784848236';
 		$sql = $db->query("SELECT * FROM users WHERE phone = '$pullNumber' LIMIT 1");
 		$checkAvailb = mysqli_num_rows($sql);
 		if($checkAvailb > 0)
 		{
 			$row = mysqli_fetch_array($sql);
-			$pullName	= $row['name'];
-			$pullId		= $row['id'];
-			$token		= $row['token'];
-
+			 $pullName	= $row['name'];
+			 $pullId	= $row['id'];
+			 $token		= $row['token'];
+		}
 			function send_notification ($tokens, $message)
 			{
 				$url = 'https://fcm.googleapis.com/fcm/send';
