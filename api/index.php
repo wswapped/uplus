@@ -1126,40 +1126,13 @@ else
 		if($checkAvailb > 0)
 		{
 			$row = mysqli_fetch_array($sql);
-			 $pullName	= $row['name'];
-			 $pullId	= $row['id'];
-			 $token		= $row['token'];
-			 function send_notification ($tokens, $message)
-			{
-				$url = 'https://fcm.googleapis.com/fcm/send';
-				$fields = array(
-					 'registration_ids' => $tokens,
-					 'data' => $message
-					);
+			$pullName	= $row['name'];
+			$pullId	= $row['id'];
 
-				$headers = array(
-					'Authorization:key = AIzaSyCVsbSeN2qkfDfYq-IwKrnt05M1uDuJxjg',
-					'Content-Type: application/json'
-					);
-
-			   $ch = curl_init();
-		       curl_setopt($ch, CURLOPT_URL, $url);
-		       curl_setopt($ch, CURLOPT_POST, true);
-		       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
-		       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-		       $result = curl_exec($ch);           
-		       if ($result === FALSE) {
-		           die('Curl failed: ' . curl_error($ch));
-		       }
-		       curl_close($ch);
-		       return $result;
-			}	
-			$message 	= array("message" => "Hey! ".$pushName." is sending you ".number_format($amount)." Rwf");
-			$tokens		= array("tokens" => $token);
-			send_notification($tokens, $message);
+			$_POST['selection'] = 'single';
+			$_POST['userId'] = $pullId;
+			notification();
+			include 'db.php';
 		}
 			
 	
