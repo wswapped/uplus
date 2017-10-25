@@ -1333,9 +1333,17 @@ else
 						if($success == true)
 						{
 							// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
+							$sql1	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pushNumber' ORDER BY id desc LIMIT 1");
+							$sql2	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pullNumber' ORDER BY id desc LIMIT 1");
+							$row1	=mysqli_fetch_array($sql1);
+							$row2	=mysqli_fetch_array($sql2);
+							$pushName	= $row1['actorName'];
+							$pullName	= $row2['actorName'];
+
+
 
 							$recipients = '+25'.$pushNumber;
-							$message    = 'Hi, '.$amount.' has been received by user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
+							$message    = 'Hi,'.$pushName.', '.$amount.' has been received by '.$pullName.' user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
 							$data = array(
 								"sender"		=>'UPLUS',
 								"recipients"	=>$recipients,
@@ -1344,7 +1352,7 @@ else
 							include 'sms.php';
 							// TELL THE RECEIVER THAT HE/SHE HAS RECEIVED MONEY
 							$recipients = '+25'.$pullNumber;
-							$message    = 'Hi, You have reived '.$amount.' from a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
+							$message    = 'Hi,'.$pullName.' You have reived '.$amount.' from '.$pushName' a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money. Download uplus and send money for free: https://xms9d.app.goo.gl/PeSx';
 							$data = array(
 								"sender"		=>'UPLUS',
 								"recipients"	=>$recipients,
