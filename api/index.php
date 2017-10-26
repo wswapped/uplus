@@ -156,7 +156,7 @@ else
 			// GET THE USER TRANSATIONS
 		
 			$returnedinformation[] = array(
-				"amount" 	=> $amount,
+				"amount" 	=> $amount." Rwf",
 		        	"pullName" 	=> $pullName,
 		        	"phone" 	=> $pullPhone,
 		        	"status"	=> $status,
