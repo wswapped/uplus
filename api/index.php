@@ -1169,8 +1169,9 @@ else
 				}
 			}
 
+
 			
-			$message = array("message" => "Hi! ".$pushName." (".$pullId.") Is sending you ".number_format($amount)." Rwf.");
+			$message = array("message" => "Hi! ".$pushName." Is sending you ".number_format($amount)." Rwf.");
 			send_notification($tokens, $message);
 
 
