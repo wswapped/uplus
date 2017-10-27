@@ -1159,19 +1159,18 @@ else
 		       return $result;
 			}	
 
-			$userId 		= $pullId;
-			$sql = $db->query("SELECT token FROM users WHERE id = '$userId'");
+			$sqlTk = $db->query("SELECT token FROM users WHERE id = '$pullId'");
 			
 			$tokens = array();
 
-			if(mysqli_num_rows($sql) > 0 ){
-				while ($row = mysqli_fetch_assoc($sql)) {
-					$tokens[] = $row["token"];
+			if(mysqli_num_rows($sqlTk) > 0 ){
+				while ($rowTk = mysqli_fetch_assoc($sqlTk)) {
+					$tokens[] = $rowTk["token"];
 				}
 			}
 
 			
-			$message = array("message" => "Hi! ".$pushName." Is sending you ".number_format($amount)." Rwf.");
+			$message = array("message" => "Hi! ".$pushName." (".$pullId.") Is sending you ".number_format($amount)." Rwf.");
 			send_notification($tokens, $message);
 
 
