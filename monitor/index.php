@@ -7,33 +7,33 @@ session_start();
 ?>
 <?php 
 		
-$account_type = preg_replace('#[^0-9]#i', '', $_SESSION["account_type"]); // filter everything but numbers and letters
- $password = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["password"]); // filter everything but numbers and letters
- $email = $_SESSION["email"]; // filter everything but numbers and letters
-include "db.php"; 
-$sql = $con->query("SELECT * FROM `users` WHERE `email` = '$email' and `pwd` = '$password' LIMIT 1")or die ($db->error);
-$existCount = mysqli_num_rows($sql); // count the row nums
-if ($existCount > 0) 
-{ 
-	while($row = mysqli_fetch_array($sql))
+	$account_type = preg_replace('#[^0-9]#i', '', $_SESSION["account_type"]); // filter everything but numbers and letters
+	 $password = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["password"]); // filter everything but numbers and letters
+	 $email = $_SESSION["email"]; // filter everything but numbers and letters
+	include "db.php"; 
+	$sql = $con->query("SELECT * FROM `users` WHERE `email` = '$email' and `pwd` = '$password' LIMIT 1")or die ($db->error);
+	$existCount = mysqli_num_rows($sql); // count the row nums
+	if ($existCount > 0) 
 	{ 
-		$thisid = $row["id"];
-		$name = $row["name"];
-		$phone = $row["phone"];
-		$level = $row["level"];
+		while($row = mysqli_fetch_array($sql))
+		{ 
+			$thisid = $row["id"];
+			$name = $row["name"];
+			$phone = $row["phone"];
+			$level = $row["level"];
+		}
 	}
-}
-else
-{
-echo "
+	else
+	{
+	echo "
 
-<br/><br/><br/><h3>Your account has been temporally deactivated</h3>
-<p>Please contact: <br/><em>(+25) 078 484-8236</em><br/><b>muhirwaclement@gmail.com</b></p>		
-Or<p><a href='logout.php'>Click Here to login again</a></p>
+	<br/><br/><br/><h3>Your account has been temporally deactivated</h3>
+	<p>Please contact: <br/><em>(+25) 078 484-8236</em><br/><b>muhirwaclement@gmail.com</b></p>		
+	Or<p><a href='logout.php'>Click Here to login again</a></p>
 
-";
-exit();
-}
+	";
+	exit();
+	}
 ?>
 
 <!DOCTYPE html>
@@ -127,26 +127,42 @@ exit();
 		      fill-opacity: 0;
 	  }</style>
         <div class="container">
+        	<div class="row">
+        		<div class="col-md-3">
+
+        			<div class="panel panel-default">
+					  <div class="panel-body">
+					    Basic panel example
+					  </div>
+					</div>
+        		Groups</div>
+        		<div class="col-md-3">Users</div>
+        		<div class="col-md-3">Transactions</div>
+        		<div class="col-md-3">Balance</div>
+        	</div>
 			<div class="row">
 				<div class="col-md-3">
 					<h4>Test Transfer</h4>
 					Amount: 
-						<input type="text" id="amountdone" class="form-control">
-						<br>
-					Use: <select class="form-control" id="payMeth" onchange="givePay()" required>
-							  <option></option>
-							  <option value="phone">Phone</option>
-							  <option value="card">Card</option>
-							</select><br>
-					  <div id="meth">
+					<input type="text" id="amountdone" class="form-control">
+					<br>
+					Use: 
+					<select class="form-control" id="payMeth" onchange="givePay()" required>
+						<option></option>
+						<option value="phone">Phone</option>
+						<option value="card">Card</option>
+					</select>
+					<br>
+				  	<div id="meth">
 						From: 
 						<input type="text" id="mtnnumber" disabled class="form-control">
-					  </div><br>
-						To (Phone): 
-						<input type="text" id="sendToAccount" class="form-control">
-						<br>
-					  <button onclick="kwishura()" class="btn btn-primary">SEND</button>
-					  <br/><br/>
+				  	</div>
+				  	<br>
+					To (Phone): 
+					<input type="text" id="sendToAccount" class="form-control">
+					<br>
+					<button onclick="kwishura()" class="btn btn-primary">SEND</button>
+					<br/><br/>
 				</div>
 				<div class="col-md-3">
 					<h4>.</h4>
@@ -174,22 +190,22 @@ exit();
   </div>
 </div>
 <script>
-function givePay()
-{
-	var payMeth = document.getElementById('payMeth').value;
-	if(payMeth == 'phone')
+	function givePay()
 	{
-		document.getElementById('meth').innerHTML = 'From: <input type="text" id="mtnnumber" placeholder="eg: 0788888888 or 0722222222" required value="<?php echo $phone;?>" class="form-control">';
+		var payMeth = document.getElementById('payMeth').value;
+		if(payMeth == 'phone')
+		{
+			document.getElementById('meth').innerHTML = 'From: <input type="text" id="mtnnumber" placeholder="eg: 0788888888 or 0722222222" required value="<?php echo $phone;?>" class="form-control">';
+		}
+		else if(payMeth == 'card')
+		{
+			document.getElementById('meth').innerHTML = 'From: <input type="text" placeholder="eg: 424242 424242 424242" required class="form-control">';
+		}
+		else
+		{
+			document.getElementById('meth').innerHTML = 'From: <input disabled class="form-control">';
+		}
 	}
-	else if(payMeth == 'card')
-	{
-		document.getElementById('meth').innerHTML = 'From: <input type="text" placeholder="eg: 424242 424242 424242" required class="form-control">';
-	}
-	else
-	{
-		document.getElementById('meth').innerHTML = 'From: <input disabled class="form-control">';
-	}
-}
 </script>
 
 <!--AJAX CALL THE STATUS-->
