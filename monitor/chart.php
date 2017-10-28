@@ -49,8 +49,8 @@
                 });
             });
         </script>
-        <script src="http://code.highcharts.com/highcharts.js"></script>
-        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+        <script src="js/highcharts.js"></script>
+        <script src="js/exporting.js"></script>
     </head>
     <body>
         <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
