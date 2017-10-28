@@ -9,7 +9,7 @@ include 'db.php';
 	$phone 		= '0784848236';
 	$phone2		= '+250784968343';
 	$sender 	= "UPLUS CLOUD";
-	$message 	= 'Hello Uplus manager, Today we had '.$balance.' Rwf through UPLUS, from '.$transactions .' transactions.';
+	$message 	= 'Hello Uplus manager, Today we had '.$balance.' Rwf through UPLUS, from '.$transactions .' transactions. For more info (https://uplus.rw/monitor)';
 		
 
 	//CLEAN PHONE
