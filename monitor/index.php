@@ -45,7 +45,7 @@ session_start();
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var options = {
@@ -91,7 +91,27 @@ session_start();
 			});
 		});
 	</script>
-	<script src="js/highchats.js"></script>  
+	<script src="js/highchats.js"></script> 
+	<style type="text/css">
+		.loader {
+border-top: 16px solid #4285f4;
+ border-right: 16px solid #36a753;
+ border-bottom: 16px solid #eb4435;
+ border-left: 16px solid #fbbc03;
+
+
+
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+	</style> 
 </head>
 
 <body>
@@ -130,7 +150,8 @@ session_start();
         	<div class="row">
         		<div class="col-md-3">
 					<div class="panel panel-default">
-					  <div class="panel-body" style="cursor: pointer;">
+					  <div class="panel-body" style="cursor: pointer;" onclick="tableing(tablesa='groups')">
+					    	<i class="fa fa-users" aria-hidden="true"></i>
 					    (<?php 
 					    	$sql = $db->query("SELECT count(id) nGroups FROM groups") or die(mysql_error($db));
 					    	if ($db) {
@@ -143,7 +164,8 @@ session_start();
 				</div>
         		<div class="col-md-3">
         			<div class="panel panel-default">
-					  <div class="panel-body" style="cursor: pointer;">
+					  <div class="panel-body" style="cursor: pointer;" onclick="tableing(tablesa='users')">
+					   <i class="fa fa-user" aria-hidden="true"></i>
 					   (<?php 
 					    	$sql = $db->query("SELECT count(id) nUsers FROM users") or die(mysql_error($db));
 					    	if ($db) {
@@ -156,7 +178,8 @@ session_start();
 				</div>
         		<div class="col-md-3">
         			<div class="panel panel-default">
-					  <div class="panel-body" style="cursor: pointer;">
+					  <div class="panel-body" style="cursor: pointer;" onclick="tableing(tablesa='transactions')">
+					    	<i class="fa fa-exchange" aria-hidden="true"></i>
 					   (<?php 
 					    	$sql = $con ->query("SELECT count(id) nTransactions FROM directtransfers WHERE (`id` % 2) = 1") or die(mysql_error($db));
 					    	$sql2 = $con ->query("SELECT count(id) nGTransactions FROM grouptransactions WHERE (`id` % 2) = 1") or die(mysql_error($db));
@@ -171,7 +194,8 @@ session_start();
 				</div>
         		<div class="col-md-3">
         			<div class="panel panel-default">
-					  <div class="panel-body" style="cursor: pointer;">
+					  <div class="panel-body" style="cursor: pointer;" onclick="tableing(tablesa='money')">
+					    	<i class="fa fa-money" aria-hidden="true"></i>
 					   (<?php 
 					    	$sql= $con->query("SELECT sum(amount) totalbalance FROM `directtransfers` WHERE (`id` % 2) = 1");
 					    	$sql2= $con->query("SELECT sum(amount) gtotalbalance FROM `grouptransactions` WHERE (`id` % 2) = 1");
@@ -182,6 +206,11 @@ session_start();
 					  </div>
 					</div>
 				</div>
+        	</div>
+        	<div class="row">
+        		<dir class="col-md-12">
+        			<div id="tables"></div>
+        		</dir>
         	</div>
         	<div class="row">
         		<dir class="col-md-12">
@@ -461,6 +490,29 @@ function chargeChangeBtn()
 						+'<div class="col-md-4" style="padding: 0;">'
 							+'<button class="btn btn-default" style="border-radius: 0px 4px 0px 0px; width: 100%" onclick="chargeBtn()">Edit</button>'
 						+'</div>';
+}
+
+function tableing(tablesa)
+{
+	var table = tablesa;
+	document.getElementById('tables').innerHTML ='<div style="width=100%; height: auto;margin: 0 auto;padding: 10px;position: relative;"><div class="loader"></div></div>';
+	$.ajax({
+		type : "GET",
+		url : "tables.php",
+		dataType : "html",
+		cache : "false",
+		data : {
+			
+			table: table
+							
+		},
+		success : function(html, textStatus){
+			$("#tables").html(html);
+		},
+		error : function(xht, textStatus, errorThrown){
+			alert(errorThrown); 
+		}
+	});
 }
 </script>
 
