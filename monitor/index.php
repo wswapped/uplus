@@ -230,6 +230,7 @@ session_start();
 			</div>
 		</div>
       <br/><br/>
+      <?php require('chart.php');?>
       </div>
     </div>
   </div>
