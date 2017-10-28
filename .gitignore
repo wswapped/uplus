@@ -10,3 +10,5 @@ temp/group1.jpeg
 *.png
 
 *.jpg
+db.php
+monitor/db.php
