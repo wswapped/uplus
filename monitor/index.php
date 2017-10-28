@@ -129,16 +129,64 @@ session_start();
         <div class="container">
         	<div class="row">
         		<div class="col-md-3">
-
-        			<div class="panel panel-default">
-					  <div class="panel-body">
-					    Basic panel example
+					<div class="panel panel-default">
+					  <div class="panel-body" style="cursor: pointer;">
+					    (<?php 
+					    	$sql = $db->query("SELECT count(id) nGroups FROM groups") or die(mysql_error($db));
+					    	if ($db) {
+					    		$row = mysqli_fetch_array($sql);
+					    		$nGroups = $row['nGroups'];
+					    		echo $nGroups;
+					    	}?>) Groups
 					  </div>
 					</div>
-        		Groups</div>
-        		<div class="col-md-3">Users</div>
-        		<div class="col-md-3">Transactions</div>
-        		<div class="col-md-3">Balance</div>
+				</div>
+        		<div class="col-md-3">
+        			<div class="panel panel-default">
+					  <div class="panel-body" style="cursor: pointer;">
+					   (<?php 
+					    	$sql = $db->query("SELECT count(id) nUsers FROM users") or die(mysql_error($db));
+					    	if ($db) {
+					    		$row = mysqli_fetch_array($sql);
+					    		$nUsers = $row['nUsers'];
+					    		echo $nUsers;
+					    	}?>) Users
+					  </div>
+					</div>
+				</div>
+        		<div class="col-md-3">
+        			<div class="panel panel-default">
+					  <div class="panel-body" style="cursor: pointer;">
+					   (<?php 
+					    	$sql = $con ->query("SELECT count(id) nTransactions FROM directtransfers WHERE (`id` % 2) = 1") or die(mysql_error($db));
+					    	$sql2 = $con ->query("SELECT count(id) nGTransactions FROM grouptransactions WHERE (`id` % 2) = 1") or die(mysql_error($db));
+					    	$row = mysqli_fetch_array($sql);
+					    	$row2 = mysqli_fetch_array($sql2);
+					    	$nTransactions = $row['nTransactions'];
+					    	$nGTransactions = $row2['nGTransactions'];
+					    	echo $nTransactions+$nGTransactions;
+					    ?>) Transactions
+					  </div>
+					</div>
+				</div>
+        		<div class="col-md-3">
+        			<div class="panel panel-default">
+					  <div class="panel-body" style="cursor: pointer;">
+					   (<?php 
+					    	$sql= $con->query("SELECT sum(amount) totalbalance FROM `directtransfers` WHERE (`id` % 2) = 1");
+					    	$sql2= $con->query("SELECT sum(amount) gtotalbalance FROM `grouptransactions` WHERE (`id` % 2) = 1");
+							$balancerow = mysqli_fetch_array($sql);
+							$balancerow2 = mysqli_fetch_array($sql2);
+								echo number_format($balancerow['totalbalance']+$balancerow2['gtotalbalance']);
+					    	?>.00 Rwf) Amount
+					  </div>
+					</div>
+				</div>
+        	</div>
+        	<div class="row">
+        		<dir class="col-md-12">
+        			<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+        		</dir>
         	</div>
 			<div class="row">
 				<div class="col-md-3">
@@ -182,7 +230,6 @@ session_start();
 			</div>
 		</div>
       <br/><br/>
-	  <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
       </div>
     </div>
   </div>

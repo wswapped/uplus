@@ -4,7 +4,7 @@
 require 'db.php';
 
 $result = $con->query("SELECT COUNT( * ) AS JUMLAH,transaction_date BULAN
-	FROM transactions
+	FROM directtransfers
 	group by DATE(transaction_date)");
 
 
