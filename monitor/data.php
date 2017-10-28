@@ -4,8 +4,8 @@
 require 'db.php';
 
 $result = $con->query("SELECT COUNT( * ) AS JUMLAH,transaction_date BULAN
-	FROM directtransfers
-	group by DATE(transaction_date)");
+	FROM directtransfers WHERE (`id` % 2) = 1
+	group by DATE(transaction_date) ");
 
 
 $bln = array();

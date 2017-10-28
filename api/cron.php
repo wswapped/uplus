@@ -7,6 +7,7 @@ include 'db.php';
 	$balance 		= $balancerow['todaybalance'];
 	$transactions 	= $balancerow2['todaytransactions'];
 	$phone 		= '0784848236';
+	$phone2		= '+250784968343';
 	$sender 	= "UPLUS CLOUD";
 	$message 	= 'Hello Uplus manager, Today we had '.$balance.' Rwf through UPLUS, from '.$transactions .' transactions.';
 		
@@ -15,7 +16,7 @@ include 'db.php';
 	$phone 	= preg_replace( '/[^0-9]/', '', $phone );
 	$phone 	= substr($phone, -10); 
 
-	$recipients = '+25'.$phone;
+	$recipients = '+25'.$phone, $phone2;
 	//$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
 	$data = array(
 		"sender"		=>$sender,
