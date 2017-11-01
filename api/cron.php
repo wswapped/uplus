@@ -8,7 +8,7 @@
 	$transactions 	= $balancerow2['todaytransactions'];
 	$phone 		= '0784848236, 0784968343';
 	$sender 	= "UPLUS CLOUD";
-	$message 	= 'Hello Uplus manager, Today we had '.$balance.' Rwf through UPLUS, from '.$transactions .' transactions. For more info (https://uplus.rw/monitor/';
+	$message 	= 'Hello Uplus manager, Today we had '.number_format($balance).' Rwf through UPLUS, from '.number_format($transactions).' transactions. For more info vist https://uplus.rw/monitor/';
 		
 
 	//CLEAN PHONE
