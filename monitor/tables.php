@@ -30,6 +30,7 @@ function users()
 		}else{
 			$active = 'NO';
 		}
+		$createdDate 	= strftime("%d, %b%y", strtotime($row["createdDate"]));
 		echo'<tr>
 			<th>'.$n.'</th>
 			<th><div style="
@@ -45,7 +46,7 @@ function users()
 "></div></th>
 			<th>'.$row['name'].'</th>
 			<th>'.$row['phone'].'</th>
-			<th>'.$row['createdDate'].'</th>
+			<th>'.$createdDate.'</th>
 			<th>'.$active.'</th>
 		</tr>';
 	}
