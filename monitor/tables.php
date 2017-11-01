@@ -112,9 +112,39 @@ function groups()
 function transactions()
 {
 	include "db.php";
-	$sql = $db->query("SELECT * FROM users ORDER BY id DESC");
+	$sql = $con->query("SELECT * FROM directtransfers WHERE (`id` % 2) = 1 ORDER BY id DESC");
 	$n= 0;
-	$data = "";
+	echo'<table class="table table-hover table-striped table-bordered" style="float: left;">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Amount</th>
+			<th>From</th>
+			<th>To</th>
+			<th>Status</th>
+			<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>';
+	while($row = mysqli_fetch_array($sql))
+	{
+		$n++;
+		$id= $row['id'];
+		$sql2 = $con->query("SELECT accountNumber, actorName FROM directtransfers WHERE id = '$id'+1");
+		$row2 = mysqli_fetch_array($sql2);
+
+		echo'<tr>
+			<th>'.$n.'</th>
+			<th>'.number_format($row['amount']).'</th>
+			<th>'.$row['actorName'].' <em>('.$row['accountNumber'].')</em></th>
+			<th>'.$row2['actorName'].'<em>('.$row2['accountNumber'].')</em></th>
+			<th>'.$row['status'].'</th>
+			<th>'.$row['transaction_date'].'</th>
+		</tr>';
+	}
+	echo'
+	</tbody>
+</table>';
 
 }
 
