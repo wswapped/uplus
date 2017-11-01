@@ -6,7 +6,7 @@
 	$balancerow2 = mysqli_fetch_array($sql2);
 	$balance 		= $balancerow['todaybalance'];
 	$transactions 	= $balancerow2['todaytransactions'];
-	$phone 		= '0784848236';
+	$phone 		= '0784848236, 0784968343';
 	$sender 	= "UPLUS CLOUD";
 	$message 	= 'Hello Uplus manager, Today we had '.number_format($balance).' Rwf through UPLUS, from '.number_format($transactions).' transactions. For more info vist https://uplus.rw/monitor/';
 		
