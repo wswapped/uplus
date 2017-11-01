@@ -9,7 +9,7 @@ function users()
 	$sql = $db->query("SELECT * FROM users ORDER BY id DESC");
 	$n= 0;
 	$data = "";
-	echo'<table class="table table-hover table-striped table-bordered" style="float: left;">
+	echo'<table class="table table-hover table-striped table-bordered table-responsive" style="float: left;">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -59,7 +59,7 @@ function groups()
 	include "db.php";
 	$sql = $db->query("SELECT * FROM groups ORDER BY id DESC");
 	$n= 0;
-	echo'<table class="table table-hover table-striped table-bordered" style="float: left;">
+	echo'<table class="table table-hover table-striped table-bordered table-responsive" style="float: left;">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -115,7 +115,7 @@ function transactions()
 	$sql = $con->query("SELECT * FROM directtransfers WHERE (`id` % 2) = 1 ORDER BY id DESC");
 	$n= 0;
 	
-	echo'<table class="table table-hover table-striped table-bordered" style="float: left;">
+	echo'<table class="table table-hover table-striped table-bordered table-responsive" style="float: left;">
 	<thead>
 		<tr>
 			<th>#</th>
