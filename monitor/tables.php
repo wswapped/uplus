@@ -114,6 +114,7 @@ function transactions()
 	include "db.php";
 	$sql = $con->query("SELECT * FROM directtransfers WHERE (`id` % 2) = 1 ORDER BY id DESC");
 	$n= 0;
+	
 	echo'<table class="table table-hover table-striped table-bordered" style="float: left;">
 	<thead>
 		<tr>
@@ -132,14 +133,22 @@ function transactions()
 		$id= $row['id'];
 		$sql2 = $con->query("SELECT accountNumber, actorName FROM directtransfers WHERE id = '$id'+1");
 		$row2 = mysqli_fetch_array($sql2);
-
+		$status = $row['status'];
+			if ($status=='Pending') {
+				$hstatus='<th style="background: #fbbc03;">'.$row['status'].'</th>';
+			}elseif ($status=='Successfull') {
+				$hstatus='<th style="background: #36a753;">'.$row['status'].'</th>';
+			}elseif ($status=='Failed') {
+				$hstatus='<th style="background: #eb4435;">'.$row['status'].'</th>';
+			}
+			$transactionDate 	= strftime("%d, %b%y", strtotime($row["transaction_date"]));
 		echo'<tr>
 			<th>'.$n.'</th>
 			<th>'.number_format($row['amount']).'</th>
 			<th>'.$row['actorName'].' <em>('.$row['accountNumber'].')</em></th>
-			<th>'.$row2['actorName'].'<em>('.$row2['accountNumber'].')</em></th>
-			<th>'.$row['status'].'</th>
-			<th>'.$row['transaction_date'].'</th>
+			<th>'.$row2['actorName'].' <em>('.$row2['accountNumber'].')</em></th>
+			'.$hstatus.'
+			<th>'.$transactionDate.'</th>
 		</tr>';
 	}
 	echo'
