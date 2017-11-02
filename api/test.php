@@ -1,15 +1,19 @@
 <?php
-include 'db.php';
-$pullNumber = '0784848236';
-$sql = $db->query("SELECT * FROM users WHERE phone = '$pullNumber' LIMIT 1");
-$checkAvailb = mysqli_num_rows($sql);
-if($checkAvailb > 0)
-{
-	$row = mysqli_fetch_array($sql);
-	echo $pullName	= $row['name'];
-	echo $pullId	= $row['id'];
-	echo $token		= $row['token'];
-}else{
-	echo "out";
+$APIToken = "89aGM18D63"; // PHPHive Truecaller API Token, Obtain it from https://tcapi.phphive.info/console/
+$no = "250788423455"; // Any Number You want to Search 
+search($no); // echo Details like Name, Internet Address ( including Profile Picutre, Email, Facebook & Twitter ), Spam Score, Spammer Type etc.
+function search($no){
+$uri = 'https://tcapi.phphive.info/'.$APIToken.'/search/'.$no;
+$ch = curl_init($uri);
+curl_setopt_array($ch, array(
+    CURLOPT_HTTPHEADER  => array('X-User: PHPHive'),
+    CURLOPT_RETURNTRANSFER  =>true,
+ CURLOPT_SSL_VERIFYHOST => false,
+ CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_VERBOSE     => 1
+));
+$response = curl_exec($ch);
+curl_close($ch);
+echo $response;
 }
 ?>

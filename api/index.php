@@ -131,7 +131,6 @@ else
 		}else{
 			echo "no";
 		}
-		
 	}
 
 	function transactions()
@@ -147,6 +146,15 @@ else
 			$pullId 	= $pushId + 1;
 			$amount 	= $row['amount'];
 			$status 	= $row['status'];
+			if($status=="Failed"){
+				$color = "0xfff00000";
+			}
+			elseif($status=="Failed"){
+				$color = "0xffff0000";
+			}
+			else{
+				$color = "0xfffff000";
+			}
 			$sql2 		= $outCon->query("SELECT accountNumber, actorName, transaction_date FROM `directtransfers` WHERE `id` = '$pullId' LIMIT 1");
 			$row2 		= mysqli_fetch_array($sql2);
 			$pullName 	= $row2['actorName'];
@@ -160,7 +168,8 @@ else
 		        	"pullName" 	=> $pullName,
 		        	"phone" 	=> $pullPhone,
 		        	"status"	=> $status,
-		        	"transactionDate"	=> $transactionDate
+		        	"transactionDate"	=> $transactionDate,
+		        	"color"		=> $color
 		    	);
 		
 		}
