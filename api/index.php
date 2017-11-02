@@ -147,13 +147,13 @@ else
 			$amount 	= $row['amount'];
 			$status 	= $row['status'];
 			if($status=="Failed"){
-				$color = "0xfff00000";
+				$color = "#eb4435";
 			}
-			elseif($status=="Failed"){
-				$color = "0xffff0000";
+			elseif($status=="Pending"){
+				$color = "#fbbc03";
 			}
 			else{
-				$color = "0xfffff000";
+				$color = "#36a753";
 			}
 			$sql2 		= $outCon->query("SELECT accountNumber, actorName, transaction_date FROM `directtransfers` WHERE `id` = '$pullId' LIMIT 1");
 			$row2 		= mysqli_fetch_array($sql2);
@@ -164,14 +164,13 @@ else
 			// GET THE USER TRANSATIONS
 		
 			$returnedinformation[] = array(
-				"amount" 	=> number_format($amount)." Rwf",
-		        	"pullName" 	=> $pullName,
-		        	"phone" 	=> $pullPhone,
-		        	"status"	=> $status,
+				"amount" 				=> number_format($amount)." Rwf",
+		        	"pullName" 			=> $pullName,
+		        	"phone" 			=> $pullPhone,
+		        	"status"			=> $status,
 		        	"transactionDate"	=> $transactionDate,
-		        	"color"		=> $color
+		        	"transactionColor"	=> $color
 		    	);
-		
 		}
 	
 		header('Content-Type: application/json');
