@@ -432,7 +432,7 @@ function checkBalance(){
 	    success: function (data) { 
 	        $.each(data, function(index, element) {
 	        	var balance = (element.balance).formatMoney(0, '.', ',');
-	            document.getElementById("donetransfer").innerHTML = '<div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 3px #000000"><h4>'+balance+' Rwf</h4>';
+	            document.getElementById("donetransfer").innerHTML = '<div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 3px #000000"><h5>Float Balance</h5><h4/>'+balance+' Rwf</h4>';
 
 	        });
 	    }
