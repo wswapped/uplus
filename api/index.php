@@ -1871,7 +1871,6 @@ else
 
 	function balance()
 	{
-
 		$url = 'https://www.intouchpay.co.rw/api/getbalance/';
 
 		$username="muhirwa.clement";
@@ -1881,10 +1880,8 @@ else
 		$txt_id = md5(time());
 		$data = array();
 		$data["username"] 				= $username;
-		//$data["password"] 				= $generate_hash;
+		$data["password"] 				= $generate_hash;
 		$data["timestamp"] 				= $var_time;
-		$data["accountid"] 				= '250150000003';
-	    $data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
 		$options = array(
 			'http' => array(
 				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -1894,6 +1891,7 @@ else
 		);
 		$context  = stream_context_create($options);
 		$result = file_get_contents($url, false, $context);
+		//echo $result;
 		if ($result === FALSE) 
 		{ 
 			$returnedinformation	= array();

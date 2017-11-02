@@ -406,51 +406,54 @@ function kwishura(){
 <script>
 // Check for the balance
 function checkBalance(){
-	var forGroupId			= '';
-	var sentAmount			= '';
-	var sendFromName		= '<?php echo $name;?>';
-	var sendToBank			= '';
-	var sendToAccount		= '';
-	
-	var sendFromBank = '';
-	var realphone1 			= '';
-	var realphone2 			= '';
-	var sendToName 			= 'CheckBalance';
 	document.getElementById('donetransfer').innerHTML = '<div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 2px #000000;"><h5>Connecting...<span id="time">00:30</span></h5></div>';
 	
 	var fiveMinutes = 30,
         display = document.querySelector('#time');
     startTimer(fiveMinutes, display);
 	//alert(sendFromName);
-	$.ajax({
-			type : "GET",
-			url : "../3rdparty/rtgs/transfer.php",
-			dataType : "html",
-			cache : "false",
-			data : {
-				
-				forGroupId		:	forGroupId,	
-				sentAmount		:	sentAmount,	
-				phone1 			: 	realphone1,
-				phone2 			: 	realphone2,
-				sendFromName	:	sendFromName,
-				sendToName		:	sendToName,
-				
-				sendFromAccount	:	realphone1,	
-				sendFromBank	:   sendFromBank,	
-				sendToBank		:   sendToBank,		
-				sendToAccount	:   sendToAccount,
-								
-			},
-			success : function(html, textStatus){
-				//alert(sendToName);
-				$("#donetransfer").html(html);
-				document.getElementById('doneMtn').innerHTML = '';
-			},
-			error : function(xht, textStatus, errorThrown){
-				document.getElementById('donetransfer').innerHTML = 'Error.'+ errorThrown; 
-			}
+	
+	Number.prototype.formatMoney = function(c, d, t){
+	var n = this, 
+	    c = isNaN(c = Math.abs(c)) ? 2 : c, 
+	    d = d == undefined ? "." : d, 
+	    t = t == undefined ? "," : t, 
+	    s = n < 0 ? "-" : "", 
+	    i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+	    j = (j = i.length) > 3 ? j % 3 : 0;
+	   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+	 };
+
+	$.ajax({ 
+	    type: 'POST', 
+	    url: '../api/index.php', 
+	    data: { action: 'balance' }, 
+	    dataType: 'json',
+	    success: function (data) { 
+	        $.each(data, function(index, element) {
+	        	var balance = (element.balance).formatMoney(0, '.', ',');
+	            document.getElementById("donetransfer").innerHTML = '<div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 3px #000000"><h4>'+balance+' Rwf</h4>';
+
+	        });
+	    }
 	});
+
+
+	// $.ajax({
+
+	// 	type: "POST", //rest Type
+ //        dataType: 'jsonp', //mispelled
+ //        url: "../api/index.php",
+ //        async: false,
+ //        contentType: "application/json; charset=utf-8",
+ //        success: function (msg) {
+ //        	//$("#donetransfer").html(msg);
+ //            console.log(msg);                
+ //        }
+	// 	error : function(xht, textStatus, errorThrown){
+	// 		document.getElementById('donetransfer').innerHTML = 'Error.'+ errorThrown; 
+	// 	}
+	// });
 }
 </script>
 
