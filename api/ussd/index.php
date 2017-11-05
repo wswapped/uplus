@@ -6,7 +6,7 @@ $phoneNumber = $_POST["phoneNumber"];
 $text        = $_POST["text"];
 if ( $text == "" ) {
      // This is the first request. Note how we start the response with CON
-     $response  = "Murakazaneza Kukimina cya Uplus \n";
+     $response  = "CON Murakazaneza Kukimina cya Uplus \n";
      $response .= "1. My Account \n";
      $response .= "2. My phone number";
 }
