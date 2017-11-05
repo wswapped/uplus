@@ -6,9 +6,9 @@ $phoneNumber = $_POST["phoneNumber"];
 $text        = $_POST["text"];
 if ( $text == "" ) {
      // This is the first request. Note how we start the response with CON
-     $response  = "Murakazaneza Kukimina Cya Uplus \n";
-     $response .= "1. Bimina Ndimo \n";
-     $response .= "2. Jya mukimina Gishya";
+     $response  = "CON What would you want to check \n";
+     $response .= "1. My Account \n";
+     $response .= "2. My phone number";
 }
 else if ( $text == "1" ) {
   // Business logic for first level response
