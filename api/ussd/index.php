@@ -17,16 +17,19 @@ if ( $text == "" ) {
   if($db){
     $userData = mysqli_fetch_array($sql);
     $userName = $userData['name'];
-
-  
-     // This is the first request. Note how we start the response with CON
-    $response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
+    $userId = $userData['id'];
+  $response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
+    $n = 0;
+    $sqlgroups  = $db->query("SELECT groupName FROM members WHERE memberId = '$userId' LIMIT 1");
+    WHILE($group  = mysqli_fetch_array($sqlgroups))
+    {
+      $n++;
+      $response .= $n.". ".$group['groupName']." \n";
     }
-     else{
-       $response  = "CON Murakazaneza Kukimina Cya Uplus \n";
-     }
-     $response .= "1. Bimina Ndimo \n";
-     $response .= "2. Jya mukimina Gishya".$phoneNumber;
+     // This is the first request. Note how we start the response with CON
+    
+     $response .= "00. Sohoka";
+   }
 }
 else if ( $text == "1" ) {
   // Business logic for first level response
