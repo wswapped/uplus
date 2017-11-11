@@ -8,7 +8,7 @@ if ( $text == "" ) {
      // This is the first request. Note how we start the response with CON
      $response  = "CON Murakazaneza Kukimina Cya Uplus \n";
      $response .= "1. Bimina Ndimo \n";
-     $response .= "2. Jya mukimina Gishya";
+     $response .= "2. Jya mukimina Gishya".$phoneNumber;
 }
 else if ( $text == "1" ) {
   // Business logic for first level response
