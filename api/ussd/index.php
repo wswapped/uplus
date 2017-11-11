@@ -6,7 +6,47 @@ $phoneNumber = $_POST["phoneNumber"];
 $text        = $_POST["text"];
 
 
-if ( $text == "" ) {
+if ( $text == "" || $text == "#" || $text == "1*#" ) {
+
+  //CLEAN PHONE
+    $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
+    $phoneNumber  = substr($phoneNumber, -10); 
+    $sql  = $db->query("SELECT * FROM users WHERE phone = '$phoneNumber' LIMIT 1");
+    if($db)
+    {
+      $countPin     = mysqli_num_rows($sql);
+      $code         = rand(1000, 9999);
+      $signInfo     = array();
+      if($countPin > 0)
+      {
+          $userData = mysqli_fetch_array($sql);
+          $userName = $userData['name'];
+          $userId = $userData['id'];
+      }
+      else
+      {
+        
+        $sqlsavePin = $db->query("INSERT INTO `users`(
+        phone, active, createdDate, password, visits, updatedBy, updatedDate) 
+        VALUES('$phoneNumber', '0', now(), '$code', '0', '1', now())")or die (mysqli_error());
+
+        $sqlcheckPin = $db->query("SELECT * FROM users ORDER BY id DESC LIMIT 1");
+          $userData = mysqli_fetch_array($sqlcheckPin);
+          $userName = $userData['name'];
+          $userId = $userData['id'];
+      }
+      
+      $response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
+      
+      // This is the first request. Note how we start the response with CON
+    }
+    // Business logic for first level response
+    $response .= "1. Ibimina Ndimo \n";
+    $response .= "2. Ubusobanuro \n";
+    $response .= "#. Subira Inyuma";
+   
+}
+else if ( $text == "1" ) {
 
   //USER DATA
   require('../db.php');
@@ -52,23 +92,17 @@ if ( $text == "" ) {
       }
       // This is the first request. Note how we start the response with CON
     }
-    $response .= "0. Jya mu Ikimina";
-   
+    $response .= "0. Jya mu Ikimina \n";
+    $response .= "#. Subira Inyuma";
 }
-else if ( $text == "1" ) {
-  // Business logic for first level response
-  $response = "CON Ibimina Urimo \n";
-  $response .= "1. Ubumwe \n";
-  $response .= "2. Umurava \n";
-  $response .= "3. Subira Inyuma";
-  
- }
- else if($text == "2") {
+
+else if($text == "2") {
   // Business logic for first level response
   // This is a terminal request. Note how we start the response with END
-  $response = "CON Shiramo code yikimina";
+  $response = "CON Uplus ni apurikasiyo imanajinga Ibimina n'Amakoperative";
  }
- else if($text == "1*1") {
+
+else if($text == "1*1") {
   // This is a second level response where the user selected 1 in the first instance
   $response   = "CON Ikimina Ubumwe \n";
   $response  .= "1. Tanga Umusanzu \n";
