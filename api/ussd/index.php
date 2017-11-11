@@ -13,18 +13,18 @@ if ( $text == "" ) {
     //CLEAN PHONE
     $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
     $phoneNumber  = substr($phoneNumber, -10); 
-  $sql  = $db->query("SELECT * FROM users WHERE phone = '$phoneNumber' LIMIT 1");
-  if($db){
-    $userData = mysqli_fetch_array($sql);
-    $userName = $userData('name');
+    //$sql  = $db->query("SELECT * FROM users WHERE phone = '$phoneNumber' LIMIT 1");
+  //if($db){
+    //$userData = mysqli_fetch_array($sql);
+    //$userName = $userData('name');
 
   
      // This is the first request. Note how we start the response with CON
-     $response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
-     }
-     else{
+     //$response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
+  //   }
+  //   else{
        $response  = "CON Murakazaneza Kukimina Cya Uplus \n";
-     }
+    // }
      $response .= "1. Bimina Ndimo \n";
      $response .= "2. Jya mukimina Gishya".$phoneNumber;
 }
