@@ -5,14 +5,14 @@ $serviceCode = $_POST["serviceCode"];
 $phoneNumber = $_POST["phoneNumber"];
 $text        = $_POST["text"];
 
-include "../db.php";
+require('db.php');
     //CLEAN PHONE
     $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
     $phoneNumber  = substr($phoneNumber, -10); 
 if ( $text == "" ) {
 
   //USER DATA
-  $sql =  $db->query("SELECT * FROM users WHERE phone = '$phoneNumber'");
+  $sql  = $db->query("SELECT *  FROM users WHERE phone = '$phoneNumber' LIMIT 1");
   if($db){
     $userData = mysqli_fetch_array($sql);
     $userName = $userData('name');
