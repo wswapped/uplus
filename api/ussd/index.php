@@ -12,13 +12,12 @@ include "../db.php";
 if ( $text == "" ) {
 
   //USER DATA
-  $sql =  $db->query(SELECT * FROM users WHERE phone = '$phoneNumber');
+  $sql =  $db->query("SELECT * FROM users WHERE phone = '$phoneNumber'");
   if($db){
     $userData = mysqli_fetch_array($sql);
     $userName = $userData('name');
 
   }
-
      // This is the first request. Note how we start the response with CON
      $response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
      $response .= "1. Bimina Ndimo \n";
