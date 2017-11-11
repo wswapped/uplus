@@ -14,22 +14,46 @@ if ( $text == "" ) {
     $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
     $phoneNumber  = substr($phoneNumber, -10); 
     $sql  = $db->query("SELECT * FROM users WHERE phone = '$phoneNumber' LIMIT 1");
-  if($db){
-    $userData = mysqli_fetch_array($sql);
-    $userName = $userData['name'];
-    $userId = $userData['id'];
-  $response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
-    $n = 0;
-    $sqlgroups  = $db->query("SELECT groupName FROM members WHERE memberId = '$userId' LIMIT 1");
-    WHILE($group  = mysqli_fetch_array($sqlgroups))
+    if($db)
     {
-      $n++;
-      $response .= $n.". ".$group['groupName']." \n";
+      $countPin     = mysqli_num_rows($sqlcheckPin);
+      $code         = rand(1000, 9999);
+      $signInfo     = array();
+      if($countPin > 0)
+      {
+          $userData = mysqli_fetch_array($sql);
+          $userName = $userData['name'];
+          $userId = $userData['id'];
+      }
+      else
+      {
+        
+        $sqlsavePin = $db->query("INSERT INTO `users`(
+        phone, active, createdDate, password, visits, updatedBy, updatedDate) 
+        VALUES('$phoneNumber', '0', now(), '$code', '0', '1', now())")or die (mysqli_error());
+
+        $sqlcheckPin = $db->query("SELECT * FROM users ORDER BY id DESC LIMIT 1");
+          $userData = mysqli_fetch_array($sqlcheckPin);
+          $userName = $userData['name'];
+          $userId = $userData['id'];
+      }
+      
+      $response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
+      $n = 0;
+      $sqlgroups  = $db->query("SELECT groupName FROM members WHERE memberId = '$userId' LIMIT 1");
+      if(mysqli_num_rows($sqlgroups)>0)
+      WHILE($group  = mysqli_fetch_array($sqlgroups))
+      {
+        $n++;
+        $response .= $n.". ".$group['groupName']." \n";
+      }
+      else{
+        $response .= "Nta Kimina urimo \n";
+      }
+      // This is the first request. Note how we start the response with CON
     }
-     // This is the first request. Note how we start the response with CON
-    
-     $response .= "00. Sohoka";
-   }
+    $response .= "0. Jya mu Ikimina";
+   
 }
 else if ( $text == "1" ) {
   // Business logic for first level response
