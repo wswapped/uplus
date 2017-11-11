@@ -16,7 +16,7 @@ if ( $text == "" ) {
     $sql  = $db->query("SELECT * FROM users WHERE phone = '$phoneNumber' LIMIT 1");
     if($db)
     {
-      $countPin     = mysqli_num_rows($sqlcheckPin);
+      $countPin     = mysqli_num_rows($sql);
       $code         = rand(1000, 9999);
       $signInfo     = array();
       if($countPin > 0)
