@@ -95,11 +95,11 @@ else if ( $text == "1" )
     $response .= "#. Subira Inyuma";
 }
 
-else if($text == "2") 
+else if($text == "2" || $text == "1*#*2") 
 {
-  // Business logic for first level response
-  // This is a terminal request. Note how we start the response with END
-  $response = "CON Uplus ni apurikasiyo imanajinga Ibimina n'Amakoperative";
+    // Business logic for first level response
+    // This is a terminal request. Note how we start the response with END
+    $response = "CON Uplus ni apurikasiyo imanajinga Ibimina nAmakoperative";
  }
 
 else if($text == "1*1") 
