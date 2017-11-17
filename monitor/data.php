@@ -90,7 +90,7 @@ function money()
 
 	$bln = array();
 	$bln['name'] = 'Dates';
-	$rows['name'] = 'Transactions';
+	$rows['name'] = 'Money';
 	while ($r = mysqli_fetch_array($result)) {
 	    $bln['data'][] = strftime("%d %b", strtotime($r['BULAN']));
 	    $rows['data'][] = $r['JUMLAH'];
