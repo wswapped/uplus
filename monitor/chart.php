@@ -1,12 +1,9 @@
 <?php 
 if (isset($_GET['table'])) 
 {
-    $_GET['table']();
+    $datapage = $_GET['table'];
 }
-function transactions()
-{
 ?>
-
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -50,7 +47,7 @@ function transactions()
                     },
                     series: []
                 };
-                $.getJSON("data.php?datapage=transactions", function(json) {
+                $.getJSON("data.php?datapage=<?php echo $datapage;?>", function(json) {
                     options.xAxis.categories = json[0]['data']; //xAxis: {categories: []}
                     options.series[0] = json[1];
                     chart = new Highcharts.Chart(options);
@@ -64,4 +61,3 @@ function transactions()
         <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </body>
 </html>
-<?php } ?>
