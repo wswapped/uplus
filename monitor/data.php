@@ -3,9 +3,11 @@
 #Basic Line
 require 'db.php';
 
-$result = $con->query("SELECT COUNT( * ) AS JUMLAH,DATE(transaction_date) BULAN
-	FROM directtransfers WHERE (`id` % 2) = 1
-	group by DATE(transaction_date) ");
+$result = $con->query(" SELECT COUNT( * ) AS JUMLAH,DATE(transaction_date) BULAN
+	FROM directtransfers 
+    WHERE (`id` % 2) = 1
+    AND transaction_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()
+    group by DATE(transaction_date)");
 
 
 $bln = array();
