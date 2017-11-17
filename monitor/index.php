@@ -498,7 +498,24 @@ function chargeChangeBtn()
 function tableing(tablesa)
 {
 	var table = tablesa;
+	document.getElementById('newChat').innerHTML ='';
 	document.getElementById('tables').innerHTML ='<div style="width=100%; height: auto;margin: 0 auto;padding: 10px;position: relative;"><div class="loader"></div></div>';
+	$.ajax({
+		type: "GET",
+		url: "chart.php",
+		dataType: "html",
+		cache: "false",
+		data:{
+			table: table
+		},
+		success : function(html, textStatus){
+			$("#newChat").html(html);
+		},
+		error : function(xht, textStatus, errorThrown){
+			alert(errorThrown);
+		}
+	});
+
 	$.ajax({
 		type : "GET",
 		url : "tables.php",
@@ -517,21 +534,7 @@ function tableing(tablesa)
 		}
 	});
 
-	$.ajax({
-		type: "GET",
-		url: "chart.php",
-		dataType: "html",
-		cache: "false",
-		data:{
-			table: table
-		},
-		success : function(html, textStatus){
-			$("#newChat").html(html);
-		},
-		error : function(xht, textStatus, errorThrown){
-			alert(errorThrown);
-		}
-	});
+	
 }
 </script>
 
