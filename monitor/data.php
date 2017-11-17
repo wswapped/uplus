@@ -81,7 +81,7 @@ function money()
 	#Basic Line
 	require 'db.php';
 
-	$result = $con->query(" SELECT COUNT( id ) AS JUMLAH,DATE(transaction_date) BULAN
+	$result = $con->query(" SELECT SUM(amount) AS JUMLAH,DATE(transaction_date) BULAN
 		FROM directtransfers 
 	    WHERE (`id` % 2) = 1
 	    AND transaction_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()
