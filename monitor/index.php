@@ -209,13 +209,12 @@ border-top: 16px solid #4285f4;
         	</div>
         	<div class="row">
         		<dir class="col-md-12">
-        			<div id="tables"></div>
+        			<div id="newChat"></div>
         		</dir>
         	</div>
         	<div class="row">
         		<dir class="col-md-12">
-        			<div id="newChat"></div>
-        			<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+        			<div id="tables"></div>
         		</dir>
         	</div>
 			<div class="row">
@@ -518,14 +517,13 @@ function tableing(tablesa)
 		}
 	});
 
-	var nothing = 1;
 	$.ajax({
 		type: "GET",
 		url: "chart.php",
 		dataType: "html",
 		cache: "false",
 		data:{
-			nothing : nothing
+			table: table
 		},
 		success : function(html, textStatus){
 			$("#newChat").html(html);
