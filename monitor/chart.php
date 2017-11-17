@@ -213,7 +213,7 @@ function money()
                     },
                     yAxis: {
                         title: {
-                            text: 'Transactions'
+                            text: 'Rwf'
                         },
                         plotLines: [{
                                 value: 0,
@@ -222,7 +222,7 @@ function money()
                             }]
                     },
                     tooltip: {
-                        valueSuffix: 'Transactions'
+                        valueSuffix: 'Rwf'
                     },
                     legend: {
                         layout: 'vertical',
