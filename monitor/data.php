@@ -3,7 +3,7 @@
 #Basic Line
 require 'db.php';
 
-$result = $con->query("SELECT COUNT( * ) AS JUMLAH,DATE(transaction_date) td BULAN
+$result = $con->query("SELECT COUNT( * ) AS JUMLAH,DATE(transaction_date) BULAN
 	FROM directtransfers WHERE (`id` % 2) = 1
 	group by DATE(transaction_date) ");
 
