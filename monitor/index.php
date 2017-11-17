@@ -214,6 +214,7 @@ border-top: 16px solid #4285f4;
         	</div>
         	<div class="row">
         		<dir class="col-md-12">
+        			<div id="newChat"></div>
         			<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
         		</dir>
         	</div>
@@ -514,6 +515,23 @@ function tableing(tablesa)
 		},
 		error : function(xht, textStatus, errorThrown){
 			alert(errorThrown); 
+		}
+	});
+
+	var nothing = 1;
+	$.ajax({
+		type: "GET",
+		url: "chart.php",
+		dataType: "html",
+		cache: "false",
+		data:{
+			nothing : nothing
+		},
+		success : function(html, textStatus){
+			$("#newChat").html(html);
+		},
+		error : function(xht, textStatus, errorThrown){
+			alert(errorThrown);
 		}
 	});
 }
