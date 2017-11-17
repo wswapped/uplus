@@ -42,7 +42,7 @@ function users()
 
 	$bln = array();
 	$bln['name'] = 'Dates';
-	$rows['name'] = 'Transfers';
+	$rows['name'] = 'Users';
 	while ($r = mysqli_fetch_array($result)) {
 	    $bln['data'][] = strftime("%d %b", strtotime($r['BULAN']));
 	    $rows['data'][] = $r['JUMLAH'];
@@ -66,7 +66,7 @@ function groups()
 
 	$bln = array();
 	$bln['name'] = 'Dates';
-	$rows['name'] = 'Transfers';
+	$rows['name'] = 'Groups';
 	while ($r = mysqli_fetch_array($result)) {
 	    $bln['data'][] = strftime("%d %b", strtotime($r['BULAN']));
 	    $rows['data'][] = $r['JUMLAH'];
@@ -90,7 +90,7 @@ function money()
 
 	$bln = array();
 	$bln['name'] = 'Dates';
-	$rows['name'] = 'Transfers';
+	$rows['name'] = 'Transactions';
 	while ($r = mysqli_fetch_array($result)) {
 	    $bln['data'][] = strftime("%d %b", strtotime($r['BULAN']));
 	    $rows['data'][] = $r['JUMLAH'];
