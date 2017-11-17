@@ -218,6 +218,7 @@ border-top: 16px solid #4285f4;
         		</dir>
         	</div>
 			<div class="row">
+				<!--
 				<div class="col-md-3">
 					<h4>Test Transfer</h4>
 					Amount: 
@@ -241,7 +242,9 @@ border-top: 16px solid #4285f4;
 					<button onclick="kwishura()" class="btn btn-primary">SEND</button>
 					<br/><br/>
 				</div>
+				-->
 				<div class="col-md-3">
+					<!--
 					<h4>.</h4>
 					Charges: 
 					<div class="row"  style="margin: unset; padding: 0;" id="charges">
@@ -252,6 +255,7 @@ border-top: 16px solid #4285f4;
 							<button class="btn btn-default" style="border-radius: 0px 4px 0px 0px; width: 100%" onclick="chargeBtn()">Edit</button>
 						</div>
 					</div>
+					-->
 					<div style="background:#007569; border-radius: 0 0 4px 4px; height:100%; padding: 60px" id="donetransfer">
 						<button onclick="checkBalance()" class="btn btn-warning">Check Balance</button>
 					</div>
