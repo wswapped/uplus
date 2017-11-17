@@ -1,4 +1,9 @@
-
+<?php 
+if (isset($_GET['table'])) 
+{
+    $datapage = $_GET['table'];
+}
+?>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -9,7 +14,7 @@
                 var options = {
                     chart: {
                         renderTo: 'container',
-                        type: 'line'
+                        type: 'area'
                     },
                     title: {
                         text: '',
@@ -42,7 +47,7 @@
                     },
                     series: []
                 };
-                $.getJSON("data.php", function(json) {
+                $.getJSON("data.php?datapage=<?php echo $datapage;?>", function(json) {
                     options.xAxis.categories = json[0]['data']; //xAxis: {categories: []}
                     options.series[0] = json[1];
                     chart = new Highcharts.Chart(options);
