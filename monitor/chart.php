@@ -30,7 +30,7 @@ function transactions()
                     },
                     yAxis: {
                         title: {
-                            text: 'Bids'
+                            text: 'Transactions'
                         },
                         plotLines: [{
                                 value: 0,
@@ -39,7 +39,7 @@ function transactions()
                             }]
                     },
                     tooltip: {
-                        valueSuffix: 'Transaction date'
+                        valueSuffix: 'Transactions'
                     },
                     legend: {
                         layout: 'vertical',
@@ -91,7 +91,7 @@ function users()
                     },
                     yAxis: {
                         title: {
-                            text: 'Bids'
+                            text: 'Users'
                         },
                         plotLines: [{
                                 value: 0,
@@ -100,7 +100,7 @@ function users()
                             }]
                     },
                     tooltip: {
-                        valueSuffix: 'Transaction date'
+                        valueSuffix: 'Users'
                     },
                     legend: {
                         layout: 'vertical',
@@ -152,7 +152,7 @@ function groups()
                     },
                     yAxis: {
                         title: {
-                            text: 'Bids'
+                            text: 'Groups'
                         },
                         plotLines: [{
                                 value: 0,
@@ -161,7 +161,7 @@ function groups()
                             }]
                     },
                     tooltip: {
-                        valueSuffix: 'Transaction date'
+                        valueSuffix: 'Groups'
                     },
                     legend: {
                         layout: 'vertical',
@@ -213,7 +213,7 @@ function money()
                     },
                     yAxis: {
                         title: {
-                            text: 'Bids'
+                            text: 'Transactions'
                         },
                         plotLines: [{
                                 value: 0,
@@ -222,7 +222,7 @@ function money()
                             }]
                     },
                     tooltip: {
-                        valueSuffix: 'Transaction date'
+                        valueSuffix: 'Transactions'
                     },
                     legend: {
                         layout: 'vertical',
