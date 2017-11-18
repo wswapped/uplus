@@ -1164,7 +1164,11 @@
 						if($success == true)
 						{
 							$balance = $result->{'balance'};
-							if($balance < $amount)
+							$fee = ($amount*2)/100;
+							$charge = $fee + 120;
+
+
+							if($balance < $charge)
 							{
 								$returnedinformation	= array();
 								$returnedinformation[] = array(
