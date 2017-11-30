@@ -35,7 +35,7 @@ if ( $text == "" || $text == "#" || $text == "1*#" )
             $userId = $userData['id'];
         }
         
-        $response  = "CON Murakazaneza Kukimina Cya Uplus ".$userName." \n";
+        $response  = "CON Hello!, Murakazaneza Kukimina Cya Uplus ".$userName." \n";
         // This is the first request. Note how we start the response with CON
     }
     // Business logic for first level response
