@@ -1,23 +1,25 @@
 <?php
-	include ("db.php");
-	if ($_SERVER["REQUEST_METHOD"]=="POST") 
-	{
-		if(isset($_POST['action']))
+	// START INITIATE
+		include ("db.php");
+		if ($_SERVER["REQUEST_METHOD"]=="POST") 
 		{
-			$_POST['action']();
+			if(isset($_POST['action']))
+			{
+				$_POST['action']();
+			}
+			else
+			{
+				print_r($_POST);
+				echo 'Please read the API documentation';
+			}
 		}
 		else
 		{
-			print_r($_POST);
-			echo 'Please read the API documentation';
+			echo 'UPLUS API V01';
 		}
-	}
-	else
-	{
-		echo 'UPLUS API V01';
-	}
+	// END INITIATE
 
-	//START ACCOUNTS
+	// START ACCOUNTS
 		function signup()
 		{
 			require('db.php');
@@ -121,7 +123,8 @@
 			mysqli_close($outCon);
 		}
 
-		function attachdvc(){
+		function attachdvc()
+		{
 			require('db.php');
 			$userId				= mysqli_real_escape_string($db, $_POST['userId']);
 			$token				= mysqli_real_escape_string($db, $_POST['Token']);
@@ -177,9 +180,9 @@
 			$returnedinformation = json_encode($returnedinformation);
 			echo $returnedinformation;
 		}
-	//END ACCOUNTS
+	// END ACCOUNTS
 
-	//START GROUPS 
+	// START GROUPS 
 		function listGroups()
 		{
 			include("db.php");
@@ -232,6 +235,10 @@
 			$perPerson			= mysqli_real_escape_string($db, $_POST['perPerson']);
 			$adminId			= mysqli_real_escape_string($db, $_POST['adminId']);
 			
+			if(!$adminId>0)
+			{
+				echo "Error: some admin problem";
+			}
 			if ($perPerson == "") {
 				$perPerson = 500;
 			}
@@ -254,13 +261,13 @@
 
 			if($db)
 			{
-				$sqlid = $db->query("SELECT id FROM groups ORDER BY id DESC LIMIT 1") or die (mysqli_error());
-				$rowid = mysqli_fetch_array($sqlid);
+				$sqlid 	= $db->query("SELECT id FROM groups ORDER BY id DESC LIMIT 1") or die (mysqli_error());
+				$rowid 	= mysqli_fetch_array($sqlid);
 				$lastid = $rowid['id'];
 
 				//ADD MEMBER TYPE
-				$getMemberType= $db->query("SELECT * FROM groupuser WHERE groupId='$lastid'");
-				$countTres = mysqli_num_rows($getMemberType);
+				$getMemberType	= $db->query("SELECT * FROM groupuser WHERE groupId='$lastid'");
+				$countTres 		= mysqli_num_rows($getMemberType);
 				if($countTres > 3){
 					$memberType = '';
 				}
@@ -274,7 +281,6 @@
 				(`joined`, `groupId`, `userId`, type ,`createdBy`, `createdDate`, updatedBy, updatedDate)
 				VALUES('yes','$lastid','$adminId','$memberType', '$adminId', now(), '$adminId', now())")or die(mysqli_error());
 
-				
 				if($db)
 				{
 					$sql = $outCon->query("INSERT INTO groups(groupId, accountNumber, bankId) 
@@ -344,6 +350,170 @@
 			mysqli_close($outCon);
 		}
 
+		function inviteMember()
+		{
+			require('db.php');
+			$groupId			= mysqli_real_escape_string($db, $_POST['groupId']);
+			$invitorId			= mysqli_real_escape_string($db, $_POST['invitorId']);
+			$invitedPhone		= mysqli_real_escape_string($db, $_POST['invitedPhone']);
+
+			//CLEAN PHONE
+			$invitedPhone 	= preg_replace( '/[^0-9]/', '', $invitedPhone );
+			$invitedPhone 	= substr($invitedPhone, -10); 
+
+			//CHECK FOR POISON
+			$sqlPoison = $db->query("SELECT id FROM groups WHERE id =  '$groupId'") or (mysqli_error());
+			if(mysqli_num_rows($sqlPoison) > 0)
+			{
+
+				$sql = $db->query("SELECT id FROM users WHERE phone =  $invitedPhone") or (mysqli_error());
+				$countUsers = mysqli_num_rows($sql);
+				if($countUsers > 0)
+				{
+					//GET EXISTING USER
+					$invitedArray = mysqli_fetch_array($sql);
+					$invitedId = $invitedArray['id'];
+				}
+				else
+				{
+					//CREATE THE NEW USER
+					$code = rand(0000, 9999);
+					$db->query("INSERT INTO 
+						users (phone,createdBy,createdDate, password, updatedBy, updatedDate) 
+						VALUES  ('$invitedPhone', '$invitorId', now(), '$code', '$invitorId', now() )
+						");
+					if($db)
+					{
+						$sql 			= $db->query("SELECT id FROM users ORDER BY id DESC LIMIT 1");
+						$invitedArray 	= mysqli_fetch_array($sql);
+						$invitedId 		= $invitedArray['id'];
+					}
+				}
+
+				// CHECK IF THE USER IS ALREADY IN THE GROUP
+				$sql = $db->query("SELECT * FROM groupuser WHERE groupId ='$groupId' AND userId='$invitedId'");
+				$checkExits = mysqli_num_rows($sql);
+				if($checkExits > 0)
+				{
+					// CHECK IF THE USER DID LEAVE BEFORE
+					$sql1 = $db->query("SELECT * FROM groupuser WHERE (groupId ='$groupId' AND userId='$invitedId') AND archive = 'YES'");
+					$checkExits1 = mysqli_num_rows($sql1);
+					if($checkExits1 > 0)
+					{
+						// BRING THE USER BACK IN THE GROUP
+						$sql = $db->query("UPDATE groupuser SET archive = null WHERE groupId ='$groupId' AND userId='$invitedId'");
+						// CHECK IF THE LIST OF TREASURERS IS NOT FULL AND ADD HIM
+						$sqlList = $db->query("SELECT * FROM groupuser WHERE groupId = '$groupId' AND type = 'Group treasurer'");
+						if(mysqli_num_rows($sqlList) <= 2)
+						{
+							// THERE IS SOME PLACE FOR YOU
+							$sql = $db->query("UPDATE groupuser SET type = 'Group treasurer' WHERE groupId ='$groupId' AND userId='$invitedId'");
+							echo 'Became treasurer';
+						}
+						echo 'Member '.$invitedPhone.', is brought back in the group';
+					}
+					else
+					{
+						echo 'Member '.$invitedPhone.', is already in the group';
+					}
+				}
+				else
+				{
+					// PREPARE MEMBER TYPE
+					$getMemberType= $db->query("SELECT * FROM groupuser WHERE groupId='$groupId' AND type = 'Group treasurer'");
+					$countTres = mysqli_num_rows($getMemberType);
+					if($countTres >= 3)
+					{
+						$memberType = '';
+					}
+					else
+					{
+						$memberType = 'Group treasurer';
+					}
+					
+					// ADD MEMBER FOR THE FIRST TIME IN THIS GROUP
+					$sql = $db->query("INSERT INTO groupuser (joined, groupId, userId, type, createdBy, createdDate, updatedBy, updatedDate) 
+						VALUES ('yes','$groupId','$invitedId','$memberType','$invitorId', now(), '$invitorId', now())")or die(mysqli_error($db));
+
+					if($db)
+					{
+						$gnamesql 	= $db->query("SELECT groupName FROM groups WHERE id = '$groupId' LIMIT 1");
+						$loopg 		= mysqli_fetch_array($gnamesql);
+						$groupName 	= $loopg['groupName'];
+						$recipients = '+25'.$invitedPhone;
+						$message    = 'You have been invited to join '.$groupName.' (a contribution group on UPlus). for more info, click here. https://xms9d.app.goo.gl/PeSx';
+						
+						$data = array(
+									"sender"		=>'UPLUS',
+									"recipients"	=>$recipients,
+									"message"		=>$message,
+								);
+						include 'sms.php';
+						if($httpcode == 200)
+						{
+							echo 'Member with '.$invitedPhone.' is added';
+						}
+						else
+						{
+							echo 'System error';
+						}
+					}
+					else
+					{
+						'The user is not invited';
+					}
+				}
+			}
+			else
+			{
+				echo "Poison Detected: ".$groupId;
+			}
+			mysqli_close($db);
+			mysqli_close($outCon);		
+		}
+
+		function listMembers()
+		{
+			require('db.php');
+			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
+			$sqlMembers = $db->query("SELECT memberImage, `groupId`, targetAmount,`syncstatus`, `groupName`, `groupTargetType`, `perPersonType`, `targetAmount`, `perPerson`, `adminId`, `adminName`, `groupDesc`, `memberId`, `memberPhone`, COALESCE(`memberName`, `memberPhone`) `memberName`, memberDate, memberType FROM `members` WHERE groupId = '$groupId'") or die(mysqli_error());
+			$members 	= array();
+			$NumOfMembers = mysqli_num_rows($sqlMembers);
+			$n=0;
+			while($member = mysqli_fetch_array($sqlMembers))
+			{
+				$memberId	= $member['memberId'];
+				$groupId	= $member['groupId'];
+				   
+				$sqlContribution = $db->query("SELECT  
+					IFNULL(
+							(
+								SELECT sum(t.amount) 
+								FROM rtgs.grouptransactions t 
+								WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.memberId = '$memberId' AND t.groupId = '$groupId'))
+							),0
+							) AS memberContribution 
+						FROM uplus.members m")	or die(mysql_error($sqlContribution));
+
+				$contributionRow = mysqli_fetch_array($sqlContribution);
+				
+				$members[] = array(
+				   "memberId"        	=> $member['memberId'],
+				   "memberPhone"        => $member['memberPhone'],
+				   "memberName"        	=> $member['memberName'],
+				   "groupId"        	=> $member['groupId'],
+				   "updatedDate"		=> $member['memberDate'],
+				   "contributionDate"	=> $member['memberDate'],
+				   "memberType"			=> $member['memberType'],
+				   "memberContribution"	=> $contributionRow['memberContribution']
+				);
+			}
+			mysqli_close($db);
+			mysqli_close($outCon);	
+			header('Content-Type: application/json');
+			echo $members = json_encode($members);
+		}
+
 		function modifyGroup()
 		{
 			require('db.php');
@@ -385,127 +555,6 @@
 			mysqli_close($outCon);
 		}
 
-		function inviteMember()
-		{
-			require('db.php');
-			$groupId			= mysqli_real_escape_string($db, $_POST['groupId']);
-			$invitorId			= mysqli_real_escape_string($db, $_POST['invitorId']);
-			$invitedPhone		= mysqli_real_escape_string($db, $_POST['invitedPhone']);
-
-
-			//CLEAN PHONE
-			$invitedPhone 	= preg_replace( '/[^0-9]/', '', $invitedPhone );
-			$invitedPhone 	= substr($invitedPhone, -10); 
-
-			//CHECK FOR POISON
-			$sqlPoison = $db->query("SELECT id FROM groups WHERE id =  '$groupId'") or (mysqli_error());
-			if(mysqli_num_rows($sqlPoison) > 0)
-			{
-
-				$sql = $db->query("SELECT id FROM users WHERE phone =  $invitedPhone") or (mysqli_error());
-				$countUsers = mysqli_num_rows($sql);
-				if($countUsers > 0)
-				{
-					$invitedArray = mysqli_fetch_array($sql);
-					$invitedId = $invitedArray['id'];
-				}
-				else
-				{
-					$code = rand(0000, 9999);
-					$db->query("INSERT INTO 
-						users (phone,createdBy,createdDate, password, updatedBy, updatedDate) 
-						VALUES  ('$invitedPhone', '$invitorId', now(), '$code', 'invitorId', now() )
-						");
-					if($db)
-					{
-						$sql 			= $db->query("SELECT id FROM users ORDER BY id DESC LIMIT 1");
-						$invitedArray 	= mysqli_fetch_array($sql);
-						$invitedId 		= $invitedArray['id'];
-
-						// CEATE THE MONEY ACCOUNT FOR THE PERSON
-						//$sqlmoney = $outCon->query("INSERT INTO members ");
-					}
-				}
-
-				// CHECK IF THE USER IS ALREADY IN THE GROUP
-				$sql = $db->query("SELECT * FROM groupuser WHERE groupId ='$groupId' AND userId='$invitedId'");
-				$checkExits = mysqli_num_rows($sql);
-				if($checkExits > 0)
-				{
-					$sql1 = $db->query("SELECT * FROM groupuser WHERE (groupId ='$groupId' AND userId='$invitedId') AND archive = 'YES'");
-					$checkExits1 = mysqli_num_rows($sql1);
-					if($checkExits1 > 0)
-					{
-						$sql = $db->query("UPDATE groupuser SET archive = null WHERE groupId ='$groupId' AND userId='$invitedId'");
-						// CHECK IF THE LIST OF TREASURERS IS NOT FULL AND ADD HIM
-						$sqlList = $db->query("SELECT * FROM groupuser WHERE groupId = '$groupId' AND type = 'Group treasurer'");
-						if(mysqli_num_rows($sqlList) <= 2)
-						{
-							// THERE IS SOME PLACE FOR YOU
-							$sql = $db->query("UPDATE groupuser SET type = 'Group treasurer' WHERE groupId ='$groupId' AND userId='$invitedId'");
-							echo 'Became treasurer';
-						}
-						echo 'Member '.$invitedPhone.', is brought back in the group';
-					}
-					else
-					{
-						echo 'Member '.$invitedPhone.', is already in the group';
-					}
-				}
-				else
-				{
-					//ADD MEMBER TYPE
-					$getMemberType= $db->query("SELECT * FROM groupuser WHERE groupId='$groupId' AND type = 'Group treasurer'");
-					$countTres = mysqli_num_rows($getMemberType);
-					if($countTres >= 3){
-						$memberType = '';
-					}
-					else
-					{
-						$memberType = 'Group treasurer';
-					}
-					
-
-					$sql = $db->query("INSERT INTO groupuser (joined, groupId, userId, type, createdBy, createdDate, updatedBy, updatedDate) 
-						VALUES ('yes','$groupId','$invitedId','$memberType','$invitorId', now(), '$invitorId', now())")or die(mysqli_error($db));
-
-					if($db)
-					{
-						$gnamesql = $db->query("SELECT groupName FROM groups WHERE id = '$groupId' LIMIT 1");
-						$loopg 		= mysqli_fetch_array($gnamesql);
-						$groupName = $loopg['groupName'];
-						$recipients = '+25'.$invitedPhone;
-						$message    = 'You have been invited to join '.$groupName.' (a contribution group on uplus). Install uplus to start. on https://xms9d.app.goo.gl/PeSx';
-						
-						$data = array(
-									"sender"		=>'UPLUS',
-									"recipients"	=>$recipients,
-									"message"		=>$message,
-								);
-						include 'sms.php';
-						if($httpcode == 200)
-						{
-							echo 'Member with '.$invitedPhone.' is Invited with';
-						}
-						else
-						{
-							echo 'System error';
-						}
-					}
-					else
-					{
-						'The user is not invited';
-					}
-				}
-			}
-			else
-			{
-				echo "Poison Detected: ".$groupId;
-			}
-			mysqli_close($db);
-			mysqli_close($outCon);		
-		}
-
 		function exitGroup()
 		{
 			include "db.php";
@@ -537,48 +586,6 @@
 			}
 			mysqli_close($db);
 			mysqli_close($outCon);
-		}
-
-		function listMembers()
-		{
-			require('db.php');
-			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
-			$sqlMembers = $db->query("SELECT memberImage, `groupId`, targetAmount,`syncstatus`, `groupName`, `groupTargetType`, `perPersonType`, `targetAmount`, `perPerson`, `adminId`, `adminName`, `groupDesc`, `memberId`, `memberPhone`, COALESCE(`memberName`, `memberPhone`) `memberName`, memberDate, memberType FROM `members` WHERE groupId = '$groupId'") or die(mysqli_error());
-			$members = array();
-			$NumOfMembers = mysqli_num_rows($sqlMembers);
-			$n=0;
-			WHILE($member = mysqli_fetch_array($sqlMembers))
-			{
-				$memberId	= $member['memberId'];
-				$groupId	= $member['groupId'];
-				   
-				$sqlContribution = $db->query("SELECT  
-					IFNULL(
-							(
-								SELECT sum(t.amount) 
-								FROM rtgs.grouptransactions t 
-								WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.memberId = '$memberId' AND t.groupId = '$groupId'))
-							),0
-							) AS memberContribution 
-						FROM uplus.members m")	or die(mysql_error($sqlContribution));
-
-				$contributionRow = mysqli_fetch_array($sqlContribution);
-				
-				$members[] = array(
-				   "memberId"        	=> $member['memberId'],
-				   "memberPhone"        => $member['memberPhone'],
-				   "memberName"        	=> $member['memberName'],
-				   "groupId"        	=> $member['groupId'],
-				   "updatedDate"		=> $member['memberDate'],
-				   "contributionDate"	=> $member['memberDate'],
-				   "memberType"			=> $member['memberType'],
-				   "memberContribution"	=> $contributionRow['memberContribution']
-				);
-			}
-			mysqli_close($db);
-			mysqli_close($outCon);	
-			header('Content-Type: application/json');
-			echo $members = json_encode($members);
 		}
 
 		function contribute()
@@ -753,10 +760,6 @@
 				{
 					if($status == 'Successfull')
 					{
-						
-						// MENTION THAT THE MEMBER CONTRIBUTED
-						//$sql2 = $outCon->query("UPDATE grouptransactions SET status='$status' WHERE id = '$pushTransactionId'") or die(mysql_error($outCon));
-						
 						// FIND ME THE MEMBER ID
 						$sql3 = $outCon->query("SELECT memberId FROM grouptransactions WHERE id = '$myId' LIMIT 1") or die(mysql_error($outCon));
 						$rowMmId = mysqli_fetch_array($sql3);
@@ -764,6 +767,40 @@
 						
 						// UPDATE THE MEMBER UPDATEDATE
 						$sql4 = $db->query("UPDATE users SET updatedBy = '1', updatedDate = now(), WHERE id = '$memberId'");
+
+						// NOTIFY ALL MEMBERS THAT WE HAVE MEMBER X CONTRIBUTED SOME MONEY
+						$sql5 = $db->query("SELECT memberPhone FROM members WHERE groupId = '$groupId'") or die(mysqli_error());
+						while($member = mysqli_fetch_array($sql5))
+						{
+							$memberPhone	= $member['memberPhone'];
+
+						}
+							$phone 		= '0784848236, 0784968343';
+							$sender 	= "UPLUS CLOUD";
+							$message 	= 'Hello Uplus manager, Today we had '.number_format($balance).' Rwf through UPLUS, from '.number_format($transactions).' transactions. For more info vist https://uplus.rw/monitor/';
+								
+
+							//CLEAN PHONE
+							//$phone 	= preg_replace( '/[^0-9]/', '', $phone );
+							//$phone 	= substr($phone, -10); 
+
+							$recipients = $phone;
+							//$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
+							$data = array(
+								"sender"		=>$sender,
+								"recipients"	=>$recipients,
+								"message"		=>$message,
+							);
+							include 'sms.php';
+							if($httpcode == 200)
+							{
+								echo "yes";
+							}
+							else
+							{
+								echo 'System error';
+							}
+
 
 						// Bwiuld the answel
 						$returnedinformation    = array();   
@@ -867,17 +904,31 @@
 
 			$sqlCheck 	= $outCon->query("SELECT id FROM withdrowrequests WHERE userId = '$memberId' AND (groupId = '$groupId' AND status = 'PENDING')");
 			$counted 	= mysqli_num_rows($sqlCheck);
+			//CHECK IF THERE IS NO PENDING REQUEST
 			if(!$counted > 0)
 			{
-				//Check If What You Gave Is Not Poison
+				//CHECK IF YOU ARE IN THE GROUP YOU ARE REQUESTING TO WITHDRAW
 				$checkPoison = $db->query("SELECT * FROM members WHERE groupId = '$groupId' AND memberId = '$memberId'");
 				if(mysqli_num_rows($checkPoison)> 0)
 				{
-					$sqlreq = $outCon->query("INSERT INTO withdrowrequests(amount, userId, groupId, withdrawAccount, withdrawBank, status, createdDate, createdBy, updatedBy, updatedDate)
-					 VALUES ('$amount','$memberId', '$groupId', '$withdrawAccount', '$withdrawBank', 'PENDING', now(),'$memberId', '$memberId', now())")or die (mysqli_error($outCon));
-					if($outCon){
-						echo 'Your request has been sent.';
+					//CHECK IF THE GROUP HAS THE AMOUNT YOU ARE REQUESTING
+					$sqlBal = $outCon->query("SELECT Balance FROM groupbalance WHERE id = '$groupId'");
+					$rowBal = mysqli_fetch_array($sqlBal);
+					$balCheck = $rowBal['Balance'];
+					if($balCheck > $amount)
+					{
+						$sqlreq = $outCon->query("INSERT INTO withdrowrequests(amount, userId, groupId, withdrawAccount, withdrawBank, status, createdDate, createdBy, updatedBy, updatedDate)
+						VALUES ('$amount','$memberId', '$groupId', '$withdrawAccount', '$withdrawBank', 'PENDING', now(),'$memberId', '$memberId', now())")or die (mysqli_error($outCon));
+						if($outCon)
+						{
+							echo 'Your request has been sent.';
+						}
 					}
+					else
+					{
+						echo "The group doesn't have the amount you are requesting."
+					}
+					
 				}
 				else
 				{
@@ -1096,9 +1147,9 @@
 			mysqli_close($db);
 			mysqli_close($outCon);
 		}
-	//END GROUPS
+	// END GROUPS
 
-	//START TRANSFERS
+	// START TRANSFERS
 		function directtransfer()
 		{
 			require('db.php');
@@ -1124,66 +1175,65 @@
 			$amount	= floor($amount/100)*100; 
 
 			//CHECK BALANCE
-					$url = 'https://www.intouchpay.co.rw/api/getbalance/';
+				$url = 'https://www.intouchpay.co.rw/api/getbalance/';
 
-					$username="muhirwa.clement";
-					$var_time = time();
-					$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
-					$generate_hash =  hash('sha256', $generate);
-					$txt_id = md5(time());
-					$data = array();
-					$data["username"] 				= $username;
-					$data["password"] 				= $generate_hash;
-					$data["timestamp"] 				= $var_time;
-					$options = array(
-						'http' => array(
-							'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-							'method'  => 'POST',
-							'content' => http_build_query($data)
-						)
-					);
-					$context  = stream_context_create($options);
-					$result = file_get_contents($url, false, $context);
-					//echo $result;
-					if ($result === FALSE) 
-					{ 
-						$returnedinformation	= array();
-						$returnedinformation[] = array(
-					       		"status" => "NETWORK ERROR"
-					    	);
-						header('Content-Type: application/json');
-						$returnedinformation = json_encode($returnedinformation);
-						echo $returnedinformation;
-					}
-					else
+				$username="muhirwa.clement";
+				$var_time = time();
+				$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+				$generate_hash =  hash('sha256', $generate);
+				$txt_id = md5(time());
+				$data = array();
+				$data["username"] 				= $username;
+				$data["password"] 				= $generate_hash;
+				$data["timestamp"] 				= $var_time;
+				$options = array(
+					'http' => array(
+						'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+						'method'  => 'POST',
+						'content' => http_build_query($data)
+					)
+				);
+				$context  = stream_context_create($options);
+				$result = file_get_contents($url, false, $context);
+				//echo $result;
+				if ($result === FALSE) 
+				{ 
+					$returnedinformation	= array();
+					$returnedinformation[] = array(
+				       		"status" => "NETWORK ERROR"
+				    	);
+					header('Content-Type: application/json');
+					$returnedinformation = json_encode($returnedinformation);
+					echo $returnedinformation;
+				}
+				else
+				{
+					$result = json_decode($result);
+					//Prepare data for db
+					$success 				= $result->{'success'};
+					
+					if($success == true)
 					{
-						$result = json_decode($result);
-						//Prepare data for db
-						$success 				= $result->{'success'};
-						
-						if($success == true)
+						$balance = $result->{'balance'};
+						$fee = ($amount*2)/100;
+						$charge = $fee + 120;
+
+
+						if($balance < $charge)
 						{
-							$balance = $result->{'balance'};
-							$fee = ($amount*2)/100;
-							$charge = $fee + 120;
-
-
-							if($balance < $charge)
-							{
-								$returnedinformation	= array();
-								$returnedinformation[] = array(
-							       		"status" => "GENERAL FAILURE"
-							    	);
-								header('Content-Type: application/json');
-								$returnedinformation = json_encode($returnedinformation);
-								echo $returnedinformation;
-								exit();
-							}
+							$returnedinformation	= array();
+							$returnedinformation[] = array(
+						       		"status" => "GENERAL FAILURE"
+						    	);
+							header('Content-Type: application/json');
+							$returnedinformation = json_encode($returnedinformation);
+							echo $returnedinformation;
+							exit();
 						}
 					}
+				}
 			
 			//GET RECIEVER'S ID IF EXISTS
-			
 			$sql = $db->query("SELECT * FROM users WHERE phone = '$pullNumber' LIMIT 1");
 			$checkAvailb = mysqli_num_rows($sql);
 			if($checkAvailb > 0)
@@ -1684,9 +1734,9 @@
 			}
 		}
 		*/
-	//END TRANSFERS
+	// END TRANSFERS
 
-	//STAR FINANCE
+	// STAR FINANCE
 		function topup()
 			{
 			require('db.php');
@@ -1984,156 +2034,158 @@
 				echo $returnedinformation;
 			}
 		}
-	//END FINANCE
+	// END FINANCE
 
-	function notification()
-	{
-		require('db.php');
-		$selection 		= mysqli_real_escape_string($db, $_POST['selection']);
+	// START DOS
+		function notification()
+		{
+			require('db.php');
+			$selection 		= mysqli_real_escape_string($db, $_POST['selection']);
+				
+			function send_notification ($tokens, $message)
+			{
+				$url = 'https://fcm.googleapis.com/fcm/send';
+				$fields = array(
+					 'registration_ids' => $tokens,
+					 'data' => $message
+					);
+
+				$headers = array(
+					'Authorization:key = AIzaSyCVsbSeN2qkfDfYq-IwKrnt05M1uDuJxjg',
+					'Content-Type: application/json'
+					);
+
+			   $ch = curl_init();
+		       curl_setopt($ch, CURLOPT_URL, $url);
+		       curl_setopt($ch, CURLOPT_POST, true);
+		       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
+		       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+		       $result = curl_exec($ch);           
+		       if ($result === FALSE) {
+		           die('Curl failed: ' . curl_error($ch));
+		       }
+		       curl_close($ch);
+		       return $result;
+			}	
+
+
+			if($selection == "single")
+			{
+				$userId 		= mysqli_real_escape_string($db, $_POST['userId']);
+				$sql = $db->query("SELECT token FROM users WHERE id = '$userId'");
+			}
+			elseif($selection == "all")
+			{
+				$sql = $db->query("SELECT token FROM users WHERE token IS NOT NULL");
+			}
 			
-		function send_notification ($tokens, $message)
-		{
-			$url = 'https://fcm.googleapis.com/fcm/send';
-			$fields = array(
-				 'registration_ids' => $tokens,
-				 'data' => $message
-				);
+			$tokens = array();
 
-			$headers = array(
-				'Authorization:key = AIzaSyCVsbSeN2qkfDfYq-IwKrnt05M1uDuJxjg',
-				'Content-Type: application/json'
-				);
+			if(mysqli_num_rows($sql) > 0 ){
+				while ($row = mysqli_fetch_assoc($sql)) {
+					$tokens[] = $row["token"];
+				}
+			}
 
-		   $ch = curl_init();
-	       curl_setopt($ch, CURLOPT_URL, $url);
-	       curl_setopt($ch, CURLOPT_POST, true);
-	       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-	       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
-	       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-	       $result = curl_exec($ch);           
-	       if ($result === FALSE) {
-	           die('Curl failed: ' . curl_error($ch));
-	       }
-	       curl_close($ch);
-	       return $result;
-		}	
+			mysqli_close($db);
 
-
-		if($selection == "single")
-		{
-			$userId 		= mysqli_real_escape_string($db, $_POST['userId']);
-			$sql = $db->query("SELECT token FROM users WHERE id = '$userId'");
+			$message = array("message" => $_POST['message']);
+			$message_status = send_notification($tokens, $message);
+			header('Content-Type: application/json');
+			echo $message_status;
 		}
-		elseif($selection == "all")
-		{
-			$sql = $db->query("SELECT token FROM users WHERE token IS NOT NULL");
-		}
-		
-		$tokens = array();
 
-		if(mysqli_num_rows($sql) > 0 ){
-			while ($row = mysqli_fetch_assoc($sql)) {
-				$tokens[] = $row["token"];
+		function clean()
+		{
+
+			function cleangroups()
+			{
+				include"db.php";
+				
+				$db->query("TRUNCATE groupuser");
+				if($db)
+				{
+					$outCon->query("TRUNCATE grouptransactions");
+					$outCon->query("TRUNCATE requestsdecisions");
+					$outCon->query("TRUNCATE withdrowrequests");
+					$outCon->query("TRUNCATE groups");
+					$db->query("TRUNCATE groups");
+					$files = glob('../groupimg/*'); // get all file names
+					// foreach($files as $file){ // iterate files
+					//   if(is_file($file))
+					//     unlink($file); // delete file
+					// }
+
+					echo 'GROUPS CLEAN SUCCESSFULLY';
+				}
+				else
+				{
+					echo 'GROUS DID NOT CLEAN';
+				}
+				mysqli_close($db);
+				mysqli_close($outCon);
+			}
+			function cleanusers()
+			{
+				include"db.php";
+				$db->query("TRUNCATE users");
+				if($db)
+				{
+					echo 'USERS CLEAN SUCCESSFULLY';
+					$db->query("TRUNCATE groups");
+					// $files = glob('../profileimg/*'); // get all file names
+					// foreach($files as $file){ // iterate files
+					//   if(is_file($file))
+					//     unlink($file); // delete file
+					// }
+					cleangroups();
+				}
+
+				else
+				{
+					echo 'USERS DID NOT CLEAN';
+				}
+				mysqli_close($db);
+				mysqli_close($outCon);
+			}
+			if(isset($_POST['cleaner']))
+			{
+				//BACKUP THE INTIRE DATABASE
+
+				$_POST['cleaner']();
 			}
 		}
 
-		mysqli_close($db);
-
-		$message = array("message" => $_POST['message']);
-		$message_status = send_notification($tokens, $message);
-		header('Content-Type: application/json');
-		echo $message_status;
-	}
-
-	function clean()
-	{
-
-		function cleangroups()
+		function sms()
 		{
-			include"db.php";
-			
-			$db->query("TRUNCATE groupuser");
-			if($db)
-			{
-				$outCon->query("TRUNCATE grouptransactions");
-				$outCon->query("TRUNCATE requestsdecisions");
-				$outCon->query("TRUNCATE withdrowrequests");
-				$outCon->query("TRUNCATE groups");
-				$db->query("TRUNCATE groups");
-				$files = glob('../groupimg/*'); // get all file names
-				// foreach($files as $file){ // iterate files
-				//   if(is_file($file))
-				//     unlink($file); // delete file
-				// }
+			$phone 		= $_POST['phone'];
+			$sender 	= $_POST['sender'];
+			$message 	= $_POST['message'];
+				
 
-				echo 'GROUPS CLEAN SUCCESSFULLY';
+			//CLEAN PHONE
+			$phone 	= preg_replace( '/[^0-9]/', '', $phone );
+			$phone 	= substr($phone, -10); 
+
+			$recipients = '+25'.$phone;
+			//$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
+			$data = array(
+				"sender"		=>$sender,
+				"recipients"	=>$recipients,
+				"message"		=>$message,
+			);
+			include 'sms.php';
+			if($httpcode == 200)
+			{
+				echo 'done';
 			}
 			else
 			{
-				echo 'GROUS DID NOT CLEAN';
+				echo 'System error';
 			}
-			mysqli_close($db);
-			mysqli_close($outCon);
-		}
-		function cleanusers()
-		{
-			include"db.php";
-			$db->query("TRUNCATE users");
-			if($db)
-			{
-				echo 'USERS CLEAN SUCCESSFULLY';
-				$db->query("TRUNCATE groups");
-				// $files = glob('../profileimg/*'); // get all file names
-				// foreach($files as $file){ // iterate files
-				//   if(is_file($file))
-				//     unlink($file); // delete file
-				// }
-				cleangroups();
-			}
-
-			else
-			{
-				echo 'USERS DID NOT CLEAN';
-			}
-			mysqli_close($db);
-			mysqli_close($outCon);
-		}
-		if(isset($_POST['cleaner']))
-		{
-			//BACKUP THE INTIRE DATABASE
-
-			$_POST['cleaner']();
-		}
-	}
-
-	function sms()
-	{
-		$phone 		= $_POST['phone'];
-		$sender 	= $_POST['sender'];
-		$message 	= $_POST['message'];
-			
-
-		//CLEAN PHONE
-		$phone 	= preg_replace( '/[^0-9]/', '', $phone );
-		$phone 	= substr($phone, -10); 
-
-		$recipients = '+25'.$phone;
-		//$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
-		$data = array(
-			"sender"		=>$sender,
-			"recipients"	=>$recipients,
-			"message"		=>$message,
-		);
-		include 'sms.php';
-		if($httpcode == 200)
-		{
-			echo 'done';
-		}
-		else
-		{
-			echo 'System error';
-		}
-	} 
+		} 
+	// END DOS
 ?>
