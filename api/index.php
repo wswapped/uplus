@@ -192,7 +192,7 @@
 			 u.perPerson, u.adminId, u.adminName, u.groupDesc, r.Balance groupBalance
 				FROM uplus.members u
 				INNER JOIN rtgs.groupbalance r 
-				WHERE u.groupId = r.groupId
+				WHERE u.groupId = r.id
 				AND u.memberId = '$memberId' group by u.groupId")or die(mysqli_error());
 			$groups 		= array();
 			WHILE($group 	= mysqli_fetch_array($sqlgroups))
