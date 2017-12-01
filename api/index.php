@@ -769,37 +769,37 @@
 						$sql4 = $db->query("UPDATE users SET updatedBy = '1', updatedDate = now(), WHERE id = '$memberId'");
 
 						// NOTIFY ALL MEMBERS THAT WE HAVE MEMBER X CONTRIBUTED SOME MONEY
-						$sql5 = $db->query("SELECT memberPhone FROM members WHERE groupId = '$groupId'") or die(mysqli_error());
-						while($member = mysqli_fetch_array($sql5))
-						{
-							$memberPhone	= $member['memberPhone'];
+						// $sql5 = $db->query("SELECT memberPhone FROM members WHERE groupId = '$groupId'") or die(mysqli_error());
+						// while($member = mysqli_fetch_array($sql5))
+						// {
+						// 	$memberPhone	= $member['memberPhone'];
 
-						}
-							$phone 		= '0784848236, 0784968343';
-							$sender 	= "UPLUS CLOUD";
-							$message 	= 'Hello Uplus manager, Today we had '.number_format($balance).' Rwf through UPLUS, from '.number_format($transactions).' transactions. For more info vist https://uplus.rw/monitor/';
+						// }
+						// 	$phone 		= '0784848236, 0784968343';
+						// 	$sender 	= "UPLUS CLOUD";
+						// 	$message 	= 'Hello Uplus manager, Today we had '.number_format($balance).' Rwf through UPLUS, from '.number_format($transactions).' transactions. For more info vist https://uplus.rw/monitor/';
 								
 
-							//CLEAN PHONE
-							//$phone 	= preg_replace( '/[^0-9]/', '', $phone );
-							//$phone 	= substr($phone, -10); 
+						// 	//CLEAN PHONE
+						// 	//$phone 	= preg_replace( '/[^0-9]/', '', $phone );
+						// 	//$phone 	= substr($phone, -10); 
 
-							$recipients = $phone;
-							//$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
-							$data = array(
-								"sender"		=>$sender,
-								"recipients"	=>$recipients,
-								"message"		=>$message,
-							);
-							include 'sms.php';
-							if($httpcode == 200)
-							{
-								echo "yes";
-							}
-							else
-							{
-								echo 'System error';
-							}
+						// 	$recipients = $phone;
+						// 	//$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
+						// 	$data = array(
+						// 		"sender"		=>$sender,
+						// 		"recipients"	=>$recipients,
+						// 		"message"		=>$message,
+						// 	);
+						// 	include 'sms.php';
+						// 	if($httpcode == 200)
+						// 	{
+						// 		echo "yes";
+						// 	}
+						// 	else
+						// 	{
+						// 		echo 'System error';
+						// 	}
 
 
 						// Bwiuld the answel
