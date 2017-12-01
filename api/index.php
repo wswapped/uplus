@@ -926,7 +926,7 @@
 					}
 					else
 					{
-						echo "The group doesn't have the amount you are requesting."
+						echo "The group doesn't have the amount you are requesting.";
 					}
 					
 				}
