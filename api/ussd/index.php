@@ -101,7 +101,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 				}
 				keeptempdata($session_id, $data, "$groupName members");
 				//Logging the members
-				$response = "CON debuggin";
 				echo "$response";
 			}	
 		}
