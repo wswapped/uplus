@@ -69,11 +69,11 @@ $phoneNumber  = substr($phoneNumber, -10);
 		
 		//Number of requests
 		$nrequests = count($requests);
-		if($nrequests == 1){
-
-			$response = "CON Ikaze muri test\n"; //Printing the group on first loop
-			// 			
-			//Here going to handle first request, going to check if sent text is among the groups shown
+		if($nrequests == 1)
+		{
+			$response =  "CON Test Works.\n";
+			
+			// //Here going to handle first request, going to check if sent text is among the groups shown
 			// $query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = \"$session_id\" and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
 			// $data = mysqli_fetch_assoc($query);			
 				
@@ -81,17 +81,20 @@ $phoneNumber  = substr($phoneNumber, -10);
 			// //There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
 			// $temp = $data;
 			// $data = array();
-			// foreach ($temp as $key => $value) {
+			// foreach ($temp as $key => $value) 
+			// {
 			// 	$data[$key] = $value;
 			// }
-			// if(!empty($data[$text])){
+			// if(!empty($data[$text]))
+			// {
 			// 	//Here the user chose a group presented
 			// 	$groupid  = $data[$text];
 			// 	//Getting group members and name
 			// 	$query = mysqli_query($conn, "SELECT * FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
 			// 	$membersOrder  = $groupInfo = array();
 			// 	$n=0;
-			// 	while ($temp = mysqli_fetch_assoc($query)) {
+			// 	while ($temp = mysqli_fetch_assoc($query)) 
+			// 	{
 			// 		if($n==0){
 			// 			$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
 			// 			$groupName = $temp['groupName'];
@@ -105,7 +108,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 			// 	keeptempdata($session_id, $data, "$groupName members");
 			// 	//Logging the members
 			// 	echo "$response";
-			}	
+			// }	
 		}
 	}
 	function keeptempdata($session_id, $data, $type){
