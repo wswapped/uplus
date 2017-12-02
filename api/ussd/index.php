@@ -7,6 +7,7 @@ $response = "";
 $tdata = array();
 $session_id = rand(10000, 99999);
 $session_id = session_id();
+$conn = $db;
 
 $req = array_merge($_POST, $_GET); //Keeping get and post for testing and productin handling concurently
 
