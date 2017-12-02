@@ -108,7 +108,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 			// 	keeptempdata($session_id, $data, "$groupName members");
 			// 	//Logging the members
 			// 	echo "$response";
-			// }	
+			// }
+			echo "$response";	
 		}
 	}
 	function keeptempdata($session_id, $data, $type){
