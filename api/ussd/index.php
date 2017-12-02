@@ -60,7 +60,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 				$tdata[($n+1)] = $groupsIds[$n];
 				$response.=($n+1).". $groups[$n]\n";
 			}
-			$response = "END debug this";
 			//Logging the tempdata
 			keeptempdata($session_id, $tdata, 'groups');
 		}
@@ -102,6 +101,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 				}
 				keeptempdata($session_id, $data, "$groupName members");
 				//Logging the members
+				$response = "CON debuggin";
 				echo "$response";
 			}	
 		}
