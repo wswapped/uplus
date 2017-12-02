@@ -73,7 +73,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 		{
 
 			//Here going to handle first request, going to check if sent text is among the groups shown
-			$query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = "$session_id" and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
+			$query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = '$session_id' and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
 			$data = mysqli_fetch_assoc($query);			
 				
 			$data = json_decode($data['data'], true);
