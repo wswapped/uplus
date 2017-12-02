@@ -78,9 +78,12 @@ $phoneNumber  = substr($phoneNumber, -10);
 			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
 			$temp = $data;
 			$data = array();
-			foreach ($temp as $key => $value) {
-				$data[$key] = $value;
-			}
+			if (is_array($temp) || is_object($temp))
+			{
+			    foreach ($temp as $key => $value) {
+					$data[$key] = $value;
+				}
+			}	
 			if(!empty($data[$text])){
 				//Here the user chose a group presented
 				$groupid  = $data[$text];
