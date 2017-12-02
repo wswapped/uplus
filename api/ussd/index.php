@@ -63,7 +63,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 			//Logging the tempdata
 			keeptempdata($session_id, $tdata, 'groups');
 		}
-		echo "$response";
 	}else{
 		$requests = explode("*", $text);
 		
@@ -77,29 +76,51 @@ $phoneNumber  = substr($phoneNumber, -10);
 			$data = mysqli_fetch_assoc($query);			
 				
 			$data = json_decode($data['data'], true);
-			if(!empty($data[$text]))
+			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
+			 $temp = $data;
+			 $data = array();
+
+			if(is_array($temp))
 			{
-				//Here the user chose a group presented
-				$groupid  = $data[$text];
-				//Getting group members and name
-				$query = mysqli_query($conn, "SELECT * FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
-				$membersOrder  = $groupInfo = array();
-				$n=0;
-				while ($temp = mysqli_fetch_assoc($query)) 
-				{
-					if($n==0){
-						$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
-						$groupName = $temp['groupName'];
-					}
-					$n++;
-					$groupInfo[] = $temp;
-					$response.="$n $temp[memberName]\n";
-					//Storing order of group memebrs
-					$membersOrder[$n] = $temp['memberId'];
+				if (empty($temp)) {
+				    // decoded is empty.
+					$response =  "CON empty decodded";
 				}
-				keeptempdata($session_id, $data, "$groupName members");
-				//Logging the members
-				echo "$response";
+				else
+				{
+					foreach($temp as $key => $value)
+					{
+						$data[$key] = $value;
+					}
+					if(!empty($data[$text]))
+					{
+						//Here the user chose a group presented
+						$groupid  = $data[$text];
+						//Getting group members and name
+						$query = mysqli_query($conn, "SELECT * FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
+						$membersOrder  = $groupInfo = array();
+						$n=0;
+						while ($temp = mysqli_fetch_assoc($query)) 
+						{
+							if($n==0){
+								$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
+								$groupName = $temp['groupName'];
+							}
+							$n++;
+							$groupInfo[] = $temp;
+							$response.="$n $temp[memberName]\n";
+							//Storing order of group memebrs
+							$membersOrder[$n] = $temp['memberId'];
+						}
+						keeptempdata($session_id, $data, "$groupName members");
+						//Logging the members
+						
+					}
+				}
+			}
+			else
+			{
+				$response =  "CON Received content contained invalid JSON!";
 			}	
 		}
 	}
@@ -113,4 +134,5 @@ $phoneNumber  = substr($phoneNumber, -10);
 			return true;
 		else return false;
 	}
+	echo "$response";
 ?>
