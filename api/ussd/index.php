@@ -81,7 +81,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 		$nrequests = count($requests);
 		if($nrequests == 1){
 			//Here going to handle first request, going to check if sent text is among the groups shown
-			$query = mysqli_query($conn, "SELECT * FROM ussdTempData WHERE session_id = \"$session_id\" and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
+			$query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = \"$session_id\" and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
 			$data = mysqli_fetch_assoc($query);			
 				
 			$data = json_decode($data['data'], true);
@@ -128,7 +128,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 		global $conn;
 		$data = json_encode($data);
 		$data = mysqli_real_escape_string($conn, $data);
-		$sql = "INSERT INTO ussdTempData(session_id, data, type) VALUES(\"$session_id\", \"$data\", \"$type\")";
+		$sql = "INSERT INTO ussdtempdata(session_id, data, type) VALUES(\"$session_id\", \"$data\", \"$type\")";
 		$query = mysqli_query($conn, $sql) or die("Can't log data: ".mysqli_error($conn));
 		if($query)
 			return true;
