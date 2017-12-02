@@ -1,6 +1,6 @@
 <?php
 require('../db.php');
-header("Content-Type: text/plain");
+//header("Content-Type: text/plain");
 session_start(); //For web testing only
 //Initialising
 $response = "";
@@ -74,17 +74,13 @@ $phoneNumber  = substr($phoneNumber, -10);
 			$response =  "CON Test Works.\n";
 			
 			// //Here going to handle first request, going to check if sent text is among the groups shown
-			// $query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = \"$session_id\" AND type = 'groups' ORDER BY time DESC LIMIT 1") or die("Error: ".mysqli_error($conn));
-			// $data = mysqli_fetch_assoc($query);			
+			 $query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = \"$session_id\" AND type = 'groups' ORDER BY time DESC LIMIT 1") or die("Error: ".mysqli_error($conn));
+			 $data = mysqli_fetch_assoc($query);			
 				
-			// $data = json_decode($data['data'], true);
-			// //There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
-			// $temp = $data;
-			// $data = array();
-			// foreach ($temp as $key => $value) 
-			// {
-			// 	$data[$key] = $value;
-			// }
+			 $data = json_decode($data['data'], true);
+			var_dump($data);
+			die();
+			
 			// if(!empty($data[$text]))
 			// {
 			// 	//Here the user chose a group presented
