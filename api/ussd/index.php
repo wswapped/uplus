@@ -8,22 +8,17 @@ $tdata = array();
 $session_id = rand(10000, 99999);
 $session_id = session_id();
 $conn = $db;
-
 $req = array_merge($_POST, $_GET); //Keeping get and post for testing and productin handling concurently
-
 $sessionId   = $req["sessionId"]??$session_id;
 $serviceCode = $req["serviceCode"]??"*801#";
 $phoneNumber = $req["phoneNumber"];
 $text        = $req["text"];
-
 //IN USSD phone number is always sent
 //CLEAN and sanitize PHONE
 $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
 $phoneNumber  = substr($phoneNumber, -10);
-
 	//Checking if user exists
 	$query  = mysqli_query($conn, "SELECT * FROM users WHERE phone = '$phoneNumber' LIMIT 1");
-
 	if(mysqli_num_rows($query))
 	{
 		//Here user already exists		
@@ -31,7 +26,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 		$userData = mysqli_fetch_array($query);
 		$userName = $userData['name'];
 		$userId = $userData['id'];
-		echo "$userName";
+		//echo "";
 	}
 	else{
 		//Here the user is new, should I ask the name?
@@ -39,37 +34,32 @@ $phoneNumber  = substr($phoneNumber, -10);
 	    $sqlsavePin = $db->query("INSERT INTO `users`(
 	    phone, active, createdDate, password, visits, updatedBy, updatedDate) 
 	    VALUES('$phoneNumber', '0', now(), '$code', '0', '1', now())")or die (mysqli_error());
-
 	    $sqlcheckPin = $db->query("SELECT * FROM users ORDER BY id DESC LIMIT 1");
 	      $userData = mysqli_fetch_array($sqlcheckPin);
 	      $userName = $userData['name'];
 	      $userId = $userData['id'];
 	}
-
 	if(empty($text) || $text == "#" || $text == "1*#"){
 		//Beginning of application
 		//Checking groups a user is in
 		$query = mysqli_query($conn, "SELECT groupId, groupName FROM `members` WHERE memberPhone = \"$phoneNumber\"") or die("Error getting groups you belong in, ".mysqli_error($conn));
 		$groups = array();
-
 		//Looping through all groups and putting them in $groups arry
 		while ($temp = mysqli_fetch_assoc($query)) {
 			$groups[] = $temp['groupName'];
 			$groupsIds[] = $temp['groupId'];
 		}
 		if(empty($groups)){
-			$response =  "CON Nta gurupe urimo.\nKugirango ujye muri gurupe shyiramo umubare uyiranga\n";
+			$response =  "CON ".$userName." Nta gurupe urimo.\nKugirango ujye muri gurupe shyiramo umubare uyiranga\n";
 			//TODO:Handle the group input
 		}else{
 			//Showing groups
-			$response.="CON Murakaza Neza kuri Uplus!\nHitamo gurupe\n";
+			$response.="CON ".$userName." Murakaza Neza kuri Uplus!\nHitamo gurupe\n";
 			for($n=0; $n<count($groups); $n++){
 				//Storing details we're showing for proof of selected group
 				$tdata[($n+1)] = $groupsIds[$n];
-
 				$response.=($n+1).". $groups[$n]\n";
 			}
-
 			//Logging the tempdata
 			keeptempdata($session_id, $tdata, 'groups');
 		}
@@ -81,22 +71,19 @@ $phoneNumber  = substr($phoneNumber, -10);
 		$nrequests = count($requests);
 		if($nrequests == 1){
 			//Here going to handle first request, going to check if sent text is among the groups shown
-			$query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = \"$session_id\" and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
+			$query = mysqli_query($conn, "SELECT * FROM ussdTempData WHERE session_id = \"$session_id\" and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
 			$data = mysqli_fetch_assoc($query);			
 				
 			$data = json_decode($data['data'], true);
-
 			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
 			$temp = $data;
 			$data = array();
 			foreach ($temp as $key => $value) {
 				$data[$key] = $value;
 			}
-
 			if(!empty($data[$text])){
 				//Here the user chose a group presented
 				$groupid  = $data[$text];
-
 				//Getting group members and name
 				$query = mysqli_query($conn, "SELECT * FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
 				$membersOrder  = $groupInfo = array();
@@ -108,27 +95,21 @@ $phoneNumber  = substr($phoneNumber, -10);
 					}
 					$n++;
 					$groupInfo[] = $temp;
-
 					$response.="$n $temp[memberName]\n";
-
 					//Storing order of group memebrs
 					$membersOrder[$n] = $temp['memberId'];
 				}
 				keeptempdata($session_id, $data, "$groupName members");
-
 				//Logging the members
 				echo "$response";
-
-
 			}	
 		}
 	}
-
 	function keeptempdata($session_id, $data, $type){
 		global $conn;
 		$data = json_encode($data);
 		$data = mysqli_real_escape_string($conn, $data);
-		$sql = "INSERT INTO ussdtempdata(session_id, data, type) VALUES(\"$session_id\", \"$data\", \"$type\")";
+		$sql = "INSERT INTO ussdTempData(session_id, data, type) VALUES(\"$session_id\", \"$data\", \"$type\")";
 		$query = mysqli_query($conn, $sql) or die("Can't log data: ".mysqli_error($conn));
 		if($query)
 			return true;
