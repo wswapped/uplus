@@ -120,7 +120,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 			}
 			else
 			{
-				$response =  "CON Received content contained invalid JSON!";
+				$response =  "CON Received content contained invalid JSON!".var_dump($temp);
 			}	
 		}
 	}
