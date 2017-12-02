@@ -97,7 +97,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 						//Here the user chose a group presented
 						$groupid  = $data[$text];
 						//Getting group members and name
-						$query = mysqli_query($conn, "SELECT * FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
+						$query = mysqli_query($conn, "SELECT memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
 						$membersOrder  = $groupInfo = array();
 						$n=0;
 						while ($temp = mysqli_fetch_assoc($query)) 
