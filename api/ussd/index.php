@@ -47,12 +47,18 @@ $phoneNumber  = substr($phoneNumber, -10);
 	      $userName = $userData['name'];
 	      $userId = $userData['id'];
 	}
-	die("CON ok here".$text);
 	//Application logic
 	if(empty($text) || $text == "#" || $text == "1*#"){
 		//First request
 		$response .="CON Murakaza neza mu kimina cya Uplus!\n1 Gurupe ndimo\n2 Konti yanjye\n3 Ubusobanuro\n# Exit\n";
-	}else if($text == "1"){
+	}
+
+
+	die("CON ok here".$text);
+
+	
+	else if($text == "1"){
+
 		//Second request
 		//Checking groups a user is in
 		$query = mysqli_query($conn, "SELECT groupId, groupName FROM `members` WHERE memberPhone = \"$phoneNumber\"") or die("Error getting groups you belong in, ".mysqli_error($conn));
