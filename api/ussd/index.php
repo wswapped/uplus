@@ -50,7 +50,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 	//Application logic
 	if(empty($text) || $text == "#" || $text == "1*#"){
 		//First request
-		$response .="CON Murakaza neza mu kimina cya Uplus!\n1 Gurupe ndimo\n2 Konti yanjye\n3 Ubusobanuro\n# Exit\n";
+		$response .="CON Murakaza neza mu kimina cya Uplus!\n1. Gurupe ndimo\n2. Konti yanjye\n3. Ubusobanuro\n# Exit\n";
 	}else{
 		//Handling further requests
 		$requests = explode("*", $text);
@@ -65,13 +65,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 				if($nrequests == 1){
 					//Checking for groups a user is in
 					$query = mysqli_query($conn, "SELECT groupId, groupName FROM `members` WHERE memberPhone = \"$phoneNumber\"") or die("Error getting groups you belong in, ".mysqli_error($conn));
-					// $groups = array();
 
-					// //Looping through all groups and putting them in $groups arry
-					// while ($temp = mysqli_fetch_assoc($query)) {
-					// 	$groups[] = $temp['groupName'];
-					// 	$groupsIds[] = $temp['groupId'];
-					// }
 					$groups = usergroups($phoneNumber);
 
 					if(empty($groups)){
@@ -85,9 +79,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 						foreach ($groups as $groupid => $groupname) {
 							$n++;
 							$tdata[$n] = $groupid;
-							$response .= "$n $groupname\n";
+							$response .= "$n. $groupname\n";
 						}
-						$response .="0 Jya muri gurupe\n";
+						$response .="0. Jya muri gurupe\n";
 						//Logging the tempdata
 						keeptempdata($sessionId, $tdata, 'groups');
 					}
@@ -114,7 +108,10 @@ $phoneNumber  = substr($phoneNumber, -10);
 									$groupid = $tdata[$smenu];
 									$groupname = groupname($groupid);
 									$response.="CON Ikaze muri $groupname\n";
-									$response.="1 Tanga umusanzu\n2 Bikuza\n3 Abanyamuryango\n4 Amakuru ya gurupe\n# Ahabanza";
+									$response.="1. Tanga umusanzu\n2. Bikuza\n3. Abanyamuryango\n4. Amakuru ya gurupe\n# Ahabanza";
+								}else if($smenu == 0){
+									//Joining a group
+									$response.="CON Mushyiremo umubare uranga gurupe\nComing soon";
 								}else{
 									$response.="Ibyo mwahisemo sibyo\n# Gutangira";
 								}
