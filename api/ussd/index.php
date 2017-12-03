@@ -14,11 +14,10 @@ if(isset($_GET['ses'])){
 //Initialising
 $response = "";
 $tdata = array();
-$session_id = session_id();
 
 $conn = $db;
 $req = array_merge($_POST, $_GET); //Keeping get and post for testing and productin handling concurently
-$sessionId   = $req["sessionId"]??$session_id;
+$sessionId   = $req["sessionId"]?? session_id();
 $serviceCode = $req["serviceCode"]??"*801#";
 $phoneNumber = $req["phoneNumber"];
 $text        = $req["text"];
@@ -70,7 +69,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 				$response.=($n+1).". $groups[$n]\n";
 			}
 			//Logging the tempdata
-			keeptempdata($session_id, $tdata, 'groups');
+			keeptempdata($sessionId, $tdata, 'groups');
 		}
 	}else{
 		$requests = explode("*", $text);
@@ -81,7 +80,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 		{
 			
 			//Here going to handle first request, going to check if sent text is among the groups shown
-			$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$session_id' and type = 'groups' ORDER BY time DESC LIMIT 1";
+			$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$sessionId' and type = 'groups' ORDER BY time DESC LIMIT 1";
 			$response =  "CON $sql";
 			$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 			$data = mysqli_fetch_assoc($query);
