@@ -52,11 +52,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 		//First request
 		$response .="CON Murakaza neza mu kimina cya Uplus!\n1 Gurupe ndimo\n2 Konti yanjye\n3 Ubusobanuro\n# Exit\n";
 	}
-
-
-	die("CON ok here".$text);
-
-	
 	else if($text == "1"){
 
 		//Second request
