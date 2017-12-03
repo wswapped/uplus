@@ -141,18 +141,33 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 							//Group chose earlier
 							$groupId = json_decode(gettempdata($sessionId, 'groups'), true)[$requests[1]];
-
+							$groupname = is_group($groupId);
 
 							if(!empty($groups)){
 								//User chose from the group menu
 								if($tmenu == 1){
 									//gutanga umusanzu
+									$response.="CON Shyiramo amafaranga ushaka kwitanga\n";
 								}else if($tmenu == 2){
 									//Kubikuza
+									$response.="CON Shyiramo amafaranga ushaka kubikuza\n";
 								}elseif ($tmenu == 3) {
 									# members
+									$members = groupmembers($groupId);																		
+									$response.="CON Abanyamuryango ba '$groupname'\n";
+									$n=0;
+									$tdata = array(); //To keep temparary dta
+									foreach ($members as $memberid => $membername) {
+										$n++;
+										$response.="$n. $membername\n";
+										$tdata[$n]= $memberid;
+									}
+									$response.="#. Ahabanza\n";
+									keeptempdata($sessionId, $tdata, '$groupname members');
+
 								}elseif ( $tmenu == 4) {
 									# group info
+									$response.="CON Ibyerekeye gurupe '$groupname'\n#.Ahabanza\n";
 
 								}else{
 									//Wrong choice
@@ -196,9 +211,20 @@ $phoneNumber  = substr($phoneNumber, -10);
 		else return false;
 	}
 
+	function groupmembers($groupid){
+		//Return names, ids of group members
+		global $conn;
+		$query = mysqli_query($conn, "SELECT memberId as id, COALESCE(memberName, memberPhone) as name FROM members WHERE groupId = \"$groupid\"") or die("CON Error getting group members ".mysqli_error($conn));
+
+		$groups = array();
+		while ($temp = mysqli_fetch_assoc($query)) {
+			$groups[$temp['id']] = $temp['name'];
+		}
+		return $groups;
+	}
+
 	function gettempdata($session_id, $type){
 		//return tempdta
-
 		global $conn;
 		$query = mysqli_query($conn, "SELECT data FROM ussdtempdata WHERE session_id = \"$session_id\" AND type= \"$type\" ORDER BY time DESC LIMIT 1 ") or die("END Error: can't get temp data ".mysqli_error($conn));
 		if(mysqli_num_rows($query)>0){
@@ -214,6 +240,11 @@ $phoneNumber  = substr($phoneNumber, -10);
 			$data = mysqli_fetch_assoc($query);
 			return $data['groupName'];
 		}else return false;
+	}
+	function groupinfo($groupid){
+		global $conn;
+		//Return info for display in about group's section
+		// $query = mysqli_query($conn, "SELECT targetAmount FROM groups WHERE id =\"$groupid\" LIMIT 1") or die("CON Error".mysqli_error($conn));
 	}
 	function usergroups($phone){
 		//FUnction to check the groups a user with $phone belongs in
