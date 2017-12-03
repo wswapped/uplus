@@ -81,7 +81,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 		{
 			
 			//Here going to handle first request, going to check if sent text is among the groups shown
-			$query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = '$session_id' and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
+			$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$session_id' and type = 'groups' ORDER BY time DESC LIMIT 1";
+			$response =  "CON $sql";
+			$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 			$data = mysqli_fetch_assoc($query);
 			
 			$data = json_decode($data['data'], true);
@@ -90,9 +92,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
 			if(is_array($data))
 			{
-				$response = "CON testing this guy";
+				$response .= "testing this guy";
 			}else{
-				$response = "CON Thi is not array";
+				$response .= "This is not array";
 			}
 
 
