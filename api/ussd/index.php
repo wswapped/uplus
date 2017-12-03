@@ -168,6 +168,13 @@ $phoneNumber  = substr($phoneNumber, -10);
 								}elseif ( $tmenu == 4) {
 									# group info
 									$response.="CON Ibyerekeye gurupe '$groupname'\n#.Ahabanza\n";
+									$groupinfo = groupinfo($groupId);
+									$response.="Amafaranga ifite:\n";
+									$response.="Ayo ishaka kugeraho: $groupinfo[targetAmount]\n";
+									$response.="Yatangiye: ".date("d-m-Y", strtotime($groupinfo['createdDate']))."\n";
+									$response.="Itangizwa: \n";
+									$response.="Iyobowe: $groupinfo[admin]\n";
+									$response.="#.Ahabanza\n";
 
 								}else{
 									//Wrong choice
@@ -244,7 +251,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 	function groupinfo($groupid){
 		global $conn;
 		//Return info for display in about group's section
-		// $query = mysqli_query($conn, "SELECT targetAmount FROM groups WHERE id =\"$groupid\" LIMIT 1") or die("CON Error".mysqli_error($conn));
+		$query = mysqli_query($conn, "SELECT targetAmount, COALESCE(adminName, adminPhone) as admin, createdDate FROM groups WHERE id =\"$groupid\" LIMIT 1") or die("CON Error".mysqli_error($conn));
+		return mysqli_fetch_assoc($query);
 	}
 	function usergroups($phone){
 		//FUnction to check the groups a user with $phone belongs in
