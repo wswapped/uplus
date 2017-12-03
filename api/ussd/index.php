@@ -2,11 +2,19 @@
 require('../db.php');
 header("Content-Type: text/plain");
 session_start(); //For web testing only
+
+
+if(isset($_GET['ses'])){
+	session_destroy();
+	session_start();
+	session_regenerate_id();
+}
+
 //Initialising
 $response = "";
 $tdata = array();
-$session_id = rand(10000, 99999);
 $session_id = session_id();
+
 $conn = $db;
 $req = array_merge($_POST, $_GET); //Keeping get and post for testing and productin handling concurently
 $sessionId   = $req["sessionId"]??$session_id;
