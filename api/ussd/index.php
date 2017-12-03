@@ -91,6 +91,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 			if(is_array($data))
 			{
 				$response = "CON testing this guy";
+			}else{
+				$response = "CON Thi is not array";
 			}
 
 
