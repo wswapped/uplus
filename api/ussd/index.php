@@ -47,7 +47,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 	      $userName = $userData['name'];
 	      $userId = $userData['id'];
 	}
-
+	die("CON ok here".$text);
 	//Application logic
 	if(empty($text) || $text == "#" || $text == "1*#"){
 		//First request
@@ -82,76 +82,70 @@ $phoneNumber  = substr($phoneNumber, -10);
 	}else if($text == 3){
 		//Information
 		$response = "END Uplus igufasha gukusanya no kugenzura amafaranga mu bimina n'amagurupe kuburyo bworoshe kandi bunoze";
-	}else if($text == "#"){
-		//Exit activity
-		$response = "END Mwakoze gukoresha Uplus!\nMugire umunsi mwiza.";
-	}
-
-	// else{
-	// 	$requests = explode("*", $text);
+	}else{
+		$requests = explode("*", $text);
 		
-	// 	//Number of requests
-	// 	$nrequests = count($requests);
-	// 	if($nrequests == 1)
-	// 	{
+		//Number of requests
+		$nrequests = count($requests);
+		if($nrequests == 2)
+		{
 			
-	// 		//Here going to handle first request, going to check if sent text is among the groups shown
-	// 		$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$sessionId' and type = 'groups' ORDER BY time DESC LIMIT 1";
-	// 		$response =  "CON $sql";
-	// 		$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-	// 		$data = mysqli_fetch_assoc($query);
+			//Here going to handle first request, going to check if sent text is among the groups shown
+			$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$sessionId' and type = 'groups' ORDER BY time DESC LIMIT 1";
+			$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+			$data = mysqli_fetch_assoc($query);
 			
-	// 		$data = json_decode($data['data'], true);
+			$data = json_decode($data['data'], true);
 			
 
-	// 		//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
-	// 		if(is_array($data)  )
-	// 		{	
-	// 			if (empty($data)) {
-	// 			    // decoded is empty.
-	// 				$response =  "CON empty decodded";
-	// 			}
-	// 			else
-	// 			{
-	// 				if(!empty($data[$text]))
-	// 				{
-	// 					//Here the user chose a group presented
-	// 					$groupid  = $data[$text];
-	// 					//Getting group members and name
-	// 					$query = mysqli_query($conn, "SELECT groupName, memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
-	// 					$membersOrder  = $groupInfo = array();
-	// 					$n=0;
-	// 					while ($temp = mysqli_fetch_assoc($query)) 
-	// 					{
-	// 						if($n==0){
-	// 							$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
-	// 							$groupName = $temp['groupName'];
-	// 						}
-	// 						$n++;
-	// 						$groupInfo[] = $temp;
-	// 						$response.="$n $temp[memberName]\n";
-	// 						//Storing order of group memebrs
-	// 						$membersOrder[$n] = $temp['memberId'];
-	// 					}
-	// 					keeptempdata($session_id, $data, "$groupName members");
-	// 					//Logging the members
+			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
+			if(is_array($data)  )
+			{	
+				if (empty($data)) {
+				    // decoded is empty.
+					$response =  "CON empty decodded";
+				}
+				else
+				{
+					if(!empty($data[$text]))
+					{
+						//Here the user chose a group presented
+						$groupid  = $data[$text];
+						//Getting group members and name
+						$query = mysqli_query($conn, "SELECT groupName, memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
+						$membersOrder  = $groupInfo = array();
+						$n=0;
+						while ($temp = mysqli_fetch_assoc($query)) 
+						{
+							if($n==0){
+								$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
+								$groupName = $temp['groupName'];
+							}
+							$n++;
+							$groupInfo[] = $temp;
+							$response.="$n $temp[memberName]\n";
+							//Storing order of group memebrs
+							$membersOrder[$n] = $temp['memberId'];
+						}
+						keeptempdata($session_id, $data, "$groupName members");
+						//Logging the members
 						
-	// 				}else{
-	// 					//Maybe the user put the group ID
-	// 					//checking if text is a group ID
-	// 					$query = $db->query("SELECT groupName FROM groups WHERE id = \"$text\" LIMIT 1") or die("Can not get group you want");
-	// 					if(mysqli_num_rows($query)){
-	// 						//Here the group*
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 		else
-	// 		{
-	// 			$response =  "CON Received content contained invalid JSON!".var_dump($temp);
-	// 		}
-	// 	}
-	// }
+					}else{
+						//Maybe the user put the group ID
+						//checking if text is a group ID
+						$query = $db->query("SELECT groupName FROM groups WHERE id = \"$text\" LIMIT 1") or die("Can not get group you want");
+						if(mysqli_num_rows($query)){
+							//Here the group*
+						}
+					}
+				}
+			}
+			else
+			{
+				$response =  "CON Received content contained invalid JSON!".var_dump($temp);
+			}
+		}
+	}
 	function keeptempdata($session_id, $data, $type){
 		global $conn;
 		$data = json_encode($data);
