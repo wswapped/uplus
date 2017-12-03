@@ -85,9 +85,17 @@ $phoneNumber  = substr($phoneNumber, -10);
 			$data = mysqli_fetch_assoc($query);
 			
 			$data = json_decode($data['data'], true);
-			$response = "CON testing this guy";
+			
 
 			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
+			if(is_array($data))
+			{
+				
+				if (empty($data)) {
+				    // decoded is empty.
+					$response =  "CON empty decoded";
+				}else $response .= "CON testing this guy";
+			}
 
 
 			// if(is_array($data))
