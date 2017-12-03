@@ -81,7 +81,10 @@ $phoneNumber  = substr($phoneNumber, -10);
 		$response = "CON Money withdrawal";
 	}else if($text == 3){
 		//Information
-		$response = "END Uplus igufasha gukusana no kugenzura amafaranga ibimina namagurupe kuburyo bworoshe kandi bunoze";
+		$response = "END Uplus igufasha gukusanya no kugenzura amafaranga mu bimina n'amagurupe kuburyo bworoshe kandi bunoze";
+	}else if($text == "#"){
+		//Exit activity
+		$response = "END Mwakoze gukoresha Uplus!\nMugire umunsi mwiza.";
 	}
 
 	// else{
