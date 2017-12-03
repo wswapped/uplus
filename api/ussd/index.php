@@ -67,7 +67,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 			//TODO:Handle the group input in third input
 		}else{
 			//Showing groups
-			$response.="CON ".$userName." Murakazaneza mu kimina cya uPlus!\n1.Hitamo gurupe\n";
+			$response.="CON ".$userName."Hitamo gurupe\n";
 			for($n=0; $n<count($groups); $n++){
 				//Storing details we're showing for proof of selected group
 				$tdata[($n+1)] = $groupsIds[$n];
@@ -83,7 +83,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 		//Information
 		$response = "END Uplus igufasha gukusana no kugenzura amafaranga ibimina namagurupe kuburyo bworoshe kandi bunoze";
 	}
-	
+
 	// else{
 	// 	$requests = explode("*", $text);
 		
