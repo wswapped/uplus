@@ -79,10 +79,11 @@ $phoneNumber  = substr($phoneNumber, -10);
 		$nrequests = count($requests);
 		if($nrequests == 1)
 		{
-			$response = "CON testing this guy";
-		// 	//Here going to handle first request, going to check if sent text is among the groups shown
-		// 	$query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = '$session_id' and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
-		// 	$data = mysqli_fetch_assoc($query);			
+			
+			//Here going to handle first request, going to check if sent text is among the groups shown
+			$query = mysqli_query($conn, "SELECT * FROM ussdtempdata WHERE session_id = '$session_id' and type = 'groups' ORDER BY time DESC LIMIT 1") or die(mysqli_error($conn));
+			$data = mysqli_fetch_assoc($query);	
+			$response = "CON testing this guy";		
 				
 		// 	$data = json_decode($data['data'], true);
 		// 	//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
