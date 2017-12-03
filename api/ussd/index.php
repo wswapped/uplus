@@ -87,10 +87,10 @@ $phoneNumber  = substr($phoneNumber, -10);
 			$data = json_decode($data['data'], true);
 
 			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
+			$response = "CON testing this guy";
 
-			if(is_array($data))
-			{
-				$response = "CON testing this guy";	
+			// if(is_array($data))
+			// {	
 				// if (empty($data)) {
 				//     // decoded is empty.
 				// 	$response =  "CON empty decodded";
@@ -122,11 +122,11 @@ $phoneNumber  = substr($phoneNumber, -10);
 						
 				// 	}
 				// }
-			}
-			else
-			{
-				$response =  "CON Received content contained invalid JSON!".var_dump($temp);
-			}
+			// }
+			// else
+			// {
+			// 	$response =  "CON Received content contained invalid JSON!".var_dump($temp);
+			// }
 		}
 	}
 	function keeptempdata($session_id, $data, $type){
