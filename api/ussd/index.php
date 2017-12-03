@@ -94,7 +94,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 				if (empty($data)) {
 				    // decoded is empty.
 					$response =  "CON empty decoded";
-				}else $response .= "CON testing this guy";
+				}else $response = "CON testing this guy";
 			}
 
 
