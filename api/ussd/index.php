@@ -90,13 +90,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
 			if(is_array($data))
 			{
-				
-				if (count($data) == 0) {
-				    // decoded is empty.
-					$response =  "CON empty decoded";
-				}else{
-					$response = "CON testing this guy";
-				}
+				$response = "CON testing this guy";
 			}
 
 
