@@ -102,55 +102,26 @@ $phoneNumber  = substr($phoneNumber, -10);
 						if(count($groups)>0){
 							//Here the user belongs in a group
 							//Here going to handle first request, going to check if sent text is among the groups shown
-							$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$sessionId' and type = 'groups' ORDER BY time DESC LIMIT 1";
-							$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-							$data = mysqli_fetch_assoc($query);
-							
-							$data = json_decode($data['data'], true);
-							if(is_array($data) )
-							{
-								if (empty($data)) {
-								    // decoded is empty.
-									$response =  "CON empty decodded";
-								}else
-								{
-									if(!empty($data[$smenu]))
-									{
-										//Here the user chose a group presented
-										$groupid  = $data[$smenu];
-										//Getting group members and name
-										$query = mysqli_query($conn, "SELECT groupName, memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
-										$membersOrder  = $groupInfo = array();
-										$n=0;
-										while ($temp = mysqli_fetch_assoc($query)) 
-										{
-											if($n==0){
-												$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
-												$groupName = $temp['groupName'];
-											}
-											$n++;
-											$groupInfo[] = $temp;
-											$response.="$n $temp[memberName]\n";
-											//Storing order of group memebrs
-											$membersOrder[$n] = $temp['memberId'];
-										}
-										keeptempdata($sessionId, $data, "$groupName members");
-										//Logging the members
-										
-									}else{
-										//Maybe the user put the group ID
-										//checking if text is a group ID
-										$query = $db->query("SELECT groupName FROM groups WHERE id = \"$text\" LIMIT 1") or die("Can not get group you want");
-										if(mysqli_num_rows($query)){
-											//Here the group*
-										}
-									}
+
+							//checking chose group's and it's menu
+							$tdata = gettempdata($sessionId, 'groups');
+							$tdata = json_decode($tdata, true);
+
+							if(is_array($tdata)){
+								if(!empty($tdata[$smenu])){
+									//User chose correct group
+									$groupid = $tdata[$smenu];
+									$groupname = groupname($groupid);
+									$response.="CON Ikaze muri $groupname\n";
+									$response.="1 Tanga umusanzu\n2 Bikuza\n3 Abanyamuryango\n4 Amakuru ya gurupe\n# Ahabanza";
+								}else{
+									$response.="Ibyo mwahisemo sibyo\n# Gutangira";
 								}
+
+							}else{
+								//No data stored or invalid JSON
 							}
-							else
-							{
-								$response =  "CON Received content contained invalid JSON!".var_dump($temp);
-							}
+
 						}else{
 							//The user is new and might have put the group code
 							//Checking if group exists
@@ -165,7 +136,36 @@ $phoneNumber  = substr($phoneNumber, -10);
 							
 					}else{
 						//Group was chose or group code was input
-						echo "string";
+						$tmenu = $requests[2]; //Third menu choice
+
+						if($nrequests == 3){
+							$groups = usergroups($phoneNumber);
+
+							//Group chose earlier
+							$groupId = json_decode(gettempdata($sessionId, 'groups'), true)[$requests[1]];
+
+
+							if(!empty($groups)){
+								//User chose from the group menu
+								if($tmenu == 1){
+									//gutanga umusanzu
+								}else if($tmenu == 2){
+									//Kubikuza
+								}elseif ($tmenu == 3) {
+									# members
+								}elseif ( $tmenu == 4) {
+									# group info
+
+								}else{
+									//Wrong choice
+									$response.="CON Mwashyizemo ibitari byo.\n#.Ahabanza\n";
+								}
+							}
+						}else{
+							$fomenu = $requests[3]; //Fourth menu item
+
+						}
+						
 					}
 					
 				}
@@ -178,87 +178,35 @@ $phoneNumber  = substr($phoneNumber, -10);
 			$response = "END Mwashyizemo ibitari byo\nMusubiremo kandi muhitemo ibiribyo";
 		}
 	}
-
-
-	// // else if($text == "1"){
-	// }else if($text == 2){
-	// 	//Money withdrawal
-	// 	$response = "CON Money withdrawal";
-	// }else if($text == 3){
-	// 	//Information
-	// 	$response = "END Uplus igufasha gukusanya no kugenzura amafaranga mu bimina n'amagurupe kuburyo bworoshe kandi bunoze";
-	// }else{
-	// 	$requests = explode("*", $text);
-		
-	// 	//Number of requests
-	// 	$nrequests = count($requests);
-	// 	if($nrequests == 2)
-	// 	{
-			
-	// 		//Here going to handle first request, going to check if sent text is among the groups shown
-	// 		$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$sessionId' and type = 'groups' ORDER BY time DESC LIMIT 1";
-	// 		$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-	// 		$data = mysqli_fetch_assoc($query);
-			
-	// 		$data = json_decode($data['data'], true); 			
-
-	// 		//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
-	// 		if(is_array($data)  )
-	// 		{	
-	// 			if (empty($data)) {
-	// 			    // decoded is empty.
-	// 				$response =  "CON empty decodded";
-	// 			}
-	// 			else
-	// 			{
-	// 				if(!empty($data[$text]))
-	// 				{
-	// 					//Here the user chose a group presented
-	// 					$groupid  = $data[$text];
-	// 					//Getting group members and name
-	// 					$query = mysqli_query($conn, "SELECT groupName, memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
-	// 					$membersOrder  = $groupInfo = array();
-	// 					$n=0;
-	// 					while ($temp = mysqli_fetch_assoc($query)) 
-	// 					{
-	// 						if($n==0){
-	// 							$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
-	// 							$groupName = $temp['groupName'];
-	// 						}
-	// 						$n++;
-	// 						$groupInfo[] = $temp;
-	// 						$response.="$n $temp[memberName]\n";
-	// 						//Storing order of group memebrs
-	// 						$membersOrder[$n] = $temp['memberId'];
-	// 					}
-	// 					keeptempdata($session_id, $data, "$groupName members");
-	// 					//Logging the members
-						
-	// 				}else{
-	// 					//Maybe the user put the group ID
-	// 					//checking if text is a group ID
-	// 					$query = $db->query("SELECT groupName FROM groups WHERE id = \"$text\" LIMIT 1") or die("Can not get group you want");
-	// 					if(mysqli_num_rows($query)){
-	// 						//Here the group*
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 		else
-	// 		{
-	// 			$response =  "CON Received content contained invalid JSON!".var_dump($temp);
-	// 		}
-	// 	}
-	// // }
 	function keeptempdata($session_id, $data, $type){
 		global $conn;
 		$data = json_encode($data);
 		$data = mysqli_real_escape_string($conn, $data);
 		$sql = "INSERT INTO ussdtempdata(session_id, data, type) VALUES(\"$session_id\", \"$data\", \"$type\")";
-		$query = mysqli_query($conn, $sql) or die("Can't log data: ".mysqli_error($conn));
+		$query = mysqli_query($conn, $sql) or die("OK Error: Can't log data: ".mysqli_error($conn));
 		if($query)
 			return true;
 		else return false;
+	}
+
+	function gettempdata($session_id, $type){
+		//return tempdta
+
+		global $conn;
+		$query = mysqli_query($conn, "SELECT data FROM ussdtempdata WHERE session_id = \"$session_id\" AND type= \"$type\" ORDER BY time DESC LIMIT 1 ") or die("END Error: can't get temp data ".mysqli_error($conn));
+		if(mysqli_num_rows($query)>0){
+			$data = mysqli_fetch_assoc($query);
+			return $data['data'];
+		}else return false;
+	}
+	function groupname($groupid){
+		//Function to check if group with $groupid exists
+		global $conn;
+		$query = mysqli_query($conn, "SELECT groupName FROM groups WHERE id = \"$groupid\"") or die("CON cn lookup group ".mysqli_error($conn));
+		if(mysqli_num_rows($query)){
+			$data = mysqli_fetch_assoc($query);
+			return $data['groupName'];
+		}else return false;
 	}
 	function usergroups($phone){
 		//FUnction to check the groups a user with $phone belongs in
