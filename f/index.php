@@ -37,7 +37,7 @@ if (isset($_GET['groupId'])){
 			$sqlVisits = $db->query("UPDATE `groups` SET visits = '$newVisit' WHERE id ='$groupID'");
 			
 			
-			$sqlbalance = $outCon->query("SELECT * FROM groupbalance WHERE groupId = '$groupID'");
+			$sqlbalance = $outCon->query("SELECT * FROM groupbalance WHERE id = '$groupID'");
 			$rowbalance = mysqli_fetch_array($sqlbalance);
 			$currentAmount = $rowbalance['Balance'];
 			
