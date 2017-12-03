@@ -57,39 +57,45 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 		//Level1 requests
 		if(is_numeric($requests[0])){
-			echo "string";
+			//Handling first menu
+			$fmenu = $requests[0];
+			if($fmenu == 1){
+				//Checking for groups a user is in
+				$query = mysqli_query($conn, "SELECT groupId, groupName FROM `members` WHERE memberPhone = \"$phoneNumber\"") or die("Error getting groups you belong in, ".mysqli_error($conn));
+				$groups = array();
+
+				//Looping through all groups and putting them in $groups arry
+				while ($temp = mysqli_fetch_assoc($query)) {
+					$groups[] = $temp['groupName'];
+					$groupsIds[] = $temp['groupId'];
+				}
+
+				if(empty($groups)){
+					//User does not belong in any group
+					$response =  "CON ".$userName." Nta gurupe urimo.\nKugirango ujye muri gurupe shyiramo umubare uyiranga\n";
+					//TODO:Handle the group input in third input
+				}else{
+					//Showing groups
+					$response.="CON ".$userName.", Hitamo gurupe\n";
+					for($n=0; $n<count($groups); $n++){
+						//Storing details we're showing for proof of selected group
+						$tdata[($n+1)] = $groupsIds[$n];
+						$response.=($n+1).". $groups[$n]\n";
+					}
+					//Logging the tempdata
+					keeptempdata($sessionId, $tdata, 'groups');
+				}
+			}
+
+
 		}else{
 			//Invalid requests
-			$response = "CON Mwashyizemo ibitari byo";
+			$response = "END Mwashyizemo ibitari byo\nMusubiremo kandi muhitemo ibiribyo";
 		}
 	}
 
 
-	// else if($text == "1"){
-
-	// 	//Second request
-	// 	//Checking groups a user is in
-	// 	$query = mysqli_query($conn, "SELECT groupId, groupName FROM `members` WHERE memberPhone = \"$phoneNumber\"") or die("Error getting groups you belong in, ".mysqli_error($conn));
-	// 	$groups = array();
-	// 	//Looping through all groups and putting them in $groups arry
-	// 	while ($temp = mysqli_fetch_assoc($query)) {
-	// 		$groups[] = $temp['groupName'];
-	// 		$groupsIds[] = $temp['groupId'];
-	// 	}
-	// 	if(empty($groups)){
-	// 		$response =  "CON ".$userName." Nta gurupe urimo.\nKugirango ujye muri gurupe shyiramo umubare uyiranga\n";
-	// 		//TODO:Handle the group input in third input
-	// 	}else{
-	// 		//Showing groups
-	// 		$response.="CON ".$userName."Hitamo gurupe\n";
-	// 		for($n=0; $n<count($groups); $n++){
-	// 			//Storing details we're showing for proof of selected group
-	// 			$tdata[($n+1)] = $groupsIds[$n];
-	// 			$response.=($n+1).". $groups[$n]\n";
-	// 		}
-	// 		//Logging the tempdata
-	// 		keeptempdata($sessionId, $tdata, 'groups');
-	// 	}
+	// // else if($text == "1"){
 	// }else if($text == 2){
 	// 	//Money withdrawal
 	// 	$response = "CON Money withdrawal";
