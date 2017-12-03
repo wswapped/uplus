@@ -87,6 +87,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 							$tdata[$n] = $groupid;
 							$response .= "$n $groupname\n";
 						}
+						$response .="0 Jya muri gurupe\n";
 						//Logging the tempdata
 						keeptempdata($sessionId, $tdata, 'groups');
 					}
@@ -170,7 +171,16 @@ $phoneNumber  = substr($phoneNumber, -10);
 					
 				}
 				
+			}else if($fmenu == 2){
+				//konti
+				$response.="CON Konti ya $userName\n";
 			}
+			else if($fmenu == 3){
+				//konti
+				$response.="END Uplus igufasha gukusanya no kugenzura amafaranga 
+		mu bimina n'amagurupe kuburyo bworoshe kandi bunoze\nKu bindi bisobanuro sura www.uplus.rw\n";
+			}
+
 
 
 		}else{
