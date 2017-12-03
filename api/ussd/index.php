@@ -167,7 +167,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 								}elseif ( $tmenu == 4) {
 									# group info
-									$response.="CON Ibyerekeye gurupe '$groupname'\n#.Ahabanza\n";
+									$response.="CON Ibyerekeye gurupe '$groupname'\n";
 									$groupinfo = groupinfo($groupId);
 									$response.="Amafaranga ifite:\n";
 									$response.="Ayo ishaka kugeraho: $groupinfo[targetAmount]\n";
@@ -192,7 +192,13 @@ $phoneNumber  = substr($phoneNumber, -10);
 				
 			}else if($fmenu == 2){
 				//konti
+
+				//Getting
+				$groups = usergroups($phoneNumber);
 				$response.="CON Konti ya $userName\n";
+				$response.="Uri muri gurupe:".count($groups)."\n";
+				$response.="Umaze kwitanga\n";
+				$response.="Umaze kubikuza\n";
 			}
 			else if($fmenu == 3){
 				//konti
@@ -254,11 +260,10 @@ $phoneNumber  = substr($phoneNumber, -10);
 		$query = mysqli_query($conn, "SELECT targetAmount, COALESCE(adminName, adminPhone) as admin, createdDate FROM groups WHERE id =\"$groupid\" LIMIT 1") or die("CON Error".mysqli_error($conn));
 		return mysqli_fetch_assoc($query);
 	}
-	function usergroups($phone){
-		//FUnction to check the groups a user with $phone belongs in
+	function usergroups($userdata, $type='memberPhone'){
+		//FUnction to check the groups a user with $userdata of column $type belongs in
 		global $conn;
-		$sql = "SELECT * FROM members WHERE memberPhone = \"$phone\"";
-
+		$sql = "SELECT * FROM members WHERE $type = \"$userdata\"";
 		$query = mysqli_query($conn, $sql) or die("END Error Checking groups u belong in\n".mysqli_error($conn));
 
 
