@@ -26,7 +26,7 @@ $text        = $req["text"];
 $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
 $phoneNumber  = substr($phoneNumber, -10);
 	//Checking if user exists
-	$query  = mysqli_query($conn, "SELECT * FROM users WHERE phone = '$phoneNumber' LIMIT 1");
+	$query  = mysqli_query($conn, "SELECT * COALESCE(name, phone) FROM users WHERE phone = '$phoneNumber' LIMIT 1");
 	if(mysqli_num_rows($query))
 	{
 		//Here user already exists		
