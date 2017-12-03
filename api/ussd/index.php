@@ -91,10 +91,12 @@ $phoneNumber  = substr($phoneNumber, -10);
 			if(is_array($data))
 			{
 				
-				if (empty($data)) {
+				if (count($data) == 0) {
 				    // decoded is empty.
 					$response =  "CON empty decoded";
-				}else $response = "CON testing this guy";
+				}else{
+					$response = "CON testing this guy";
+				}
 			}
 
 
