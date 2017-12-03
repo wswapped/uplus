@@ -252,7 +252,7 @@ else{
 										<b style="float: right;">
 
 											<?php 
-											if($groupTargetType == 'target'){
+											if($groupTargetType == 'fixed'){
 												echo number_format($targetAmount).'Rwf';
 												}
 											elseif($groupTargetType == 'any'){
