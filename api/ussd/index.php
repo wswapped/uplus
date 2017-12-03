@@ -157,7 +157,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 							$groupname = is_group($smenu);
 							if($groupname){
 								//The group requested to join exists
-								$response.="Mwasabye kwinjira muri gurupe '$groupname'\n";
+								$response.="CON Mwasabye kwinjira muri gurupe '$groupname'\n";
 								$response.="Turacyari gutunganya ubu buryo\n";
 							}
 						}
