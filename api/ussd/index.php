@@ -89,52 +89,44 @@ $phoneNumber  = substr($phoneNumber, -10);
 			
 
 			//There is problem accessing this array with strings which PHP keeps changing to number, here's  work around
-			if(is_array($data))
-			{
-				$response .= "testing this guy";
-			}else{
-				$response .= "This is not array";
-			}
-
-
-			// if(is_array($data))
-			// {	
-				// if (empty($data)) {
-				//     // decoded is empty.
-				// 	$response =  "CON empty decodded";
-				// }
-				// else
-				// {
-				// 	if(!empty($data[$text]))
-				// 	{
-				// 		//Here the user chose a group presented
-				// 		$groupid  = $data[$text];
-				// 		//Getting group members and name
-				// 		$query = mysqli_query($conn, "SELECT groupName, memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
-				// 		$membersOrder  = $groupInfo = array();
-				// 		$n=0;
-				// 		while ($temp = mysqli_fetch_assoc($query)) 
-				// 		{
-				// 			if($n==0){
-				// 				$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
-				// 				$groupName = $temp['groupName'];
-				// 			}
-				// 			$n++;
-				// 			$groupInfo[] = $temp;
-				// 			$response.="$n $temp[memberName]\n";
-				// 			//Storing order of group memebrs
-				// 			$membersOrder[$n] = $temp['memberId'];
-				// 		}
-				// 		keeptempdata($session_id, $data, "$groupName members");
-				// 		//Logging the members
+			if(is_array($data)  )
+			{	
+				if (empty($data)) {
+				    // decoded is empty.
+					$response =  "CON empty decodded";
+				}
+				else
+				{
+					if(!empty($data[$text]))
+					{
+						//Here the user chose a group presented
+						$groupid  = $data[$text];
+						//Getting group members and name
+						$query = mysqli_query($conn, "SELECT groupName, memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
+						$membersOrder  = $groupInfo = array();
+						$n=0;
+						while ($temp = mysqli_fetch_assoc($query)) 
+						{
+							if($n==0){
+								$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
+								$groupName = $temp['groupName'];
+							}
+							$n++;
+							$groupInfo[] = $temp;
+							$response.="$n $temp[memberName]\n";
+							//Storing order of group memebrs
+							$membersOrder[$n] = $temp['memberId'];
+						}
+						keeptempdata($session_id, $data, "$groupName members");
+						//Logging the members
 						
-				// 	}
-				// }
-			// }
-			// else
-			// {
-			// 	$response =  "CON Received content contained invalid JSON!".var_dump($temp);
-			// }
+					}
+				}
+			}
+			else
+			{
+				$response =  "CON Received content contained invalid JSON!".var_dump($temp);
+			}
 		}
 	}
 	function keeptempdata($session_id, $data, $type){
