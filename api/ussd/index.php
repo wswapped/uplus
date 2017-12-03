@@ -95,56 +95,74 @@ $phoneNumber  = substr($phoneNumber, -10);
 					$smenu = $requests[1];
 
 					if($nrequests == 2){
-						//Here going to handle first request, going to check if sent text is among the groups shown
-						$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$sessionId' and type = 'groups' ORDER BY time DESC LIMIT 1";
-						$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-						$data = mysqli_fetch_assoc($query);
-						
-						$data = json_decode($data['data'], true);
-						if(is_array($data)  )
-						{
-							if (empty($data)) {
-							    // decoded is empty.
-								$response =  "CON empty decodded";
-							}else
+
+						//Checking if user belongs
+						$groups = usergroups($phoneNumber);
+
+						if(count($groups)>0){
+							//Here the user belongs in a group
+							//Here going to handle first request, going to check if sent text is among the groups shown
+							$sql = "SELECT * FROM ussdtempdata WHERE session_id = '$sessionId' and type = 'groups' ORDER BY time DESC LIMIT 1";
+							$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+							$data = mysqli_fetch_assoc($query);
+							
+							$data = json_decode($data['data'], true);
+							if(is_array($data) )
 							{
-								if(!empty($data[$smenu]))
+								if (empty($data)) {
+								    // decoded is empty.
+									$response =  "CON empty decodded";
+								}else
 								{
-									//Here the user chose a group presented
-									$groupid  = $data[$smenu];
-									//Getting group members and name
-									$query = mysqli_query($conn, "SELECT groupName, memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
-									$membersOrder  = $groupInfo = array();
-									$n=0;
-									while ($temp = mysqli_fetch_assoc($query)) 
+									if(!empty($data[$smenu]))
 									{
-										if($n==0){
-											$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
-											$groupName = $temp['groupName'];
+										//Here the user chose a group presented
+										$groupid  = $data[$smenu];
+										//Getting group members and name
+										$query = mysqli_query($conn, "SELECT groupName, memberId, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId = \"$groupid\"") or die("Error: ".mysqli_error($conn));
+										$membersOrder  = $groupInfo = array();
+										$n=0;
+										while ($temp = mysqli_fetch_assoc($query)) 
+										{
+											if($n==0){
+												$response = "CON Ikaze muri $temp[groupName]\n"; //Printing the group on first loop
+												$groupName = $temp['groupName'];
+											}
+											$n++;
+											$groupInfo[] = $temp;
+											$response.="$n $temp[memberName]\n";
+											//Storing order of group memebrs
+											$membersOrder[$n] = $temp['memberId'];
 										}
-										$n++;
-										$groupInfo[] = $temp;
-										$response.="$n $temp[memberName]\n";
-										//Storing order of group memebrs
-										$membersOrder[$n] = $temp['memberId'];
-									}
-									keeptempdata($sessionId, $data, "$groupName members");
-									//Logging the members
-									
-								}else{
-									//Maybe the user put the group ID
-									//checking if text is a group ID
-									$query = $db->query("SELECT groupName FROM groups WHERE id = \"$text\" LIMIT 1") or die("Can not get group you want");
-									if(mysqli_num_rows($query)){
-										//Here the group*
+										keeptempdata($sessionId, $data, "$groupName members");
+										//Logging the members
+										
+									}else{
+										//Maybe the user put the group ID
+										//checking if text is a group ID
+										$query = $db->query("SELECT groupName FROM groups WHERE id = \"$text\" LIMIT 1") or die("Can not get group you want");
+										if(mysqli_num_rows($query)){
+											//Here the group*
+										}
 									}
 								}
 							}
+							else
+							{
+								$response =  "CON Received content contained invalid JSON!".var_dump($temp);
+							}
+						}else{
+							//The user is new and might have put the group code
+							//Checking if group exists
+							$groupname = is_group($smenu);
+							if($groupname){
+								//The group requested to join exists
+								$response.="Mwasabye kwinjira muri gurupe '$groupname'\n";
+								$response.="Turacyari gutunganya ubu buryo\n";
+							}
 						}
-						else
-						{
-							$response =  "CON Received content contained invalid JSON!".var_dump($temp);
-						}
+
+							
 					}else{
 						//Group was chose or group code was input
 						echo "string";
@@ -257,6 +275,15 @@ $phoneNumber  = substr($phoneNumber, -10);
 		}
 
 		return $groups;
+	}
+	function is_group($groupid){
+		//Function to check if group with $groupid exists
+		global $conn;
+		$query = mysqli_query($conn, "SELECT groupName FROM groups WHERE id = \"$groupid\"") or die("CON cn lookup group ".mysqli_error($conn));
+		if(mysqli_num_rows($query)){
+			$data = mysqli_fetch_assoc($query);
+			return $data['groupName'];
+		}else return false;
 	}
 	echo "$response";
 ?>
