@@ -55,8 +55,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 		$response = "ok $text";
 	}
 
-	die("$response");
-	
 	// else if($text == "1"){
 
 	// 	//Second request
