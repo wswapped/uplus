@@ -198,11 +198,13 @@ $phoneNumber  = substr($phoneNumber, -10);
 										if($api_call){
 											$response .= "END $userName watanze umusanzu wa $contmoney muri '$groupname'\n";
 										}else{
-											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse\nMurebe ko mufite amafaranga ahafije\n";
+											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
 										}
 									}else{
 										$response.="CON Shyiramo umubare w'amafaranga ushaka gutanga\n#.Ahabanza\n";
 									}
+								}else if ($tmenu == 2) {
+									# Kubikuza
 								}
 							}
 						}
