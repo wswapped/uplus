@@ -138,6 +138,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 						$tdata = json_decode(gettempdata($sessionId, 'groups'), true);
 						$groupid = $tdata[$smenu];
+						$groupname = is_group($groupid);
 
 						if($nrequests == 3){
 							$groups = usergroups($phoneNumber);
@@ -192,9 +193,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 								if($tmenu == 1){
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
-
+										$response .= "END $userName ugiye umusanzu wa $contmoney muri '$groupname'\n";
 										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
-										$response .= "END u're contributing $contmoney\nid:$userId\ngroup:$groupid\n";
+										
 									}else{
 										$response.="CON Shyiramo umubare w'amafaranga ushaka gutanga\n#.Ahabanza\n";
 									}
