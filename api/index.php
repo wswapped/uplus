@@ -472,13 +472,15 @@
 			mysqli_close($outCon);		
 		}
 
-		function listMembers()
+function listMembers()
 		{
 			require('db.php');
 			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
 			$sqlMembers = $db->query("SELECT memberImage, `groupId`, targetAmount,`syncstatus`, `groupName`, `groupTargetType`, `perPersonType`, `targetAmount`, `perPerson`, `adminId`, `adminName`, `groupDesc`, `memberId`, `memberPhone`, COALESCE(`memberName`, `memberPhone`) `memberName`, memberDate, memberType FROM `members` WHERE groupId = '$groupId'") or die(mysqli_error());
 			$members 	= array();
 			$NumOfMembers = mysqli_num_rows($sqlMembers);
+			$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
+			$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
 			$n=0;
 			while($member = mysqli_fetch_array($sqlMembers))
 			{
@@ -505,7 +507,8 @@
 				   "updatedDate"		=> $member['memberDate'],
 				   "contributionDate"	=> $member['memberDate'],
 				   "memberType"			=> $member['memberType'],
-				   "memberContribution"	=> $contributionRow['memberContribution']
+				   "memberContribution"	=> $contributionRow['memberContribution'],
+				   "groupBalance"		=> $gBalanceRow['groupBalance']
 				);
 			}
 			mysqli_close($db);
