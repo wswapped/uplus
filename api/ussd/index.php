@@ -196,15 +196,29 @@ $phoneNumber  = substr($phoneNumber, -10);
 										
 										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
 										if($api_call){
-											$response .= "END $userName ugiyr gutanga umusanzu wa $contmoney muri '$groupname'\n";
+											$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
 										}else{
 											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
 										}
 									}else{
-										$response.="CON Shyiramo umubare w'amafaranga ushaka gutanga\n#.Ahabanza\n";
+										$response.="CON Shyiramo umubare w'amafaranga ushaka gutanga, wishyiramo amagambo\n#.Ahabanza\n";
 									}
 								}else if ($tmenu == 2) {
 									# Kubikuza
+									if(is_numeric($fomenu)){
+										$contmoney = $fomenu;
+										$response .= "END $userName ugiye ubikuza amafaranga $contmoney muri '$groupname'\n";
+										
+										// $api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
+										// if($api_call){
+										// 	$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
+										// }else{
+										// 	$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
+										// }
+									}else{
+										$response.="CON Shyiramo umubare w'amafaranga ushaka kubikuza, wishyiramo amagambo\n#.Ahabanza\n";
+									}
+
 								}
 							}
 						}
