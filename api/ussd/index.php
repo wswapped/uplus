@@ -196,7 +196,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 										
 										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
 										if($api_call){
-											$response .= "END $userName watanze umusanzu wa $contmoney muri '$groupname'\n";
+											$response .= "END $userName ugiyr gutanga umusanzu wa $contmoney muri '$groupname'\n";
 										}else{
 											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
 										}
