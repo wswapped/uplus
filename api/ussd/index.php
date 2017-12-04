@@ -136,6 +136,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 						//Group was chose or group code was input
 						$tmenu = $requests[2]; //Third menu choice
 
+						$tdata = json_decode(gettempdata($sessionId, 'groups'), true);
+						$groupid = $tdata[$smenu];
+
 						if($nrequests == 3){
 							$groups = usergroups($phoneNumber);
 
@@ -184,6 +187,19 @@ $phoneNumber  = substr($phoneNumber, -10);
 						}else{
 							$fomenu = $requests[3]; //Fourth menu item
 
+							if($nrequests ==4){
+
+								if($tmenu == 1){
+									if(is_numeric($fomenu)){
+										$contmoney = $fomenu;
+
+										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
+										$response .= "END u're contributing $contmoney\nid:$userId\ngroup:$groupid\n";
+									}else{
+										$response.="CON Shyiramo umubare w'amafaranga ushaka gutanga\n#.Ahabanza\n";
+									}
+								}
+							}
 						}
 						
 					}
@@ -283,6 +299,49 @@ $phoneNumber  = substr($phoneNumber, -10);
 			$data = mysqli_fetch_assoc($query);
 			return $data['groupName'];
 		}else return false;
+	}
+
+
+	function api($action, $data){
+		//Function to query the API with action and specify $data as required per $action
+		//FOr example if action is contribute, then $data will be memberId, groupId, amount, pushnumber, senderBank as keys of arrays and values
+		$url = 'https://uplus.rw/api/';
+
+		//Add all data
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => http_build_query($data)
+			)
+		);
+
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);
+
+		if ($result === FALSE) 
+		{ 
+			return "Network error";
+		}
+		else
+		{	
+			$result = json_decode($result, true)[0];
+
+			$status = $result['status'];
+			
+			if($status == true)
+			{
+				return true;
+				//tell him that everything is fine
+				//end the comunication he is going to interact with momo with a request of a pin from momo directly
+			}
+			else
+			{
+				return false;
+				//Tell him that he doesnt have enough money on his momo and end it
+			}
+		}
+		
 	}
 	echo "$response";
 ?>
