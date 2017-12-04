@@ -193,9 +193,13 @@ $phoneNumber  = substr($phoneNumber, -10);
 								if($tmenu == 1){
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
-										$response .= "END $userName ugiye umusanzu wa $contmoney muri '$groupname'\n";
-										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
 										
+										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
+										if($api_call){
+											$response .= "END $userName watanze umusanzu wa $contmoney muri '$groupname'\n";
+										}else{
+											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse\nMurebe ko mufite amafaranga ahafije\n";
+										}
 									}else{
 										$response.="CON Shyiramo umubare w'amafaranga ushaka gutanga\n#.Ahabanza\n";
 									}
