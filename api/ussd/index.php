@@ -193,8 +193,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 								if($tmenu == 1){
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
-										
-										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
+										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>senderbank($phoneNumber)));
 										if($api_call){
 											$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
 										}else{
@@ -209,14 +208,14 @@ $phoneNumber  = substr($phoneNumber, -10);
 										$contmoney = $fomenu;
 										$response .= "END $userName ugiye ubikuza amafaranga $contmoney muri '$groupname'\n";
 										
-										// $api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
-										// if($api_call){
-										// 	$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
-										// }else{
-										// 	$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
-										// }
+										$api_call = api('withdrawrequest', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
+										if($api_call){
+											$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
+										}else{
+											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
+										}
 									}else{
-										$response.="END Shyiramo umubare w'amafaranga ushaka kubikuza, wishyiramo amagambo\n#.Ahabanza\n";
+										$response.="CON Shyiramo umubare w'amafaranga ushaka kubikuza, wishyiramo amagambo\n#.Ahabanza\n";
 									}
 
 								}
@@ -363,6 +362,12 @@ $phoneNumber  = substr($phoneNumber, -10);
 			}
 		}
 		
+	}
+	function senderbank($phoneNumber){
+		$phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
+		$phoneNumber  = substr($phoneNumber, -8);
+		if($phoneNumber[0] == 8)
+			return 1;
 	}
 	echo "$response";
 ?>
