@@ -188,7 +188,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 						}else{
 							$fomenu = $requests[3]; //Fourth menu item
 
-							if($nrequests ==4){
+							if($nrequests ==4 || 1){
 
 								if($tmenu == 1){
 									if(is_numeric($fomenu)){
