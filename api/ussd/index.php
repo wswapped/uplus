@@ -171,9 +171,20 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 								}elseif ( $tmenu == 4) {
 									# group info
+									$api_call = api('', array('action'=>'listGroups', 'memberId'=>$userId));
+
+									$groups_data = json_decode($api_call, true);
+									foreach ($groups_data as $key => $value) {
+										if($value['groupId'] == $groupId){
+											$groupdata = $value;
+											break;
+										}
+									}
+									var_dump($groupdata);
+
 									$response.="CON Ibyerekeye gurupe '$groupname'\n";
 									$groupinfo = groupinfo($groupId);
-									$response.="Amafaranga ifite:\n";
+									$response.="Amafaranga ifite:$groupdata[groupBalance]\n";
 									$response.="Ayo ishaka kugeraho: $groupinfo[targetAmount]\n";
 									$response.="Yatangiye: ".date("d-m-Y", strtotime($groupinfo['createdDate']))."\n";
 									$response.="Itangizwa: \n";
