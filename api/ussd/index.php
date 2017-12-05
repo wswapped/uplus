@@ -151,14 +151,14 @@ $phoneNumber  = substr($phoneNumber, -10);
 								//User chose from the group menu
 								if($tmenu == 1){
 									//gutanga umusanzu
-									$response.="CON Shyiramo amafaranga ushaka kwitanga\n";
+									$response.="CON $groupname\nShyiramo amafaranga ushaka kwitanga\n";
 								}else if($tmenu == 2){
 									//Kubikuza
-									$response.="CON Shyiramo amafaranga ushaka kubikuza\n";
+									$response.="CON $groupname\nShyiramo amafaranga ushaka kubikuza\n";
 								}elseif ($tmenu == 3) {
 									# members
 									$members = groupmembers($groupId);																		
-									$response.="CON Abanyamuryango ba '$groupname'\n";
+									$response.="CON $groupname\nUrutonde rw'abanyamuryango'\n";
 									$n=0;
 									$tdata = array(); //To keep temparary dta
 									foreach ($members as $memberid => $membername) {
@@ -206,7 +206,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 									# Kubikuza
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
-										$response .= "END $userName ugiye ubikuza amafaranga $contmoney muri '$groupname'\n";
 										
 										$api_call = api('withdrawrequest', array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber) ));
 										if($api_call){
