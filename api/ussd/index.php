@@ -209,7 +209,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 										
 										$api_call = withdraw('withdrawrequest', array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber), 'action'=>'withdrawrequest' ));
 										
-										$response.="END $withdraw\n";
+										$response.="END $api_call\n";
 									}else{
 										$response.="CON Shyiramo umubare w'amafaranga ushaka kubikuza, wishyiramo amagambo\n#.Ahabanza\n";
 									}
