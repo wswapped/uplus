@@ -188,7 +188,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 						}else{
 							$fomenu = $requests[3]; //Fourth menu item
 
-							if($nrequests ==4 || 1){
+							if($nrequests ==4){
 
 								if($tmenu == 1){
 									if(is_numeric($fomenu)){
@@ -201,7 +201,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije kuri konti ya mobile money\n";
 										}
 									}else{
-										$response.="CON Shyiramo umubare w'amafaranga ushaka gutanga, wishyiramo amagambo\n#.Ahabanza\n";
+										$response.="END Shyiramo umubare w'amafaranga ushaka gutanga, wishyiramo amagambo\n#.Ahabanza\n";
 									}
 								}else if ($tmenu == 2) {
 									# Kubikuza
@@ -216,7 +216,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 										// 	$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
 										// }
 									}else{
-										$response.="CON Shyiramo umubare w'amafaranga ushaka kubikuza, wishyiramo amagambo\n#.Ahabanza\n";
+										$response.="END Shyiramo umubare w'amafaranga ushaka kubikuza, wishyiramo amagambo\n#.Ahabanza\n";
 									}
 
 								}
