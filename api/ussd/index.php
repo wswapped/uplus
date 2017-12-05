@@ -1,6 +1,6 @@
 <?php
 require('../db.php');
-header("Content-Type: text/plain");
+// /header("Content-Type: text/plain");
 session_start(); //For web testing only
 
 
@@ -34,7 +34,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 		$userData = mysqli_fetch_array($query);
 		$userName = $userData['name'];
 		$userId = $userData['id'];
-		//echo "";
 	}
 	else{
 		//Here the user is new, should I ask the name?
@@ -180,7 +179,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 											break;
 										}
 									}
-									var_dump($groupdata);
 
 									$response.="CON Ibyerekeye gurupe '$groupname'\n";
 									$groupinfo = groupinfo($groupId);
