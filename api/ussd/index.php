@@ -208,9 +208,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 										$contmoney = $fomenu;
 										$response .= "END $userName ugiye ubikuza amafaranga $contmoney muri '$groupname'\n";
 										
-										$api_call = api('withdrawrequest', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>1));
+										$api_call = api('withdrawrequest', array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber) ));
 										if($api_call){
-											$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
+											$response .= "END $userName ugiye kubikuza amafaranga $contmoney muri '$groupname'\n";
 										}else{
 											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
 										}
