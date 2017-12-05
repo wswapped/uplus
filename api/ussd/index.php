@@ -158,7 +158,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 								}elseif ($tmenu == 3) {
 									# members
 									$members = groupmembers($groupId);																		
-									$response.="CON $groupname\nUrutonde rw'abanyamuryango'\n";
+									$response.="CON $groupname\nUrutonde rw'abanyamuryango\n";
 									$n=0;
 									$tdata = array(); //To keep temparary dta
 									foreach ($members as $memberid => $membername) {
@@ -193,7 +193,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 								if($tmenu == 1){
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
-										$api_call = api('contribute', array('memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>senderbank($phoneNumber)));
+										$api_call = contribute('contribute', array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>senderbank($phoneNumber)));
 										if($api_call){
 											$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
 										}else{
@@ -207,12 +207,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
 										
-										$api_call = api('withdrawrequest', array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber) ));
-										if($api_call){
-											$response .= "END $userName ugiye kubikuza amafaranga $contmoney muri '$groupname'\n";
-										}else{
-											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije\n";
-										}
+										$api_call = withdraw('withdrawrequest', array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber), 'action'=>'withdrawrequest' ));
+										
+										$response.="END $withdraw\n";
 									}else{
 										$response.="CON Shyiramo umubare w'amafaranga ushaka kubikuza, wishyiramo amagambo\n#.Ahabanza\n";
 									}
@@ -343,24 +340,34 @@ $phoneNumber  = substr($phoneNumber, -10);
 			return "Network error";
 		}
 		else
-		{	
-			$result = json_decode($result, true)[0];
-
-			$status = $result['status'];
-			
-			if($status == true)
-			{
-				return true;
-				//tell him that everything is fine
-				//end the comunication he is going to interact with momo with a request of a pin from momo directly
-			}
-			else
-			{
-				return false;
-				//Tell him that he doesnt have enough money on his momo and end it
-			}
+		{
+			return $result;			
 		}
 		
+	}
+
+	function contribute($action, $data){
+		$result = api($action, $data);
+
+		$result = json_decode($result, true)[0];
+
+		$status = $result['status'];
+		
+		if($status == true)
+		{
+			return true;
+			//tell him that everything is fine
+			//end the comunication he is going to interact with momo with a request of a pin from momo directly
+		}
+		else
+		{
+			return false;
+			//Tell him that he doesn't have enough money on his momo and end it
+		}
+	}
+	function withdraw($action, $data){
+		$result = api($action, $data);
+		return $result;
 	}
 	function senderbank($phoneNumber){
 		$phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
