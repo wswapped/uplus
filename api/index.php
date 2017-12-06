@@ -1260,7 +1260,7 @@
 						{
 							$returnedinformation	= array();
 							$returnedinformation[] = array(
-						       		"status" => "GENERAL FAILURE"
+						       		"status" => "failed"
 						    	);
 							header('Content-Type: application/json');
 							$returnedinformation = json_encode($returnedinformation);
