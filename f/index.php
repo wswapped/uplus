@@ -222,7 +222,7 @@ else
 								</div>
 								<div style="margin: -5px 0 0 -5px; max-height: 176px;overflow: hidden;">
 								<p>
-									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper<?php echo $groupID;?>.jpg"><span style="background-image: url(../temp/group<?php echo $groupID;?>.jpeg);" class="gallery"></span></a>
+									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="<?php echo $groupImage;?>"><span style="background-image: url(<?php echo $groupImage;?>);" class="gallery"></span></a>
 									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper15.jpg"><span style="background-image: url(../temp/group15.jpeg);" class="gallery"></span></a>
 									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper7.jpg"><span style="background-image: url(../temp/group7.jpeg);" class="gallery"></span></a>
 								</p>
