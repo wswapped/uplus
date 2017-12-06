@@ -1,6 +1,6 @@
 <?php
 require('../db.php');
-// /header("Content-Type: text/plain");
+header("Content-Type: text/plain");
 session_start(); //For web testing only
 
 
@@ -170,7 +170,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 								}elseif ( $tmenu == 4) {
 									# group info
-									$api_call = api('', array('action'=>'listGroups', 'memberId'=>$userId));
+									$api_call = api(array('action'=>'listGroups', 'memberId'=>$userId));
 
 									$groups_data = json_decode($api_call, true);
 									foreach ($groups_data as $key => $value) {
@@ -181,7 +181,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 									}
 
 									$response.="CON Ibyerekeye gurupe '$groupname'\n";
-									$groupinfo = groupinfo($groupId);
+									$groupinfo = groupinfo($groupId);									
 									$response.="Amafaranga ifite:$groupdata[groupBalance]\n";
 									$response.="Ayo ishaka kugeraho: $groupinfo[targetAmount]\n";
 									$response.="Yatangiye: ".date("d-m-Y", strtotime($groupinfo['createdDate']))."\n";
@@ -202,7 +202,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 								if($tmenu == 1){
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
-										$api_call = contribute('contribute', array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>senderbank($phoneNumber)));
+										$api_call = contribute(array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>senderbank($phoneNumber)));
 										if($api_call){
 											$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
 										}else{
@@ -216,7 +216,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
 										
-										$api_call = withdraw('withdrawrequest', array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber), 'action'=>'withdrawrequest' ));
+										$api_call = withdraw(array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber), 'action'=>'withdrawrequest' ));
 										
 										$response.="END $api_call\n";
 									}else{
@@ -236,6 +236,13 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 				//Getting
 				$groups = usergroups($phoneNumber);
+
+
+				//Getting contributions and withdrawals in groups
+				foreach ($groups as $groupid => $groupname) {
+					$contributions = api()
+				}
+
 				$response.="CON Konti ya $userName\n";
 				$response.="Uri muri gurupe:".count($groups)."\n";
 				$response.="Umaze kwitanga\n";
@@ -327,7 +334,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 	}
 
 
-	function api($action, $data){
+	function api($data){
 		//Function to query the API with action and specify $data as required per $action
 		//FOr example if action is contribute, then $data will be memberId, groupId, amount, pushnumber, senderBank as keys of arrays and values
 		$url = 'https://uplus.rw/api/';
@@ -355,8 +362,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 		
 	}
 
-	function contribute($action, $data){
-		$result = api($action, $data);
+	function contribute($data){
+		$result = api($data);
 
 		$result = json_decode($result, true)[0];
 
@@ -374,8 +381,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 			//Tell him that he doesn't have enough money on his momo and end it
 		}
 	}
-	function withdraw($action, $data){
-		$result = api($action, $data);
+	function withdraw($data){
+		$result = api($data);
 		return $result;
 	}
 	function senderbank($phoneNumber){
