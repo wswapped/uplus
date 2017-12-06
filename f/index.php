@@ -1,67 +1,65 @@
 <?php
-//require_once 'System.php';
-//var_dump(class_exists('System', false));
-?>
-<?php
 error_reporting(E_ALL); 
 ini_set('display_errors', 1);
-if (isset($_GET['groupId'])){	
-		$groupID = (int)$_GET['groupId'];
-		require_once "parsedown/Parsedown.php";
-		$parsedown = new parsedown();
-		include "../db.php"; 
-		$sql2 = $db->query("SELECT * FROM groups WHERE archive is null AND id='$groupID' "); 
-		$countAvail = mysqli_num_rows($sql2);
-		if($countAvail > 0){
-		while($row = mysqli_fetch_array($sql2)){ 
-			$groupName = $row["groupName"];
-			$groupImage = $row["groupImage"];
-			$groupTargetType= $row['groupTargetType'];
-			$targetAmount 	= round($row['targetAmount']);
-			$perPersonType 	= $row['perPersonType'];
-			$perPerson 		= round($row['perPerson']);
-			$adminId 		= $row['adminId'];
+if (isset($_GET['groupId']))
+{	
+	$groupID = (int)$_GET['groupId'];
+	require_once "parsedown/Parsedown.php";
+	$parsedown = new parsedown();
+	include "../db.php"; 
+	$sql2 = $db->query("SELECT * FROM groups WHERE archive is null AND id='$groupID' "); 
+	$countAvail = mysqli_num_rows($sql2);
+	if($countAvail > 0){
+	while($row = mysqli_fetch_array($sql2)){ 
+		$groupName = $row["groupName"];
+		$groupImage = $row["groupImage"];
+		$groupTargetType= $row['groupTargetType'];
+		$targetAmount 	= round($row['targetAmount']);
+		$perPersonType 	= $row['perPersonType'];
+		$perPerson 		= round($row['perPerson']);
+		$adminId 		= $row['adminId'];
 
-			$sql3 = $db->query("SELECT * FROM users WHERE id='$adminId' "); 
-			$rowAdmin = mysqli_fetch_array($sql3); 
+		$sql3 = $db->query("SELECT * FROM users WHERE id='$adminId' "); 
+		$rowAdmin = mysqli_fetch_array($sql3); 
 
-			$adminPhone 	= $rowAdmin['phone'];
-			$adminImage 	= $rowAdmin['userImage'];
-			$adminName 		= $rowAdmin['name'];
-			$groupDesc 		= $row["groupDesc"];
-			$groupStory 	= $parsedown->text($row["groupStory"]);
-			$createdDate 	= $row["createdDate"];
-			$contributionDate = $row["expirationDate"];
-			$visits 		= $row["visits"];
-			
-			$newVisit 		= $visits + 1;
-			$sqlVisits = $db->query("UPDATE `groups` SET visits = '$newVisit' WHERE id ='$groupID'");
-			
-			
-			$sqlbalance = $outCon->query("SELECT * FROM groupbalance WHERE id = '$groupID'");
-			$rowbalance = mysqli_fetch_array($sqlbalance);
-			$currentAmount = $rowbalance['Balance'];
-			
-			$prog = $currentAmount*100/$targetAmount;
-			$progressing =$prog + (20*$prog/100);
-			
-		}
-		$sqladminId = $db->query("SELECT id adminId, gender adminGender FROM users WHERE id = '$adminId'");
-		$rowAdminId = mysqli_fetch_array($sqladminId);
-		$adminGender = $rowAdminId["adminGender"];
+		$adminPhone 	= $rowAdmin['phone'];
+		$adminName 		= $rowAdmin['name'];
+		$groupDesc 		= $row["groupDesc"];
+		$groupStory 	= $parsedown->text($row["groupStory"]);
+		$createdDate 	= $row["createdDate"];
+		$contributionDate = $row["expirationDate"];
+		$visits 		= $row["visits"];
 		
-		if($currentAmount == ''){
-			$currentAmount = 0;
-		}
-		}
-		else
-		{
-			echo 'This Group Does Not Exist';
-			exit();
-		}
+		$newVisit 		= $visits + 1;
+		$sqlVisits = $db->query("UPDATE `groups` SET visits = '$newVisit' WHERE id ='$groupID'");
+		
+		
+		$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupID'))),0) AS groupBalance FROM rtgs.groups g");
+		$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
+				
+		$currentAmount = $gBalanceRow['groupBalance'];
+		
+		$prog = $currentAmount*100/$targetAmount;
+		$progressing =$prog + (20*$prog/100);
+		
 	}
-else{
-	echo 'nothig isset';
+	$sqladminId = $db->query("SELECT id adminId, gender adminGender FROM users WHERE id = '$adminId'");
+	$rowAdminId = mysqli_fetch_array($sqladminId);
+	$adminGender = $rowAdminId["adminGender"];
+	
+	if($currentAmount == ''){
+		$currentAmount = 0;
+	}
+	}
+	else
+	{
+		echo 'This Group Does Not Exist';
+		exit();
+	}
+}
+else
+{
+	echo 'Error';
 }
 ?>
 
@@ -192,7 +190,7 @@ else{
 					<div class="leftSidePanel" style="position: relative; width: 20%; margin-left: 0px;float: left; padding-top: 80px;">
 						<div>
 							<div>Group Admin</div>
-							<div class="profile" style="background-image: url(<?php echo $adminImage;?>);"></div>
+							<div class="profile" style="background-image: url(../proimg/<?php echo $adminId;?>.jpg);"></div>
 							<div style="padding: 15px 0;">
 								<table border="0">
 									<tr style="border-bottom: 1px #ccc solid;">
@@ -252,7 +250,7 @@ else{
 										<b style="float: right;">
 
 											<?php 
-											if($groupTargetType == 'fixed'){
+											if($groupTargetType == 'target'){
 												echo number_format($targetAmount).'Rwf';
 												}
 											elseif($groupTargetType == 'any'){
