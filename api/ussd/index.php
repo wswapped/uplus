@@ -223,13 +223,17 @@ $phoneNumber  = substr($phoneNumber, -10);
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
 										$api_call = contribute(array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'pushnumber'=>$phoneNumber, 'senderBank'=>senderbank($phoneNumber)));
-										if($api_call){
-											$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
+
+										if($api_call === false){
+											$response .= "END Twagize ikibazo k'ihuzanzira\nMwongere mukanya\nNetwork failed!\n";
+										}
+										else if($api_call=='failed'){
+											$response .= "END $userName gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije kuri konti ya mobile money\n";											
 										}else{
-											$response .= "END $userName gutanga umusanzu wa $contmoney muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije kuri konti ya mobile money\n";
+											$response .= "END $userName ugiye gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname'\n";
 										}
 									}else{
-										$response.="END Shyiramo umubare w'amafaranga ushaka gutanga, wishyiramo amagambo\n#.Ahabanza\n";
+										$response.="END Shyiramo umubare w'amafaranga(FRW) ushaka gutanga, wishyiramo amagambo\n#.Ahabanza\n";
 									}
 								}else if ($tmenu == 2) {
 									# Kubikuza
