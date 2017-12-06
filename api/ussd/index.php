@@ -46,14 +46,22 @@ $phoneNumber  = substr($phoneNumber, -10);
 	      $userName = $userData['name'];
 	      $userId = $userData['id'];
 	}
+
+
+	//Handling further requests
+	$requests = explode("*", $text);
+	$nrequests = count($requests); //Number of requests
+
+	//If last requesy is hash, then user should go back to home
+	if($requests[$nrequests-1] == "#"){
+		$text="#";
+	}
+
 	//Application logic
 	if(empty($text) || $text == "#" || $text == "1*#"){
 		//First request
 		$response .="CON Murakaza neza mu kimina cya Uplus!\n1. Gurupe ndimo\n2. Konti yanjye\n3. Ubusobanuro\n# Exit\n";
 	}else{
-		//Handling further requests
-		$requests = explode("*", $text);
-		$nrequests = count($requests); //Number of requests
 
 		//Level1 requests
 		if(is_numeric($requests[0])){
