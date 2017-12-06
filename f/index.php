@@ -355,11 +355,25 @@ else
 													echo $countContr = mysqli_num_rows($sqlcountcontr);
 													?> Contributors</h5><hr style="margin-top: 18px;margin-bottom: 20px;border: 0; border-top: 1px solid #616161;">
 							<div>
-								<?php 
-									$sqlcontributors = $outCon->query("SELECT `amount`, actorName FROM `transactionsview` WHERE `operation` = 'debit' and`forGroupId` = '$groupID' AND status = 'Approved' ORDER BY amount DESC limit 5");
+								<?php
+									$sqlcontributors = $db->query("SELECT memberId, memberImage, COALESCE(memberName, memberPhone) memberName FROM members WHERE groupId = '$groupID'");
 									$ncontrib = 0;
-									while($row = mysqli_fetch_array($sqlcontributors))
+									while($member = mysqli_fetch_array($sqlcontributors))
 									{
+										$memberId	= $member['memberId'];
+										$sqlContribution = $db->query("SELECT  
+										IFNULL(
+												(
+													SELECT sum(t.amount) 
+													FROM rtgs.grouptransactions t 
+													WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.memberId = '$memberId' AND t.groupId = '$groupID'))
+												),0
+												) AS memberContribution 
+											FROM uplus.members m")	or die(mysql_error($sqlContribution));
+
+											$contributionRow = mysqli_fetch_array($sqlContribution);
+											$memberContribution = $contributionRow['memberContribution'];
+
 										$ncontrib++;
 										echo '<div style="padding-bottom: 15px;">
 										<i class="fa fa-user-circle" style="
@@ -369,16 +383,8 @@ else
 										"></i>
 										<div style="padding-top: 5px;padding-left: 40px;">'.$ncontrib.' <a style="
 										font-weight: 400;
-										">'.$row['actorName'].'</a>: '.number_format($row['amount']).' Rwf</div>
+										">'.$member['memberName'].'</a>: '.number_format($memberContribution).' Rwf</div>
 										</div>';
-									}
-									if($countContr > 5)
-									{
-										$leftmore = $countContr - 5;
-										echo'
-										<div style="text-align: center"><a style="
-										font-weight: 400;
-										"href="#">Show me other '.$leftmore.' more</a></div>';
 									}
 								?>
 							</div>
