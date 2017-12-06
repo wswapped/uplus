@@ -352,9 +352,9 @@ else
 					<div class="rightSidePanel" style="width: 20%; float: left; padding-top: 80px;">
 						<div>
 							<h5 style="text-align: center; font-size: 17px;"><i class="fa fa-group"></i> <?php 
-													$sqlcountcontr = $outCon->query("SELECT `amount` FROM `transactionsview` WHERE `operation` = 'debit' and `forGroupId` = '$groupID' AND status = 'Approved' OR 'COMPLITEAAA'");
+													$sqlcountcontr = $db->query("SELECT memberId FROM members WHERE groupId = '$groupID'");
 													echo $countContr = mysqli_num_rows($sqlcountcontr);
-													?> Contributors</h5><hr style="margin-top: 18px;margin-bottom: 20px;border: 0; border-top: 1px solid #616161;">
+													?> Members</h5><hr style="margin-top: 18px;margin-bottom: 20px;border: 0; border-top: 1px solid #616161;">
 							<div>
 								<?php
 									$sqlcontributors = $db->query("SELECT memberId, memberImage, COALESCE(memberName, memberPhone) memberName FROM members WHERE groupId = '$groupID'");
@@ -369,19 +369,15 @@ else
 													FROM rtgs.grouptransactions t 
 													WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.memberId = '$memberId' AND t.groupId = '$groupID'))
 												),0
-												) AS memberContribution 
+											) AS memberContribution 
 											FROM uplus.members m")	or die(mysql_error($sqlContribution));
-
 											$contributionRow = mysqli_fetch_array($sqlContribution);
 											$memberContribution = $contributionRow['memberContribution'];
 
 										$ncontrib++;
-										echo '<div style="padding-bottom: 15px;">
-										<i class="fa fa-user-circle" style="
-										color: #007569;
-										float: left;
-										font-size: 32px;
-										"></i>
+										echo '
+										<div style="padding-bottom: 15px;">
+										<div class="avatars" style="background-image: url('.$member['memberImage'].');"></div>
 										<div style="padding-top: 5px;padding-left: 40px;">'.$ncontrib.' <a style="
 										font-weight: 400;
 										">'.$member['memberName'].'</a>: '.number_format($memberContribution).' Rwf</div>
