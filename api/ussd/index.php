@@ -1,6 +1,6 @@
 <?php
 require('../db.php');
-header("Content-Type: text/plain");
+// header("Content-Type: text/plain");
 session_start(); //For web testing only
 
 
@@ -47,13 +47,26 @@ $phoneNumber  = substr($phoneNumber, -10);
 	      $userId = $userData['id'];
 	}
 
-
 	//Handling further requests
 	$requests = explode("*", $text);
 	$nrequests = count($requests); //Number of requests
+	$temp = array('');
 
-	//If last requesy is hash, then user should go back to home
-	if($requests[$nrequests-1] == "#"){
+	$ntemp = array_search("#", $requests);
+	$ntemp = is_int($ntemp)?$ntemp:0;
+
+	// if($ntemp){
+	// 	for($n=$ntemp; ($n<$nrequests && $ntemp>0); $n++){
+	// 		if(($n+1)!=$nrequests){
+	// 			$temp[]=$requests[$n+1];
+	// 		}
+	// 	}
+	// 	$requests = $temp;
+	// 	$nrequests = count($requests);	
+	// }
+
+	//If last request is hash, then user should go back to home
+	if(isset($requests[$nrequests-1]) && ($requests[$nrequests-1] == "#")){
 		$text="#";
 	}
 
@@ -62,7 +75,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 		//First request
 		$response .="CON Murakaza neza mu kimina cya Uplus!\n1. Gurupe ndimo\n2. Konti yanjye\n3. Ubusobanuro\n# Exit\n";
 	}else{
-
 		//Level1 requests
 		if(is_numeric($requests[0])){
 			//Handling first menu
@@ -210,7 +222,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 								if($tmenu == 1){
 									if(is_numeric($fomenu)){
 										$contmoney = $fomenu;
-										$api_call = contribute(array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'senderBank'=>senderbank($phoneNumber)));
+										$api_call = contribute(array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'pushnumber'=>$phoneNumber, 'senderBank'=>senderbank($phoneNumber)));
 										if($api_call){
 											$response .= "END $userName ugiye gutanga umusanzu wa $contmoney muri '$groupname'\n";
 										}else{
@@ -392,6 +404,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 	}
 
 	function contribute($data){
+		var_dump($data);
 		$result = api($data);
 
 		$result = json_decode($result, true)[0];
