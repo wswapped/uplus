@@ -984,7 +984,7 @@
 		{
 			include("db.php");
 			$groupId		= mysqli_real_escape_string($db, $_POST['groupId']);
-			$sqlwithdraw	= $outCon->query("SELECT w.id, w.amount, w.groupId, u.name FROM rtgs.withdrowrequests w INNER JOIN uplus.users u ON u.id = w.userId WHERE groupId = '$groupId' AND status = 'PENDING'")or die(mysqli_error($outCon));
+			$sqlwithdraw	= $outCon->query("SELECT w.id, w.amount, w.groupId, COALESCE(u.name, u.phone) name, FROM rtgs.withdrowrequests w INNER JOIN uplus.users u ON u.id = w.userId WHERE groupId = '$groupId' AND status = 'PENDING'")or die(mysqli_error($outCon));
 			$withdraws 		= array();
 			WHILE($withdraw = mysqli_fetch_array($sqlwithdraw))
 			{
