@@ -237,16 +237,37 @@ $phoneNumber  = substr($phoneNumber, -10);
 				//Getting
 				$groups = usergroups($phoneNumber);
 
+				$conts = $withs = 0;
 
-				//Getting contributions and withdrawals in groups
-				// foreach ($groups as $groupid => $groupname) {
-				// 	$contributions = api();
-				// }
+
+				//Getting contributions in groups
+				foreach ($groups as $groupid => $groupname) {
+					$contributions = api(array('action'=>'listMembers', 'groupId'=>$groupid));
+					//Looking for this user
+					$contributions = json_decode($contributions, true);
+					foreach ($contributions as $key => $value) {
+						if($value['memberId'] == $userId){
+							$conts+=$value['memberContribution'];
+							break;
+						}
+					}
+
+
+					//Withdrawals
+					$withdrawals = api(array('action'=>'withdrawlist', 'groupId'=>$groupid));
+					$withdrawals = json_decode($withdrawals, true);
+					foreach ($withdrawals as $key => $value) {
+						if($value['memberName'] == $userName){
+							$withs+=$value['amount'];
+							break;
+						}
+					}
+				}
 
 				$response.="CON Konti ya $userName\n";
 				$response.="Uri muri gurupe:".count($groups)."\n";
-				$response.="Umaze kwitanga\n";
-				$response.="Umaze kubikuza\n";
+				$response.="Umaze kwitanga: $conts\n";
+				$response.="Umaze kubikuza: $withs\n";
 			}
 			else if($fmenu == 3){
 				//konti
