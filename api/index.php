@@ -705,7 +705,7 @@
 						$success   				= $result->{'success'};
 						if($success === FALSE){
 							//Prepare data for db
-							$status 				= "failed";
+							$status 				= "Failed";
 							$requesttransactionid   = $pushTransactionId;
 
 							$responsecode   		= $result->{'responsecode'};
@@ -1260,7 +1260,7 @@
 						{
 							$returnedinformation	= array();
 							$returnedinformation[] = array(
-						       		"status" => "failed"
+						       		"status" => "Failed"
 						    	);
 							header('Content-Type: application/json');
 							$returnedinformation = json_encode($returnedinformation);
@@ -1397,7 +1397,7 @@
 					$success   				= $result->{'success'};
 					if($success === FALSE){
 						//Prepare data for db
-						$status 				= "failed";
+						$status 				= "Failed";
 						$requesttransactionid   = $pushTransactionId;
 						$responsecode   		= $result->{'responsecode'};
 						$transactionid  		= "no";
