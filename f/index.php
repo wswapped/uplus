@@ -223,8 +223,8 @@ else
 								<div style="margin: -5px 0 0 -5px; max-height: 176px;overflow: hidden;">
 								<p>
 									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="<?php echo $groupImage;?>"><span style="background-image: url(<?php echo $groupImage;?>);" class="gallery"></span></a>
-									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper15.jpg"><span style="background-image: url(../temp/group15.jpeg);" class="gallery"></span></a>
-									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="../temp/supper7.jpg"><span style="background-image: url(../temp/group7.jpeg);" class="gallery"></span></a>
+									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="<?php echo $groupImage;?>"><span style="background-image: url(<?php echo $groupImage;?>);" class="gallery"></span></a>
+									<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="<?php echo $groupImage;?>"><span style="background-image: url(<?php echo $groupImage;?>);" class="gallery"></span></a>
 								</p>
 								</div>
 							</div>
@@ -378,7 +378,7 @@ else
 										echo '
 										<div style="padding-bottom: 15px; float: left; min-width: 235px;">
 										<div class="avatars" style="background-image: url('.$member['memberImage'].');"></div>
-										<div style="padding-top: 5px;padding-left: 40px;">'.$ncontrib.' <a style="
+										<div style="padding-top: 5px;padding-left: 40px;"><a style="
 										font-weight: 400;
 										">'.$member['memberName'].'</a><br/>'.number_format($memberContribution).' Rwf</div>
 										</div>';
