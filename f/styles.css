@@ -395,6 +395,9 @@ background-color: unset;
     background-repeat: no-repeat;
     background-position: center center;
     border-radius: 100px;
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
 }
 .leftSidePanel{
 	width: 21%;
