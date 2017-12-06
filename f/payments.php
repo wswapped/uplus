@@ -361,6 +361,7 @@ elseif($method == '6'){?>
 <script>
 // Display a recurrunf Invitation
 function kwishura(){
+
 console.clear()
 
 	
@@ -405,44 +406,70 @@ console.clear()
 			+'</div>'
 		+'</div>';
 	document.getElementById('donetransfer').innerHTML = '<div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 2px #000000;"><div class="loader"></div></div>';
-	/*
-	alert(forGroupId);		
-	alert(sentAmount);	
-	alert(sendFromAccount);
-	alert(sendFromName);
-	alert(sendToName);
-	alert(sendFromBank);	
-	alert(sendToBank);	
-	alert(sendToAccount);
-	alert(realphone1);
-	alert(realphone2);
-	*/
-	$.ajax({
-			type : "GET",
-			url : "../3rdparty/rtgs/transfer.php",
-			dataType : "html",
-			cache : "false",
-			data : {
+	
+	$.ajax(
+	{
+		type : "POST",
+		url : "../api/index.php",
+		dataType : "json",
+		cache : "false",
+		data : {
+			action 			: 	"contribute",
+			groupId			:	forGroupId,	
+			amount			:	sentAmount,	
+			pushnumber		:	realphone1,	
+			senderBank		:	sendFromBank	
 				
-				forGroupId		:	forGroupId,	
-				sentAmount		:	sentAmount,	
-				sendFromAccount	:	sendFromAccount,	
-				sendFromName	:	sendFromName,	
-				sendToName		:	sendToName,
-				sendFromBank	:   sendFromBank,	
-				sendToBank		:   sendToBank,		
-				sendToAccount	:   sendToAccount,
-				phone1 			: 	realphone1,
-				phone2 			: 	realphone2,		
-			},
-			success : function(html, textStatus){
-				$("#donetransfer").html(html);
-				document.getElementById('doneMtn').innerHTML = '';
-			},
-			error : function(xht, textStatus, errorThrown){
-				alert("Error : " + errorThrown);
-			}
+				
+		},
+		success: function (data) { 
+	        $.each(data, function(index, element) {
+	        	var transactionId = (element.transactionId);
+	        	var status = (element.status);
+	            //document.getElementById("donetransfer").innerHTML = '<div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 3px #000000"><h5>Float Balance</h5><h4/>'+balance+' Rwf</h4>';
+	            
+	            //alert(status);
+	            document.getElementById('donetransfer').innerHTML = '<div style="text-align: center;padding-top:10px; color: #fff; text-shadow: 1px 1px 3px #000000"><h4>The transaction:<br/>'+status+'</h4>';
+	            document.getElementById('doneMtn').innerHTML = '';
+	            if(status == "pending"){
+	            	alert(transactionId);
+	            	//call the check status
+	            	checkcontributionstatus(transactionId);
+	            }
+	        });
+	    },
+		error : function(xht, textStatus, errorThrown){
+			//alert("Error : " + errorThrown);
+			document.getElementById('donetransfer').innerHTML = 'System Error';
+	        document.getElementById('doneMtn').innerHTML = '';
+		}
 	});
+}
+function checkcontributionstatus(transactionId)
+{
+	$.ajax(
+	{
+		type : "POST",
+		url : "../api/index.php",
+		dataType : "json",
+		cache : "false",
+		data : {
+			action 			: 	"checkcontributionstatus",
+			transactionId	:	transactionId
+		},
+		success: function (data) { 
+        $.each(data, function(index, element) {
+        	var transactionId = (element.transactionId);
+        	var status = (element.status);
+        	if(status == "pending"){
+	            	alert(transactionId);
+	            	//call the check status
+	            	checkcontributionstatus(transactionId);
+	            }
+            });
+
+    	}
+    });
 }
 </script>
 
