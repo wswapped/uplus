@@ -376,7 +376,7 @@ else
 
 										$ncontrib++;
 										echo '
-										<div style="padding-bottom: 15px;">
+										<div style="padding-bottom: 15px; float: left;">
 										<div class="avatars" style="background-image: url('.$member['memberImage'].');"></div>
 										<div style="padding-top: 5px;padding-left: 40px;">'.$ncontrib.' <a style="
 										font-weight: 400;
