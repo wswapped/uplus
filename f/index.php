@@ -23,6 +23,7 @@ if (isset($_GET['groupId']))
 		$rowAdmin = mysqli_fetch_array($sql3); 
 
 		$adminPhone 	= $rowAdmin['phone'];
+		$adminImage 	= $rowAdmin['userImage'];
 		$adminName 		= $rowAdmin['name'];
 		$groupDesc 		= $row["groupDesc"];
 		$groupStory 	= $parsedown->text($row["groupStory"]);
@@ -190,7 +191,7 @@ else
 					<div class="leftSidePanel" style="position: relative; width: 20%; margin-left: 0px;float: left; padding-top: 80px;">
 						<div>
 							<div>Group Admin</div>
-							<div class="profile" style="background-image: url(../proimg/<?php echo $adminId;?>.jpg);"></div>
+							<div class="profile" style="background-image: url(<?php echo $adminImage;?>);"></div>
 							<div style="padding: 15px 0;">
 								<table border="0">
 									<tr style="border-bottom: 1px #ccc solid;">
