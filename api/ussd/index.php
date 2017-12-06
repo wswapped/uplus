@@ -1,6 +1,6 @@
 <?php
 require('../db.php');
-header("Content-Type: text/plain");
+//header("Content-Type: text/plain");
 session_start(); //For web testing only
 
 
@@ -220,7 +220,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 							if($nrequests ==4){
 
 								if($tmenu == 1){
-									if(is_numeric($fomenu)){
+									//Kwizigama
+									if(is_numeric($fomenu) && $fomenu>0){
 										$contmoney = $fomenu;
 										$api_call = contribute(array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'pushnumber'=>$phoneNumber, 'senderBank'=>senderbank($phoneNumber)));
 
@@ -232,6 +233,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 										}else{
 											$response .= "END $userName ugiye gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname'\n";
 										}
+									}else if($fomenu<=0){
+										$response .="END Mushyiremo amafaranga(FRW) ahagije yo kwitanga"; 
 									}else{
 										$response.="END Shyiramo umubare w'amafaranga(FRW) ushaka gutanga, wishyiramo amagambo\n#.Ahabanza\n";
 									}
