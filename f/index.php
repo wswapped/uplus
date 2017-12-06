@@ -376,11 +376,11 @@ else
 
 										$ncontrib++;
 										echo '
-										<div style="padding-bottom: 15px; float: left;">
+										<div style="padding-bottom: 15px; float: left; min-width: 235px;">
 										<div class="avatars" style="background-image: url('.$member['memberImage'].');"></div>
 										<div style="padding-top: 5px;padding-left: 40px;">'.$ncontrib.' <a style="
 										font-weight: 400;
-										">'.$member['memberName'].'</a>: '.number_format($memberContribution).' Rwf</div>
+										">'.$member['memberName'].'</a><br/>'.number_format($memberContribution).' Rwf</div>
 										</div>';
 									}
 								?>
