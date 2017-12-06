@@ -239,9 +239,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 
 				//Getting contributions and withdrawals in groups
-				foreach ($groups as $groupid => $groupname) {
-					$contributions = api()
-				}
+				// foreach ($groups as $groupid => $groupname) {
+				// 	$contributions = api();
+				// }
 
 				$response.="CON Konti ya $userName\n";
 				$response.="Uri muri gurupe:".count($groups)."\n";
