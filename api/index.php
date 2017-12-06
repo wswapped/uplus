@@ -472,7 +472,7 @@
 			mysqli_close($outCon);		
 		}
 
-function listMembers()
+		function listMembers()
 		{
 			require('db.php');
 			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
@@ -595,7 +595,7 @@ function listMembers()
 		{
 			require('db.php');
 
-			$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
+			
 			$groupId		= mysqli_real_escape_string($db, $_POST['groupId']);
 			$amount 		= mysqli_real_escape_string($db, $_POST['amount']);
 			$pushNumber 	= mysqli_real_escape_string($db, $_POST['pushnumber']);
@@ -604,6 +604,25 @@ function listMembers()
 			//CLEAN PHONE
 			$pushNumber 	= preg_replace( '/[^0-9]/', '', $pushNumber );
 			$pushNumber 	= substr($pushNumber, -10); 
+
+			//GET THE MEMBER ID
+			if (isset($_POST['memberId'])) 
+			{
+				$memberId		= mysqli_real_escape_string($db, $_POST['memberId']);
+			}
+			else
+			{
+				$sqlMId = $db->query("SELECT id FROM users WHERE phone = '$pushNumber' LIMIT 1");
+				if(mysqli_num_rows($sqlMId)>0)
+				{
+					$rowMId = mysqli_fetch_array($sqlMId);
+					$memberId = $rowMId['id'];
+				}
+				else
+				{
+					$memberId = 1;
+				}
+			}
 
 			//CLEAN AMOUNT
 			$amount	= floor($amount/100)*100;
@@ -683,19 +702,34 @@ function listMembers()
 					{
 						$result = json_decode($result);
 
-						//Prepare data for db
-						$status 				= $result->{'status'};
-						$requesttransactionid   		= $result->{'requesttransactionid'};
 						$success   				= $result->{'success'};
-						$responsecode   			= $result->{'responsecode'};
-						$transactionid  			= $result->{'transactionid'};
-						$message   				= $result->{'message'};
+						if($success === FALSE){
+							//Prepare data for db
+							$status 				= "failed";
+							$requesttransactionid   = $pushTransactionId;
+
+							$responsecode   		= $result->{'responsecode'};
+							$transactionid  		= "no";
+							$message   				= $result->{'message'};
+						
+						}
+						else
+						{
+							//Prepare data for db
+							$status 				= $result->{'status'};
+							$requesttransactionid   = $result->{'requesttransactionid'};
+
+							$responsecode   		= $result->{'responsecode'};
+							$transactionid  		= $result->{'transactionid'};
+							$message   				= $result->{'message'};
+						}
+						
 						
 						//SAVE THE TRANSACTION FROM MTN
 						$sql = $outCon->query("INSERT INTO intouchapi(
 								status, requesttransactionid, success, 
 								responsecode, transactionid, message, 
-								amount, pushNumber, pullNumber,  myid, type
+								amount, pushNumber, pullNumber, myid, type
 							) 
 							VALUES (
 							'$status', '$requesttransactionid', '$success', 
@@ -1177,6 +1211,64 @@ function listMembers()
 			//CLEAN AMOUNT
 			$amount	= floor($amount/100)*100; 
 
+			//CHECK BALANCE
+				$url = 'https://www.intouchpay.co.rw/api/getbalance/';
+
+				$username="muhirwa.clement";
+				$var_time = time();
+				$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+				$generate_hash =  hash('sha256', $generate);
+				$txt_id = md5(time());
+				$data = array();
+				$data["username"] 				= $username;
+				$data["password"] 				= $generate_hash;
+				$data["timestamp"] 				= $var_time;
+				$options = array(
+					'http' => array(
+						'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+						'method'  => 'POST',
+						'content' => http_build_query($data)
+					)
+				);
+				$context  = stream_context_create($options);
+				$result = file_get_contents($url, false, $context);
+				//echo $result;
+				if ($result === FALSE) 
+				{ 
+					$returnedinformation	= array();
+					$returnedinformation[] = array(
+				       		"status" => "NETWORK ERROR"
+				    	);
+					header('Content-Type: application/json');
+					$returnedinformation = json_encode($returnedinformation);
+					echo $returnedinformation;
+				}
+				else
+				{
+					$result = json_decode($result);
+					//Prepare data for db
+					$success 				= $result->{'success'};
+					
+					if($success == true)
+					{
+						$balance = $result->{'balance'};
+						$fee = ($amount*2)/100;
+						$charge = $fee + 120;
+
+
+						if($balance < $charge)
+						{
+							$returnedinformation	= array();
+							$returnedinformation[] = array(
+						       		"status" => "GENERAL FAILURE"
+						    	);
+							header('Content-Type: application/json');
+							$returnedinformation = json_encode($returnedinformation);
+							echo $returnedinformation;
+							exit();
+						}
+					}
+				}
 			
 			//GET RECIEVER'S ID IF EXISTS
 			$sql = $db->query("SELECT * FROM users WHERE phone = '$pullNumber' LIMIT 1");
@@ -1301,13 +1393,26 @@ function listMembers()
 				{
 					$result = json_decode($result);
 
-					//Prepare data for db
-					$status 				= $result->{'status'};
-					$requesttransactionid   = $result->{'requesttransactionid'};
+
 					$success   				= $result->{'success'};
-					$responsecode   		= $result->{'responsecode'};
-					$transactionid  		= $result->{'transactionid'};
-					$message   				= $result->{'message'};
+					if($success === FALSE){
+						//Prepare data for db
+						$status 				= "failed";
+						$requesttransactionid   = $pushTransactionId;
+						$responsecode   		= $result->{'responsecode'};
+						$transactionid  		= "no";
+						$message   				= $result->{'message'};
+					
+					}
+					else
+					{
+						//Prepare data for db
+						$status 				= $result->{'status'};
+						$requesttransactionid   = $result->{'requesttransactionid'};
+						$responsecode   		= $result->{'responsecode'};
+						$transactionid  		= $result->{'transactionid'};
+						$message   				= $result->{'message'};
+					}
 					
 					//SAVE THE TRANSACTION FROM MTN
 					$sql = $outCon->query("INSERT INTO intouchapi(
