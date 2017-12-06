@@ -1,6 +1,6 @@
 <?php
 require('../db.php');
-//header("Content-Type: text/plain");
+header("Content-Type: text/plain");
 session_start(); //For web testing only
 
 
