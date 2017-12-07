@@ -170,10 +170,10 @@ $phoneNumber  = substr($phoneNumber, -10);
 								//User chose from the group menu
 								if($tmenu == 1){
 									//gutanga umusanzu
-									$response.="CON $groupname\nShyiramo amafaranga ushaka kwitanga\n";
+									$response.="CON $groupname\nShyiramo amafaranga(FRW) ushaka kwitanga\n";
 								}else if($tmenu == 2){
 									//Kubikuza
-									$response.="CON $groupname\nShyiramo amafaranga ushaka kubikuza\n";
+									$response.="CON $groupname\nShyiramo amafaranga(FRW) ushaka kubikuza\n";
 								}elseif ($tmenu == 3) {
 									# members
 									$members = groupmembers($groupId);																		
@@ -202,8 +202,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 									$response.="CON Ibyerekeye gurupe '$groupname'\n";
 									$groupinfo = groupinfo($groupId);									
-									$response.="Amafaranga ifite:$groupdata[groupBalance]\n";
-									$response.="Ayo ishaka kugeraho: $groupinfo[targetAmount]\n";
+									$response.="Amafaranga ifite:".number_format($groupdata['groupBalance'])."RWF\n";
+									$response.="Ayo ishaka kugeraho: ".number_format($groupinfo['targetAmount'])."RWF\n";
 									$response.="Yatangiye: ".date("d-m-Y", strtotime($groupinfo['createdDate']))."\n";
 									$response.="Itangizwa: \n";
 									$response.="Iyobowe: $groupinfo[admin]\n";
@@ -229,7 +229,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 											$response .= "END Twagize ikibazo k'ihuzanzira\nMwongere mukanya\nNetwork failed!\n";
 										}
 										else if($api_call=='failed'){
-											$response .= "END $userName gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije kuri konti ya mobile money\n";											
+											$response = "END $userName gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije kuri konti ya mobile money\n";											
 										}else{
 											$response .= "END $userName ugiye gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname'\n";
 										}
@@ -409,6 +409,31 @@ $phoneNumber  = substr($phoneNumber, -10);
 		}
 		
 	}
+
+	// function api($data){
+	// 	//Using curl
+	// 	$curl = curl_init();
+
+	// 	curl_setopt_array($curl, array(
+	// 	    CURLOPT_RETURNTRANSFER => 1,
+	// 	    CURLOPT_URL => 'http://uplus.rw/api',
+	// 	    CURLOPT_USERAGENT => 'USSD',
+	// 	    CURLOPT_POST => 1,
+	// 	    CURLOPT_POSTFIELDS => $data
+	// 	));
+
+	// 	$resp = curl_exec($curl);
+
+	// 	if($resp){
+	// 		return $resp;
+	// 	}else{
+	// 		die("END Error:". curl_error($curl)." of ". curl_error($curl));
+	// 	}
+
+	// 	curl_close($curl);
+
+	// 	return $resp;
+	// }
 
 	function contribute($data){
 		$result = api($data);
