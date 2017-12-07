@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-lg-9 col-sm-9">
 	    <div class="row">
-			<div class="col-md-12 col-xs-12 masonry-item ">
+			<!-- <div class="col-md-12 col-xs-12 masonry-item ">
 				<!-- Widget -->
 				<div class="widget widget-article widget-shadow">
 				  <div class="widget-left cover plyr" id="tutorials">
@@ -33,7 +33,7 @@
                   </a>
                 </div>
               </div>
-			</div>
+			</div> -->
 				<!-- End Widget -->
 			</div>
 			<div class="col-md-12 col-xs-12">
