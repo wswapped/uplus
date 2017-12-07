@@ -70,7 +70,7 @@
 						while($row = mysqli_fetch_array($sql))
 						{
 							$groupId = $row['id'];
-							$sqlGetbalance = $outCon->query("SELECT Balance FROM groupbalance WHERE groupId = '$groupId'");
+							$sqlGetbalance = $outCon->query("SELECT Balance FROM groupbalance WHERE id = '$groupId'");
 							$rowBalance = mysqli_fetch_array($sqlGetbalance);
 							$balance = $rowBalance['Balance'];
 							$n++;
