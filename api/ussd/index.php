@@ -221,7 +221,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 								if($tmenu == 1){
 									//Kwizigama
-									if(is_numeric($fomenu) && $fomenu>0){
+									if(is_numeric($fomenu) && $fomenu>100 && $fomenu<=2000000){
 										$contmoney = $fomenu;
 										$api_call = contribute(array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'pushnumber'=>$phoneNumber, 'senderBank'=>senderbank($phoneNumber)));
 
@@ -233,21 +233,21 @@ $phoneNumber  = substr($phoneNumber, -10);
 										}else{
 											$response .= "END $userName ugiye gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname'\n";
 										}
-									}else if($fomenu<=0){
-										$response .="END Mushyiremo amafaranga(FRW) ahagije yo kwitanga"; 
+									}else if($fomenu<=100 || $fomenu>2000000){
+										$response .="END Mushyiremo amafaranga(FRW) ahagije ari hagati ya RWF 100 kugeza kuri FRW 2 000 000 yo kwitanga"; 
 									}else{
 										$response.="END Shyiramo umubare w'amafaranga(FRW) ushaka gutanga, wishyiramo amagambo\n#.Ahabanza\n";
 									}
 								}else if ($tmenu == 2) {
 									# Kubikuza
-									if(is_numeric($fomenu)){
+									if(is_numeric($fomenu) && $fomenu>=100 && $fomenu<=2000000){
 										$contmoney = $fomenu;
 										
 										$api_call = withdraw(array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber), 'action'=>'withdrawrequest' ));
 										
 										$response.="END $api_call\n";
-									}else{
-										$response.="CON Shyiramo umubare w'amafaranga ushaka kubikuza, wishyiramo amagambo\n#.Ahabanza\n";
+									}else if($fomenu<100 || $fomenu<=2000000){}else{
+										$response.="CON Mushobora kubikuza amafaranga(FRW) ari hagati ya 100 na 2 000 000 gusa\n";
 									}
 
 								}
