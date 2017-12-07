@@ -6,34 +6,34 @@
     <div class="row">
       <div class="col-lg-9 col-sm-9">
 	    <div class="row">
-			<!-- <div class="col-md-12 col-xs-12 masonry-item ">
-				<!-- Widget -->
+			<!--<div class="col-md-12 col-xs-12 masonry-item ">
+				 Widget 
 				<div class="widget widget-article widget-shadow">
-				  <div class="widget-left cover plyr" id="tutorials">
-					<iframe class="cover-background" width="559" height="315" frameborder="0" allowfullscreen>
-					  
-					</iframe>
-				  </div>
-				<div class="widget-body" style="background-color: #fff;">
-                <h4 class="widget-title">How to use Uplus</h4>
-                <p>This videos will take you through how to use uplus, efectivly by raising money from any country, any currency instantly into rwf.</p>
-                 <a href="javascript:void(0)" onclick="videosavings()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Create a contribution</a> <em style="font-size: 11px;">(0:45)</em><br>
-                 <a href="javascript:void(0)" onclick="videoinfo()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Send bulk SMS for free</a> <em style="font-size: 11px;">(00:30)</em><br>
-                 <a href="javascript:void(0)" onclick="videocontribution()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Receive money</a> <em style="font-size: 11px;">(01:05)</em><br>
-                 
-                <div class="widget-body-footer">
-                  <div class="widget-actions pull-left">
-                    <a href="javascript:void(0)">
-                      <i class="icon md-share"></i>
-                    </a>
-                   
-                  </div>
-                  <a style="display: none;" class="btn btn-warning pull-right" href="learn">
-                    <i class="icon md-chevron-right"></i> Learn More
-                  </a>
-                </div>
-              </div>
-			</div> -->
+					<div class="widget-left cover plyr" id="tutorials">
+						<iframe class="cover-background" width="559" height="315" frameborder="0" allowfullscreen>
+						  
+						</iframe>
+					</div>
+					<div class="widget-body" style="background-color: #fff;">
+	                	<h4 class="widget-title">How to use Uplus</h4>
+		                <p>This videos will take you through how to use uplus, efectivly by raising money from any country, any currency instantly into rwf.</p>
+		                 <a href="javascript:void(0)" onclick="videosavings()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Create a contribution</a> <em style="font-size: 11px;">(0:45)</em><br>
+		                 <a href="javascript:void(0)" onclick="videoinfo()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Send bulk SMS for free</a> <em style="font-size: 11px;">(00:30)</em><br>
+		                 <a href="javascript:void(0)" onclick="videocontribution()" style="font-size: 16px;"><i class="icon md-play"></i>&nbsp; Receive money</a> <em style="font-size: 11px;">(01:05)</em><br>
+	                 
+		                <div class="widget-body-footer">
+		                  <div class="widget-actions pull-left">
+		                    <a href="javascript:void(0)">
+		                      <i class="icon md-share"></i>
+		                    </a>
+		                   
+		                  </div>
+		                  <a style="display: none;" class="btn btn-warning pull-right" href="learn">
+		                    <i class="icon md-chevron-right"></i> Learn More
+		                  </a>
+		                </div>
+	              	</div>
+				</div>
 				<!-- End Widget -->
 			</div>
 			<div class="col-md-12 col-xs-12">
