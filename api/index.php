@@ -1286,70 +1286,9 @@
 				$pushTransactionId = $pullTransactionId - 1;
 
 				
-				// //CHECK BALANCE
-				// $url = 'https://www.intouchpay.co.rw/api/getbalance/';
+				//CHECK BALANCE
+				$url = 'https://www.intouchpay.co.rw/api/getbalance/';
 
-				// $username="muhirwa.clement";
-				// $var_time = time();
-				// $generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
-				// $generate_hash =  hash('sha256', $generate);
-				// $txt_id = md5(time());
-				// $data = array();
-				// $data["username"] 				= $username;
-				// $data["password"] 				= $generate_hash;
-				// $data["timestamp"] 				= $var_time;
-				// $options = array(
-				// 	'http' => array(
-				// 		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-				// 		'method'  => 'POST',
-				// 		'content' => http_build_query($data)
-				// 	)
-				// );
-				// $context  = stream_context_create($options);
-				// $result = file_get_contents($url, false, $context);
-				// //echo $result;
-				// if ($result === FALSE) 
-				// { 
-				// 	$returnedinformation	= array();
-				// 	$returnedinformation[] = array(
-				//        		"status" => "NETWORK ERROR"
-				//     	);
-				// 	header('Content-Type: application/json');
-				// 	$returnedinformation = json_encode($returnedinformation);
-				// 	echo $returnedinformation;
-				// }
-				// else
-				// {
-				// 	$result = json_decode($result);
-				// 	//Prepare data for db
-				// 	$success 				= $result->{'success'};
-					
-				// 	if($success == true)
-				// 	{
-				// 		$balance = $result->{'balance'};
-				// 		$fee = ($amount*2)/100;
-				// 		$charge = $fee + 120;
-
-
-				// 		if($balance < $charge)
-				// 		{
-				// 			$returnedinformation	= array();
-				// 			$returnedinformation[] = array(
-				// 		       		"status" 		=> "Failed",
-				// 		       		"transactionid" => $pushTransactionId
-				// 		    	);
-				// 			header('Content-Type: application/json');
-				// 			$returnedinformation = json_encode($returnedinformation);
-				// 			echo $returnedinformation;
-				// 			exit();
-				// 		}
-				// 	}
-				// }
-			
-
-				$url = 'https://www.intouchpay.co.rw/api/requestpayment/';
-			
-				$phone = '25'.$pushNumber;
 				$username="muhirwa.clement";
 				$var_time = time();
 				$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
@@ -1357,15 +1296,9 @@
 				$txt_id = md5(time());
 				$data = array();
 				$data["username"] 				= $username;
+				$data["password"] 				= $generate_hash;
 				$data["timestamp"] 				= $var_time;
-				$data["amount"] 				= $amount;
-			    $data["password"] 				= $generate_hash;
-				$data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
-				$data["mobilephone"] 			= $phone;
-				$data["requesttransactionid"]	= $txt_id;
-				$data["accountid"] 				= '250150000003';
-
-			    $options = array(
+				$options = array(
 					'http' => array(
 						'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 						'method'  => 'POST',
@@ -1374,14 +1307,11 @@
 				);
 				$context  = stream_context_create($options);
 				$result = file_get_contents($url, false, $context);
+				//echo $result;
 				if ($result === FALSE) 
 				{ 
-					$Update= $outCon->query("UPDATE directtransfers SET status='NETWORK ERROR' WHERE id = '$pushTransactionId'");
-					
 					$returnedinformation	= array();
-					
 					$returnedinformation[] = array(
-				       		"transactionId" => $pushTransactionId,
 				       		"status" => "NETWORK ERROR"
 				    	);
 					header('Content-Type: application/json');
@@ -1391,53 +1321,127 @@
 				else
 				{
 					$result = json_decode($result);
-
-
-					$success   				= $result->{'success'};
-					if($success === FALSE){
-						//Prepare data for db
-						$status 				= "Failed";
-						$requesttransactionid   = $pushTransactionId;
-						$responsecode   		= $result->{'responsecode'};
-						$transactionid  		= "no";
-						$message   				= $result->{'message'};
+					//Prepare data for db
+					$success 				= $result->{'success'};
 					
-					}
-					else
+					if($success == true)
 					{
-						//Prepare data for db
-						$status 				= $result->{'status'};
-						$requesttransactionid   = $result->{'requesttransactionid'};
-						$responsecode   		= $result->{'responsecode'};
-						$transactionid  		= $result->{'transactionid'};
-						$message   				= $result->{'message'};
+						$balance = $result->{'balance'};
+						$fee = ($amount*2)/100;
+						$charge = $fee + 120;
+
+
+						if($balance < $charge)
+						{
+							$returnedinformation	= array();
+							$returnedinformation[] = array(
+						       		"status" 		=> "Failed",
+						       		"transactionid" => $pushTransactionId
+						    	);
+							header('Content-Type: application/json');
+							$returnedinformation = json_encode($returnedinformation);
+							echo $returnedinformation;
+						}
+						else
+						{
+
+
+							$url = 'https://www.intouchpay.co.rw/api/requestpayment/';
+						
+							$phone = '25'.$pushNumber;
+							$username="muhirwa.clement";
+							$var_time = time();
+							$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+							$generate_hash =  hash('sha256', $generate);
+							$txt_id = md5(time());
+							$data = array();
+							$data["username"] 				= $username;
+							$data["timestamp"] 				= $var_time;
+							$data["amount"] 				= $amount;
+						    $data["password"] 				= $generate_hash;
+							$data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
+							$data["mobilephone"] 			= $phone;
+							$data["requesttransactionid"]	= $txt_id;
+							$data["accountid"] 				= '250150000003';
+
+						    $options = array(
+								'http' => array(
+									'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+									'method'  => 'POST',
+									'content' => http_build_query($data)
+								)
+							);
+							$context  = stream_context_create($options);
+							$result = file_get_contents($url, false, $context);
+							if ($result === FALSE) 
+							{ 
+								$Update= $outCon->query("UPDATE directtransfers SET status='NETWORK ERROR' WHERE id = '$pushTransactionId'");
+								
+								$returnedinformation	= array();
+								
+								$returnedinformation[] = array(
+							       		"transactionId" => $pushTransactionId,
+							       		"status" => "NETWORK ERROR"
+							    	);
+								header('Content-Type: application/json');
+								$returnedinformation = json_encode($returnedinformation);
+								echo $returnedinformation;
+							}
+							else
+							{
+								$result = json_decode($result);
+
+
+								$success   				= $result->{'success'};
+								if($success === FALSE)
+								{
+									//Prepare data for db
+									$status 				= "Failed";
+									$requesttransactionid   = $pushTransactionId;
+									$responsecode   		= $result->{'responsecode'};
+									$transactionid  		= "no";
+									$message   				= $result->{'message'};
+								
+								}
+								else
+								{
+									//Prepare data for db
+									$status 				= $result->{'status'};
+									$requesttransactionid   = $result->{'requesttransactionid'};
+									$responsecode   		= $result->{'responsecode'};
+									$transactionid  		= $result->{'transactionid'};
+									$message   				= $result->{'message'};
+								}
+								
+								//SAVE THE TRANSACTION FROM MTN
+								$sql = $outCon->query("INSERT INTO intouchapi(
+										status, requesttransactionid, success, 
+										responsecode, transactionid, message, 
+										amount, pushNumber, pullNumber,  myid, type
+									) 
+									VALUES (
+									'$status', '$requesttransactionid', '$success', 
+									'$responsecode', '$transactionid', '$message', 
+									'$amount', '$pushNumber', '$pullNumber', $pushTransactionId, 'directtransfer'
+									)
+								")or die(mysqli_error($outCon));
+								// UPDATE MY DB
+								$sql2 = $outCon->query("UPDATE directtransfers SET status='$status' WHERE id = '$pushTransactionId'") or die(mysql_error($outCon));
+
+								$returnedinformation    = array();   
+								$returnedinformation[] = array(
+										"status" => $status,
+								        "transactionId" => $pushTransactionId
+								    );
+
+								header('Content-Type: application/json');
+								$returnedinformation = json_encode($returnedinformation);
+								echo $returnedinformation;
+							}
+						}
 					}
-					
-					//SAVE THE TRANSACTION FROM MTN
-					$sql = $outCon->query("INSERT INTO intouchapi(
-							status, requesttransactionid, success, 
-							responsecode, transactionid, message, 
-							amount, pushNumber, pullNumber,  myid, type
-						) 
-						VALUES (
-						'$status', '$requesttransactionid', '$success', 
-						'$responsecode', '$transactionid', '$message', 
-						'$amount', '$pushNumber', '$pullNumber', $pushTransactionId, 'directtransfer'
-						)
-					")or die(mysqli_error($outCon));
-					// UPDATE MY DB
-					$sql2 = $outCon->query("UPDATE directtransfers SET status='$status' WHERE id = '$pushTransactionId'") or die(mysql_error($outCon));
-
-					$returnedinformation    = array();   
-					$returnedinformation[] = array(
-							"status" => $status,
-					        "transactionId" => $pushTransactionId
-					    );
-
-					header('Content-Type: application/json');
-					$returnedinformation = json_encode($returnedinformation);
-					echo $returnedinformation;
 				}
+			
 			}
 			else
 			{
