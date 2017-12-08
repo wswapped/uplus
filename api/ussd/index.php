@@ -221,7 +221,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 								if($tmenu == 1){
 									//Kwizigama
-									if(is_numeric($fomenu) && $fomenu>100 && $fomenu<=2000000){
+									if(is_numeric($fomenu) && $fomenu>=100 && $fomenu<=2000000){
 										$contmoney = $fomenu;
 										$api_call = contribute(array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'pushnumber'=>$phoneNumber, 'senderBank'=>senderbank($phoneNumber)));
 
@@ -246,7 +246,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 										$api_call = withdraw(array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber), 'action'=>'withdrawrequest' ));
 										
 										$response.="END $api_call\n";
-									}else if($fomenu<100 || $fomenu<=2000000){}else{
+									}else if($fomenu<=100 || $fomenu<=2000000){}else{
 										$response.="CON Mushobora kubikuza amafaranga(FRW) ari hagati ya 100 na 2 000 000 gusa\n";
 									}
 
