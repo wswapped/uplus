@@ -189,9 +189,10 @@ $phoneNumber  = substr($phoneNumber, -10);
 									keeptempdata($sessionId, $tdata, '$groupname members');
 
 								}elseif ( $tmenu == 4) {
-									# group info
+									// group info
 									$api_call = api(array('action'=>'listGroups', 'memberId'=>$userId));
 
+									$groupdata=0; //init
 									$groups_data = json_decode($api_call, true);
 									foreach ($groups_data as $key => $value) {
 										if($value['groupId'] == $groupId){
@@ -200,13 +201,20 @@ $phoneNumber  = substr($phoneNumber, -10);
 										}
 									}
 
+									//Group admins
+									$query = mysqli_query($conn, "SELECT memberName as admin FROM members WHERE memberType = \"Group treasurer\" AND groupId = \"$groupId\"") or die("END Error: ".mysqli_error($conn));
+									$admins = array();
+									while ($temp = mysqli_fetch_assoc($query)) {
+										$admins[] = $temp['admin']; 
+									}
+									$admins = implode($admins, ', ');
 									$response.="CON Ibyerekeye gurupe '$groupname'\n";
 									$groupinfo = groupinfo($groupId);									
-									$response.="Amafaranga ifite:".number_format($groupdata['groupBalance'])."RWF\n";
-									$response.="Ayo ishaka kugeraho: ".number_format($groupinfo['targetAmount'])."RWF\n";
+									$response.="Amafaranga ifite:".number_format($groupdata['groupBalance'])."FRW\n";
+									$response.="Ayo ishaka kugeraho: ".number_format($groupinfo['targetAmount'])."FRW\n";
 									$response.="Yatangiye: ".date("d-m-Y", strtotime($groupinfo['createdDate']))."\n";
-									$response.="Itangizwa: \n";
-									$response.="Iyobowe: $groupinfo[admin]\n";
+									// $response.="Itangizwa: \n";
+									$response.="Iyobowe: $admins\n";
 									$response.="#.Ahabanza\n";
 
 								}else{
@@ -228,15 +236,15 @@ $phoneNumber  = substr($phoneNumber, -10);
 										if($api_call === false){
 											$response .= "END Twagize ikibazo k'ihuzanzira\nMwongere mukanya\nNetwork failed!\n";
 										}
-										else if($api_call=='failed'){
+										else if($api_call=='failed' || $api_call == 'pending'){
 											$response = "END $userName gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije kuri konti ya mobile money\n";											
 										}else{
 											$response .= "END $userName ugiye gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname'\n";
 										}
-									}else if($fomenu<=100 || $fomenu>2000000){
+									}else if($fomenu<100 || $fomenu>2000000){
 										$response .="END Mushyiremo amafaranga(FRW) ahagije ari hagati ya RWF 100 kugeza kuri FRW 2 000 000 yo kwitanga"; 
 									}else{
-										$response.="END Shyiramo umubare w'amafaranga(FRW) ushaka gutanga, wishyiramo amagambo\n#.Ahabanza\n";
+										$response.="END Shyiramo umubare w'amafaranga(FRW) ushaka gutanga, wishyiramo amagambo\n";
 									}
 								}else if ($tmenu == 2) {
 									# Kubikuza
@@ -246,7 +254,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 										$api_call = withdraw(array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber), 'action'=>'withdrawrequest' ));
 										
 										$response.="END $api_call\n";
-									}else if($fomenu<=100 || $fomenu<=2000000){}else{
+									}else if($fomenu<100 || $fomenu<2000000){}else{
 										$response.="CON Mushobora kubikuza amafaranga(FRW) ari hagati ya 100 na 2 000 000 gusa\n";
 									}
 
