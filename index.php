@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="frontassets/css/bootstrap.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="frontassets/css/style.css" media="all">
 	<script src="frontassets/js/typed.js" type="text/javascript"></script>
@@ -26,8 +26,8 @@
 
 			Typed.new("#typed", {
 				stringsElement: document.getElementById('typed-strings'),
-				typeSpeed: 30,
-				backDelay: 1200,
+				typeSpeed: 50,
+				backDelay: 3000,
 				loop: false,
 				contentType: 'html', // or text
 				// defaults to null for infinite loop
@@ -60,87 +60,87 @@
 <body >
     <!-- navigation -->
 <script>// Facebook
-function registerFb()
-{
-	var targetAmount	= document.getElementById('targetAmount').value;
-	var targetPerPerson	= document.getElementById('targetPerPerson').value;
-	var fundName	 	= document.getElementById('fundName').value;
-	var fundPhone	 	= document.getElementById('fundPhone').value;
-	var fundBank	 	= document.getElementById('fundBank').value;
-	var fundAccount	 	= document.getElementById('fundAccount').value;
-	
-
-	
-	
-	document.getElementById('passage').innerHTML =''
-	+'<input type="hidden" id="targetAmount" value="'+targetAmount+'"/>'
-	+'<input type="hidden" id="targetPerPerson" value="'+targetPerPerson+'"/>'
-	+'<input type="hidden" id="fundName" value="'+fundName+'"/>'
-	+'<input type="hidden" id="fundPhone" value="'+fundPhone+'"/>'
-	+'<input type="hidden" id="fundBank" value="'+fundBank+'"/>'
-	+'<input type="hidden" id="fundAccount" value="'+fundAccount+'"/>'
-	
-	
-	document.getElementById('makegroupBody').innerHTML ='<div class="slide_content_a" style="height: 350px; background: #3b5998; text-align: center;" id="slide_content_a"><div class="loader"></div></div>';
-	document.getElementById('makegroupBody').innerHTML =
-	'<div class="btnHolder" style="padding: 0px 45px; " id="loginResults">'
-		+'<div id="login" onlogin="checkLoginState();">'
-			+'<button class="btn btn-block btn-social btn-facebook btn-flat">'
-				+'<i class="fa fa-facebook"></i> Sign in using Facebook'
-			+'</button>'
-		+'</div>'
-		+'<br/><button class="btn btn-block btn-social btn-google btn-flat" data-onsuccess="onSignIn" data-gapiscan="true" data-onload="true"><i class="fa fa-google-plus"></i> Sign in using Google+</button><br>'
-		+'<button  onclick="getPin()" class="btn btn-block btn-social btn-mobile btn-flat"><i class="fa fa-mobile"></i> Sign in using SMS</button>'
-	+'</div>';
-	
-	document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;"></span>'
-									+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>'
-									+'<span style="width: 33.33%;height: 100%;background: #007569;float: left;border-left: 1px solid #fff;"></span>';
-	
-	function statusChangeCallback(response) 
+	function registerFb()
 	{
-		if (response.status === 'connected') 
-		{
-		  testAPI();
-		} 
-		else if (response.status === 'not_authorized') 
-		{
-			alert('you are logedin but not connectd');
-			document.getElementById('login').innerHTML = 
-			'<button class="btn btn-block btn-social btn-facebook btn-flat">'
-			+'<i class="fa fa-facebook"></i>Sign up using Facebook</button></div>';
-		} 
-		else 
-		{
-			//alert('problems');
-		}
-	}
-	
-	function checkLoginState()
-	{
-		alert('colled checkLoginState');
-		FB.getLoginStatus(function(response) {
-		  statusChangeCallback(response);
-		});
-	}
-
-	window.fbAsyncInit = function()
-	{
-	  FB.init({
-		appId      : '1822800737957483',
-		cookie     : true,  // enable cookies to allow the server to access 
-							// the session
-		xfbml      : true,  // parse social plugins on this page
-		version    : 'v2.8' // use graph api version 2.8
-	  });
+		var targetAmount	= document.getElementById('targetAmount').value;
+		var targetPerPerson	= document.getElementById('targetPerPerson').value;
+		var fundName	 	= document.getElementById('fundName').value;
+		var fundPhone	 	= document.getElementById('fundPhone').value;
+		var fundBank	 	= document.getElementById('fundBank').value;
+		var fundAccount	 	= document.getElementById('fundAccount').value;
 		
-	  FB.getLoginStatus(function(response) {
-		 // alert('in window fb.getLoginStatus response sen statusChangeCallback');
-		statusChangeCallback(response);
-	  });
 
-	  };
-}
+		
+		
+		document.getElementById('passage').innerHTML =''
+		+'<input type="hidden" id="targetAmount" value="'+targetAmount+'"/>'
+		+'<input type="hidden" id="targetPerPerson" value="'+targetPerPerson+'"/>'
+		+'<input type="hidden" id="fundName" value="'+fundName+'"/>'
+		+'<input type="hidden" id="fundPhone" value="'+fundPhone+'"/>'
+		+'<input type="hidden" id="fundBank" value="'+fundBank+'"/>'
+		+'<input type="hidden" id="fundAccount" value="'+fundAccount+'"/>'
+		
+		
+		document.getElementById('makegroupBody').innerHTML ='<div class="slide_content_a" style="height: 350px; background: #3b5998; text-align: center;" id="slide_content_a"><div class="loader"></div></div>';
+		document.getElementById('makegroupBody').innerHTML =
+		'<div class="btnHolder" style="padding: 0px 45px; " id="loginResults">'
+			+'<div id="login" onlogin="checkLoginState();">'
+				+'<button class="btn btn-block btn-social btn-facebook btn-flat">'
+					+'<i class="fa fa-facebook"></i> Sign in using Facebook'
+				+'</button>'
+			+'</div>'
+			+'<br/><button class="btn btn-block btn-social btn-google btn-flat" data-onsuccess="onSignIn" data-gapiscan="true" data-onload="true"><i class="fa fa-google-plus"></i> Sign in using Google+</button><br>'
+			+'<button  onclick="getPin()" class="btn btn-block btn-social btn-mobile btn-flat"><i class="fa fa-mobile"></i> Sign in using SMS</button>'
+		+'</div>';
+		
+		document.getElementById('raiseprog').innerHTML = '	<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;"></span>'
+										+'<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>'
+										+'<span style="width: 33.33%;height: 100%;background: #007569;float: left;border-left: 1px solid #fff;"></span>';
+		
+		function statusChangeCallback(response) 
+		{
+			if (response.status === 'connected') 
+			{
+			  testAPI();
+			} 
+			else if (response.status === 'not_authorized') 
+			{
+				alert('you are logedin but not connectd');
+				document.getElementById('login').innerHTML = 
+				'<button class="btn btn-block btn-social btn-facebook btn-flat">'
+				+'<i class="fa fa-facebook"></i>Sign up using Facebook</button></div>';
+			} 
+			else 
+			{
+				//alert('problems');
+			}
+		}
+		
+		function checkLoginState()
+		{
+			alert('colled checkLoginState');
+			FB.getLoginStatus(function(response) {
+			  statusChangeCallback(response);
+			});
+		}
+
+		window.fbAsyncInit = function()
+		{
+		  FB.init({
+			appId      : '1822800737957483',
+			cookie     : true,  // enable cookies to allow the server to access 
+								// the session
+			xfbml      : true,  // parse social plugins on this page
+			version    : 'v2.8' // use graph api version 2.8
+		  });
+			
+		  FB.getLoginStatus(function(response) {
+			 // alert('in window fb.getLoginStatus response sen statusChangeCallback');
+			statusChangeCallback(response);
+		  });
+
+		  };
+	}
 </script>
 
 <script>
@@ -153,7 +153,6 @@ function registerFb()
     fjs.parentNode.insertBefore(js, fjs);
 	
   }(document, 'script', 'facebook-jssdk'));
-
 </script>  
 
     <header id="header_main">
@@ -163,12 +162,12 @@ function registerFb()
                 <div class="homelogocont">
 					<a href="javascript:void()" >
 						<img src="frontassets/img/logo_main_3.png" alt="" width="71" style="box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-    height: 50px;
-    width: 50px;
-    border-radius: 100px;
-    margin: auto;
-    background-color: #fff;
-    cursor: pointer;" class="dense-image dense-loading">
+					    height: 50px;
+					    width: 50px;
+					    border-radius: 100px;
+					    margin: auto;
+					    background-color: #fff;
+					    cursor: pointer;" class="dense-image dense-loading">
 					</a>
 				</div>
                 <span class="loginspan"><a href="login.php" class="md-btn md-btn-primary uk-navbar-flip header_cta uk-margin-left">SIGN IN</a></span>
@@ -176,7 +175,7 @@ function registerFb()
                     <ul class="uk-navbar-nav" id="main_navigation">
                         <li>
                             <a href="#sect-overview">
-                                Overview
+                                Home
                             </a>
                         </li>
                         <!-- <li>
@@ -185,20 +184,8 @@ function registerFb()
                             </a>
                         </li> -->
                         <li>
-                            <a href="#sect-fund" class="uk-navbar-nav-subtitle">
-                                <?php 
-								include('db.php');
-								//$sql= $outCon->query("SELECT sum(balance) totalbalance FROM `groupbalance`");
-								$sql= $outCon->query("SELECT sum(amount) totalbalance FROM `directtransfers` WHERE (`id` % 2) = 1");
-								$balancerow = mysqli_fetch_array($sql);
-								echo number_format($balancerow['totalbalance']);?>
-								Rwf
-                                <div>Now Collected on Uplus</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#sect-team">
-                                How it works?
+                            <a href="./about">
+                                About us
                             </a>
                         </li>
                     </ul>
@@ -212,7 +199,7 @@ function registerFb()
                 <li>
 					<a href="#sect-overview" data-uk-smooth-scroll="{offset: 48}">
 						<span class="menu_icon"><i class="material-icons">&#xE417;</i></span>
-						<span class="menu_title">Overview</span>
+						<span class="menu_title">Home</span>
 					</a>
 				</li><!-- 
 				<li>
@@ -222,15 +209,9 @@ function registerFb()
 					</a>
 				</li> -->
 				<li>
-					<a href="#raised" class="uk-navbar-nav-subtitle" data-uk-smooth-scroll="{offset: 48}">
-						<span class="menu_icon"><i class="material-icons">&#xE227;</i></span>
-						<span class="menu_title"><?php echo number_format($balancerow['totalbalance']);?> Rwf<small>Now Collected on Uplus</small></span>
-					</a>
-				</li>
-				<li>
-					<a href="#sect-team" data-uk-smooth-scroll="{offset: 48}">
+					<a href="./about" data-uk-smooth-scroll="{offset: 48}">
 						<span class="menu_icon"><i class="material-icons">&#xE7FB;</i></span>
-						<span class="menu_title">How it works?</span>
+						<span class="menu_title">About us</span>
 					</a> 
 				</li>
             </ul>
@@ -239,16 +220,12 @@ function registerFb()
 
     <section class="banner" id="sect-overview">
         <div>
-            <ul class="uk-slideshow" style="height: 480px;">
-                <li style=" background-repeat: no-repeat;
-    background-attachment: fixed;
-	background-image: url(&quot;frontassets/img/slider/car2.jpg&quot;);height: 480px;" aria-hidden="false" class="uk-active">
+            <ul class="uk-slideshow" style="height: 520px;">
+                <li style=" background-repeat: no-repeat; background-attachment: fixed; background-image: url(&quot;frontassets/img/slider/car2.jpg&quot;);height: 520px;" aria-hidden="false" class="uk-active">
                     <span class="overlay">
 					</span>
 					
-					<div style="height: 230px;position: absolute;
-							width: 590px;
-							margin: 77px 0px 0 60px;">
+					<div style="height: 230px;position: absolute; width: 590px; margin: 77px 0px 0 60px;">
 							
 									
 						<h1 class="heading text-uppercase" style='color: #fff;
@@ -256,7 +233,7 @@ function registerFb()
 							font: 700 45px/60px "Ubuntu","Helvetica Neue",Helvetica,Arial,sans-serif;'><br>
 											Collect money<br>
 							
-							<span id="typed" style="white-space:pre;"></span></h1>
+						<span id="typed" style="white-space:pre;"></span></h1>
 						<span class="divider white"></span>
 
 						<span class="arrow" style="height: 134px;
@@ -265,9 +242,8 @@ function registerFb()
 							width: 300px;
 							background-repeat: no-repeat;
 							margin: -15px 0 0 410px;"></span>
-																		
 					</div>
-					<div style="color: #000; " class="uk-container uk-container-center" id="moreCard">
+					<!-- <div style="color: #000; " class="uk-container uk-container-center" id="moreCard">
                         <div id="status">
 							<div class="slide_content_a" id="slide_content_a">
 								<div class="makegroupHeader">
@@ -342,8 +318,7 @@ function registerFb()
 									<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>
 									<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>
 								</div>
-								<div class="makegroupFooter" id="makegroupFooter" style="height: 70px;
-    border-radius: 0 0 4px 4px; padding: 10px 25px 10px 25px;">
+								<div class="makegroupFooter" id="makegroupFooter" style="height: 70px;border-radius: 0 0 4px 4px; padding: 10px 25px 10px 25px;">
 									
 									<span style="float: right">
 										<a href="javascript:void()" onclick="raise()" class="md-btn md-btn-large md-btn-warning">Collect</a>
@@ -351,7 +326,7 @@ function registerFb()
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</li>
            </ul>
         </div>
@@ -492,47 +467,10 @@ function registerFb()
 		
     </section>
 
-    <section  id="sect-team" class="section">
-        <div class="uk-container uk-container-center">
-            <div class="uk-grid" data-uk-grid-margin>
-                <div class="uk-width-large-2-4 uk-invisible" data-uk-scrollspy="{cls:'uk-animation-slide-left uk-invisible',delay:400,topoffset:-100}">
-                    <h3 class="heading_c"><i class="material-icons md-36 md-color-red-500">&#xE88F;</i> HOW TO USE UPLUS?</h3>
-                    <iframe src="https://www.youtube.com/embed/_QoR_i0IIfY" frameborder="0" allowfullscreen width="100%" height="300px"></iframe>
-                    
-                </div>
-                <div class="uk-width-large-2-4 uk-invisible" data-uk-scrollspy="{cls:'uk-animation-slide-right uk-invisible',delay:800,topoffset:-100}">
-                    <div class="uk-accordion" data-uk-accordion>
-                        <h3 class="uk-accordion-title">WHAT ARE THE CHARGES?</h3>
-                        <div class="uk-accordion-content">
-                            <p>UPLUS  Charges 5% on the total amount transferd to the receiver, 
-                            including 2.5 visa transfer charges and 2 for MTN, TIGO or AIRTEL fee.
-                            </p>
-                        </div>
-                        <h3 class="uk-accordion-title">WHAT IF I'M USING VISA CARD</h3>
-                        <div class="uk-accordion-content">
-                            <p>Lets say you are contributing $100 using visa or master card on a group which uses RWF.
-                            <br>Uplus instantly converts $100 into RWF, for now it will be 85,000Rwf,
-                             sends it into the group. At a time the group wishes to withdraw using eather MTN mobile money, Tigo Cash or any Bank account in Rwanda the total amount collected
-                             in the group including your $100 will be charged 5%. 
-                            </p>
-                        </div>
-                        <h3 class="uk-accordion-title">WHAT IF I'M USING MTN MOBILE MONEY</h3>
-                        <div class="uk-accordion-content">
-                            <p></p>
-                        </div>
-                        <h3 class="uk-accordion-title">IS UPLUS A BANK OR FINANCIAL INSTITUTION?</h3>
-                        <div class="uk-accordion-content">
-                            <p></p>
-                        </div>
-                        <h3 class="uk-accordion-title">WHAT HAPPENS IF I NEED A REFUND</h3>
-                        <div class="uk-accordion-content">
-                            <p></p>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section  id="sect-team" class="section" style="text-align: center;">
+        <h1 style="margin-bottom: 30px;">Use uplus from your phone</h1>
+        <p style="margin-bottom: 30px;font-size: 18px;font-weight: 100;">We guarantee, you will enjoye this app to the maximum. It’s that good!</p>
+    <a href="https://play.google.com/store/apps/details?id=info.androidhive.uplus" style="display: inline-block;-moz-background-size: cover;background-size: cover;background-position: center;background-repeat: no-repeat;width: 168px;height: 49px;background-image:url(http://test.viewdemo.co/wp/sanjose/wp-content/uploads/2017/05/play-store-green.png);"></a>
     </section>
 
 <!-- 
@@ -693,9 +631,9 @@ function registerFb()
 			 <div id="passage"></div>
             <div id="typed-strings">
 								<p><span style="color: #13a89e;">For</span> Anything</p>
-								<p><span style="color: #13a89e;">Like</span> A Wedding</p>
-								<p><span style="color: #13a89e;">Like</span> A Funeral</p>
-								<p><span style="color: #13a89e;">Like</span> A Medical Bill</p>
+								<p><span style="color: #13a89e;">Like</span> A Wedding Party</p>
+								<p><span style="color: #13a89e;">Like</span> A Saving group</p>
+								<p><span style="color: #13a89e;">From</span> Anycountry</p>
 								<p><span style="color: #13a89e;">Using</span> <span style="color: #ffbe00;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">MTN mobile money</span></p>
 								<p><span style="color: #13a89e;">Using</span> <span style="color: #6f91ef;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">Tigo Cash</span></p>
 								<p><span style="color: #13a89e;">Using</span> Visa cards</p>
@@ -706,27 +644,46 @@ function registerFb()
        <!--  </div>
     </section>
  -->
-    <section class="section section_dark md-bg-blue-grey-700" style="background:#007569 !important">
-        <div class="uk-container uk-container-center">
-            <div class="uk-grid" data-uk-grid-margin>
-                <div class="uk-width-medium-3-5 uk-text-center-medium">
-                   
-				Copyright &copy; 2016 uplus mutual partner, All rights reserved.
-                 
-				</div>
-                <div class="uk-width-medium-2-5">
-                    <div class="uk-align-medium-right uk-text-center-medium">
-                        <a href="https://www.facebook.com/Uplus-950052218429354/" class="uk-margin-medium-right" data-uk-tooltip="{offset: 12}" title="Facebook">
-							<i class="uk-icon-facebook uk-icon-small md-color-white"></i>
-						</a>
-						<a href="https://twitter.com/uplusMP" class="uk-margin-medium-right" data-uk-tooltip="{offset: 12}" title="Twitter"><i class="uk-icon-twitter uk-icon-small md-color-white"></i></a><!--
-                        --><a href="#" class="uk-margin-medium-right" data-uk-tooltip="{offset: 12}" title="Youtube"><i class="uk-icon-youtube uk-icon-small md-color-white"></i></a><!--
-                        --><a href="#" data-uk-tooltip="{offset: 12}" title="Google Plus"><i class="uk-icon-google-plus uk-icon-small md-color-white"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="section section_dark md-bg-blue-grey-700 footer" style="background:#007569 !important;padding: 48px 0 15px 0;">
+  <div class="uk-container uk-container-center">
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-medium-4-10 uk-text-center-medium">
+        Get in touch
+        <br/><br/>
+        <div class="uk-align-medium-left uk-text-center-medium">
+          <a href="https://www.facebook.com/Uplus-950052218429354/" class="uk-margin-medium-right" data-uk-tooltip="{offset: 12}" title="Facebook">
+            <i class="uk-icon-facebook uk-icon-small md-color-white"></i>
+          </a>
+          <a href="https://twitter.com/uplusMP" class="uk-margin-medium-right" data-uk-tooltip="{offset: 12}" title="Twitter"><i class="uk-icon-twitter uk-icon-small md-color-white"></i></a>
+          <a href="#" class="uk-margin-medium-right" data-uk-tooltip="{offset: 12}" title="Youtube"><i class="uk-icon-youtube uk-icon-small md-color-white"></i></a>
+          <a href="#" data-uk-tooltip="{offset: 12}" title="Google Plus"><i class="uk-icon-google-plus uk-icon-small md-color-white"></i></a>
+        </div><br/><br/>
+        Copyright &copy; 2016 Uplus Mutual Partner ltd.
+      </div>
+
+      <div class="uk-width-medium-2-10 uk-text-center-medium">
+        <p>Uplus</p>
+        <a href="#">About</a><br/>
+        <a href="#">Fees</a><br/>
+        <a href="#">Security</a><br/>
+      </div>
+      <div class="uk-width-medium-2-10 uk-text-center-medium">
+        <p>Demo</p>
+        <a href="#">Social Contributions</a><br/>
+        <a href="#">Savings group USSD</a><br/>
+        <a href="#">Churches</a><br/>
+      </div>
+      <div class="uk-width-medium-2-10 uk-text-center-medium">
+        <p>Quick Links</p>
+        <a href="#">FAQ</a><br/>
+        <a href="#">PRESS</a><br/>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="endfooter">
+</div>
+ 
 
     <!-- google web fonts -->
     <script>
