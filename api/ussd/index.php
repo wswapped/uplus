@@ -293,8 +293,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 				$response.="CON Konti ya $userName\n";
 				$response.="Uri muri gurupe:".count($groups)."\n";
-				$response.="Umaze kwitanga: $conts\n";
-				$response.="Umaze kubikuza: $withs\n";
+				$response.="Umaze kwitanga: ".number_format($conts)."FRW\n";
+				$response.="Umaze kubikuza: ".number_format($withs)."FRW\n";
+				$response.="#. Ahabanza\n";
 			}
 			else if($fmenu == 3){
 				//konti
