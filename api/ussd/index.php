@@ -202,7 +202,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 									}
 
 									//Group admins
-									$query = mysqli_query($conn, "SELECT memberName as admin FROM members WHERE memberType = \"Group treasurer\" AND groupId = \"$groupId\"") or die("END Error: ".mysqli_error($conn));
+									$query = mysqli_query($conn, "SELECT COALESCE(memberName, memberPhone) as admin FROM members WHERE memberType = \"Group treasurer\" AND groupId = \"$groupId\"") or die("END Error: ".mysqli_error($conn));
 									$admins = array();
 									while ($temp = mysqli_fetch_assoc($query)) {
 										$admins[] = $temp['admin']; 
