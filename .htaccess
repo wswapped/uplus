@@ -18,6 +18,7 @@ RewriteRule ^blank blank.php [NC,L]
 RewriteRule ^testall testall.php [NC,L]
 RewriteRule ^editgroup groupmod.php [NC,L]
 RewriteRule ^sitting sitting.php [NC,L]
+RewriteRule ^about about.php [NC,L]
 
 RewriteRule ^logout logout.php [NC,L]
 RewriteRule ^group([0-9]+) group.php?groupInfo=$1 [NC,L]
