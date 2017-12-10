@@ -13,7 +13,7 @@
 @media (max-width: 800px) {
 	.newinput {
 		width:100%;
-}
+    }
 }
 .overlay{
 	top: 0;
@@ -253,20 +253,6 @@
     100% { transform: rotate(360deg); }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .customheader {
     	padding: 10px;
     	font: 300 100% / 10px "Roboto", sans-serif;
@@ -294,6 +280,10 @@
     bottom: 30px;
     padding: 3px 5px 5px 5px;
     margin-bottom: -30px;
+}
+.aboutBlog{
+    padding: 0 40px 0 20px; height: 670px;
+    overflow: scroll;
 }
  @media screen and (min-width:  360px){
 	.customheader {
@@ -364,12 +354,15 @@
 }
 .footer a{color: #e9ebee;font-weight: 100;}
 .footer p{font-weight: bold;}
-.endfooter{background: #0e4e45;
+.endfooter{
+    background: #0e4e45;
     width: 100%;
-    height: 30px;    padding: 7px;}
-        #header_main .uk-navbar-nav > li > a {
-            color: #fff;
-        }
+    height: 30px;    padding: 7px;
+}
+#header_main .uk-navbar-nav > li > a {
+    color: #fff;
+}
+
 /*
 #header_main .uk-navbar-nav > li > a{
     color:#fff;
@@ -377,3 +370,18 @@
 #header_main .uk-navbar {
     background: #007569;
 }*/
+
+
+@media (max-width: 800px) {
+    .sectionContent {
+        padding: 0 15px 0px 15px;;
+    }
+    .aboutBlog {
+        padding: 0 40px 0 20px; 
+        height: unset;
+        overflow: unset;
+    }
+    .section{
+        padding: 10px;
+    }
+}

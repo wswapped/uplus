@@ -209,7 +209,7 @@
 					</a>
 				</li> -->
 				<li>
-					<a href="./about" data-uk-smooth-scroll="{offset: 48}">
+					<a href="./about">
 						<span class="menu_icon"><i class="material-icons">&#xE7FB;</i></span>
 						<span class="menu_title">About us</span>
 					</a> 

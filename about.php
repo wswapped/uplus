@@ -22,7 +22,12 @@
   <link rel="stylesheet" href="frontassets/css/login.css" />
   <link rel="stylesheet" href="frontassets/css/bootstrap.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<style type="text/css">
+  
+    .col-md-3{
+        padding: 0px 30px 0px 15px;
+    }
+</style>
 </head>
 <body>
 <header id="header_main">
@@ -62,7 +67,7 @@
   <div class="uk-offcanvas-bar">
     <ul>
       <li>
-  			<a href="./" data-uk-smooth-scroll="{offset: 48}">
+  			<a href="./">
   				<span class="menu_icon"><i class="material-icons">&#xE7FB;</i></span>
   				<span class="menu_title">Home</span>
   			</a> 
@@ -143,8 +148,7 @@
       </div>
     </section>
   </div>
-  <div class="col-md-3" style="padding: 0 40px 0 20px; height: 670px;
-    overflow: scroll;">
+  <div class="col-md-3 aboutBlog">
     <ul class="uk-grid uk-grid-small  uk-grid-width-medium-1-1 uk-grid-width-large-1-1">
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
