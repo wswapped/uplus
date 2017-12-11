@@ -149,7 +149,7 @@
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
           <div class="md-card-content padding-reset">
-            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/about/ssa2.jpg); border-radius: 5px 5px 0 0;">
+            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/aboutimg/ssa2.jpg); border-radius: 5px 5px 0 0;">
               <div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
             </div>
           </div> 
@@ -162,7 +162,7 @@
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
           <div class="md-card-content padding-reset">
-            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/about/itu2.jpg); border-radius: 5px 5px 0 0;">
+            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/aboutimg/itu2.jpg); border-radius: 5px 5px 0 0;">
               <div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
             </div>
           </div> 
@@ -175,7 +175,7 @@
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
           <div class="md-card-content padding-reset">
-            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/about/ussd1.jpg); border-radius: 5px 5px 0 0;">
+            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/aboutimg/ussd1.jpg); border-radius: 5px 5px 0 0;">
               <div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
             </div>
           </div> 
@@ -188,7 +188,7 @@
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
           <div class="md-card-content padding-reset">
-            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/about/mtn.jpg); border-radius: 5px 5px 0 0;">
+            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/aboutimg/mtn.jpg); border-radius: 5px 5px 0 0;">
               <div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
             </div>
           </div> 
@@ -201,7 +201,7 @@
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
           <div class="md-card-content padding-reset">
-            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/about/akoma.jpg); border-radius: 5px 5px 0 0;">
+            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/aboutimg/akoma.jpg); border-radius: 5px 5px 0 0;">
               <div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
             </div>
           </div> 
@@ -214,7 +214,7 @@
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
           <div class="md-card-content padding-reset">
-            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/about/data4fi.jpg); border-radius: 5px 5px 0 0;">
+            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/aboutimg/data4fi.jpg); border-radius: 5px 5px 0 0;">
               <div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
             </div>
           </div> 
@@ -227,7 +227,7 @@
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
           <div class="md-card-content padding-reset">
-            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/about/afr.jpg); border-radius: 5px 5px 0 0;">
+            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/aboutimg/afr.jpg); border-radius: 5px 5px 0 0;">
               <div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
             </div>
           </div> 
@@ -240,7 +240,7 @@
       <li style="margin: 10px 0;">
         <div class="md-card" style="border-radius: 5px;">
           <div class="md-card-content padding-reset">
-            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/about/topstartup.jpg); border-radius: 5px 5px 0 0;">
+            <div class="cont-image" style="height: 170px; background-image: url(frontassets/img/aboutimg/topstartup.jpg); border-radius: 5px 5px 0 0;">
               <div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
             </div>
           </div> 
