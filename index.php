@@ -386,6 +386,7 @@
 						
 						$groupID = $row['id'];
 						$groupName = $row["groupName"];
+						$groupImage = $row["groupImage"];
 							$targetAmount = round($row['targetAmount']);
 							$likes = round($row['likes']);
 							$adminPhone = $row['adminPhone'];
@@ -413,7 +414,7 @@
 								<div class="md-card-content padding-reset">
 									
 									<div class="cont-image" style="background-image: url(proimg/6.jpg); border-radius: 5px 5px 0 0;">
-										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(temp/group'.$row['id'].'.jpeg);"></div>
+										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url('.$groupImage.');"></div>
 									</div>
 									
 									<div id="heart'.$groupID.'">
