@@ -391,7 +391,7 @@
 							$adminPhone = $row['adminPhone'];
 							$groupDescription = $row["groupDesc"];
 							
-							$sqlbalance = $outCon->query("SELECT * FROM groupbalance WHERE groupId = '$groupID'");
+							$sqlbalance = $outCon->query("SELECT * FROM groupbalance WHERE id = '$groupID'");
 							$balanceCount = mysqli_num_rows($sqlbalance);
 
 							$rowbalance = mysqli_fetch_array($sqlbalance);
