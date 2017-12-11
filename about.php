@@ -96,8 +96,8 @@
               <p>
                 <i class="fa fa-whatsapp" aria-hidden="true"></i>
               Conctacts: +250784848236 / info@uplus.rw</p>
-                <p>Uplus stands for you + me = wealth, A digital contribution platform which enables people to pool money togather in a group and make something happen like a saving group,
-                a wedding, investment etc...
+                <p>Uplus stands for you + me = wealth, A digital contribution platform which enables people to pool money togather in a group and make something happen like a Savings group,
+                a Wedding party, Investment vehicles, etc...
                 </p>
               <div class="aboutSubTitle">Why uplus</div>
                 <ul class="fa-ul" style="line-height: 200%;">
@@ -159,7 +159,7 @@
           </div> 
           <div class="md-card-content" style="min-height: 74px;    padding: 10px;">
             <a href="http://www.igihe.com/amakuru/u-rwanda/article/igihe-yegukanye-igihembo-muri-smart-service-awards-2017" class="cardTitle">Best Mobile App</a>
-            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2015 at smart services awards, uplus won the best mobile app awrd</div>
+            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2015 at smart services awards, uplus wan the best mobile app awrd</div>
           </div>
         </div>
       </li>
@@ -172,7 +172,7 @@
           </div> 
           <div class="md-card-content" style="min-height: 74px;    padding: 10px;">
             <a href="https://telecomworld.itu.int/exhibitor-sponsor-list/uplus-mutual-partners/" target="blank"  class="cardTitle">ITU exhibition</a>
-            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2015 Uplus exhibiting at 2017 ITU world South Korea</div>
+            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2015 Uplus was exhibiting at 2017 ITU world summit (South Korea)</div>
           </div>
         </div>
       </li>

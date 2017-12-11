@@ -43,17 +43,17 @@ function users()
     background-image: url('.$row['userImage'].'");
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
 	
-"></div></th>
-			<th>'.$row['name'].'</th>
-			<th>'.$row['phone'].'</th>
-			<th>'.$createdDate.'</th>
-			<th>'.$active.'</th>
-		</tr>';
-	}
-	echo'
-	</tbody>
-</table>
-</div>';
+	"></div></th>
+				<th>'.$row['name'].'</th>
+				<th>'.$row['phone'].'</th>
+				<th>'.$createdDate.'</th>
+				<th>'.$active.'</th>
+			</tr>';
+		}
+		echo'
+		</tbody>
+	</table>
+	</div>';
 }
 
 function groups()
@@ -97,19 +97,19 @@ function groups()
     background-image: url('.$row['groupImage'].'");
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
 	
-"></div></th>
-			<th>'.$row['groupName'].'</th>
-			<th>'.$row['adminName'].'</th>
-			<th>'.$members.'</th>
-			<th>'.number_format($row['targetAmount']).' Rwf</th>
-			<th>'.number_format($gBalanceRow['groupBalance']).' Rwf</th>
-			<th>'.$row['createdDate'].'</th>
-		</tr>';
-	}
-	echo'
-	</tbody>
-</table>
-</div>';
+	"></div></th>
+				<th>'.$row['groupName'].'</th>
+				<th>'.$row['adminName'].'</th>
+				<th>'.$members.'</th>
+				<th>'.number_format($row['targetAmount']).' Rwf</th>
+				<th>'.number_format($gBalanceRow['groupBalance']).' Rwf</th>
+				<th>'.$row['createdDate'].'</th>
+			</tr>';
+		}
+		echo'
+		</tbody>
+	</table>
+	</div>';
 }
 
 
@@ -145,6 +145,8 @@ function transactions()
 				$hstatus='<th style="background: #36a753;">'.$row['status'].'</th>';
 			}elseif ($status=='Failed') {
 				$hstatus='<th style="background: #eb4435;">'.$row['status'].'</th>';
+			}else{
+				$hstatus='<th style="background: #000; color: #fff";>Low Bal</th>';
 			}
 			$transactionDate 	= strftime("%d, %b%y", strtotime($row["transaction_date"]));
 		echo'<tr>
@@ -160,7 +162,6 @@ function transactions()
 	</tbody>
 </table>
 </div>';
-
 }
 
 function money()
@@ -168,7 +169,6 @@ function money()
 	include "db.php";
 	$sql = $db->query("SELECT * FROM users ORDER BY id DESC");
 	$n= 0;
-	$data = "";
-	
+	$data = "";	
 }
 ?>

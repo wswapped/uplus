@@ -471,7 +471,7 @@
     <section  id="sect-team" class="section" style="text-align: center;">
         <h1 style="margin-bottom: 30px;">Use uplus from your phone</h1>
         <p style="margin-bottom: 30px;font-size: 18px;font-weight: 100;">We guarantee, you will enjoye this app to the maximum. It’s that good!</p>
-    <a href="https://play.google.com/store/apps/details?id=info.androidhive.uplus" style="display: inline-block;-moz-background-size: cover;background-size: cover;background-position: center;background-repeat: no-repeat;width: 168px;height: 49px;background-image:url(http://test.viewdemo.co/wp/sanjose/wp-content/uploads/2017/05/play-store-green.png);"></a>
+    <a href="https://play.google.com/store/apps/details?id=info.androidhive.uplus" style="display: inline-block;-moz-background-size: cover;background-size: cover;background-position: center;background-repeat: no-repeat;width: 168px;height: 49px;background-image:url(frontassets/img/playstore.png);"></a>
     </section>
 
 <!-- 
