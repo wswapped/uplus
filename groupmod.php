@@ -53,7 +53,7 @@ if (isset($_GET['groupId']))
 	$fetchAdminID = $rowAdminID = mysqli_fetch_array($sqladminID);
 	$adminID = $rowAdminID["adminID"];
 	
-	$sqlbalance = $outCon->query("SELECT * FROM groupbalance WHERE groupId = '$groupID'");
+	$sqlbalance = $outCon->query("SELECT * FROM groupbalance WHERE id = '$groupID'");
 	$rowbalance = mysqli_fetch_array($sqlbalance);
 	$balance = $rowbalance['Balance'];
 	
