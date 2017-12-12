@@ -158,7 +158,7 @@
             </div>
           </div> 
           <div class="md-card-content" style="min-height: 74px;    padding: 10px;">
-            <a href="http://www.igihe.com/amakuru/u-rwanda/article/igihe-yegukanye-igihembo-muri-smart-service-awards-2017" class="cardTitle">Best Mobile App</a>
+            <a href="http://inyarwanda.com/articles/show/BusinessNews/urubyiruko-rukomeje-kugaragaza-udushya-mu-kwihangira-imirimo-79343.html" class="cardTitle">Best Mobile App</a>
             <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2015 at smart services awards, uplus wan the best mobile app awrd</div>
           </div>
         </div>
@@ -172,7 +172,7 @@
           </div> 
           <div class="md-card-content" style="min-height: 74px;    padding: 10px;">
             <a href="https://telecomworld.itu.int/exhibitor-sponsor-list/uplus-mutual-partners/" target="blank"  class="cardTitle">ITU exhibition</a>
-            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2015 Uplus was exhibiting at 2017 ITU world summit (South Korea)</div>
+            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2017 Uplus was exhibiting at 2017 ITU world summit (South Korea)</div>
           </div>
         </div>
       </li>
