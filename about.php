@@ -92,7 +92,7 @@
             <div class="aboutSubTitle">Business Information</div>
               <p>
                 <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
-              Founded on Sept 2, 2015</p>
+              Founded on Sept 2, 2017</p>
               <p>
                 <i class="fa fa-whatsapp" aria-hidden="true"></i>
               Conctacts: +250784848236 / info@uplus.rw</p>
