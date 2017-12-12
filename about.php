@@ -159,7 +159,7 @@
           </div> 
           <div class="md-card-content" style="min-height: 74px;    padding: 10px;">
             <a href="http://inyarwanda.com/articles/show/BusinessNews/urubyiruko-rukomeje-kugaragaza-udushya-mu-kwihangira-imirimo-79343.html" class="cardTitle">Best Mobile App</a>
-            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2015 at smart services awards, uplus wan the best mobile app awrd</div>
+            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2017 at smart services awards, uplus wan the best mobile app awrd</div>
           </div>
         </div>
       </li>
