@@ -73,7 +73,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 	//Application logic
 	if(empty($text) || $text == "#" || $text == "1*#"){
 		//First request
-		$response .="CON Murakaza neza mu kimina cya Uplus!\n1. Gurupe ndimo\n2. Konti yanjye\n3. Ubusobanuro\n# Exit\n";
+		$response .="CON Ikaze ku kimina cya Uplus!\n1. Gurupe ndimo\n2. Konti yanjye\n3. Ubusobanuro\n# Exit\n";
 	}else{
 		//Level1 requests
 		if(is_numeric($requests[0])){
@@ -300,9 +300,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 				}
 
 				$response.="CON Konti ya $userName\n";
-				$response.="Uri muri gurupe:".count($groups)."\n";
-				$response.="Umaze kwitanga: ".number_format($conts)."FRW\n";
-				$response.="Umaze kubikuza: ".number_format($withs)."FRW\n";
+				$response.="Uri muri gurupe: ".count($groups)."\n";
+				$response.="Umaze kwitanga: ".number_format($conts)."Rwf\n";
+				$response.="Umaze kubikuza: ".number_format($withs)."Rwf\n";
 				$response.="#. Ahabanza\n";
 			}
 			else if($fmenu == 3){

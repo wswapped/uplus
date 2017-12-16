@@ -173,7 +173,7 @@
                 <span class="loginspan"><a href="login.php" class="md-btn md-btn-primary uk-navbar-flip header_cta uk-margin-left">SIGN IN</a></span>
                 <div class="uk-navbar-flip">
                     <ul class="uk-navbar-nav" id="main_navigation">
-                        <li>
+                        <li class="current_active">
                             <a href="#sect-overview">
                                 Home
                             </a>

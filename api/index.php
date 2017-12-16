@@ -734,7 +734,7 @@
 							VALUES (
 							'$status', '$requesttransactionid', '$success', 
 							'$responsecode', '$transactionid', '$message', 
-							'$amount', '$pushNumber', '0', '$pushTransactionId', 'grouptransaction'
+							'$amount', '$pushNumber', '$groupId', '$pushTransactionId', 'grouptransaction'
 							)
 						")or die(mysqli_error($outCon));
 						// UPDATE MY DB
@@ -770,11 +770,12 @@
 			
 			// Get the transfer id
 			//sleep(5);
-			$sql = $outCon->query("SELECT amount, pushnumber, checkCount, requesttransactionid FROM intouchapi WHERE myid = '$myId' AND type= 'grouptransaction' ORDER BY id DESC LIMIT 1");
+			$sql = $outCon->query("SELECT amount, pushnumber, pullnumber checkCount, requesttransactionid FROM intouchapi WHERE myid = '$myId' AND type= 'grouptransaction' ORDER BY id DESC LIMIT 1");
 			$transactionIdArray 	= mysqli_fetch_array($sql);
 			$requesttransactionid 	= $transactionIdArray['requesttransactionid'];
 			$checkCount 			= $transactionIdArray['checkCount'];
 			$pushNumber 			= $transactionIdArray['pushnumber'];
+			$pullNumber 			= $transactionIdArray['pullnumber'];
 			$amount 				= $transactionIdArray['amount'];
 			$newCheckCount 			= $checkCount + 1;
 
@@ -798,46 +799,45 @@
 					if($status == 'Successfull')
 					{
 						// FIND ME THE MEMBER ID
-						$sql3 = $outCon->query("SELECT memberId FROM grouptransactions WHERE id = '$myId' LIMIT 1") or die(mysql_error($outCon));
+						$sql3 = $outCon->query("SELECT memberId FROM grouptransactions WHERE id = '$pullNumber' LIMIT 1") or die(mysql_error($outCon));
 						$rowMmId = mysqli_fetch_array($sql3);
 						$memberId = $rowMmId['memberId'];
 						
 						// UPDATE THE MEMBER UPDATEDATE
 						$sql4 = $db->query("UPDATE users SET updatedBy = '1', updatedDate = now(), WHERE id = '$memberId'");
 
+
 						// NOTIFY ALL MEMBERS THAT WE HAVE MEMBER X CONTRIBUTED SOME MONEY
-						// $sql5 = $db->query("SELECT memberPhone FROM members WHERE groupId = '$groupId'") or die(mysqli_error());
-						// while($member = mysqli_fetch_array($sql5))
-						// {
-						// 	$memberPhone	= $member['memberPhone'];
+						$sql5 = $db->query("SELECT memberPhone, groupName FROM members WHERE groupId = 58") or die(mysqli_error());
+						$recipients = "";
+						while($member = mysqli_fetch_array($sql5))
+						{
+							$recipients.= $member['memberPhone'].", ";
+							$groupName 	= $member['groupName'];
+						}
 
-						// }
-						// 	$phone 		= '0784848236, 0784968343';
-						// 	$sender 	= "UPLUS CLOUD";
-						// 	$message 	= 'Hello Uplus manager, Today we had '.number_format($balance).' Rwf through UPLUS, from '.number_format($transactions).' transactions. For more info vist https://uplus.rw/monitor/';
-								
+						//Get contributors name
+						$sqlMid = $db->query("SELECT COALESCE(memberName, memberPhone) memberName FROM members WHERE memberId = '$memberId'") or die(mysqli_error());
+						$rowMid = mysqli_fetch_array($sqlMid);
+						$contributorName = $rowMid['memberName'];
+						//CLEAN CONTACTS
+						$recipients		= rtrim($recipients,", ");
+						echo $recipients;
+						echo "</br>";
 
-						// 	//CLEAN PHONE
-						// 	//$phone 	= preg_replace( '/[^0-9]/', '', $phone );
-						// 	//$phone 	= substr($phone, -10); 
-
-						// 	$recipients = $phone;
-						// 	//$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
-						// 	$data = array(
-						// 		"sender"		=>$sender,
-						// 		"recipients"	=>$recipients,
-						// 		"message"		=>$message,
-						// 	);
-						// 	include 'sms.php';
-						// 	if($httpcode == 200)
-						// 	{
-						// 		echo "yes";
-						// 	}
-						// 	else
-						// 	{
-						// 		echo 'System error';
-						// 	}
-
+						$message    = 'Congratulations, Member of '.$groupName.'. ('.$contributorName.') Just contributed '.$amount.'Rwf in the group, your group is doing well, Keep up.';
+						echo $message;
+						$data = array(
+						 		"sender"		=>"UPLUS",
+						 		"recipients"	=>$recipients,
+						 		"message"		=>$message,
+						 	);
+					 	include 'sms.php';
+					 	if($httpcode == 200){
+					 		echo "msg sent";
+					 	}else{
+					 		echo "not okay sms";
+					 	}
 
 						// Bwiuld the answel
 						$returnedinformation    = array();   
@@ -846,10 +846,9 @@
 						        "transactionId" => $myId
 						    );
 
-						header('Content-Type: application/json');
+						//header('Content-Type: application/json');
 						$returnedinformation = json_encode($returnedinformation);
 						echo $returnedinformation;
-
 					}
 					else
 					{
@@ -868,15 +867,15 @@
 				else
 				{
 					// Bwiuld the answel
-						$returnedinformation    = array();   
-						$returnedinformation[] 	= array(
-								"status" => "Server Error",
-						        "transactionId" => $myId
-						    );
+					$returnedinformation    = array();   
+					$returnedinformation[] 	= array(
+							"status" => "Server Error",
+					        "transactionId" => $myId
+					    );
 
-						header('Content-Type: application/json');
-						$returnedinformation = json_encode($returnedinformation);
-						echo $returnedinformation;
+					header('Content-Type: application/json');
+					$returnedinformation = json_encode($returnedinformation);
+					echo $returnedinformation;
 				}
 			}
 			else
