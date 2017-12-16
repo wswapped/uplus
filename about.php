@@ -53,8 +53,8 @@
                         Home
                     </a>
                 </li>
-                <li>
-                    <a href="section2">
+                <li class="current_active">
+                    <a href="#">
                         About Us
                     </a>
                 </li>
