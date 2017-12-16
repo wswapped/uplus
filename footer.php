@@ -17,7 +17,7 @@
       </div>
       <div class="uk-width-medium-2-10 uk-text-center-medium">
         <p>Uplus</p>
-        <a href="#">About</a><br/>
+        <a href="about">About</a><br/>
         <a href="#">Fees</a><br/>
         <a href="#">Security</a><br/>
       </div>
