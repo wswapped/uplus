@@ -243,10 +243,21 @@
 							background-repeat: no-repeat;
 							margin: -15px 0 0 410px;"></span>
 					</div>
-					<!-- <div style="color: #000; " class="uk-container uk-container-center" id="moreCard">
+					 <div style="color: #000; " class="uk-container uk-container-center" id="moreCard">
                         <div id="status">
-							<div class="slide_content_a" id="slide_content_a">
-								<div class="makegroupHeader">
+							<div class="slide_content_a" id="slide_content_a" style="height: 550px;
+    background-color: unset;
+    background-repeat: no-repeat;
+    background-image: url(http://localhost:8080/uplus/frontassets/img/slider/phone1.png);
+}
+
+
+
+
+
+">
+								
+								<!-- <div class="makegroupHeader">
 									<h2 class="slide_header" id="slide_header">UPLUS</h2>
 									<h4 class="text-center" style="color: #696969;margin: 0 0 30px;">
 										Collect money from friends and family here!
@@ -323,10 +334,10 @@
 									<span style="float: right">
 										<a href="javascript:void()" onclick="raise()" class="md-btn md-btn-large md-btn-warning">Collect</a>
 									</span>
-								</div>
+								</div> -->
 							</div>
 						</div>
-					</div> -->
+					</div>
 				</li>
            </ul>
         </div>
