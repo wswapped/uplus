@@ -33,8 +33,8 @@ if (isset($_GET['contributions']))
 		{
 			$result = json_decode($result);	
 			var_dump($result);
-			$status = $result->{'status'};
-			$transactionId = $result->{'transactionId'};
+			$status = $result[0]->{'status'};
+			$transactionId = $result[0]->{'transactionId'};
 			echo "<li>".$n." ".$status." of: ".$transactionId."</li>";		
 		}
 	}
@@ -72,9 +72,8 @@ elseif (isset($_GET['directtransfers']))
 		else
 		{
 			$result = json_decode($result);	
-			print_r($result);
 			$status = $result[0]->{'status'};
-			$transactionId = $result->{'transactionId'};
+			$transactionId = $result[0]->{'transactionId'};
 			echo "<li>".$n." ".$status." of: ".$transactionId."</li>";			
 		}
 	}
