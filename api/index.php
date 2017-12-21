@@ -1315,7 +1315,7 @@
 				{
 					$result = json_decode($result);
 					//Prepare data for db
-					$success 				= $result->{'success'};
+					$success 			= $result->{'success'};
 					
 					if($success == true)
 					{
@@ -1327,7 +1327,7 @@
 						if($balance < $charge)
 						{
 							$returnedinformation	= array();
-							$returnedinformation[] = array(
+							$returnedinformation[] 	= array(
 						       		"status" 		=> "Failed",
 						       		"transactionid" => $pushTransactionId
 						    	);
@@ -1337,10 +1337,7 @@
 						}
 						else
 						{
-
-
 							$url = 'https://www.intouchpay.co.rw/api/requestpayment/';
-						
 							$phone = '25'.$pushNumber;
 							$username="muhirwa.clement";
 							$var_time = time();
@@ -1356,7 +1353,6 @@
 							$data["mobilephone"] 			= $phone;
 							$data["requesttransactionid"]	= $txt_id;
 							$data["accountid"] 				= '250150000003';
-
 						    $options = array(
 								'http' => array(
 									'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -1369,9 +1365,7 @@
 							if ($result === FALSE) 
 							{ 
 								$Update= $outCon->query("UPDATE directtransfers SET status='NETWORK ERROR' WHERE id = '$pushTransactionId'");
-								
 								$returnedinformation	= array();
-								
 								$returnedinformation[] = array(
 							       		"transactionId" => $pushTransactionId,
 							       		"status" => "NETWORK ERROR"
@@ -1383,8 +1377,6 @@
 							else
 							{
 								$result = json_decode($result);
-
-
 								$success   				= $result->{'success'};
 								if($success === FALSE)
 								{
@@ -1394,7 +1386,6 @@
 									$responsecode   		= $result->{'responsecode'};
 									$transactionid  		= "no";
 									$message   				= $result->{'message'};
-								
 								}
 								else
 								{
