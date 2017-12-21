@@ -32,7 +32,6 @@ if (isset($_GET['contributions']))
 		else
 		{
 			$result = json_decode($result);	
-			var_dump($result);
 			$status = $result[0]->{'status'};
 			$transactionId = $result[0]->{'transactionId'};
 			echo "<li>".$n." ".$status." of: ".$transactionId."</li>";		
