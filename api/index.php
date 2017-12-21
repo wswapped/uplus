@@ -1473,183 +1473,220 @@
 				$dataarray = mysqli_fetch_array($sql3a);
 				$transId = $dataarray['id'];
 				$status = $dataarray['status'];
-				$outCon->query("UPDATE intouchResponses SET statusStatus= 'seen' WHERE id = '$transId'");
+				// CHECK IF YOU NEVER SAW IT BEFORE
+				$checkRep = $outCon->query("SELECT id FROM  intouchResponses WHERE id = '$transId' AND statusStatus= 'seen'");
 
-				$sql2 = $outCon->query("UPDATE directtransfers SET status='$status' WHERE id = '$myId'") or die(mysql_error($outCon));
-
-				if($outCon)
+				if(!mysqli_num_rows($checkRep)>0)
 				{
-					if($status == 'Successfull')
+					$outCon->query("UPDATE intouchResponses SET statusStatus= 'seen' WHERE id = '$transId'");
+					$sql2 = $outCon->query("UPDATE directtransfers SET status='$status' WHERE id = '$myId'") or die(mysql_error($outCon));
+					if($outCon)
 					{
-						
-						sleep(3);
-						// SENDING PAYMENT REQUEST
+						if($status == 'Successfull')
+						{
+							
+							sleep(3);
+							// SENDING PAYMENT REQUEST
 
-						$url = 'https://www.intouchpay.co.rw/api/requestdeposit/';
-			
-						$phone = '25'.$pullNumber;
-						$username="muhirwa.clement";
-						$var_time = time();
-						$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
-						$generate_hash =  hash('sha256', $generate);
-						$txt_id = md5(time());
-						$data = array();
-						
-						$data["username"] 				= $username;
-						$data["timestamp"] 				= $var_time;
-						$data["amount"] 				= $amount;
-					   	$data["withdrawcharge"] 		= 0;
-						$data["reason"] 				= "Send Money";
-						$data["sid"] 					= "1";
-						$data["password"] 				= $generate_hash;
-						$data["mobilephone"] 			= $phone;
-						$data["requesttransactionid"]	= $txt_id;
+							$url = 'https://www.intouchpay.co.rw/api/requestdeposit/';
+				
+							$phone = '25'.$pullNumber;
+							$username="muhirwa.clement";
+							$var_time = time();
+							$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+							$generate_hash =  hash('sha256', $generate);
+							$txt_id = md5(time());
+							$data = array();
+							
+							$data["username"] 				= $username;
+							$data["timestamp"] 				= $var_time;
+							$data["amount"] 				= $amount;
+						   	$data["withdrawcharge"] 		= 0;
+							$data["reason"] 				= "Send Money";
+							$data["sid"] 					= "1";
+							$data["password"] 				= $generate_hash;
+							$data["mobilephone"] 			= $phone;
+							$data["requesttransactionid"]	= $txt_id;
 
-					    $options = array(
-							'http' => array(
-								'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-								'method'  => 'POST',
-								'content' => http_build_query($data)
-							)
-						);
-						$context  = stream_context_create($options);
-						$result = file_get_contents($url, false, $context);
-						if ($result == false) 
-						{ 
-							$returnedinformation	= array();
-							$returnedinformation[] = array(
-						       		"transactionId" => $myId,
-						       		"status" => "2 NETWORK ERROR"
-						    	);
-							header('Content-Type: application/json');
-							$returnedinformation = json_encode($returnedinformation);
-							echo $returnedinformation;
+						    $options = array(
+								'http' => array(
+									'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+									'method'  => 'POST',
+									'content' => http_build_query($data)
+								)
+							);
+							$context  = stream_context_create($options);
+							$result = file_get_contents($url, false, $context);
+							if ($result == false) 
+							{ 
+								$returnedinformation	= array();
+								$returnedinformation[] = array(
+							       		"transactionId" => $myId,
+							       		"status" => "2 NETWORK ERROR"
+							    	);
+								header('Content-Type: application/json');
+								$returnedinformation = json_encode($returnedinformation);
+								echo $returnedinformation;
+							}
+							else
+							{
+								$result = json_decode($result);
+									//Prepare data for db
+								$success   				= $result->{'success'};
+								$requesttransactionid   = $result->{'requesttransactionid'};
+								$responsecode   		= $result->{'responsecode'};
+								$referenceid   			= $result->{'referenceid'};
+
+								
+								// if the user recieved money
+								if($success == true)
+								{
+									// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
+									$sql1	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pushNumber' ORDER BY id desc LIMIT 1");
+									$sql2	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pullNumber' ORDER BY id desc LIMIT 1");
+									$row1	= mysqli_fetch_array($sql1);
+									$row2	= mysqli_fetch_array($sql2);
+									$pushName	= $row1['actorName'];
+									$pullName	= $row2['actorName'];
+									
+									$recipients = '+25'.$pushNumber;
+									$message    = 'Hi,'.$pushName.' '.number_format($amount).' Rwf has been received by '.$pullName.' user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
+									$data = array(
+										"sender"		=>'UPLUS',
+										"recipients"	=>$recipients,
+										"message"		=>$message,
+									);
+									include 'sms.php';
+									// TELL THE RECEIVER THAT HE/SHE HAS RECEIVED MONEY
+									$recipients = '+25'.$pullNumber;
+									$message    = 'Hi, '.$pullName.' You have reived '.number_format($amount).' Rwf from '.$pushName.' a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
+									$data = array(
+										"sender"		=>'UPLUS',
+										"recipients"	=>$recipients,
+										"message"		=>$message,
+									);
+									include 'sms.php';
+
+									$returnedinformation    = array();   
+									$returnedinformation[] = array(
+											"status" => "Successfull",
+									        "transactionId" => $myId
+									    );
+									header('Content-Type: application/json');
+									$returnedinformation = json_encode($returnedinformation);
+									echo $returnedinformation;
+								}
+								elseif($success == false)
+								{
+									
+									$url = 'https://www.intouchpay.co.rw/api/requestdeposit/';
+				
+									$phone 			= '25'.$pushNumber;
+									$userName 		= "muhirwa.clement";
+									$var_time 		= time();
+									$generate 		= $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+									$generate_hash 	= hash('sha256', $generate);
+									$txt_id 		= md5(time());
+									$data 			= array();
+									
+									$data["username"] 				= $username;
+									$data["timestamp"] 				= $var_time;
+									$data["amount"] 				= $amount;
+								   	$data["withdrawcharge"] 		= 0;
+									$data["reason"] 				= "Refund";
+									$data["sid"] 					= "1";
+									$data["password"] 				= $generate_hash;
+									$data["mobilephone"] 			= $phone;
+									$data["requesttransactionid"]	= $txt_id;
+									
+								    $options = array(
+										'http' => array(
+											'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+											'method'  => 'POST',
+											'content' => http_build_query($data)
+										)
+									);
+									$context  = stream_context_create($options);
+									$result = file_get_contents($url, false, $context);
+									
+									//WAS THE RUFUND SUCCESS IF NOT LET THE ADMIN KNOW
+									$result = json_decode($result);
+									$success   				= $result->{'success'};
+									if($success == true)
+									{
+										// TELL THE SENDER IT DINT WORK WE REFUNDED YOU
+										$recipients = '+25'.$pushNumber;
+										$message    = 'Hi, We are very sorry, The transaction did not succeed, we have refunded you your '.$amount.' Rwf. If there is any problem, please call 0784848236, Intouch is the Uplus agent in MTN Mobile Money.';
+										$data = array(
+											"sender"		=>'UPLUS',
+											"recipients"	=>$recipients,
+											"message"		=>$message,
+										);
+										include 'sms.php';
+										// Bwiuld the answel
+										$returnedinformation    = array();   
+										$returnedinformation[] 	= array(
+												"status" 		=> "Refund",
+										        "transactionId" => $myId
+										    );
+
+										header('Content-Type: application/json');
+										$returnedinformation = json_encode($returnedinformation);
+										echo $returnedinformation;
+
+									}
+									else
+									{
+										// TELL THE ADMIN FIRE FIRE
+										$recipients = '+250784848236';
+										$message    = 'Hey, '.$amount.' Rwf from '.$pushNumber.' to '.$pullNumber.' is stack. You have 15 min max to solve this issue https:uplus.rw/monitor.';
+										$data = array(
+											"sender"		=>'UPLUS DOWN',
+											"recipients"	=>$recipients,
+											"message"		=>$message,
+										);
+										include 'sms.php';
+
+										// TELL THE SENDER IT DINT WORK WE ARE WORKING ON IT
+										$recipients = '+25'.$pushNumber;
+										$message    = 'Hi, We are very sorry, The transfer of '.$amount.' to '.$pullNumber.' did not succeed because of a technical issue, we are working on it, It wont take more than 15 min, If there is any problem, please call 0784848236.';
+										$data = array(
+											"sender"		=>'UPLUS',
+											"recipients"	=>$recipients,
+											"message"		=>$message,
+										);
+										include 'sms.php';
+										// Bwiuld the answel
+										$returnedinformation    = array();   
+										$returnedinformation[] 	= array(
+												"status" 		=> "Refund Error",
+										        "transactionId" => $myId
+										    );
+
+										header('Content-Type: application/json');
+										$returnedinformation = json_encode($returnedinformation);
+										echo $returnedinformation;
+									}
+								}
+							}
 						}
 						else
 						{
-							$result = json_decode($result);
-								//Prepare data for db
-							$success   				= $result->{'success'};
-							$requesttransactionid   = $result->{'requesttransactionid'};
-							$responsecode   		= $result->{'responsecode'};
-							$referenceid   			= $result->{'referenceid'};
+							// Bwiuld the answel
+							$returnedinformation    = array();   
+							$returnedinformation[] 	= array(
+									"status" => $status,
+							        "transactionId" => $myId
+							    );
 
-							
-							// if the user recieved money
-							if($success == true)
-							{
-								// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
-								$sql1	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pushNumber' ORDER BY id desc LIMIT 1");
-								$sql2	=$outCon->query("SELECT actorName FROM directtransfers WHERE accountNumber = '$pullNumber' ORDER BY id desc LIMIT 1");
-								$row1	= mysqli_fetch_array($sql1);
-								$row2	= mysqli_fetch_array($sql2);
-								$pushName	= $row1['actorName'];
-								$pullName	= $row2['actorName'];
-
-
-
-								$recipients = '+25'.$pushNumber;
-								$message    = 'Hi,'.$pushName.' '.number_format($amount).' Rwf has been received by '.$pullName.' user with '.$pullNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
-								$data = array(
-									"sender"		=>'UPLUS',
-									"recipients"	=>$recipients,
-									"message"		=>$message,
-								);
-								include 'sms.php';
-								// TELL THE RECEIVER THAT HE/SHE HAS RECEIVED MONEY
-								$recipients = '+25'.$pullNumber;
-								$message    = 'Hi, '.$pullName.' You have reived '.number_format($amount).' Rwf from '.$pushName.' a uplus user with '.$pushNumber.', Intouch is the Uplus agent in MTN Mobile Money.';
-								$data = array(
-									"sender"		=>'UPLUS',
-									"recipients"	=>$recipients,
-									"message"		=>$message,
-								);
-								include 'sms.php';
-
-								$returnedinformation    = array();   
-								$returnedinformation[] = array(
-										"status" => "Successfull",
-								        "transactionId" => $myId
-								    );
-								header('Content-Type: application/json');
-								$returnedinformation = json_encode($returnedinformation);
-								echo $returnedinformation;
-							}
-							elseif($success == false)
-							{
-								
-								$url = 'https://www.intouchpay.co.rw/api/requestdeposit/';
-			
-								$phone 			= '25'.$pushNumber;
-								$userName 		= "muhirwa.clement";
-								$var_time 		= time();
-								$generate 		= $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
-								$generate_hash 	= hash('sha256', $generate);
-								$txt_id 		= md5(time());
-								$data 			= array();
-								
-								$data["username"] 				= $username;
-								$data["timestamp"] 				= $var_time;
-								$data["amount"] 				= $amount;
-							   	$data["withdrawcharge"] 		= 0;
-								$data["reason"] 				= "Refund";
-								$data["sid"] 					= "1";
-								$data["password"] 				= $generate_hash;
-								$data["mobilephone"] 			= $phone;
-								$data["requesttransactionid"]	= $txt_id;
-								
-							    $options = array(
-									'http' => array(
-										'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-										'method'  => 'POST',
-										'content' => http_build_query($data)
-									)
-								);
-								$context  = stream_context_create($options);
-								$result = file_get_contents($url, false, $context);
-
-								// WE SHALL Bwiuld the answel
-								// TELL THE SENDER THAT THE MONEY HAS BEEN RECEIVED
-
-								$recipients = '+25'.$pushNumber;
-								$message    = 'Hi, We are very sorry, The transaction did not succeed, we have refunded you your '.$amount.' Rwf. If there is any problem, please call 0784848236, Intouch is the Uplus agent in MTN Mobile Money.';
-								$data = array(
-									"sender"		=>'UPLUS',
-									"recipients"	=>$recipients,
-									"message"		=>$message,
-								);
-								include 'sms.php';
-
-
-								// Bwiuld the answel
-								$returnedinformation    = array();   
-								$returnedinformation[] 	= array(
-										"status" 		=> "Refund",
-								        "transactionId" => $myId
-								    );
-
-								header('Content-Type: application/json');
-								$returnedinformation = json_encode($returnedinformation);
-								echo $returnedinformation;
-								
-							}
+							header('Content-Type: application/json');
+							$returnedinformation = json_encode($returnedinformation);
+							echo $returnedinformation;
 						}
 					}
 					else
 					{
 						// Bwiuld the answel
-						$returnedinformation    = array();   
-						$returnedinformation[] 	= array(
-								"status" => $status,
-						        "transactionId" => $myId
-						    );
-
-						header('Content-Type: application/json');
-						$returnedinformation = json_encode($returnedinformation);
-						echo $returnedinformation;
-					}
-				}else{
-					// Bwiuld the answel
 						$returnedinformation    = array();   
 						$returnedinformation[] 	= array(
 								"status" => "Server Error",
@@ -1659,6 +1696,20 @@
 						header('Content-Type: application/json');
 						$returnedinformation = json_encode($returnedinformation);
 						echo $returnedinformation;
+					}
+				}
+				else
+				{
+					// You saw it before Bwiuld the answel
+					$returnedinformation    = array();   
+					$returnedinformation[] 	= array(
+							"status" => $status,
+					        "transactionId" => $myId
+					    );
+
+					header('Content-Type: application/json');
+					$returnedinformation = json_encode($returnedinformation);
+					echo $returnedinformation;
 				}
 			}
 			else
