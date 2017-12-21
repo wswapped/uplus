@@ -907,9 +907,8 @@
 					// Build the answel
 					$returnedinformation    = array();   
 					$returnedinformation[] 	= array(
-						"status" => 'System Error',
-				        "transactionId" => $myId,
-				        "requesttransactionid" => $requesttransactionid
+						"status" => 'Pending',
+				        "transactionId" => $myId
 				    );
 				}
 				
@@ -1717,7 +1716,8 @@
 			}
 			else
 			{
-				if($checkCount < 5){
+				if($checkCount < 5)
+				{
 					sleep(7);
 					// Build the answel
 					$returnedinformation    = array();   
@@ -1726,7 +1726,8 @@
 					        "transactionId" => $myId
 					    );
 				}
-				elseif($checkCount < 9){
+				elseif($checkCount < 10)
+				{
 					sleep(10);
 					// Build the answel
 					$returnedinformation    = array();   
@@ -1735,7 +1736,8 @@
 				        "transactionId" => $myId
 				    );
 				}
-				elseif($checkCount < 12){
+				elseif($checkCount < 15)
+				{
 					sleep(20);
 					// Build the answel
 					$returnedinformation    = array();   
@@ -1744,17 +1746,16 @@
 				        "transactionId" => $myId
 				    );
 				}
-				elseif($checkCount > 12){
+				elseif($checkCount > 17)
+				{
 					// Build the answel
 					$returnedinformation    = array();   
 					$returnedinformation[] 	= array(
-						"status" => 'System Error',
-				        "transactionId" => $myId,
-				        "requesttransactionid" => $requesttransactionid
+						"status" => 'Pending',
+				        "transactionId" => $myId
 				    );
 				}
 				
-
 				header('Content-Type: application/json');
 				$returnedinformation = json_encode($returnedinformation);
 				echo $returnedinformation;
