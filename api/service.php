@@ -73,9 +73,9 @@ elseif (isset($_GET['directtransfers']))
 		{
 			$result = json_decode($result);	
 			var_dump($result);
-			// $status = $result->{'status'};
-			// $transactionId = $result->{'transactionId'};
-			// echo "<li>".$n." ".$status." of: ".$transactionId."</li>";			
+			$status = $result->{'status'};
+			$transactionId = $result->{'transactionId'};
+			echo "<li>".$n." ".$status." of: ".$transactionId."</li>";			
 		}
 	}
 	echo "</ul>";
