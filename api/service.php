@@ -2,7 +2,7 @@
 include 'db.php';
 if (isset($_GET['contributions'])) 
 {
-	$sql = $outCon->query("SELECT id FROM grouptransactions WHERE status = 'Pending'") or die(mysql_error($outCon));
+	$sql = $outCon->query("SELECT id FROM grouptransactions WHERE (status = 'Pending' OR status = 'CALLED') AND operation = 'DEBIT'") or die(mysql_error($outCon));
 	echo"<ul>";
 	$n=0;
 	while($peniding = mysqli_fetch_array($sql))
