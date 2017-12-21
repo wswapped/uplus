@@ -1452,8 +1452,9 @@
 			
 			// Get the transfer id
 			//sleep(5);
-			$sql = $outCon->query("SELECT amount,pullnumber, pushnumber, checkCount, requesttransactionid FROM intouchapi WHERE myid = '$myId' AND type= 'directtransfer' ORDER BY id DESC LIMIT 1");
+			$sql = $outCon->query("SELECT amount,pullnumber, pushnumber, checkCount, requesttransactionid, status FROM intouchapi WHERE myid = '$myId' AND type= 'directtransfer' ORDER BY id DESC LIMIT 1");
 			$transactionIdArray = mysqli_fetch_array($sql);
+			$status = $transactionIdArray['status'];
 			$requesttransactionid = $transactionIdArray['requesttransactionid'];
 			$checkCount = $transactionIdArray['checkCount'];
 			$pushNumber = $transactionIdArray['pushnumber'];
@@ -1461,6 +1462,7 @@
 			$amount 	= $transactionIdArray['amount'];
 			$newCheckCount = $checkCount + 1;
 
+			$sql1 = $outCon->query("UPDATE grouptransactions SET status= '$status' WHERE id = '$myId'");
 			$sql2 = $outCon->query("UPDATE intouchapi SET checkCount= '$newCheckCount' WHERE requesttransactionid = '$requesttransactionid'");
 
 			// Check if the transfer status is back
@@ -1480,6 +1482,7 @@
 				{
 					$outCon->query("UPDATE intouchResponses SET statusStatus= 'seen' WHERE id = '$transId'");
 					$sql2 = $outCon->query("UPDATE directtransfers SET status='$status' WHERE id = '$myId'") or die(mysql_error($outCon));
+					$sql21 = $outCon->query("UPDATE intouchapi SET status='$status' WHERE myid = '$myId'") or die(mysql_error($outCon));
 					if($outCon)
 					{
 						if($status == 'Successfull')
