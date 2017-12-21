@@ -70,7 +70,7 @@
 			}
 			$results="";
 			// 'went to require sms class';
-			
+
 			$recipients = '+25'.$phoneNumber;
 			$message    = 'Welcome to UPLUS, please use '.$code.' to log into your account.';
 			$data = array(
@@ -763,10 +763,8 @@
 			
 		function checkcontributionstatus()
 		{
-
 			require('db.php');
 			$myId = mysqli_real_escape_string($db, $_POST['transactionId']);
-
 			
 			// Get the transfer id
 			//sleep(5);
@@ -793,6 +791,7 @@
 				$outCon->query("UPDATE intouchResponses SET statusStatus= 'seen' WHERE id = '$transId'");
 
 				$sql2 = $outCon->query("UPDATE grouptransactions SET status='$status' WHERE id = '$myId'") or die(mysql_error($outCon));
+				$sql21 = $outCon->query("UPDATE intouchapi SET status='$status' WHERE myid = '$myId'") or die(mysql_error($outCon));
 
 				if($outCon)
 				{
@@ -873,7 +872,8 @@
 			}
 			else
 			{
-				if($checkCount < 5){
+				if($checkCount < 5)
+				{
 					sleep(7);
 					// Build the answel
 					$returnedinformation    = array();   
@@ -882,7 +882,8 @@
 					        "transactionId" => $myId
 					    );
 				}
-				elseif($checkCount < 10){
+				elseif($checkCount < 10)
+				{
 					sleep(10);
 					// Build the answel
 					$returnedinformation    = array();   
@@ -891,7 +892,8 @@
 				        "transactionId" => $myId
 				    );
 				}
-				elseif($checkCount < 15){
+				elseif($checkCount < 15)
+				{
 					sleep(20);
 					// Build the answel
 					$returnedinformation    = array();   
@@ -900,7 +902,8 @@
 				        "transactionId" => $myId
 				    );
 				}
-				elseif($checkCount > 17){
+				elseif($checkCount > 17)
+				{
 					// Build the answel
 					$returnedinformation    = array();   
 					$returnedinformation[] 	= array(
@@ -910,7 +913,6 @@
 				    );
 				}
 				
-
 				header('Content-Type: application/json');
 				$returnedinformation = json_encode($returnedinformation);
 				echo $returnedinformation;
