@@ -803,7 +803,7 @@
 						$memberId = $rowMmId['memberId'];
 						
 						// UPDATE THE MEMBER UPDATEDATE
-						$sql4 = $db->query("UPDATE users SET updatedBy = '1', updatedDate = now(), WHERE id = '$memberId'");
+						$sql4 = $db->query("UPDATE users SET updatedBy = '0', updatedDate = now() WHERE id = '$memberId'");
 
 
 						// NOTIFY ALL MEMBERS THAT WE HAVE MEMBER X CONTRIBUTED SOME MONEY
