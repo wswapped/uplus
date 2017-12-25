@@ -248,7 +248,7 @@
 							<div class="slide_content_a" id="slide_content_a" style="height: 550px;
     background-color: unset;
     background-repeat: no-repeat;
-    background-image: url(http://localhost:8080/uplus/frontassets/img/slider/phone1.png);
+    background-image: url(frontassets/img/slider/phone1.png);
 }
 
 
