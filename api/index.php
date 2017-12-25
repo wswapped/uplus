@@ -804,7 +804,7 @@
 						
 						// UPDATE THE MEMBER UPDATEDATE
 						$var_time = time();
-						$sql4 = $db->query("UPDATE users SET updatedBy = '0', updatedDate = '$var_time' WHERE id = '$memberId'");
+						$sql4 = $db->query("UPDATE users SET updatedBy = '0', 3rdpartyId = '$var_time' WHERE id = '$memberId'");
 
 
 						// NOTIFY ALL MEMBERS THAT WE HAVE MEMBER X CONTRIBUTED SOME MONEY
