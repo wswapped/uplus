@@ -803,8 +803,10 @@
 						$memberId = $rowMmId['memberId'];
 						
 						// UPDATE THE MEMBER UPDATEDATE
-						$var_time = time();
-						$sql4 = $db->query("UPDATE users SET updatedBy = '0', 3rdpartyId = '$var_time' WHERE id = '$memberId'");
+						$timezone = date_default_timezone_get();
+						date_default_timezone_set($timezone);
+						$var_time = date('Y-m-d h:i:s', time());
+						$sql4 = $db->query("UPDATE users SET updatedBy = '0', updatedDate = '$var_time' WHERE id = '$memberId'");
 
 
 						// NOTIFY ALL MEMBERS THAT WE HAVE MEMBER X CONTRIBUTED SOME MONEY
