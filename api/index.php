@@ -472,6 +472,38 @@
 			mysqli_close($outCon);		
 		}
 
+		function publicInvite()
+		{
+			require('db.php');
+			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
+			$sqlInvits 	= $db->query("SELECT u.groupImage,
+			 u.groupName, u.targetAmount, r.Balance groupBalance
+				FROM uplus.members u
+				INNER JOIN rtgs.groupbalance r 
+				WHERE u.groupId = r.id
+				AND u.groupId = '$groupId' LIMIT 1")or die(mysqli_error());
+			$groups 		= array();
+			WHILE($group 	= mysqli_fetch_array($sqlInvits))
+			{
+				$groupId					= $group['groupId'];
+				$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
+				$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
+				$groups[] = array(
+					"groupImage"		=> $group['groupImage'],
+					"groupName"			=> $group['groupName'],
+					"targetAmount"		=> $group['targetAmount'],
+					"groupBalance"		=> $gBalanceRow['groupBalance']
+				);
+			}
+
+
+			mysqli_close($db);
+			mysqli_close($outCon);
+			header('Content-Type: application/json');
+			$groups = json_encode($groups);
+			echo $groups;
+		}
+
 		function listMembers()
 		{
 			require('db.php');

@@ -79,6 +79,18 @@ UPLUS API V1.0 DOCUMENTATION
 		<-
 			msg (string[info])
 
+	publicInvite
+		->
+			groupId
+		<-
+			memberList
+				memberName
+				memberPhoto
+			groupName
+			groupPicture
+			groupAmount
+			groupTarget
+
 	exitGroup
 		->
 			groupId	
@@ -144,6 +156,7 @@ UPLUS API V1.0 DOCUMENTATION
 			vote
 		<-
 			msg (string[info])
+
 --END GROUPS--
 
 --START TRANSFERS--
