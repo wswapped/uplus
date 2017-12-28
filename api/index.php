@@ -478,10 +478,10 @@
 			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
 			$sqlInvits 	= $db->query("SELECT u.groupImage,
 			 u.groupName, u.targetAmount, r.Balance groupBalance
-				FROM uplus.members u
+				FROM uplus.groups u
 				INNER JOIN rtgs.groupbalance r 
-				WHERE u.groupId = r.id
-				AND u.groupId = '$groupId' LIMIT 1")or die(mysqli_error());
+				WHERE u.id = r.id
+				AND u.id = '$groupId' LIMIT 1")or die(mysqli_error());
 			$groups 		= array();
 			WHILE($group 	= mysqli_fetch_array($sqlInvits))
 			{
