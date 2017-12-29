@@ -83,13 +83,10 @@ UPLUS API V1.0 DOCUMENTATION
 		->
 			groupId
 		<-
-			memberList
-				memberName
-				memberPhoto
+			groupImage
 			groupName
-			groupPicture
-			groupAmount
-			groupTarget
+			targetAmount
+			groupBalance
 
 	exitGroup
 		->
@@ -156,7 +153,6 @@ UPLUS API V1.0 DOCUMENTATION
 			vote
 		<-
 			msg (string[info])
-
 --END GROUPS--
 
 --START TRANSFERS--
@@ -181,3 +177,7 @@ UPLUS API V1.0 DOCUMENTATION
 			transactionId
 			status
 --END TRANSFERS--	
+
+--START EVENTS--
+
+--END EVENTS--

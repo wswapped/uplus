@@ -1214,6 +1214,61 @@
 		}
 	// END GROUPS
 
+	// START EVENT
+
+		function eventList()
+		{
+			include("db.php");
+			$sqlEvents = $eventDb->query("SELECT * FROM events");
+			$events[] = array();
+			while ($row = mysqli_fetch_array($sqlEvents)) {
+				$eventId = $row['id_event'];
+				$events[] = array(
+					"eventId"			=> $row['id_event'],
+					"eventName"			=> $row['Event_Name'],
+					"eventCover"		=> $row['Event_Cover'],
+					"eventContact"		=> $row['phone'],
+					"eventDate"			=> $row['date_happ']
+					);
+			}
+
+			foreach ($events as $i => $event) {
+				$eventId = $event['eventId'];
+				$tickets = array();
+			    $sqltickets = $eventDb->query("SELECT * FROM eventing_pricing WHERE event_code LIKE '$eventId'")or die(mysqli_error($db));
+			    while($rowTicket = mysqli_fetch_array($sqltickets))
+			    {
+			    	$ticketId	= $rowTicket['pricing_code'];
+			    	$sqlSeats 	= $eventDb->query("SELECT * FROM pricing WHERE pricing_id = '$ticketId' LIMIT 1");
+			    	$rowSeat = mysqli_fetch_array($sqlSeats);
+			    	
+			    	$tickets[] 	= array(
+				    	"seatPrice"			=> $rowSeat['price'],
+						"ticketName"		=> $rowSeat['event_property'],
+						"availableSeats"	=> $rowSeat['event_seats']
+					);
+			    }
+			    $events[$i]['eventTickets'] = $tickets;
+			}
+			print_r($events);
+		}
+
+		function eventCreate(){}
+
+		function eventEdit(){}
+
+		function eventRemove(){}
+
+		function eventBook(){}
+
+		function eventChecout(){}
+
+		function eventStatus(){}
+
+		function eventTransactions(){}
+
+	// END EVENT
+
 	// START TRANSFERS
 		function directtransfer()
 		{
