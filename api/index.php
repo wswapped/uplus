@@ -1226,9 +1226,12 @@
 				$events[] = array(
 					"eventId"			=> $row['id_event'],
 					"eventName"			=> $row['Event_Name'],
+					"eventDesc"			=> $row['Event_Desc'],
 					"eventCover"		=> $row['Event_Cover'],
 					"eventContact"		=> $row['phone'],
-					"eventDate"			=> $row['date_happ']
+					"eventStart"		=> $row['Event_Start'],
+					"eventEnd"			=> $row['Event_End'],
+					"eventActive"		=> $row['active'],
 					);
 			}
 
@@ -1241,11 +1244,9 @@
 			    	$ticketId		= $rowTicket['pricing_code'];
 			    	$sqlTakenSeats	= $eventDb->query("SELECT * FROM transaction WHERE cust_event_seats = '$ticketId'");
 			    	$takenSeats  	= mysqli_num_rows($sqlTakenSeats);
-
 			    	$sqlSeats 	= $eventDb->query("SELECT * FROM pricing WHERE pricing_id = '$ticketId' LIMIT 1");
 			    	$rowSeat 	= mysqli_fetch_array($sqlSeats);
 			    	$allSeats 	= $rowSeat['event_seats'];
-			    	
 			    	$tickets[] 	= array(
 				    	"seatPrice"			=> $rowSeat['price'],
 						"ticketName"		=> $rowSeat['event_property'],
