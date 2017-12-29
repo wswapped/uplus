@@ -1238,19 +1238,27 @@
 			    $sqltickets = $eventDb->query("SELECT * FROM eventing_pricing WHERE event_code LIKE '$eventId'")or die(mysqli_error($db));
 			    while($rowTicket = mysqli_fetch_array($sqltickets))
 			    {
-			    	$ticketId	= $rowTicket['pricing_code'];
+			    	$ticketId		= $rowTicket['pricing_code'];
+			    	$sqlTakenSeats	= $eventDb->query("SELECT * FROM transaction WHERE cust_event_seats = '$ticketId'");
+			    	$takenSeats  	= mysqli_num_rows($sqlTakenSeats);
+
 			    	$sqlSeats 	= $eventDb->query("SELECT * FROM pricing WHERE pricing_id = '$ticketId' LIMIT 1");
-			    	$rowSeat = mysqli_fetch_array($sqlSeats);
+			    	$rowSeat 	= mysqli_fetch_array($sqlSeats);
+			    	$allSeats 	= $rowSeat['event_seats'];
 			    	
 			    	$tickets[] 	= array(
 				    	"seatPrice"			=> $rowSeat['price'],
 						"ticketName"		=> $rowSeat['event_property'],
-						"availableSeats"	=> $rowSeat['event_seats']
+						"availableSeats"	=> $allSeats-$takenSeats
 					);
 			    }
 			    $events[$i]['eventTickets'] = $tickets;
 			}
-			print_r($events);
+			mysqli_close($db);
+			mysqli_close($eventDb);
+			header('Content-Type: application/json');
+			$events = json_encode($events);
+			echo $events;
 		}
 
 		function eventCreate(){}
