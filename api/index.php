@@ -1215,7 +1215,6 @@
 	// END GROUPS
 
 	// START EVENT
-
 		function eventList()
 		{
 			include("db.php");
@@ -1263,6 +1262,11 @@
 			echo $events;
 		}
 
+		function updateEvent()
+		{
+			
+		}
+
 		function eventCreate(){}
 
 		function eventEdit(){}
@@ -1276,7 +1280,6 @@
 		function eventStatus(){}
 
 		function eventTransactions(){}
-
 	// END EVENT
 
 	// START TRANSFERS
