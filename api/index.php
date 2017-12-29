@@ -1228,6 +1228,7 @@
 					"eventName"			=> $row['Event_Name'],
 					"eventDesc"			=> $row['Event_Desc'],
 					"eventCover"		=> $row['Event_Cover'],
+					"eventLocation"		=> $row['Event_Location'],
 					"eventContact"		=> $row['phone'],
 					"eventStart"		=> $row['Event_Start'],
 					"eventEnd"			=> $row['Event_End'],
