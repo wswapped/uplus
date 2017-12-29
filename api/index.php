@@ -1263,11 +1263,6 @@
 			echo $events;
 		}
 
-		function akokanya_list_event(){
-			
-
-		}
-
 		function eventUpdate(){
 			global $eventDb;
 			$url = "http://akokanya.com/api/events/?email=muhirwaclement@gmail.com&password=clement123 ";
@@ -1299,8 +1294,8 @@
 						$code = $events['code']??"";
 						$details = $events['details']??"";
 						$status = $events['status']??"";
-						$from_time = $events['from_time']??"";
-						$to_time = $events['to_time']??"";
+						$from_time = $events['from_time']??"0000-00-00";
+						$to_time = $events['to_time']??"0000-00-00";
 						$user_id = $events['user_id']??"";
 						$available_place = $events['available_place']??"";
 						$location = $events['location']??"";
@@ -1309,9 +1304,9 @@
 						$file1 = $events['file1']??"";
 						$file2 = $events["file2"]??"";
 						$file3 = $events["file3"]??"";
-						$deleted_at = $events["deleted_at"]??"";
-						$created_at = $events["created_at"]??"";
-						$updated_at = $events["updated_at"]??"";
+						$deleted_at = $events["deleted_at"]??"0000-00-00 00:00:00";
+						$created_at = $events["created_at"]??"0000-00-00 00:00:00";
+						$updated_at = $events["updated_at"]??"0000-00-00 00:00:00";
 						$counting = $events["counting"]??"";
 
 
