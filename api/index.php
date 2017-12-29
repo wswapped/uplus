@@ -1,7 +1,8 @@
 <?php
 	// START INITIATE
 		include ("db.php");
-		if ($_SERVER["REQUEST_METHOD"]=="POST") 
+		// var_dump($_SERVER["REQUEST_METHOD"]);
+		if ($_SERVER["REQUEST_METHOD"] == "POST") 
 		{
 			if(isset($_POST['action']))
 			{
@@ -9,7 +10,6 @@
 			}
 			else
 			{
-				print_r($_POST);
 				echo 'Please read the API documentation';
 			}
 		}
@@ -1215,6 +1215,7 @@
 	// END GROUPS
 
 	// START EVENT
+
 		function eventList()
 		{
 			include("db.php");
@@ -1262,9 +1263,81 @@
 			echo $events;
 		}
 
-		function updateEvent()
-		{
+		function akokanya_list_event(){
 			
+
+		}
+
+		function eventUpdate(){
+			global $eventDb;
+			$url = "http://akokanya.com/api/events/?email=muhirwaclement@gmail.com&password=clement123 ";
+
+			$header = array();
+			$header[] = "email:muhirwaclement@gmail.com";
+			$header[] = "password:clement123";
+
+			$ch = curl_init();
+			curl_setopt_array($ch, array(
+			    CURLOPT_RETURNTRANSFER => 1,
+			    CURLOPT_URL => $url,
+			    CURLOPT_HTTPHEADER => $header,
+			    CURLOPT_USERAGENT => 'Uplus'
+			));
+
+	       $result = curl_exec($ch);           
+	       	if ($result === FALSE) {
+	           die('Curl failed: ' . curl_error($ch));
+	       	}else{
+	       		$result = json_decode($result, 1);
+
+		       	if($result){
+
+		       		//Looping through events
+		       		for ($n=0; $n < count($result); $n++) {
+		       			$events = $result[$n];
+			       		$name = $events['name']??"";
+						$code = $events['code']??"";
+						$details = $events['details']??"";
+						$status = $events['status']??"";
+						$from_time = $events['from_time']??"";
+						$to_time = $events['to_time']??"";
+						$user_id = $events['user_id']??"";
+						$available_place = $events['available_place']??"";
+						$location = $events['location']??"";
+						$event_payment_model_id = $events['event_payment_model_id']??"";
+						$event_category_id = $events['event_category_id']??"";
+						$file1 = $events['file1']??"";
+						$file2 = $events["file2"]??"";
+						$file3 = $events["file3"]??"";
+						$deleted_at = $events["deleted_at"]??"";
+						$created_at = $events["created_at"]??"";
+						$updated_at = $events["updated_at"]??"";
+						$counting = $events["counting"]??"";
+
+
+						//Checking if event exists in DB already
+						$query = $eventDb->query("SELECT * FROM akokanya WHERE code = \"$code\" ");
+						if($query->num_rows>0){
+							echo "string";
+						}else{
+							$sql = "INSERT INTO akokanya
+							(name, code, details, status, from_time, to_time, user_id,
+							available_place, location, event_payment_model_id, event_category_id,
+							file1, file2, file3, deleted_at, created_at, updated_at, counting) 
+							VALUES
+							(\"$name\", \"$code\", \"$details\", \"$status\", \"$from_time\", \"$to_time\", \"$user_id\",
+							\"$available_place\", \"$location\", \"$event_payment_model_id\", \"$event_category_id\",
+							\"$file1\", \"$file2\", \"$file3\", \"$deleted_at\", \"$created_at\", \"$updated_at\", \"$counting\")";
+						// echo "$sql";
+
+							mysqli_query($eventDb, $sql) or die("error:1, msg:".mysqli_error($eventDb));
+						}
+						
+					}
+		       	}
+	       }
+	       curl_close($ch);
+	       return $result;
 		}
 
 		function eventCreate(){}
@@ -1280,6 +1353,7 @@
 		function eventStatus(){}
 
 		function eventTransactions(){}
+
 	// END EVENT
 
 	// START TRANSFERS
