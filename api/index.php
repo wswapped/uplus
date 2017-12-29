@@ -476,7 +476,7 @@
 		{
 			require('db.php');
 			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
-			$sqlInvits 	= $db->query("SELECT u.groupImage,
+			$sqlInvits 	= $db->query("SELECT u.id, u.groupImage,
 			 u.groupName, u.targetAmount, r.Balance groupBalance
 				FROM uplus.groups u
 				INNER JOIN rtgs.groupbalance r 
@@ -485,15 +485,29 @@
 			$groups 		= array();
 			WHILE($group 	= mysqli_fetch_array($sqlInvits))
 			{
-				$groupId					= $group['groupId'];
-				$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
+				$groupId		= $group['groupId'];
+				$sqlGroupBalance= $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
 				$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
 				$groups[] = array(
+					"groupId"		=> $group['id'],
 					"groupImage"		=> $group['groupImage'],
 					"groupName"			=> $group['groupName'],
 					"targetAmount"		=> $group['targetAmount'],
 					"groupBalance"		=> $gBalanceRow['groupBalance']
 				);
+			}
+			foreach ($groups as $i => $group) {
+				$groupId = $group['groupId'];
+				$members = array();
+			    $sqlMembers = $db->query("SELECT memberImage, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId LIKE '$groupId'")or die(mysqli_error($db));
+			    while($rowMembers = mysqli_fetch_array($sqlMembers))
+			    {
+			    	$members[] 	= array(
+				    	"memberName"	=> $rowMembers['memberName'],
+						"memberImage"	=> $rowMembers['memberImage']
+					);
+			    }
+			    $groups[$i]['members'] = $members;
 			}
 
 
