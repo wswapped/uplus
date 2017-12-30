@@ -556,6 +556,7 @@
 				   "updatedDate"		=> $member['memberDate'],
 				   "contributionDate"	=> $member['memberDate'],
 				   "memberType"			=> $member['memberType'],
+				   "memberImage"		=> $member['memberImage'],
 				   "memberContribution"	=> $contributionRow['memberContribution'],
 				   "groupBalance"		=> $gBalanceRow['groupBalance']
 				);
