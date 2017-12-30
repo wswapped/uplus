@@ -476,12 +476,14 @@
 		{
 			require('db.php');
 			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
-			$sqlInvits 	= $db->query("SELECT u.id, u.groupImage,
-			 u.groupName, u.targetAmount, r.Balance groupBalance
-				FROM uplus.groups u
+			$sqlInvits 	= $db->query("SELECT COALESCE(u.name , u.phone) adminName, g.id, g.groupImage,
+			 g.groupName, g.targetAmount, r.Balance groupBalance
+				FROM uplus.groups g
+				INNER JOIN uplus.users u
+				ON g.adminId = u.id
 				INNER JOIN rtgs.groupbalance r 
-				WHERE u.id = r.id
-				AND u.id = '$groupId' LIMIT 1")or die(mysqli_error());
+				ON g.id = r.id
+				AND g.id = '$groupId' LIMIT 1")or die(mysqli_error());
 			$groups 		= array();
 			WHILE($group 	= mysqli_fetch_array($sqlInvits))
 			{
@@ -489,10 +491,11 @@
 				$sqlGroupBalance= $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
 				$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
 				$groups[] = array(
-					"groupId"		=> $group['id'],
+					"groupId"			=> $group['id'],
 					"groupImage"		=> $group['groupImage'],
 					"groupName"			=> $group['groupName'],
 					"targetAmount"		=> $group['targetAmount'],
+					"adminName"			=> $group['adminName'],
 					"groupBalance"		=> $gBalanceRow['groupBalance']
 				);
 			}
