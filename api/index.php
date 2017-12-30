@@ -1309,8 +1309,6 @@
 						$updated_at = $events["updated_at"]??"2017-12-30 00:00:10";
 						$counting = $events["counting"]??"";
 
-						print_r($events);
-
 
 						//Checking if event exists in DB already
 						$query = $eventDb->query("SELECT * FROM akokanya WHERE code = \"$code\" ");
