@@ -1312,6 +1312,10 @@
 						$updated_at = $events["updated_at"]??"2017-12-30 00:00:10";
 						$counting = $events["counting"]??"";
 
+						//Dates formatting
+						$from_time = date("Y-m-d", strtotime($from_time));
+						$to_time = date("Y-m-d", strtotime($to_time));
+
 
 						//Putting event in DB
 						$sql = "INSERT INTO akokanya
@@ -1323,7 +1327,9 @@
 						\"$available_place\", \"$location\", \"$event_payment_model_id\", \"$event_category_id\",
 						\"$file1\", \"$file2\", \"$file3\", \"$deleted_at\", \"$created_at\", \"$updated_at\", \"$counting\")";
 
-						mysqli_query($eventDb, $sql) or die("error:1, msg:".mysqli_error($eventDb));
+						$query = mysqli_query($eventDb, $sql);
+
+						if(!$query) echo("error:1, msg:".mysqli_error($eventDb));
 						
 					}
 		       	}
