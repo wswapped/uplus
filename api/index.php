@@ -1329,7 +1329,8 @@
 
 						$query = mysqli_query($eventDb, $sql);
 
-						if(!$query) echo("error:1, msg:".mysqli_error($eventDb));
+						if(!$query) echo("status:0, msg:".mysqli_error($eventDb));
+						else echo("status:1, msg: Event inserted\n");
 						
 					}
 		       	}
