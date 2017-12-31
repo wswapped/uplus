@@ -1287,6 +1287,9 @@
 
 		       	if($result){
 
+		       		//Cleaning table data //Truncating
+		       		$eventDb->query("DELETE FROM akokanya");
+
 		       		//Looping through events
 		       		for ($n=0; $n < count($result); $n++) {
 		       			$events = $result[$n];
@@ -1310,23 +1313,17 @@
 						$counting = $events["counting"]??"";
 
 
-						//Checking if event exists in DB already
-						$query = $eventDb->query("SELECT * FROM akokanya WHERE code = \"$code\" ");
-						if($query->num_rows > 0){
-							echo "On code $code $query->num_rows \n";
-						}else{
-							$sql = "INSERT INTO akokanya
-							(name, code, details, status, from_time, to_time, user_id,
-							available_place, location, event_payment_model_id, event_category_id,
-							file1, file2, file3, deleted_at, created_at, updated_at, counting) 
-							VALUES
-							(\"$name\", \"$code\", \"$details\", \"$status\", \"$from_time\", \"$to_time\", \"$user_id\",
-							\"$available_place\", \"$location\", \"$event_payment_model_id\", \"$event_category_id\",
-							\"$file1\", \"$file2\", \"$file3\", \"$deleted_at\", \"$created_at\", \"$updated_at\", \"$counting\")";
-						// echo "$sql";
+						//Putting event in DB
+						$sql = "INSERT INTO akokanya
+						(name, code, details, status, from_time, to_time, user_id,
+						available_place, location, event_payment_model_id, event_category_id,
+						file1, file2, file3, deleted_at, created_at, updated_at, counting) 
+						VALUES
+						(\"$name\", \"$code\", \"$details\", \"$status\", \"$from_time\", \"$to_time\", \"$user_id\",
+						\"$available_place\", \"$location\", \"$event_payment_model_id\", \"$event_category_id\",
+						\"$file1\", \"$file2\", \"$file3\", \"$deleted_at\", \"$created_at\", \"$updated_at\", \"$counting\")";
 
-							mysqli_query($eventDb, $sql) or die("error:1, msg:".mysqli_error($eventDb));
-						}
+						mysqli_query($eventDb, $sql) or die("error:1, msg:".mysqli_error($eventDb));
 						
 					}
 		       	}
