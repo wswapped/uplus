@@ -476,24 +476,41 @@
 		{
 			require('db.php');
 			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
-			$sqlInvits 	= $db->query("SELECT u.groupImage,
-			 u.groupName, u.targetAmount, r.Balance groupBalance
-				FROM uplus.groups u
+			$sqlInvits 	= $db->query("SELECT COALESCE(u.name , u.phone) adminName, g.id, g.groupImage,
+			 g.groupName, g.targetAmount, r.Balance groupBalance
+				FROM uplus.groups g
+				INNER JOIN uplus.users u
+				ON g.adminId = u.id
 				INNER JOIN rtgs.groupbalance r 
-				WHERE u.id = r.id
-				AND u.id = '$groupId' LIMIT 1")or die(mysqli_error());
+				ON g.id = r.id
+				AND g.id = '$groupId' LIMIT 1")or die(mysqli_error());
 			$groups 		= array();
 			WHILE($group 	= mysqli_fetch_array($sqlInvits))
 			{
-				$groupId					= $group['groupId'];
-				$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
+				$groupId		= $group['groupId'];
+				$sqlGroupBalance= $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
 				$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
 				$groups[] = array(
+					"groupId"			=> $group['id'],
 					"groupImage"		=> $group['groupImage'],
 					"groupName"			=> $group['groupName'],
 					"targetAmount"		=> $group['targetAmount'],
+					"adminName"			=> $group['adminName'],
 					"groupBalance"		=> $gBalanceRow['groupBalance']
 				);
+			}
+			foreach ($groups as $i => $group) {
+				$groupId = $group['groupId'];
+				$members = array();
+			    $sqlMembers = $db->query("SELECT memberImage, COALESCE(`memberName`, `memberPhone`) `memberName` FROM members WHERE groupId LIKE '$groupId'")or die(mysqli_error($db));
+			    while($rowMembers = mysqli_fetch_array($sqlMembers))
+			    {
+			    	$members[] 	= array(
+				    	"memberName"	=> $rowMembers['memberName'],
+						"memberImage"	=> $rowMembers['memberImage']
+					);
+			    }
+			    $groups[$i]['members'] = $members;
 			}
 
 
@@ -539,6 +556,7 @@
 				   "updatedDate"		=> $member['memberDate'],
 				   "contributionDate"	=> $member['memberDate'],
 				   "memberType"			=> $member['memberType'],
+				   "memberImage"		=> $member['memberImage'],
 				   "memberContribution"	=> $contributionRow['memberContribution'],
 				   "groupBalance"		=> $gBalanceRow['groupBalance']
 				);
@@ -1307,11 +1325,12 @@
 						$file1 = $events['file1']??"";
 						$file2 = $events["file2"]??"";
 						$file3 = $events["file3"]??"";
-						$deleted_at = $events["deleted_at"]??"2017-12-30 00:00:10";
-						$created_at = $events["created_at"]??"2017-12-30 00:00:10";
-						$updated_at = $events["updated_at"]??"2017-12-30 00:00:10";
+						$deleted_at = $events["deleted_at"]??"0000-00-00 00:00:00";
+						$created_at = $events["created_at"]??"0000-00-00 00:00:00";
+						$updated_at = $events["updated_at"]??"0000-00-00 00:00:00";
 						$counting = $events["counting"]??"";
 
+<<<<<<< HEAD
 						//Dates formatting
 						$from_time = date("Y-m-d", strtotime($from_time));
 						$to_time = date("Y-m-d", strtotime($to_time));
@@ -1331,6 +1350,26 @@
 
 						if(!$query) echo("status:0, msg:".mysqli_error($eventDb));
 						else echo("status:1, msg: Event inserted\n");
+=======
+
+						//Checking if event exists in DB already
+						$query = $eventDb->query("SELECT * FROM akokanya WHERE code = \"$code\" ");
+						if($query->num_rows>0){
+							echo "string";
+						}else{
+							$sql = "INSERT INTO akokanya
+							(name, code, details, status, from_time, to_time, user_id,
+							available_place, location, event_payment_model_id, event_category_id,
+							file1, file2, file3, deleted_at, created_at, updated_at, counting) 
+							VALUES
+							(\"$name\", \"$code\", \"$details\", \"$status\", \"$from_time\", \"$to_time\", \"$user_id\",
+							\"$available_place\", \"$location\", \"$event_payment_model_id\", \"$event_category_id\",
+							\"$file1\", \"$file2\", \"$file3\", \"$deleted_at\", \"$created_at\", \"$updated_at\", \"$counting\")";
+						// echo "$sql";
+
+							mysqli_query($eventDb, $sql) or die("error:1, msg:".mysqli_error($eventDb));
+						}
+>>>>>>> parent of 9338c55... Update index.php
 						
 					}
 		       	}
@@ -1338,7 +1377,7 @@
 	       curl_close($ch);
 	       return $result;
 		}
- 
+
 		function eventCreate(){}
 
 		function eventEdit(){}

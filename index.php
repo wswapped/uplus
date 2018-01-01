@@ -469,6 +469,63 @@
 						</li>';
 						
 					}
+
+					$sqlEvents = $eventDb->query("SELECT * FROM akokanya");
+					
+					while($rowEvents = mysqli_fetch_array($sqlEvents))
+					{
+						
+						$groupID = $row['id'];
+						$groupName = $row["name"];
+						$groupImage = $row["groupImage"];
+						$targetAmount = 1000;
+						$likes = round($row['likes']);
+						$adminPhone = $row['adminPhone'];
+						$groupDescription = $row['details'];
+						
+						$currentAmount = rand(100,1000);
+						$prog = $currentAmount*100/$targetAmount;
+						$prog = round($prog);
+						if($prog < 10){$size=10;} else{$size=$prog;}
+					echo'<li>
+							<div class="md-card" style="border-radius: 5px;">
+								<div class="md-card-content padding-reset">
+									
+									<div class="cont-image" style="background-image: url(proimg/6.jpg); border-radius: 5px 5px 0 0;">
+										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url('.$groupImage.');"></div>
+									</div>
+									
+									<div id="heart'.$groupID.'">
+										<i class="uk-icon-heart uk-icon-medium md-color-white heart">
+											<div id="likes'.$groupID.'" class="likesCount">
+												<span class="likes" onclick="likeit(likes='.$likes.', likeid='.$groupID.')">'.$likes.'</span>
+											</div>
+										</i>
+									</div>
+									
+									
+									<a class="fundname" href="f/i'.$row['id'].'">
+										<h4 class="fundtitle">'.$groupName.'</h4>
+									</a>
+									
+								</div>
+								<div class="progress" style="border-radius: 0px;">
+									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="'.$prog.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$size.'%;">
+									  '.$prog.'%
+									</div>
+								</div>
+								<div class="raisedNow">Collected '.number_format($currentAmount).' Rwf </div> 
+								<div class="md-card-content" style="min-height: 74px;">
+									';?>
+								<?php echo "This".$groupDescription;?>
+							<?php
+							echo'
+								</div>
+							</div>
+							<br>
+						</li>';
+						
+					}
 				echo '</ul>';	
 					if($countresults > 9){
 						echo '<center><button class="btn btn-success">See More Contributions</button></center>';
@@ -480,6 +537,12 @@
     </section>
 
     <section  id="sect-team" class="section" style="text-align: center;">
+    <?php 
+    	$sqlEvents = $eventDb->query("SELECT * FROM akokanya");
+					
+		while($rowEvents = mysqli_fetch_array($sqlEvents))
+		{}
+    ?>
         <h1 style="margin-bottom: 30px;">Use uplus from your phone</h1>
         <p style="margin-bottom: 30px;font-size: 18px;font-weight: 100;">We guarantee, you will enjoye this app to the maximum. It’s that good!</p>
     <a href="https://play.google.com/store/apps/details?id=info.androidhive.uplus" style="display: inline-block;-moz-background-size: cover;background-size: cover;background-position: center;background-repeat: no-repeat;width: 168px;height: 49px;background-image:url(frontassets/img/playstore.png);"></a>
