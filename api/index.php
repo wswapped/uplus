@@ -1331,6 +1331,7 @@
 						$counting = $events["counting"]??"";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 						//Dates formatting
 						$from_time = date("Y-m-d", strtotime($from_time));
 						$to_time = date("Y-m-d", strtotime($to_time));
@@ -1351,6 +1352,8 @@
 						if(!$query) echo("status:0, msg:".mysqli_error($eventDb));
 						else echo("status:1, msg: Event inserted\n");
 =======
+=======
+>>>>>>> parent of 9338c55... Update index.php
 
 						//Checking if event exists in DB already
 						$query = $eventDb->query("SELECT * FROM akokanya WHERE code = \"$code\" ");
