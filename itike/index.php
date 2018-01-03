@@ -10,7 +10,7 @@ else
 $userid = $_SESSION['user_id'];
 
 include("dbconnect.php");
-$selectevent = $db->query("SELECT * FROM events") or die(mysqli_error($db));
+$selectevent = $eventDb->query("SELECT * FROM events") or die(mysqli_error($db));
  ?>
  <!DOCTYPE html>
  <html>

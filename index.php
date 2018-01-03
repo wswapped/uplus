@@ -49,7 +49,7 @@
 
 		function foo(){ console.log("Callback"); }
 	</script>
-<link rel="stylesheet" href="frontassets/css/login.css" />
+	<link rel="stylesheet" href="frontassets/css/login.css" />
 	<link rel="stylesheet" href="frontassets/css/bootstrap.css">
 	<style type="text/css">
 		#header_main .uk-navbar-nav > li > a {
@@ -347,15 +347,15 @@
         <div class="uk-container uk-container-center">
 			<h4 class="heading_b" style="padding: 0px 0 15px 0px;">
 					Public Contributions  <input style="float: right;
-    width: 322px;    border-radius: 30px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    padding: 0 15px;
-    color: #000;
-    font-weight: 100;
-    outline: none;
-    margin: 10px auto;
-    " type="" name="" placeholder="Search For your Contribution">
+				    width: 322px;    border-radius: 30px;
+				    font-size: 18px;
+				    border: 1px solid #ccc;
+				    padding: 0 15px;
+				    color: #000;
+				    font-weight: 100;
+				    outline: none;
+				    margin: 10px auto;
+				    " type="" name="" placeholder="Search For your Contribution">
 			</h4>
 			<div>
 				<ul class="uk-navbar-nav">
@@ -470,54 +470,47 @@
 						
 					}
 
-					$sqlEvents = $eventDb->query("SELECT * FROM akokanya");
+					$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE status = 0");
 					
 					while($rowEvents = mysqli_fetch_array($sqlEvents))
 					{
+						$eventId 		= $rowEvents['id'];
+						$eventName 		= $rowEvents["name"];
+						$eventImage 	= $rowEvents["file1"];
+						$eventDesc		= $rowEvents['details'];
+						$eventStart		= $rowEvents['to_time'];
+						$allSeats		= $rowEvents['available_place'];
+						$boockedSeats	= $rowEvents['counting'];
+						$eventLocation	= $rowEvents['location'];
 						
-						$groupID = $row['id'];
-						$groupName = $row["name"];
-						$groupImage = $row["groupImage"];
-						$targetAmount = 1000;
-						$likes = round($row['likes']);
-						$adminPhone = $row['adminPhone'];
-						$groupDescription = $row['details'];
-						
-						$currentAmount = rand(100,1000);
-						$prog = $currentAmount*100/$targetAmount;
+						$prog = $boockedSeats*100/$allSeats;
 						$prog = round($prog);
 						if($prog < 10){$size=10;} else{$size=$prog;}
 					echo'<li>
 							<div class="md-card" style="border-radius: 5px;">
+								<a href="f/e'.$eventId.'">
 								<div class="md-card-content padding-reset">
 									
 									<div class="cont-image" style="background-image: url(proimg/6.jpg); border-radius: 5px 5px 0 0;">
-										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url('.$groupImage.');"></div>
-									</div>
-									
-									<div id="heart'.$groupID.'">
-										<i class="uk-icon-heart uk-icon-medium md-color-white heart">
-											<div id="likes'.$groupID.'" class="likesCount">
-												<span class="likes" onclick="likeit(likes='.$likes.', likeid='.$groupID.')">'.$likes.'</span>
-											</div>
-										</i>
+										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(http://akokanya.com/'.$eventImage.');"></div>
 									</div>
 									
 									
-									<a class="fundname" href="f/i'.$row['id'].'">
-										<h4 class="fundtitle">'.$groupName.'</h4>
+									<a class="fundname" href="f/e'.$eventId.'">
+										<h4 class="fundtitle">'.$eventName.' </h4>
 									</a>
 									
 								</div>
+								</a>
 								<div class="progress" style="border-radius: 0px;">
 									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="'.$prog.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$size.'%;">
 									  '.$prog.'%
 									</div>
 								</div>
-								<div class="raisedNow">Collected '.number_format($currentAmount).' Rwf </div> 
+								<div class="raisedNow">At '.$eventLocation.' on '.$eventStart.'</div> 
 								<div class="md-card-content" style="min-height: 74px;">
 									';?>
-								<?php echo "This".$groupDescription;?>
+								<?php echo $eventDesc;?>
 							<?php
 							echo'
 								</div>
@@ -527,9 +520,7 @@
 						
 					}
 				echo '</ul>';	
-					if($countresults > 9){
-						echo '<center><button class="btn btn-success">See More Contributions</button></center>';
-					}
+					
 				?>
 			<br>
         </div>

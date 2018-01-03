@@ -12,10 +12,10 @@ $userid = $_SESSION['user_id'];
 include("dbconnect.php");
 
 $eventis_selected = $_GET['event'];
-$select_detail_eve = mysql_query("SELECT * FROM transaction WHERE cust_event_choose LIKE '$eventis_selected' ") or die("error please in selecting transaction".mysql_error());
+$select_detail_eve = $eventDb->query("SELECT * FROM transaction WHERE cust_event_choose LIKE '$eventis_selected' ") or die("error please in selecting transaction".mysqli_error());
 
-$select_event = mysql_query("SELECT * FROM events WHERE id_event LIKE '$eventis_selected'");
-$fetch_event = mysql_fetch_assoc($select_event);
+$select_event = $eventDb->query("SELECT * FROM events WHERE id_event LIKE '$eventis_selected'");
+$fetch_event = mysqli_fetch_assoc($select_event);
 $event_cover = $fetch_event['Event_Cover'];
 
  ?>
@@ -72,7 +72,7 @@ $event_cover = $fetch_event['Event_Cover'];
       <div style="border:1px solid #444; max-width:100%;overflow:hidden;padding:10%;">
         <?php
           $sum = 0;
-          while($fetch_detail_eve = mysql_fetch_assoc($select_detail_eve))
+          while($fetch_detail_eve = mysqli_fetch_assoc($select_detail_eve))
           {
            $event_id = $fetch_detail_eve['cust_event_choose'];
            $amount_paid = $fetch_detail_eve['amount'];

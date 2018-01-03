@@ -15,7 +15,7 @@
 		}
 		else
 		{
-			echo 'UPLUS API V01';
+			echo 'UPLUS API V02';
 		}
 	// END INITIATE
 
@@ -525,7 +525,7 @@
 		{
 			require('db.php');
 			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
-			$sqlMembers = $db->query("SELECT memberImage, `groupId`, targetAmount,`syncstatus`, `groupName`, `groupTargetType`, `perPersonType`, `targetAmount`, `perPerson`, `adminId`, `adminName`, `groupDesc`, `memberId`, `memberPhone`, COALESCE(`memberName`, `memberPhone`) `memberName`, memberDate, memberType FROM `members` WHERE groupId = '$groupId'") or die(mysqli_error());
+			$sqlMembers = $db->query("SELECT memberImage, groupId, targetAmount, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc, memberId, memberPhone, COALESCE(`memberName`, `memberPhone`) `memberName`, memberDate, memberType FROM `members` WHERE groupId = '$groupId' ORDER BY memberType DESC") or die(mysqli_error());
 			$members 	= array();
 			$NumOfMembers = mysqli_num_rows($sqlMembers);
 			$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
@@ -810,7 +810,7 @@
 			mysqli_close($db);
 			mysqli_close($outCon);
 		}
-			
+
 		function checkcontributionstatus()
 		{
 			require('db.php');
@@ -881,8 +881,8 @@
 						 		"recipients"	=>$recipients,
 						 		"message"		=>$message,
 						 	);
-					 	// include 'sms.php';
-					 	// if($httpcode == 200){}
+					 	//include 'sms.php';
+					 	//if($httpcode == 200){}
 
 						// Bwiuld the answel
 						$returnedinformation    = array();   
@@ -1212,28 +1212,51 @@
 			mysqli_close($outCon);
 		}
 
-		function vote()
+		function voteTreasurer()
 		{
+			include 'db.php';
 			$groupId 	= $_POST['groupId'];
 			$memberId 	= $_POST['memberId'];
 			$votedId1 	= $_POST['votedId1'];
 			$votedId2 	= $_POST['votedId2'];
 			$votedId3 	= $_POST['votedId3'];
 
-			// INSERT A VOTE
-
-			/* CHECK IF VOTERS OF SAME ID ARE 50% THAN THE TOTAL NUMBER OF MEMBERS
-				IF YES 
-					THEN GET THE
-			*/
-			require('db.php');
+			$results	= array();
+			header('Content-Type: application/json');
+			//CHECK IF THIS MEMBER NEVER VOTED BEFORE
+			if(mysqli_num_rows($db->query("SELECT id FROM treasurervotes WHERE createdBy = '$memberId'"))>0)
+			{
+				$results[] = array(
+					       	"status" => "You have voted before"
+					    );
+			}
+			else
+			{
+				if($db->query("INSERT INTO treasurervotes(groupId, votedId, createdBy)
+					 VALUES 
+					 ('$groupId','$votedId1','$memberId'),
+					 ('$groupId','$votedId2','$memberId'),
+					 ('$groupId','$votedId3','$memberId')"))
+				{
+					$url = 'http://localhost:8080/uplus/api/service.php?condition=70&&groupId=79&&voteResults';
+					$options = array(
+						'http' => array(
+						)
+					);
+					$context  = stream_context_create($options);
+					$result = file_get_contents($url, false, $context);
+					
+					$results[] = array(
+					       	"status" => "Your vote has been casted"
+					    );
+				}
+			}
+			echo json_encode($results);
 			mysqli_close($db);
-			mysqli_close($outCon);
 		}
 	// END GROUPS
 
 	// START EVENT
-
 		function eventList()
 		{
 			include("db.php");
@@ -1363,14 +1386,17 @@
 
 		function eventRemove(){}
 
-		function eventBook(){}
+		function eventBook()
+		{}
 
-		function eventChecout(){}
+		function eventChecout()
+		{}
 
-		function eventStatus(){}
+		function eventStatus()
+		{}
 
-		function eventTransactions(){}
-
+		function eventTransactions()
+		{}
 	// END EVENT
 
 	// START TRANSFERS

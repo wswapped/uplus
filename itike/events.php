@@ -9,7 +9,7 @@ if(!isset($_SESSION['user_id']))
 else
 {
 $userid = $_SESSION['user_id'];
-$select_user = $db->query("SELECT * FROM users WHERE user_id LIKE $userid") or die("error please in user selection".mysqli_error());
+$select_user = $eventDb->query("SELECT * FROM users WHERE user_id LIKE $userid") or die("error please in user selection".mysqli_error());
 $fetchuser = mysqli_fetch_assoc($select_user);
 	$status = $fetchuser['status'];
 	$phone = $fetchuser['phone'];

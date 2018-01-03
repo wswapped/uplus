@@ -17,7 +17,7 @@ if (isset($_POST['username']) && isset($_POST['password']))
 	{
 		require_once("dbconnect.php");
 		$query = "SELECT user_id FROM users WHERE phone LIKE '$username' AND password LIKE '$password'";
-		if ($query_run = $db->query($query) or die("error please in seller account select".mysqli_error())) 
+		if ($query_run = $eventDb->query($query) or die("error please in seller account select".mysqli_error())) 
 		{
 			$query_num_row = mysqli_num_rows($query_run);
 			if ($query_num_row == 0) 
@@ -27,9 +27,9 @@ if (isset($_POST['username']) && isset($_POST['password']))
 			elseif($query_num_row ==1)
 			{
 				$userArray = mysqli_fetch_array($query_run);
-					$user_id = $userArray['user_id'];
-					echo $_SESSION['user_id'] = $user_id;
-					header('location:events.php');
+				$user_id = $userArray['user_id'];
+				echo $_SESSION['user_id'] = $user_id;
+				header('location:events.php');
 			}
 		}
 	}

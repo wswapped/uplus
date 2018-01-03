@@ -1,4 +1,4 @@
-UPLUS API V1.0 DOCUMENTATION
+UPLUS API V1.1 DOCUMENTATION
 
 --START ACCOUNTS--
 	signup
@@ -153,6 +153,17 @@ UPLUS API V1.0 DOCUMENTATION
 			vote
 		<-
 			msg (string[info])
+
+	voteTreasurer
+		->
+			groupId
+			memberId
+			votedId1
+			votedId2
+			votedId3
+		<-
+			msg (array[status])
+
 --END GROUPS--
 
 --START TRANSFERS--
@@ -179,5 +190,27 @@ UPLUS API V1.0 DOCUMENTATION
 --END TRANSFERS--	
 
 --START EVENTS--
+	eventList
+		->
+			null
+		<-
+			eventId
+			eventName 
+			eventDesc 
+			eventCover
+			eventLocatio
+			eventContact
+			eventStart
+			eventEnd
+			eventActive
+			eventTickets
+				seatPrice
+				ticketName
+				availableSeats
 
+	eventUpdate
+		->
+			null
+		<-
+			null
 --END EVENTS--

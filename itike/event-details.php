@@ -12,13 +12,13 @@ else
 	include("dbconnect.php");
 	 $eventid = $_GET['id'];
 
-	$selecteventd = mysql_query("SELECT * FROM events WHERE id_event = '$eventid'") or die("error please".mysql_error());
-		$fetcheve = mysql_fetch_assoc($selecteventd);
+	$selecteventd = $eventDb->query("SELECT * FROM events WHERE id_event = '$eventid'") or die("error please".mysqli_error());
+		$fetcheve = mysqli_fetch_assoc($selecteventd);
 		  $event_id = $fetcheve['id_event'];
 		  $event_name = $fetcheve['Event_Name'];
 		  $event_profile = $fetcheve['Event_Cover'];
 
-		  $select_ev_pricing = mysql_query("SELECT * from eventing_pricing WHERE event_code LIKE '$event_id'");
+		  $select_ev_pricing = $eventDb->query("SELECT * from eventing_pricing WHERE event_code LIKE '$event_id'");
 ?>
  <!DOCTYPE html>
  <html>
@@ -52,11 +52,11 @@ else
 	 				<label>Price:</label>  
 	 				<select id="ibyiciro">
 	 					<?php
-	 						while($fetch_ev_code = mysql_fetch_assoc($select_ev_pricing))
+	 						while($fetch_ev_code = mysqli_fetch_assoc($select_ev_pricing))
 	 						{
 	 							$pricing_code = $fetch_ev_code['pricing_code'];
-	 							$select_price = mysql_query("SELECT * FROM pricing WHERE pricing_id LIKE '$pricing_code'");
-	 							$fetch_price = mysql_fetch_assoc($select_price);
+	 							$select_price = $eventDb->query("SELECT * FROM pricing WHERE pricing_id LIKE '$pricing_code'");
+	 							$fetch_price = mysqli_fetch_assoc($select_price);
 	 							 $pricing_id = $fetch_price['pricing_id'];
 	 							 $price = $fetch_price['price'];
 	 							 $event_property = $fetch_price['event_property'];

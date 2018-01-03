@@ -10,7 +10,7 @@ else
 {
 $userid = $_SESSION['user_id'];
 include("dbconnect.php");
-$selectransact = mysql_query("SELECT * FROM transaction  WHERE user_id LIKE '$userid'") or die("error in selecting of the events");
+$selectransact = $eventDb->query("SELECT * FROM transaction  WHERE user_id LIKE '$userid'") or die("error in selecting of the events");
  ?>
  <!DOCTYPE html>
  <html>
@@ -57,8 +57,8 @@ $selectransact = mysql_query("SELECT * FROM transaction  WHERE user_id LIKE '$us
 </div>
  <div  style="margin:0;padding:3% 3% 3% 10%; max-width:100%;overflow:hidden;margin-left:17%;  ">
  <?php
-    $select_event = mysql_query("SELECT * FROM events WHERE user_id LIKE $userid");
-      while($fetch_event = mysql_fetch_assoc($select_event))
+    $select_event = $eventDb->query("SELECT * FROM events WHERE user_id LIKE $userid");
+      while($fetch_event = mysqli_fetch_assoc($select_event))
       {
         $event_id = $fetch_event['id_event'];
         $event_name = $fetch_event['Event_Name'];

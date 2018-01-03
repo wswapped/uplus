@@ -9,7 +9,7 @@ else
 {
 $userid = $_SESSION['user_id'];
 include("dbconnect.php");
-$selectevent = $db->query("SELECT * FROM Events") or die("error in selecting of the events");
+$selectevent = $eventDb->query("SELECT * FROM Events") or die("error in selecting of the events");
  ?>
  <!DOCTYPE html>
  <html>
@@ -67,17 +67,17 @@ $selectevent = $db->query("SELECT * FROM Events") or die("error in selecting of 
 	 			</div>
 	 			<div style="height:54px; background-color:#fff;max-width:100%; color:#fff;padding-top:15px; padding-left:5px;padding-right:5px;border-top:1px solid #333;">
 	 				<?php
-	 				$selectdetail = $db->query("SELECT * FROM eventing_pricing WHERE event_code LIKE '$eventid'") or die("error in selecting of the events");
+	 				$selectdetail = $eventDb->query("SELECT * FROM eventing_pricing WHERE event_code LIKE '$eventid'") or die("error in selecting of the events");
 	 				while($fetchdetail = mysqli_fetch_assoc($selectdetail))
 	 				{
 	 					//This is seats (ID)  for this event
 	 					$seatnumber = $fetchdetail['pricing_code']; 
 	 					// require of the selecting all from transaction  when event->property->ID (seats' place selected to sit ) 
-	 					$selectrrrr = $db->query("SELECT * FROM transaction WHERE cust_event_seats = '$seatnumber'");
+	 					$selectrrrr = $eventDb->query("SELECT * FROM transaction WHERE cust_event_seats = '$seatnumber'");
 	 					// numbers of the rows that count event->property-> hs been purchased
 	 					$bought = mysqli_num_rows($selectrrrr);
 	 					// require for selecting event seats  from priving  when pricng id equal to seats ID
-	 					$sqlpricing = $db->query("SELECT event_seats,event_property FROM pricing WHERE pricing_id ='$seatnumber'") or mysqli_error();
+	 					$sqlpricing = $eventDb->query("SELECT event_seats,event_property FROM pricing WHERE pricing_id ='$seatnumber'") or mysqli_error();
 	 					// require for  fetching data from events above sqlquery
 	 					$row = mysqli_fetch_array($sqlpricing);
 	 					// This is number of the seats are provided for  this events and especial this property

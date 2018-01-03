@@ -10,21 +10,21 @@ else
 {
 $userid = $_SESSION['user_id'];
 include("dbconnect.php");
-$selectransact = mysql_query("SELECT * FROM transaction  WHERE user_id LIKE '$userid'") or die("error in selecting of the events");
+$selectransact = $eventDb->query("SELECT * FROM transaction  WHERE user_id LIKE '$userid'") or die("error in selecting of the events");
 $eventis_selected = $_GET['event'];
-$select_detail_eve = mysql_query("SELECT * FROM transaction WHERE cust_event_choose LIKE '$eventis_selected' AND user_id LIKE '$userid'") or die("error please in selecting transaction".mysql_error());
+$select_detail_eve = $eventDb->query("SELECT * FROM transaction WHERE cust_event_choose LIKE '$eventis_selected' AND user_id LIKE '$userid'") or die("error please in selecting transaction".mysql_error());
 
-$fetch_detail_eve = mysql_fetch_assoc($select_detail_eve);
+$fetch_detail_eve = mysqli_fetch_assoc($select_detail_eve);
 $event_id = $fetch_detail_eve['cust_event_choose'];
 $custom_pay_phone = $fetch_detail_eve['cust_pay_phone'];
 $amount = $fetch_detail_eve['amount'];
 $cust_event_seatid = $fetch_detail_eve['cust_event_seats'];
-  $select_pricing = mysql_query("SELECT * FROM pricing WHERE pricing_id LIKE '$cust_event_seatid'");
-  $fetch_pricing = mysql_fetch_assoc($select_pricing);
+  $select_pricing = $eventDb->query("SELECT * FROM pricing WHERE pricing_id LIKE '$cust_event_seatid'");
+  $fetch_pricing = mysqli_fetch_assoc($select_pricing);
   $event_property = $fetch_pricing['event_property'];
 
-  $selectevent = mysql_query("SELECT * FROM events WHERE id_event LIKE '$event_id'");
-  $fetchevent = mysql_fetch_assoc($selectevent);
+  $selectevent = $eventDb->query("SELECT * FROM events WHERE id_event LIKE '$event_id'");
+  $fetchevent = mysqli_fetch_assoc($selectevent);
   $event_cover = $fetchevent['Event_Cover'];
   $event_name = $fetchevent['Event_Name'];
   $event_date = $fetchevent['date_happ'];

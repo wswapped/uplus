@@ -25,18 +25,18 @@ $error = array();
 				move_uploaded_file($file_tmp, 'images/'.$file_name);
 
 				//mysql_query for inserting of the events
-				$insert_events = mysql_query("INSERT INTO events (id_event, Event_Name, Event_Cover, phone, date_happ, user_id) VALUES('','$names','$images_cover','$phone','$date','$user_id')");
-				 $event_last_id =mysql_insert_id($con);
+				$insert_events = $eventDb->query("INSERT INTO events (id_event, Event_Name, Event_Cover, phone, date_happ, user_id) VALUES('','$names','$images_cover','$phone','$date','$user_id')");
+				 $event_last_id =mysqli_insert_id($insert_events);
 
 				for($i = 0; $i < count($pro1); $i++)
 				{
 					// mysql_query for inserting of the pricing 
-					$insert_pricing = mysql_query("INSERT INTO pricing (pricing_id, price, event_property, event_seats)
-					 			VALUES('','$pric1[$i]','$pro1[$i]','$seat1[$i]')")	or die("error please in pricing insert".mysql_error());
+					$insert_pricing = $eventDb->query("INSERT INTO pricing (pricing_id, price, event_property, event_seats)
+					 			VALUES('','$pric1[$i]','$pro1[$i]','$seat1[$i]')")	or die("error please in pricing insert".mysqli_error());
 
-					 $pricing_last_id =mysql_insert_id($con);
+					 $pricing_last_id =mysqli_insert_id($insert_pricing);
 
-					mysql_query("INSERT INTO eventing_pricing (event_code, pricing_code) VALUES($event_last_id,$pricing_last_id)") or die("error please".mysql_error());
+					$eventDb->query("INSERT INTO eventing_pricing (event_code, pricing_code) VALUES($event_last_id,$pricing_last_id)") or die("error please".mysqli_error());
 				} 
 
 
