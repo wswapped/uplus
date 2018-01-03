@@ -476,7 +476,7 @@
 					{
 						$eventId 		= $rowEvents['id'];
 						$eventName 		= $rowEvents["name"];
-						$eventImage 	= $rowEvents["file1"];
+						$eventImage 	= $rowEvents["file2"];
 						$eventDesc		= $rowEvents['details'];
 						$eventStart		= $rowEvents['to_time'];
 						$allSeats		= $rowEvents['available_place'];
