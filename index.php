@@ -470,7 +470,7 @@
 						
 					}
 
-					$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE status = 0");
+					$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE status");
 					
 					while($rowEvents = mysqli_fetch_array($sqlEvents))
 					{
