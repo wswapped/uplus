@@ -4,7 +4,7 @@
    
   <div class="page-content container-fluid">
     <div class="row">
-      <div class="col-lg-9 col-sm-9">
+      <div class="col-lg-12 col-sm-12">
 	    <div class="row">
 			<!--<div class="col-md-12 col-xs-12 masonry-item ">
 				 Widget 
@@ -106,7 +106,7 @@
 			</div>
         </div>
       </div>
-      <div class="col-lg-3 col-sm-3">
+      <!-- <div class="col-lg-3 col-sm-3">
         <div class="qa-message-list" id="wallmessages">
           <div class="message-item" id="m3">
             <div class="message-inner">
@@ -137,7 +137,7 @@
             </div>
           </div>
 		</div>
-      </div>
+      </div> -->
     </div>
   </div>
   
