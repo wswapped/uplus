@@ -157,11 +157,11 @@ while ($row = mysqli_fetch_array($sql)) {
 	}
 		
 	if ($status=='Pending') {
-		$hstatus='<th style="background: #fbbc03;">'.$row['status'].'</th>';
+		$hstatus='<th style="background: #fbbc03;">'.$status.'</th>';
 	}elseif ($status=='Successfull') {
-		$hstatus='<th style="background: #36a753;">'.$row['status'].'</th>';
+		$hstatus='<th style="background: #36a753;">'.$status.'</th>';
 	}elseif ($status=='Failed') {
-		$hstatus='<th style="background: #eb4435;">'.$row['status'].'</th>';
+		$hstatus='<th style="background: #eb4435;">'.$status.'</th>';
 	}else{
 		$hstatus='<th style="background: #000; color: #fff";>Low Bal</th>';
 	}
