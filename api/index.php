@@ -1397,6 +1397,31 @@
 
 		function eventTransactions()
 		{}
+
+		function eventTicketsList()
+		{
+			include 'db.php';
+			$eventId 		= mysqli_real_escape_string($db, $_POST['eventId']);
+			$sqlTicketsList = $eventDb->query("
+				SELECT T.ticketCode, T.status, T.amount, P.event_property ticketType
+				FROM transaction T
+				INNER JOIN pricing P
+				ON T.cust_event_seats = P.pricing_id
+				WHERE cust_event_choose = '$eventId' AND paidStatus IS NOT NULL");
+			$ticktes = array();
+			while ($rowTicketsList = mysqli_fetch_array($sqlTicketsList)) {
+				$ticktes[] = array(
+				   "ticketCode"		=> $rowTicketsList['ticketCode'],
+				   "ticketType"		=> $rowTicketsList['ticketType'],
+				   "ticketStatus"	=> $rowTicketsList['status'],
+				   "ticketAmount"	=> $rowTicketsList['amount']
+				);
+			}
+			mysqli_close($db);
+			mysqli_close($outCon);	
+			header('Content-Type: application/json');
+			echo $ticktes = json_encode($ticktes);
+		}
 	// END EVENT
 
 	// START TRANSFERS

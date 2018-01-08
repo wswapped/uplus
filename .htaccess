@@ -5,6 +5,7 @@ RewriteEngine On
 
 RewriteRule ^home test.php [NC,L]
 RewriteRule ^events events.php [NC,L]
+RewriteRule ^newevent newevent.php [NC,L]
 RewriteRule ^ikimina ikimina.php [NC,L]
 RewriteRule ^accounts accounts.php [NC,L]
 RewriteRule ^contAdmin contAdmin.php [NC,L]

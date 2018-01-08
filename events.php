@@ -132,11 +132,11 @@ WHERE E.user_id ='$thisid' GROUP BY E.id_event");
 		  <!-- Panel Wizard Form -->
 			<div class="panel-body ">
 			 <!-- Wizard Content -->
+			<form id="eventForm" action="scripts/newevent.php" method="POST">
 				<div class="wizard-pane active" id="exampleAccount" role="tabpanel">
 					<div id="exampleAccountForm">
 						<div id="stepFill">
-							
-							<input hidden id="step" value="info">
+							<input id="step" hidden value="info">
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="eventTitle">Event Title:</label>
@@ -156,31 +156,64 @@ WHERE E.user_id ='$thisid' GROUP BY E.id_event");
 								<input type="date" class="form-control" required name="eventEnding" id="eventEnding">
 							</div>
 						</div>
-						<!-- 
-						<div class="row">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label class="control-label" for="ticketName">Ticket</label>
-									<input type="text" class="form-control" id="ticketName" required name="groupName" placeholder=""/> 
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label class="control-label" for="ticketPrice">Price</label>
-									<input type="text" class="form-control" id="groupName" required name="groupName" placeholder=""/> 
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label class="control-label" for="ticketSeats">Seats</label>
-									<input type="text" class="form-control" id="ticketSeats" required name="groupName" placeholder=""/> 
-								</div>
-							</div>
-							<div class="col-md-2"><br/>Add</div>
-						</div> -->
 						<br>
 					</div>
 				</div>
+				<div class="wizard-pane" id="exampleBilling" role="tabpanel">
+					<div id="exampleBillingForm">
+						<div class="row" id="moreTickets">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="control-label" for="ticketName1[]">Ticket</label>
+									<input type="text" class="form-control" id="ticketName1[]" required name="ticketName1[]" placeholder="eg: VIP"/> 
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label class="control-label" for="ticketPrice1[]">Price</label>
+									<input type="number" class="form-control" id="ticketPrice1[]" required name="ticketPrice1[]" placeholder="RWF"/> 
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label class="control-label" for="ticketSeats1[]">Seats</label>
+									<input type="number" class="form-control" id="ticketSeats1[]" required name="ticketSeats1[]" placeholder="eg: 10"/> 
+								</div>
+							</div>
+							<div class="col-md-2">
+								<label class="control-label" for="addTicket">Action</label>
+								<button class="btn btn-default btn-sm" id="addTicket">Add</button>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-lg-6 col-sm-6">
+							    <label class="control-label margin-bottom-15" for="withdrawAccount">Account Holder:</label>
+							    <select class="form-control" id="withdrawAccount" required name="withdrawAccount">
+							    	<option>--Select--</option>
+							    	<?php 
+							    		$sqlBank = $outCon->query("SELECT * FROM banks");
+							    		while($rowBank = mysqli_fetch_array($sqlBank))
+							    		{
+							    			echo '<option>'.$rowBank['name'].'</option>';
+							    		}
+							    	?>
+							    </select>
+							    <br/>
+							</div>
+							<div class="col-lg-6 col-sm-6">
+							    <label class="control-label margin-bottom-15" for="withdrawAccountNo">Account</label>
+							    <input type="text" class="form-control" id="withdrawAccountNo" name="withdrawAccountNo"/><br/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="wizard-pane" id="exampleGetting" role="tabpanel">
+					<div id="invite">
+						
+					</div>
+				</div>
+			</form>
 			 <!-- End Wizard Content -->
 			</div>
 		  <!-- End Panel Wizard One Form -->
@@ -202,8 +235,7 @@ WHERE E.user_id ='$thisid' GROUP BY E.id_event");
    
 <?php include('template/notifications.php');?>
  
-  
-	<script src="assets/js/ajax_call.js"></script>
+  <script src="assets/js/ajax_call.js"></script>
 
   <!-- Core  -->
   <script src="assets/global/vendor/jquery/jquery.min.js"></script>
@@ -239,132 +271,50 @@ WHERE E.user_id ='$thisid' GROUP BY E.id_event");
 
   <script src="assets/examples/js/forms/wizard.min.js"></script>
   <script src="assets/examples/js/forms/advanced.min.js"></script>
-  
- <script>
-function getContType(groupType)
-{
-	var groupType =$("#groupType").val();
-	if (groupType == "CONTRIBUTOIN")
-	{
-		document.getElementById('contributionType').innerHTML = '<label class="control-label margin-bottom-15" for="contType">Contribution Type:</label><select class="form-control round" id="contType" name="contType" required="required"><option></option><option value="fixed">ONCE-OFF.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eg: wedding, funerals...</option><option value="periodical">RECURRING.&nbsp;&nbsp;&nbsp;&nbsp;eg: Church tithe, Umutekano...</option></select><br/>';
-	}
-	else
-	{
-		document.getElementById('contributionType').innerHTML = '<input id="contType" hidden name="contType" value="none">';
-	};
-}
- </script>
+ 
 <script>
  //  GROUP CREATION
 
 	//1 Pass Info Then Finance // 2 Pass Finance Then Invite
 function nexttoaccounts(){
 	var step = document.getElementById('step').value;
-	//alert (step);
+	alert (step);
 	if(step == 'info')
 	{
-		var groupType = document.getElementById('groupType').value;
-		  if (groupType == null || groupType == "") {
+		var eventTitle = document.getElementById('eventTitle').value;
+		  if (eventTitle == null || eventTitle == "") {
 				//alert("groupType must be filled out");
 				return false;
 			}
-		  var contType = document.getElementById('contType').value;
-		  if (contType == null || contType == "") {
+		  var eventLocation = document.getElementById('eventLocation').value;
+		  if (eventLocation == null || eventLocation == "") {
 				//alert("contType must be filled out");
 				return false;
 			}
-		  var groupName = document.getElementById('groupName').value;
-		  if (groupName == null || groupName == "") {
-				//alert("groupName must be filled out");
-				return false;
-			}
-		  var groupDesc = document.getElementById('groupDesc').value;
-		  if (groupDesc == null || groupDesc == "") {
-				//alert("groupDesc must be filled out");
-				return false;
-			}
-		  var thisId = document.getElementById('thisId').value;
-		  var adminName = document.getElementById('adminName').value;
-		  var adminPhone = document.getElementById('adminPhone').value;
-		  if(groupType == 'IKIMINA'){
-		  document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="2aIkiminaFinance">'
-		  }
-		  else if(groupType == 'CONTRIBUTOIN' && contType == 'periodical'){
-			document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="2bContributionTitheFinance">'
-		  }
-		  else if(groupType == 'CONTRIBUTOIN' && contType == 'fixed'){
-			document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="2cContributionWedding">'
-		  }
-		  else if(groupType == 'INVESTMENT'){
-			document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="2dInvestmentFinance">'
-		  }
-		document.getElementById('finance').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
+		  var eventStarting = document.getElementById('eventStarting').value;
+		  
+		  var eventEnding = document.getElementById('eventEnding').value;
+		  document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="finance">'
+		  
+			document.getElementById('finance').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
 	
-		  //alert (groupType);
-			$.ajax({
-			  type : "GET",
-			  url : "scripts/newgroup.php",
-			  dataType : "html",
-			  cache : "false",
-			  data : {
-				
-				groupType : groupType,
-				contType : contType,
-				groupName : groupName,
-				groupDesc : groupDesc,
-				thisId : thisId,
-				adminName : adminName,
-				adminPhone : adminPhone
-			  },
-			  success : function(html, textStatus){
-				$("#finance").html(html);
-			  },
-			  error : function(xht, textStatus, errorThrown){
-				alert("Error : " + errorThrown);
-			  }
-		  });
 	}
-////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 	
 	//2.a Pass IKIMINA Finance Then Invite people
-	else if(step == '2aIkiminaFinance')
+	else if(step == 'finance')
 	{
-		//alert("INVITE FOR IKIMINA");
-		 var contributionAmount = document.getElementById('contributionAmount').value;
-		  if (contributionAmount == null || contributionAmount == "") 
-		  {
-				alert("contributionAmount must be filled out");
-				return false;
-			}
-		  var transactionDays = document.getElementById('transactionDays').value;
-		  if (transactionDays == null || transactionDays == "") {
-				alert("transactionDays must be filled out");
-				return false;
-			}
-		  var startingDate = document.getElementById('startingDate').value;
-		  if (startingDate == null || startingDate == "") {
-				alert("startingDate must be filled out");
-				return false;
-			}
-		  var Saving = document.getElementById('Saving').value;
-		  if (Saving == null || Saving == "") {
-				alert("Saving must be filled out");
-				return false;
-			}
-		  
-		  document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="3aIkiminaInvite">';
+		
+		  document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="confirm">';
 		  document.getElementById('invite').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
 		  $.ajax({
 			  type : "GET",
-			  url : "scripts/newgroup.php",
+			  url : "scripts/newevent.php",
 			  dataType : "html",
 			  cache : "false",
 			  data : {
 				
-				contributionAmount : contributionAmount,
-				transactionDays : transactionDays,
-				startingDate : startingDate,
-				Saving : Saving
+				page : "finance"
 			  },
 			  success : function(html, textStatus){
 				$("#invite").html(html);
@@ -373,176 +323,62 @@ function nexttoaccounts(){
 				alert("Error : " + errorThrown);
 			  }
 		  });
-
 	}
-	
-	//2.b Pass TIGHT Finance Then Invite people
-	else if(step == '2bContributionTitheFinance')
+	/////////////////////////////////////////////////////////////////
+}
+function finishGroup(){
+	alert("Submiting the form");
+	document.forms["eventForm"].submit();
+}
+function backtoaccounts(){
+	var step = document.getElementById('step').value;
+	//alert (step);
+	if(step == 'info')
 	{
-		var bank = document.getElementById('bank').value;
-		if (bank == null || bank == "") 
-		{
-			alert("bank must be filled out");
-			return false;
-		}
-		var bankaccount = document.getElementById('bankaccount').value;
-		if (bankaccount == null || bankaccount == "") 
-		{
-			alert("bankaccount must be filled out");
-			return false;
-		}
-		 alert(bank);
-		document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="3bTitheInvite">';
-		document.getElementById('invite').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
-		$.ajax({
-			type : "GET",
-			url : "scripts/newgroup.php",
-			dataType : "html",
-			cache : "false",
-			data : {
-				
-				tightbank : bank,
-				bankaccount : bankaccount
-			},
-			success : function(html, textStatus){
-			$("#invite").html(html);
-			},
-			error : function(xht, textStatus, errorThrown){
-			alert("Error : " + errorThrown);
-			}
-		});
+		document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="info">';
 	}
-
-	//2.c Pass Wedding Finance Then Invite people
-	else if(step == '2cContributionWedding')
+	else if(step == 'finance')
 	{
-	 var bank = document.getElementById('bank').value;
-	  if (bank == null || bank == "") 
-	  {
-			alert("bank must be filled out");
-			return false;
-		}
-	  var bankaccount = document.getElementById('bankaccount').value;
-	  if (bankaccount == null || bankaccount == "") {
-			alert("bankaccount must be filled out");
-			return false;
-		}
-	 var WeedingAmount = document.getElementById('WeedingAmount').value;
-	  if (WeedingAmount == null || WeedingAmount == "") 
-	  {
-			alert("WeedingAmount must be filled out");
-			return false;
-		}
-	  var WeddingDate = document.getElementById('WeddingDate').value;
-	  if (WeddingDate == null || WeddingDate == "") {
-			alert("WeddingDate must be filled out");
-			return false;
-		}
-	
-	document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="3cWeedingInvite">';
-	document.getElementById('invite').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
-	  $.ajax({
-		  type : "GET",
-		  url : "scripts/newgroup.php",
-		  dataType : "html",
-		  cache : "false",
-		  data : {
-			
-			WeedingAmount : WeedingAmount,
-			WeddingDate : WeddingDate,
-			Weddingbank : bank,
-			Weddingbankaccount : bankaccount
-		  },
-		  success : function(html, textStatus){
-			$("#invite").html(html);
-		  },
-		  error : function(xht, textStatus, errorThrown){
-			alert("Error : " + errorThrown);
-		  }
-	  });
+		document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="info">';
 	}
-
-	//2.d Pass INVESTMENT Finance Then Invite people
-	else if(step == '2dInvestmentFinance')
+	else if(step == 'confirm')
 	{
-	    var investmentAmount = document.getElementById('investmentAmount').value;
-	    if (investmentAmount == null || investmentAmount == "") 
-		  {
-				alert("investmentAmount must be filled out");
-				return false;
-			}
-		  var offerDate = document.getElementById('offerDate').value;
-		  if (offerDate == null || offerDate == "") {
-				alert("offerDate must be filled out");
-				return false;
-			}
-		 var totalShares = document.getElementById('totalShares').value;
-		  if (totalShares == null || totalShares == "") 
-		  {
-				alert("totalShares must be filled out");
-				return false;
-			}
-		  var ashare = document.getElementById('ashare').value;
-		  if (ashare == null || ashare == "") {
-				alert("ashare must be filled out");
-				return false;
-			}
-		 var bankaccount = document.getElementById('bankaccount').value;
-		  if (bankaccount == null || bankaccount == "") {
-				alert("bankaccount must be filled out");
-				return false;
-			}
-		
-		document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="3dInvestmentInvite">';
-		document.getElementById('invite').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
-		$.ajax({
-		    type : "GET",
-		    url : "scripts/newgroup.php",
-		    dataType : "html",
-		    cache : "false",
-		    data : {
-				
-				investmentAmount  : investmentAmount,
-				offerDate         : offerDate,
-				totalShares       : totalShares,
-				ashare            : ashare,
-				bankaccount       : bankaccount
-			  },
-			  success : function(html, textStatus){
-				$("#invite").html(html);
-			  },
-			  error : function(xht, textStatus, errorThrown){
-				alert("Error : " + errorThrown);
-		    }
-	    });
+		document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="finance">';
 	}
+}
+$(document).ready(function()
+{
 
-/////////////////////////////////////////////////////////////////
+	$("#addTicket").click(function()
+	{
 
-}	
+		$("#moreTickets").append('<div class="col-md-4">'
+									+'<div class="form-group">'
+										+'<label class="control-label" for="ticketName1[]">Ticket</label>'
+										+'<input type="text" class="form-control" id="ticketName1[]" required name="ticketName1[]" placeholder="eg: VIP"/>'
+									+'</div>'
+								+'</div>'
+								+'<div class="col-md-3">'
+									+'<div class="form-group">'
+										+'<label class="control-label" for="ticketPrice1[]">Price</label>'
+										+'<input type="number" class="form-control" id="ticketPrice1[]" required name="ticketPrice1[]" placeholder="RWF"/>'
+									+'</div>'
+								+'</div>'
+								+'<div class="col-md-3">'
+									+'<div class="form-group">'
+										+'<label class="control-label" for="ticketSeats1[]">Seats</label>'
+										+'<input type="number" class="form-control" id="ticketSeats1[]" required name="ticketSeats1[]" placeholder="eg: 10"/>'
+									+'</div>'
+								+'</div>'
+								+'<div class="col-md-2">'
+								+'</div>');
+	});
+
+
+});		
 ///////////////////////////////////////////////////////////////////////////
 </script>
-<script>
-// VIDEOS TUTORIALS
-function videoinfo(){
-	document.getElementById('tutorials').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
-	
- document.getElementById('tutorials').innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/_QoR_i0IIfY" frameborder="0" allowfullscreen></iframe>';
-  }
-function videosavings(){
-	document.getElementById('tutorials').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
-	document.getElementById('tutorials').innerHTML = '<iframe width="559" height="315" src="https://www.youtube.com/embed/vj7XExwChwI" frameborder="0" allowfullscreen></iframe>';
-  }
-function videocontribution(){
-	document.getElementById('tutorials').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';	
- document.getElementById('tutorials').innerHTML = '<iframe src="https://player.vimeo.com/video/72700224" width="559" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-  }
-function videoloans(){
-	document.getElementById('tutorials').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
- document.getElementById('tutorials').innerHTML = '<iframe width="559" height="315" src="https://www.youtube.com/embed/8b5-iEnW70k" frameborder="0" allowfullscreen></iframe>';
- 
-  }
-</script>
+
 </body>
 
 </html>

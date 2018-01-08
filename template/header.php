@@ -56,6 +56,7 @@
   <link rel="icon" type="image/png" href="frontassets/img/favicon-16x16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="frontassets/img/favicon-32x32.png" sizes="32x32">
   
+ 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/global/css/bootstrap.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/css/bootstrap-extend.min3f0d.css?v2.2.0">
@@ -65,10 +66,61 @@
   <link rel="stylesheet" href="assets/global/vendor/animsition/animsition.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/vendor/asscrollable/asScrollable.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/vendor/switchery/switchery.min3f0d.css?v2.2.0">
-   <link rel="stylesheet" href="assets/global/vendor/slidepanel/slidePanel.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/intro-js/introjs.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/slidepanel/slidePanel.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/vendor/flag-icon-css/flag-icon.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/vendor/waves/waves.min3f0d.css?v2.2.0">
 
+
+  <!-- Plugins For This Page -->
+  <link rel="stylesheet" href="assets/global/vendor/footable/footable.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/chartist-js/chartist.min3f0d.css?v2.2.0">
+  <!-- Plugins For This Page -->
+  <link rel="stylesheet" href="assets/global/vendor/bootstrap-sweetalert/sweet-alert.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/toastr/toastr.min3f0d.css?v2.2.0">
+  <!-- Page -->
+  <link rel="stylesheet" href="assets/examples/css/advanced/alertify.min3f0d.css?v2.2.0">
+
+   <!-- Page -->
+  <link rel="stylesheet" href="assets/examples/css/widgets/chart.min3f0d.css?v2.2.0">
+
+
+  <!-- Plugins For Form Wizard -->
+  <link rel="stylesheet" href="assets/global/vendor/jquery-wizard/jquery-wizard.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/formvalidation/formValidation.min3f0d.css?v2.2.0">
+
+  
+  
+  
+  <!-- Plugins For This Page -->
+  <link rel="stylesheet" href="assets/global/vendor/select2/select2.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/bootstrap-tokenfield/bootstrap-tokenfield.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/bootstrap-tagsinput/bootstrap-tagsinput.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/bootstrap-select/bootstrap-select.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/icheck/icheck.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/switchery/switchery.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/asrange/asRange.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/asspinner/asSpinner.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/clockpicker/clockpicker.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/ascolorpicker/asColorPicker.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/bootstrap-touchspin/bootstrap-touchspin.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/card/card.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/jquery-labelauty/jquery-labelauty.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/bootstrap-datepicker/bootstrap-datepicker.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/bootstrap-maxlength/bootstrap-maxlength.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/jt-timepicker/jquery-timepicker.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/jquery-strength/jquery-strength.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/multi-select/multi-select.min3f0d.css?v2.2.0">
+  <link rel="stylesheet" href="assets/global/vendor/typeahead-js/typeahead.min3f0d.css?v2.2.0">
+
+  <!-- Page -->
+  <link rel="stylesheet" href="assets/examples/css/forms/advanced.min3f0d.css?v2.2.0">
+
+  
+  
+  
+  
+  
   <!-- Fonts 
   <link rel="stylesheet" href="assets/global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0">-->
   <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0">
@@ -84,6 +136,13 @@
   <script>
     Breakpoints();
   </script>
+  
+  <script src="assets/js/jquery.js"></script>
+   <script src="assets/js/uploadFile.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+  </script>
+  <script src="assets/js/ajax_call.js"></script>
 </head>
 <body >
 

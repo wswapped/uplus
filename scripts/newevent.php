@@ -1,26 +1,53 @@
+<?php ob_start(); include('../db.php');?>
+<?php 
+ 
+if(isset($_GET['page'])){
+	$_GET['page']();
+	}
+?>
+
 <?php
-echo'<form enctype="multipart/form-data" name="myForm" id="myform" >
-   <div class="form-group">
-		   
-		<div class="row">
-			<div class="col-lg-6 col-sm-6">
-			    <label class="control-label margin-bottom-15" for="contributionAmount">Contribution Amount:</label>
-			    <input type="number" required class="form-control round" id="contributionAmount" required name="contributionAmount" placeholder=".00 Rwf"/><br/>
-			</div>
-			<div class="col-lg-6 col-sm-6">
-			    <label class="control-label margin-bottom-15" for="Saving">Saving Amount</label>
-			    <input type="number" class="form-control round" id="Saving" required name="Saving" placeholder=".00 Rwf"/><br/>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-6 col-sm-6">
-			    <label class="control-label margin-bottom-15" for="transactionDays">Rotation Days Of Transaction:</label>
-			    <input type="number" class="form-control round" id="transactionDays" required name="transactionDays" placeholder=""/><br/>
-			</div>
-			<div class="col-lg-6 col-sm-6">
-			    <label class="control-label margin-bottom-15" for="startingDate">Starting Date</label>
-			    <input type="date" class="form-control round" id="startingDate" name="startingDate"/><br/>
-			</div>
-		</div>
-	</div>
- </form>' ;
+	function finance()
+	{ 
+		
+?>
+You are going to recieve a call from our team 
+for manual check so that the event can go public
+<?php
+	}
+?>
+<?php
+if (isset($_POST['eventTitle'])) {
+	$eventTitle 		= $_POST['eventTitle'];
+	$eventLocation 		= $_POST['eventLocation'];
+	$eventStarting 		= $_POST['eventStarting'];
+	$eventEnding 		= $_POST['eventEnding'];
+
+	$ticketName1 		= $_POST['ticketName1'];
+	$ticketPrice1 		= $_POST['ticketPrice1'];
+	$ticketSeats1 		= $_POST['ticketSeats1'];
+
+	$withdrawAccount 	= $_POST['withdrawAccount'];
+	$withdrawAccountNo 	= $_POST['withdrawAccountNo'];
+
+	//mysql_query for inserting of the events
+	$eventDb->query("INSERT INTO 
+		events (Event_Name, Event_Cover, Event_Desc, Event_Location, phone, Event_Start, Event_End, user_id, createdBy) 
+		VALUES('$eventTitle','test.jpg', 'testDesc', '$eventLocation', '0788556677', '$eventStarting', '$eventEnding', '1', '1')")or die(mysqli_error($eventDb));
+	if($eventDb){
+	 $event_last_id =mysqli_insert_id($eventDb);
+	}
+	for($i = 0; $i < count($ticketName1); $i++)
+	{
+		// mysql_query for inserting of the pricing 
+		$eventDb->query("INSERT INTO pricing (price, event_property, event_seats)
+		 			VALUES('$ticketPrice1[$i]','$ticketName1[$i]','$ticketSeats1[$i]')")or die(mysqli_error($eventDb));
+		if($eventDb){
+			$pricing_last_id 	=mysqli_insert_id($eventDb);
+		}
+		
+		$eventDb->query("INSERT INTO eventing_pricing (event_code, pricing_code) VALUES($event_last_id,$pricing_last_id)") or die("error please".mysqli_error());
+	} 
+	header('location:../events');	
+}
+?>
