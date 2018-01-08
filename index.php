@@ -499,21 +499,18 @@
 									<a class="fundname" href="f/e'.$eventId.'">
 										<h4 class="fundtitle">'.$eventName.' </h4>
 									</a>
-									
+									<div style="width: 70%">
+										<div class="raisedNow">At '.$eventLocation.' on '.$eventStart.'</div> 
+										<div class="md-card-content" style="min-height: 74px;">
+											';?>
+												<?php echo $eventDesc;?>
+											<?php
+											echo'
+										</div>
+									</div>
+									<div style="width: 30%; background: red">.</div>
 								</div>
 								</a>
-								<div class="progress" style="border-radius: 0px;">
-									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="'.$prog.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$size.'%;">
-									  '.$prog.'%
-									</div>
-								</div>
-								<div class="raisedNow">At '.$eventLocation.' on '.$eventStart.'</div> 
-								<div class="md-card-content" style="min-height: 74px;">
-									';?>
-								<?php echo $eventDesc;?>
-							<?php
-							echo'
-								</div>
 							</div>
 							<br>
 						</li>';
