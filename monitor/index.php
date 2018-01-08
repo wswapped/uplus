@@ -181,13 +181,9 @@ border-top: 16px solid #4285f4;
 					  <div class="panel-body" style="cursor: pointer;" onclick="tableing(tablesa='transactions')">
 					    	<i class="fa fa-exchange" aria-hidden="true"></i>
 					   (<?php 
-					    	$sql = $con ->query("SELECT count(id) nTransactions FROM directtransfers WHERE (`id` % 2) = 1") or die(mysql_error($db));
-					    	$sql2 = $con ->query("SELECT count(id) nGTransactions FROM grouptransactions WHERE (`id` % 2) = 1") or die(mysql_error($db));
-					    	$row = mysqli_fetch_array($sql);
-					    	$row2 = mysqli_fetch_array($sql2);
-					    	$nTransactions = $row['nTransactions'];
-					    	$nGTransactions = $row2['nGTransactions'];
-					    	echo $nTransactions+$nGTransactions;
+					    	$sql = $con ->query("SELECT count(id) nTransactions FROM intouchapi") or die(mysql_error($db));
+					    	$nTransactions = mysqli_fetch_array($sql)['nTransactions'];
+					    	echo $nTransactions;
 					    ?>) Transactions
 					  </div>
 					</div>
@@ -198,7 +194,7 @@ border-top: 16px solid #4285f4;
 					    	<i class="fa fa-money" aria-hidden="true"></i>
 					   (<?php 
 					    	$sql= $con->query("SELECT sum(amount) totalbalance FROM `directtransfers` WHERE (`id` % 2) = 1");
-					    	$sql2= $con->query("SELECT sum(amount) gtotalbalance FROM `grouptransactions` WHERE (`id` % 2) = 1");
+					    	$sql2= $con->query("SELECT sum(amount) gtotalbalance FROM `grouptransactions`");
 							$balancerow = mysqli_fetch_array($sql);
 							$balancerow2 = mysqli_fetch_array($sql2);
 								echo number_format($balancerow['totalbalance']+$balancerow2['gtotalbalance']);
