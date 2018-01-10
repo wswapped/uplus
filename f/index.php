@@ -355,7 +355,7 @@ else
 													$sqlcountcontr = $db->query("SELECT memberId FROM members WHERE groupId = '$groupID'");
 													echo $countContr = mysqli_num_rows($sqlcountcontr);
 													?> Members</h5><hr style="margin-top: 18px;margin-bottom: 20px;border: 0; border-top: 1px solid #616161;">
-							<div style="overflow: scroll;height: 600px;">
+							<div style="overflow: scroll;height: 500px;">
 								<?php
 									$sqlcontributors = $db->query("SELECT memberId, memberImage, COALESCE(memberName, memberPhone) memberName FROM members WHERE groupId = '$groupID'");
 									$ncontrib = 0;
