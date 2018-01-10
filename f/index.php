@@ -377,8 +377,8 @@ else
 										$ncontrib++;
 										echo '
 										<div style="padding-bottom: 15px; float: left; min-width: 235px;">
-										<div class="avatars" style="background-image: url('.$member['memberImage'].');"></div>
-										<div style="padding-top: 5px;padding-left: 40px;"><a style="
+										<div class="avatars" style="cursor: pointer; background-image: url('.$member['memberImage'].');"></div>
+										<div style="cursor: pointer; padding-top: 5px;padding-left: 40px;"><a style="cursor: pointer; text-decoration: none;
 										font-weight: 400;
 										">'.$member['memberName'].'</a><br/>'.number_format($memberContribution).' Rwf</div>
 										</div>';
