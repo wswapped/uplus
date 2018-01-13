@@ -310,6 +310,14 @@
 			mysqli_close($outCon);
 		}
 
+		function updateGroupShortLink()
+		{
+			require('db.php');
+			$groupId	= mysqli_real_escape_string($db, $_POST['groupId']);
+			$shortLink	= mysqli_real_escape_string($db, $_POST['shortLink']);
+			$sql 		= $db->query("UPDATE groups SET shortLink = '$shortLink' WHERE id = '$groupId'")or die(mysqli_error($db));
+		}
+
 		function createcollection()
 		{
 			require('db.php');
