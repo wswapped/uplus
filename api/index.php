@@ -457,14 +457,14 @@
 									"message"		=>$message,
 								);
 						include 'sms.php';
-						if($httpcode == 200)
-						{
-							echo 'Member with '.$invitedPhone.' is added';
-						}
-						else
-						{
-							echo 'System error';
-						}
+						// if($httpcode == 200)
+						// {
+						// 	echo 'Member with '.$invitedPhone.' is added';
+						// }
+						// else
+						// {
+						// 	echo 'System error';
+						// }
 					}
 					else
 					{
@@ -1012,6 +1012,13 @@
 						VALUES ('$amount','$memberId', '$groupId', '$withdrawAccount', '$withdrawBank', 'PENDING', now(),'$memberId', '$memberId', now())")or die (mysqli_error($outCon));
 						if($outCon)
 						{
+							$data = array(
+								"sender"		=>"UPLUS",
+								"recipients"	=>$recipients,
+								"message"		=>'Member X is requesting to withdraw '.$amount.' Please approve or reject his/ her request',
+							);
+							//include 'sms.php';
+							
 							echo 'Your request has been sent.';
 						}
 					}
@@ -1154,7 +1161,13 @@
 									// if the user recieved money
 									if($success == true)
 									{
-										
+										$data = array(
+											"sender"		=>"UPLUS",
+											"recipients"	=>$recipients,
+											"message"		=>'Member X is Successfully withdrawen '.$amount.' from the group after the aproval of the 3 group admins',
+										);
+
+
 										$sqlApprove = $outCon->query("UPDATE withdrowrequests SET status = 'APPROVED' WHERE id = '$requestId'");
 										echo 'Request was approved, and the money is sent. Thanks for Approving this request.';
 									}
