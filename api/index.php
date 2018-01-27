@@ -457,14 +457,14 @@
 									"message"		=>$message,
 								);
 						include 'sms.php';
-						// if($httpcode == 200)
-						// {
-						// 	echo 'Member with '.$invitedPhone.' is added';
-						// }
-						// else
-						// {
-						// 	echo 'System error';
-						// }
+						if($httpcode == 200)
+						{
+							echo 'Member with '.$invitedPhone.' is added';
+						}
+						else
+						{
+							echo 'System error';
+						}
 					}
 					else
 					{
@@ -1012,12 +1012,20 @@
 						VALUES ('$amount','$memberId', '$groupId', '$withdrawAccount', '$withdrawBank', 'PENDING', now(),'$memberId', '$memberId', now())")or die (mysqli_error($outCon));
 						if($outCon)
 						{
+							while($member = mysqli_fetch_array($db->("SELECT memberPhone, groupName FROM members WHERE groupId = '$groupId'"))
+							{
+								$recipients.= $member['memberPhone'].", ";
+								$groupName 	= $member['groupName'];
+							}
+							$withdrawerName = mysqli_fetch_array($sqlCheckTreasurer)['memberName'];
+							//CLEAN CONTACTS
+							$recipients		= rtrim($recipients,", ");
 							$data = array(
 								"sender"		=>"UPLUS",
 								"recipients"	=>$recipients,
-								"message"		=>'Member X is requesting to withdraw '.$amount.' Please approve or reject his/ her request',
+								"message"		=>'Member '.$withdrawerName.' Is requesting to withdraw '.number_format($amount).'Rwf from '.$groupName.' group, if you are the group treasurer please approve or reject his/her request',
 							);
-							//include 'sms.php';
+
 							
 							echo 'Your request has been sent.';
 						}
@@ -1161,12 +1169,20 @@
 									// if the user recieved money
 									if($success == true)
 									{
+										// TELL GROUP MEMBERS THAT THE MEMBER WITHDRAWEN SOME MONEY
+										while($member = mysqli_fetch_array($db->("SELECT memberPhone, groupName FROM members WHERE groupId = '$groupId'"))
+										{
+											$recipients.= $member['memberPhone'].", ";
+											$groupName 	= $member['groupName'];
+										}
+										$withdrawerName = mysqli_fetch_array($sqlCheckTreasurer)['memberName'];
+										//CLEAN CONTACTS
+										$recipients		= rtrim($recipients,", ");
 										$data = array(
 											"sender"		=>"UPLUS",
 											"recipients"	=>$recipients,
-											"message"		=>'Member X is Successfully withdrawen '.$amount.' from the group after the aproval of the 3 group admins',
+											"message"		=>'Member '.$withdrawerName.' Successfully withdrawen '.number_format($amount).'Rwf from '.$groupName.' group, After being approved by 3 group treasurers, If you dont agree, kindly call 0784848236.',
 										);
-
 
 										$sqlApprove = $outCon->query("UPDATE withdrowrequests SET status = 'APPROVED' WHERE id = '$requestId'");
 										echo 'Request was approved, and the money is sent. Thanks for Approving this request.';
@@ -2547,4 +2563,173 @@
 			}
 		} 
 	// END DOS
+
+	// START PARTNERS
+		function c2b()
+		{
+			require('db.php');
+
+			$groupId		= mysqli_real_escape_string($db, $_POST['partnerId']);
+			$amount 		= mysqli_real_escape_string($db, $_POST['amount']);
+			$pushNumber 	= mysqli_real_escape_string($db, $_POST['pushNumber']);
+			$pushBank		= mysqli_real_escape_string($db, $_POST['pushBank']);
+
+			//CLEAN PHONE
+			$pushNumber 	= preg_replace( '/[^0-9]/', '', $pushNumber );
+			$pushNumber 	= substr($pushNumber, -10); 
+
+			//GET THE MEMBER ID
+			if (isset($_POST['memberId'])) 
+			{
+				$memberId	= mysqli_real_escape_string($db, $_POST['memberId']);
+			}
+			else
+			{
+				$sqlMId = $db->query("SELECT id FROM users WHERE phone = '$pushNumber' LIMIT 1");
+				if(mysqli_num_rows($sqlMId)>0)
+				{
+					$rowMId = mysqli_fetch_array($sqlMId);
+					$memberId = $rowMId['id'];
+				}
+				else
+				{
+					$memberId = 1;
+				}
+			}
+
+			//CLEAN AMOUNT
+			$amount	= floor($amount/100)*100;
+
+
+			// GET USER'S INFROMATION
+			$sql = $db->query("SELECT groupName, memberName FROM members WHERE groupId = '$groupId' AND memberId = '$memberId' LIMIT 1");
+			
+			if($db)
+			{
+				while($row = mysqli_fetch_array($sql))
+				{
+					$groupName 		= $row['groupName'];
+					$memberName		= $row['memberName'];
+				}
+
+				// SAVE THE TRANSACTION TO THE UPLUS DATABASE
+				$sql = $outCon->query("INSERT INTO grouptransactions(
+					memberId, groupId, amount, fromPhone, 
+					bankId, operation, status, updatedBy, updatedDate)
+				 	VALUES ('$memberId', '$groupId', '$amount', '$pushNumber', 
+				 	'$pushBank', 'DEBIT', 'CALLED', '1', now())")
+				 	 or mysqli_error($outCon);
+
+				if($outCon)
+				{
+					// GET THE TRANSACTION ID
+					$sqlRemovedId		= $outCon->query("SELECT id FROM grouptransactions ORDER BY id DESC LIMIT 1");
+					$remId 				= mysqli_fetch_array($sqlRemovedId);
+					$pushTransactionId 	= $remId['id'];
+
+					//CALL THE API
+					$url = 'https://www.intouchpay.co.rw/api/requestpayment/';
+			
+					$phone = '25'.$pushNumber;
+					$username="muhirwa.clement";
+					$var_time = time();
+					$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+					$generate_hash =  hash('sha256', $generate);
+					$txt_id = md5(time());
+					$data = array();
+					$data["username"] 				= $username;
+					$data["timestamp"] 				= $var_time;
+					$data["amount"] 				= $amount;
+				    $data["password"] 				= $generate_hash;
+					$data["partnerpassword"] 		= '8;b%-#K2$w\J3q{^dwr';
+					$data["mobilephone"] 			= $phone;
+					$data["requesttransactionid"]	= $txt_id;
+					$data["accountid"] 				= '250150000003';
+
+				    $options = array(
+						'http' => array(
+							'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+							'method'  => 'POST',
+							'content' => http_build_query($data)
+						)
+					);
+					$context  = stream_context_create($options);
+					$result = file_get_contents($url, false, $context);
+					if ($result === FALSE) 
+					{ 
+						// API ERROR/ NETWORK ERROR
+						$Update= $outCon->query("UPDATE grouptransactions SET status='NETWORK ERROR' WHERE id = '$pushTransactionId'");
+						
+						$returnedinformation	= array();
+						
+						$returnedinformation[] = array(
+					       		"transactionId" => $pushTransactionId,
+					       		"status" => "NETWORK ERROR",
+							"memberId"	=> $memberId
+					    	);
+						header('Content-Type: application/json');
+						$returnedinformation = json_encode($returnedinformation);
+						echo $returnedinformation;
+					}
+					else
+					{
+						$result = json_decode($result);
+
+						$success   				= $result->{'success'};
+						if($success === FALSE){
+							//Prepare data for db
+							$status 				= "Failed";
+							$requesttransactionid   = $pushTransactionId;
+
+							$responsecode   		= $result->{'responsecode'};
+							$transactionid  		= "no";
+							$message   				= $result->{'message'};
+						
+						}
+						else
+						{
+							//Prepare data for db
+							$status 				= $result->{'status'};
+							$requesttransactionid   = $result->{'requesttransactionid'};
+							$responsecode   		= $result->{'responsecode'};
+							$transactionid  		= $result->{'transactionid'};
+							$message   				= $result->{'message'};
+						}
+						
+						//SAVE THE TRANSACTION FROM MTN
+						$sql = $outCon->query("INSERT INTO intouchapi(
+								status, requesttransactionid, success, 
+								responsecode, transactionid, message, 
+								amount, pushNumber, pullNumber, myid, type
+							) 
+							VALUES (
+							'$status', '$requesttransactionid', '$success', 
+							'$responsecode', '$transactionid', '$message', 
+							'$amount', '$pushNumber', '$groupId', '$pushTransactionId', 'grouptransaction'
+							)
+						")or die(mysqli_error($outCon));
+						// UPDATE MY DB
+						$sql2 = $outCon->query("UPDATE grouptransactions SET status='$status' WHERE id = '$pushTransactionId'") or die(mysql_error($outCon));
+
+						$returnedinformation    = array();   
+						$returnedinformation[] = array(
+						       	"transactionId" => $pushTransactionId,
+								"status" => $status,
+								"memberId"	=> $memberId
+						    );
+
+						header('Content-Type: application/json');
+						$returnedinformation = json_encode($returnedinformation);
+						echo $returnedinformation;
+					}
+				}
+				else
+				{
+					echo 'error inserting a transation';
+				}
+			}
+			mysqli_close($db);
+			mysqli_close($outCon);
+		}
+	// END PARTNERS
 ?>

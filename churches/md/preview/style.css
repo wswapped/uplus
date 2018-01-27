@@ -1,0 +1,86 @@
+*,
+*:after,
+*:before {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	background: #ebeff2;
+	padding: 0;
+	margin: 0;        
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left: 0;
+
+}
+
+.the-frame {
+	padding: 20px 60px 60px;
+}
+
+.framer {
+	padding: 0;
+	margin: 0;
+	border-radius: 45px;
+	border-top: 70px solid #263238;
+	border-bottom: 70px solid #263238;
+	border-right: 15px solid #263238;
+	border-left: 15px solid #263238;
+        box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14),0 1px 18px 0 rgba(0,0,0,0.12),0 3px 5px -1px rgba(0,0,0,0.3);
+}
+
+ul {
+	padding: 0;
+	margin: 25px 0 0;
+	text-align: center;
+}
+
+ul li {
+	display: inline-block;
+	margin: 0 3px;
+}
+
+.box {
+	width: 40px;
+	height: 40px;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0),0 1px 5px 0 rgba(0, 0, 0, 0.24),0 3px 1px -2px rgba(0, 0, 0, 0);
+}
+
+.default {
+	background: #3f51b5;
+}
+
+.blue {
+	background: #1e88e5;
+}
+
+.grey {
+	background: #455a64;
+}
+
+.orange {
+	background: #fb8c00;
+}
+
+.pink {
+	background: #f50057;
+}
+
+.purple {
+	background: #9c27b0;
+}
+
+.red {
+	background: #f44336;
+}
+
+.teal {
+	background: #00897b;
+}
+
+.yellow {
+	background: #fdd835;
+}

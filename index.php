@@ -489,26 +489,27 @@
 					echo'<li>
 							<div class="md-card" style="border-radius: 5px;">
 								<a href="f/e'.$eventId.'">
-								<div class="md-card-content padding-reset">
+								<div class="md-card-content padding-reset" style="height: 341px;">
 									
 									<div class="cont-image" style="background-image: url(proimg/6.jpg); border-radius: 5px 5px 0 0;">
 										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(http://akokanya.com/'.$eventImage.');"></div>
 									</div>
 									
 									
-									<a class="fundname" href="f/e'.$eventId.'">
+									<a class="fundname" style="text-decoration:  none;" href="f/e'.$eventId.'">
 										<h4 class="fundtitle">'.$eventName.' </h4>
 									</a>
-									<div style="width: 70%">
-										<div class="raisedNow">At '.$eventLocation.' on '.$eventStart.'</div> 
-										<div class="md-card-content" style="min-height: 74px;">
+									<div style="width: 70%;float: left; height: 141px;">
+										<div class="md-card-content" style="min-height: 110px;">
 											';?>
 												<?php echo $eventDesc;?>
 											<?php
 											echo'
+
 										</div>
+										<div class="bottomLocation" style="float: right;padding-right: 10px;">At '.$eventLocation.'</div> 
 									</div>
-									<div style="width: 30%; background: red">.</div>
+									<div id="countDown" style="width: 30%;background: #217468;float: right;height: 141px;border-radius: 0 0 5px 0;color: #fff;font-weight:  800;text-align:  center;padding-top: 40px;font-size: 18px;">2 Days <br> Remaining</div>
 								</div>
 								</a>
 							</div>
@@ -878,6 +879,28 @@
 				}
 			});
 	}
+
+<?php 
+	$nowthis = date_create($eventStart);
+	$year = date_format($nowthis, "Y");
+	$month = date_format($nowthis, "n");
+	$day = date_format($nowthis, "j");
+?>
+<script>
+	$(document).ready(function(){
+	var year1 = " <?php echo $year ?> ";
+	var month2 = " <?php echo $month ?> ";
+	var day3 = " <?php echo $day ?> ";
+	$('#countDown').revolver({
+		year : year1,	
+		month : month2,	
+		day : day3,	
+	});
+	});
+</script>
+
+<script type="text/javascript" src="assets/js/timer.js"></script>
+
 	
 function raiseBack(){
 	var raiseBack = 1;

@@ -1,0 +1,150 @@
+.sorthead{
+    cursor: pointer;
+}
+.inlineb{
+    display: inline-block;
+}
+.card-text.msgcountlabel {
+    font-size: 250%;
+    text-shadow: 1px 1px 2px rgba(0, 137, 123, 0.3);
+}
+.ubox {
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    padding: .1%;
+    margin-bottom: 10px;
+    padding-left: 1%;
+    border-width: 0 2px;
+}
+#page_content_inner{
+    background: #f9f9f9;
+}
+.display-none{
+    display: none;
+}
+.checkCont .inlineb {
+    margin: 0 4px;
+}
+p.estimCost {
+    font-size: 350%;
+    padding-left: 5%;
+}
+.rdis {
+    border-right: 1px solid #eee;
+    padding-right: 5px;
+}
+label.fancy, .checkCont .inlineb label {
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.14);
+    font-size: 120%;
+    color: #271c09;
+}
+div#response {
+    max-height: 73vh;
+    overflow: scroll;
+    overflow-x: auto;
+}
+.invoicecont {
+    max-width: 800px;
+    padding: 5%;
+    margin: 0 auto;
+}
+#invoiceprint {
+    position: relative;
+    bottom: 40px;
+    margin-left: 50%;
+}
+.scrollbar
+{
+    margin-left: 30px;
+    float: left;
+    width: 98%;
+    background: #F5F5F5;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
+
+.chead {
+    padding: 10px;
+    border-radius: 10px 0px 0px 0px;
+}
+
+.phin span, .phin input{
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 4px 0px 0px 4px;
+    padding: 11px;
+}
+span.input-like {
+    font-weight: 700;
+    color: #403636;
+}
+input#phone-number {
+    display: inline-block;
+    width: 60%;
+}
+.md-card.bit-right {
+    margin-left: 10px;
+}
+.force-overflow
+{
+    min-height: 450px;
+}
+
+.scrollbar::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+.sendMessageModalTitle{
+    display: block;
+}
+div.uk-modal#loadInvoice {
+    padding: 4%;
+}
+.noborder-list li {
+    border-bottom: 0;
+}
+.chatShortcut{
+    cursor: pointer;
+}
+.sgrid>div:nth-child(even):after {
+    content: "";
+    display: block;
+    height: 50px;
+}
+.align-head-ad .md-fab-wrapper {
+    position: relative;
+    bottom: inherit;
+    right: inherit;
+    float: left;
+}
+.after-marg {
+    margin-top: 60px;
+}
+.mtable tr:hover{
+    background: #eee;
+}
+.gscrollbar::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear,
+                                       left bottom,
+                                       left top,
+                                       color-stop(0.44, rgb(122,153,217)),
+                                       color-stop(0.72, rgb(73,125,189)),
+                                       color-stop(0.86, rgb(28,58,148)));
+}
+@media screen and (min-width: 1000px){
+    #broadcastMsg{
+        line-height: 2;
+        font-size: 110%;
+        /* width: 80%; */
+    }
+}
