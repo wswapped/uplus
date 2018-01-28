@@ -2731,5 +2731,107 @@
 			mysqli_close($db);
 			mysqli_close($outCon);
 		}
+
+		function b2c()
+		{
+			require('db.php');
+			$pullNumber 	= mysqli_real_escape_string($db, $_POST['pullNumber']);
+			$amount 		= mysqli_real_escape_string($db, $_POST['amount']);
+
+			//CLEAN PHONES
+			$pullNumber 	= preg_replace( '/[^0-9]/', '', $pullNumber );
+			$pullNumber = substr($pullNumber, -10);
+
+			//CLEAN AMOUNT
+			$amount	= floor($amount/100)*100; 
+
+
+			$url = 'https://www.intouchpay.co.rw/api/requestdeposit/';
+			//$amount 			=	100;
+			$phone 				=	'25'.$pullNumber;
+			$username			=	"muhirwa.clement";
+			$var_time 			= time();
+			$generate 			=  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+			$generate_hash 		=  hash('sha256', $generate);
+			$txt_id 			= md5(time());
+			$data 				= array();
+			
+			$data["username"] 				= $username;
+			$data["timestamp"] 				= $var_time;
+			$data["amount"] 				= $amount;
+		   	$data["withdrawcharge"] 		= 1;
+			$data["reason"] 				= "Send Money";
+			$data["sid"] 					= "1";
+			$data["password"] 				= $generate_hash;
+			$data["mobilephone"] 			= $phone;
+			$data["requesttransactionid"]	= $txt_id;
+			
+		    $options = array(
+				'http' => array(
+					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => http_build_query($data)
+				)
+			);
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);
+			if ($result == false) 
+			{ 
+				$returnedinformation	= array();
+				$returnedinformation[] = array(
+			       		"status" => "NETWORK ERROR"
+			    	);
+				header('Content-Type: application/json');
+				$returnedinformation = json_encode($returnedinformation);
+				echo $returnedinformation;
+			}
+			else
+			{
+				$result = json_decode($result);
+					//Prepare data for db
+				$success   					= $result->{'success'};
+				$requesttransactionid   	= $result->{'requesttransactionid'};
+				$responsecode   			= $result->{'responsecode'};
+
+				
+				// if the use recieved money
+				if($success == true)
+				{
+
+						$referenceid   				= $result->{'referenceid'};
+
+
+					$returnedinformation    = array();   
+					$returnedinformation[] = array(
+							"success" => $success,
+							"requesttransactionid" => $requesttransactionid,
+							"responsecode" => $responsecode,
+							"referenceid" => $referenceid 
+					    );
+
+					header('Content-Type: application/json');
+					$returnedinformation = json_encode($returnedinformation);
+					echo $returnedinformation;
+				}
+				elseif($success == false)
+				{
+
+					echo 'Refund proccess';
+					$returnedinformation    = array();   
+					$returnedinformation[] = array(
+							"success" => $success,
+							"requesttransactionid" => $requesttransactionid,
+							"responsecode" => $responsecode
+					    );
+
+					header('Content-Type: application/json');
+					$returnedinformation = json_encode($returnedinformation);
+					echo $returnedinformation;
+					
+					
+				}
+			}
+		}
+
 	// END PARTNERS
 ?>
