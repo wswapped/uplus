@@ -536,7 +536,7 @@
 			$sqlMembers = $db->query("SELECT memberImage, groupId, targetAmount, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc, memberId, memberPhone, COALESCE(`memberName`, `memberPhone`) `memberName`, memberDate, memberType FROM `members` WHERE groupId = '$groupId' ORDER BY memberType DESC") or die(mysqli_error());
 			$members 	= array();
 			$NumOfMembers = mysqli_num_rows($sqlMembers);
-			$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
+			$sqlGroupBalance = $outCon->query("SELECT (select sum(t.amount) FROM grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId')))-(SELECT sum(w.amount) FROM withdrowrequests w WHERE w.groupId = '$groupId') as groupBalance");
 			$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
 			$n=0;
 			while($member = mysqli_fetch_array($sqlMembers))
@@ -1012,7 +1012,7 @@
 						VALUES ('$amount','$memberId', '$groupId', '$withdrawAccount', '$withdrawBank', 'PENDING', now(),'$memberId', '$memberId', now())")or die (mysqli_error($outCon));
 						if($outCon)
 						{
-							while($member = mysqli_fetch_array($db->("SELECT memberPhone, groupName FROM members WHERE groupId = '$groupId'"))
+							while($member = mysqli_fetch_array($db->query("SELECT memberPhone, groupName FROM members WHERE groupId = '$groupId'")))
 							{
 								$recipients.= $member['memberPhone'].", ";
 								$groupName 	= $member['groupName'];
@@ -1047,6 +1047,49 @@
 			}
 			mysqli_close($db);
 			mysqli_close($outCon);
+		}
+
+		function voteForTreasurer()
+		{
+			include 'db.php';
+			$groupId 	= $_POST['groupId'];
+			$memberId 	= $_POST['memberId'];
+			$votedId1 	= $_POST['votedId1'];
+			$votedId2 	= $_POST['votedId2'];
+			$votedId3 	= $_POST['votedId3'];
+
+			$results	= array();
+			header('Content-Type: application/json');
+			//CHECK IF THIS MEMBER NEVER VOTED BEFORE
+			if(mysqli_num_rows($db->query("SELECT id FROM treasurervotes WHERE createdBy = '$memberId'"))>0)
+			{
+				$results[] = array(
+					       	"status" => "You have voted before"
+					    );
+			}
+			else
+			{
+				if($db->query("INSERT INTO treasurervotes(groupId, votedId, createdBy)
+					 VALUES 
+					 ('$groupId','$votedId1','$memberId'),
+					 ('$groupId','$votedId2','$memberId'),
+					 ('$groupId','$votedId3','$memberId')"))
+				{
+					$url = 'http://localhost:8080/uplus/api/service.php?condition=70&&groupId=79&&voteResults';
+					$options = array(
+						'http' => array(
+						)
+					);
+					$context  = stream_context_create($options);
+					$result = file_get_contents($url, false, $context);
+					
+					$results[] = array(
+					       	"status" => "Your vote has been casted"
+					    );
+				}
+			}
+			echo json_encode($results);
+			mysqli_close($db);
 		}
 
 		function withdrawlist()
@@ -1170,7 +1213,7 @@
 									if($success == true)
 									{
 										// TELL GROUP MEMBERS THAT THE MEMBER WITHDRAWEN SOME MONEY
-										while($member = mysqli_fetch_array($db->("SELECT memberPhone, groupName FROM members WHERE groupId = '$groupId'"))
+										while($member = mysqli_fetch_array($db->query("SELECT memberPhone, groupName FROM members WHERE groupId = '$groupId'")))
 										{
 											$recipients.= $member['memberPhone'].", ";
 											$groupName 	= $member['groupName'];
@@ -1595,15 +1638,15 @@
 				}
 				else
 				{
-					$result = json_decode($result);
+					$result 	= json_decode($result);
 					//Prepare data for db
-					$success 			= $result->{'success'};
+					$success 	= $result->{'success'};
 					
 					if($success == true)
 					{
-						$balance = $result->{'balance'};
-						$fee = ($amount*2)/100;
-						$charge = $fee + 120;
+						$balance 	= $result->{'balance'};
+						$fee 		= ($amount*2)/100;
+						$charge 	= $fee + 120;
 
 
 						if($balance < $charge)
