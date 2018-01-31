@@ -25,6 +25,6 @@ if ($result === FALSE)
 }
 else
 {
-   vardump($result);       
+   var_dump($result);       
 }
 ?>
