@@ -189,7 +189,7 @@
                 <li title="Groups">
                     <a href="groups.php">
                         <span class="menu_icon">
-                        <i class="material-icons"></i>
+                        <i class="material-icons">group</i>
                         </span>
                         <span class="menu_title">Groups</span>
                     </a>
