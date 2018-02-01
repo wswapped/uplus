@@ -90,6 +90,17 @@
             return false;
         }       
     }
+    function list_groups($churchID){
+    	global $conn;
+    	$query = $conn->query("SELECT groups.*, branches.name as branchname FROM groups JOIN branches ON groups.branchid = branches.id WHERE branches.church = \"$churchID\" ") or die("Cant get groups ".$conn->error);
+
+    	$churches = array();
+
+    	while ($data = $query->fetch_assoc()) {
+    		$churches[] = $data;
+    	}
+    	return $churches;
+    }
     function email($email, $subject, $body, $header=''){
         echo("dkfjdk");
               require_once 'mailer/PHPMailerAutoload.php';

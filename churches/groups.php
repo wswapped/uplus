@@ -97,7 +97,6 @@
             <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
                 <div class="uk-row-first"><h4 class=""><?php echo $churchname; ?> - Groups</h4></div>
             </div>
-            
             <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
                 <div class="uk-width-large-4-4">
     				<div class="md-card">
@@ -106,7 +105,7 @@
                             <div id="chartist_line_area" class="chartist"></div>
                         </div>
                     </div>
-                    <div class="md-card">
+                    <!-- <div class="md-card">
                         <div class="md-card-content">
                             <div class="dt_colVis_buttons"></div>
                             <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
@@ -141,12 +140,77 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> -->
+                    
+                </div>
+                <?php
+                    $branches = list_groups($churchID);
+                    
+                    for ($n=0; $n<count($branches);$n++) {
+                        $bdata = $branches[$n]; //Branch data
+                        $sqlGetMembers = $db->query("SELECT * FROM `group_members` WHERE groupid = '$data[id]'")or die (mysqli_error());
+
+                        ?>
+                            <div class="uk-width-large-2-4">
+                                <div class="md-card">
+                                    <div class="">
+                                        <img src="<?php echo $bdata['profile_picture']; ?>" alt="">
+                                        <div class="md-card-content">
+                                            <strong><?php echo $bdata['name']; ?></strong><br>
+                                            <span class="uk-text-muted"><?php echo $bdata['type']." at ".$bdata['branchname']; ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php
+                    }
+                ?> 
+                <div class="md-fab-wrapper ">
+                    <!-- <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">add</i></a> -->
+                    <button class="md-fab md-fab-small md-fab-warning d_inline" href="javascript:void(0)" data-uk-modal="{target:'#modal_default'}"><i class="material-icons">group_add</i></button>
                 </div>
     		</div>              
         </div>
         <?php } ?>
     </div>
+
+
+    <div class="uk-modal" id="modal_default" aria-hidden="true" style="display: none; overflow-y: auto;">
+        <div class="uk-modal-dialog" style="top: 339.5px;">
+            <button type="button" class="uk-modal-close uk-close"></button>
+
+            <div class="md-card">
+                <div class="md-card-toolbar">
+                    <h3 class="md-card-toolbar-heading-text">New Group</h3>
+                </div>
+                <div class="md-card-content">                    
+                    <div class="uk-width-medium-1-2 uk-row-first">
+                        <form action="operations.php" method="POST">
+                            <div class="uk-form-row">
+                                <div class="uk-grid" data-uk-grid-margin="">
+                                    <div class="uk-width-medium-2-2 uk-row-first">
+                                        <div class="md-input-wrapper"><label>Group name</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <div class="md-input-wrapper"><label>Location</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>     
+                            </div>
+                            <div class="uk-form-row">
+                                <div class="md-input-wrapper md-input-filled"><select id="select_demo_1" class="md-input">
+                                <option value="" disabled="" selected="" hidden="">Select type...</option>
+                                    <option value="a1">Cell</option>
+                                    <option value="b1">Prayer</option>
+                                    <option value="c1">Other</option>
+                            </select><span class="md-input-bar "></span></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- google web fonts -->
     <script>
         WebFontConfig = {

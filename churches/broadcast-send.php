@@ -116,7 +116,7 @@
                             <tbody id="membersCont">
                                 <tr></tr>
                                 <?php
-                                    $mPhone = $membersdata = array();
+                                    $mApp = $mPhone = $membersdata = array();
                                     $query = mysqli_query($conn, "SELECT DISTINCT(members.name) as t, members.*, branches.name as bname FROM members JOIN branches ON members.locationId = branches.id ORDER BY name ASC LIMIT 10") or die(mysqli_error($conn));
                                     $n = 0;
                                     while($data = mysqli_fetch_assoc($query)){
