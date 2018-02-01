@@ -104,51 +104,14 @@
                             <h4 class="heading_c uk-margin-bottom">Groups</h4>
                             <div id="chartist_line_area" class="chartist"></div>
                         </div>
-                    </div>
-                    <!-- <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="dt_colVis_buttons"></div>
-                            <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        <th>Branche</th>
-                                        <th>Members</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-    								<?php 
-    								$n=0;
-                                    while ($data = $query->fetch_assoc()) {
-                                            $n++;
-                                            $groups[] = $data;
-                                            $sqlGetMembers = $db->query("SELECT * FROM `group_members` WHERE groupid = '$data[id]'")or die (mysqli_error());
-    										echo '<tr>
-    										<td>'.$n.'</td>
-    										<td>'.$data['name'].'</td>
-                                            <td>'.$data['type'].'</td>
-    										<td>'.$data['branchname'].'</td>
-                                            <td>'.count($sqlGetMembers).'</td>
-    										<td><a href="groups.php?act=edit&group='.$data['id'].'"><i class="material-icons"></i></a></td>
-    										</tr>';
-    									}
-    								?> 
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> -->
-                    
+                    </div>                    
                 </div>
                 <?php
                     $branches = list_groups($churchID);
                     
                     for ($n=0; $n<count($branches);$n++) {
                         $bdata = $branches[$n]; //Branch data
-                        $sqlGetMembers = $db->query("SELECT * FROM `group_members` WHERE groupid = '$data[id]'")or die (mysqli_error());
+                        // $sqlGetMembers = $db->query("SELECT * FROM `group_members` WHERE groupid = '$data[id]'")or die (mysqli_error());
 
                         ?>
                             <div class="uk-width-large-2-4">
@@ -158,6 +121,7 @@
                                         <div class="md-card-content">
                                             <strong><?php echo $bdata['name']; ?></strong><br>
                                             <span class="uk-text-muted"><?php echo $bdata['type']." at ".$bdata['branchname']; ?></span>
+                                            <div class=""><button class="btn md-btn-default">VIEW MORE</button></div>
                                         </div>
                                     </div>
                                 </div>
@@ -183,28 +147,42 @@
                 <div class="md-card-toolbar">
                     <h3 class="md-card-toolbar-heading-text">New Group</h3>
                 </div>
-                <div class="md-card-content">                    
-                    <div class="uk-width-medium-1-2 uk-row-first">
-                        <form action="operations.php" method="POST">
-                            <div class="uk-form-row">
-                                <div class="uk-grid" data-uk-grid-margin="">
-                                    <div class="uk-width-medium-2-2 uk-row-first">
-                                        <div class="md-input-wrapper"><label>Group name</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>                                       
+                <div class="md-card-content">
+                    <div class="uk-grid">                  
+                        <div class="uk-width-medium-1-2 uk-row-first">
+                            <form action="operations.php" method="POST">
+                                <div class="uk-form-row">
+                                    <div class="uk-grid" data-uk-grid-margin="">
+                                        <div class="uk-width-medium-2-2 uk-row-first">
+                                            <div class="md-input-wrapper"><label>Group name</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>                                       
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="uk-form-row">
-                                <div class="md-input-wrapper"><label>Location</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>     
-                            </div>
-                            <div class="uk-form-row">
-                                <div class="md-input-wrapper md-input-filled"><select id="select_demo_1" class="md-input">
-                                <option value="" disabled="" selected="" hidden="">Select type...</option>
-                                    <option value="a1">Cell</option>
-                                    <option value="b1">Prayer</option>
-                                    <option value="c1">Other</option>
-                            </select><span class="md-input-bar "></span></div>
-                            </div>
-                        </form>
+                                <div class="uk-form-row">
+                                    <div class="md-input-wrapper"><label>Location</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>     
+                                </div>
+                                <div class="uk-form-row">
+                                    <div class="md-input-wrapper md-input-filled"><select id="select_demo_1" class="md-input">
+                                    <option value="" disabled="" selected="" hidden="">Select type...</option>
+                                        <option value="a1">Cell</option>
+                                        <option value="b1">Prayer</option>
+                                        <option value="c1">Other</option>
+                                </select><span class="md-input-bar "></span></div>
+                                </div>
+                                <div class="uk-form-row">
+                                    <div class="uk-grid" data-uk-grid-margin="">
+                                        <div class="uk-width-medium-2-2 uk-row-first">
+                                            <div class="md-input-wrapper"><label>Representative phone number</label><input type="text" class="md-input"><span class="md-input-bar "></span>
+                                            <p class="uk-text-small uk-text-muted">like 0782331232</p>
+                                            </div>                                       
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="uk-width-medium-1-2">
+                            <div id="map"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -251,6 +229,7 @@
     <script src="bower_components/datatables-buttons/js/buttons.colVis.js"></script>
     <script src="bower_components/datatables-buttons/js/buttons.html5.js"></script>
     <script src="bower_components/datatables-buttons/js/buttons.print.js"></script>
+    <script src="bower_components/select2/select2.min.js"></script>
     
       <!-- datatables custom integration -->
     <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
@@ -290,7 +269,22 @@
             altair_helpers.ie_fix();
         });
     </script>
-<script src="js/uploadFile.js"></script>
+    <script src="js/uploadFile.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpFRXdO-OSgHx_ZnZizVyAohoWEIU7gWg&callback=initMap">
+    </script>
+    <script type="text/javascript">
+        function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
 </body>
 </html>
 <!-- Localized -->

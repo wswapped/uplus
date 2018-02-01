@@ -54,7 +54,6 @@
                                                     <option value="">Branch...</option>
                                                     <?php
                                                         //Getting branches
-                                                    var_dump($churchID);
                                                         $branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $churchID ") or die("Can't get branches ".$conn->error);
                                                         $branches = array();
                                                         while ($data = $branchesQuery->fetch_assoc()) {
