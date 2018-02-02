@@ -31,6 +31,15 @@
                                     </div>
                                     <div class="md-card-content">
                                         <form action="operations.php" method="POST">
+                                            <div class="md-input-wrapper">
+                                                <select name="membertype" data-md-selectize>
+                                                    <option value="">Type...</option>
+                                                    <option value="VISITOR">VISITOR<option>
+                                                    <option value="FULL">FULL</option>
+                                                </select>
+                                                <span class="md-input-bar "></span>
+                                            </div>
+                                            <select name="membertype" data-md-selectize="" tabindex="-1" style="display: none;" class="selectized"><option value="FULL" selected="selected">FULL</option></select>
                                             <div class="md-input-wrapper md-input-filled">
                                                 <label>Group Name</label>
                                                 <input type="text" name="membername" value="<?php echo $groupData['name']; ?>" class="md-input">
@@ -50,7 +59,7 @@
                                                     ?>
                                                 </select>
                                                 <div class="selectize_fix"></div>
-                                        </div>
+                                            </div>
                                             <!-- <div class="md-input-wrapper md-input-filled">
                                                 <label>Operation Branch</label>
                                                 <select class="selectized">
@@ -150,23 +159,27 @@
                     <div class="md-card-content">
                         <div class="uk-grid">                  
                             <div class="uk-width-medium-1-2 uk-row-first">
+
+                                    <div class="uk-form-row">
+                                        <div class="md-input-wrapper md-input-filled">
+                                            <select id="group_type_select" class="md-input">
+                                                <option value="" disabled="" selected="" hidden="">Select type...</option>
+                                                <option value="cell">Cell group</option>
+                                                <option value="prayer">Prayer group</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            <span class="md-input-bar "></span>
+                                        </div>
+                                    </div>
                                     <div class="uk-form-row">
                                         <div class="uk-grid" data-uk-grid-margin="">
                                             <div class="uk-width-medium-2-2 uk-row-first">
-                                                <div class="md-input-wrapper"><label>Group name</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>                                       
+                                                <div class="md-input-wrapper" id="group_name-cont"><label>Group name</label><input type="text" id="group_name" class="md-input"><span class="md-input-bar "></span></div>                                       
                                             </div>
                                         </div>
                                     </div>
                                     <div class="uk-form-row">
                                         <div class="md-input-wrapper"><label>Location</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>     
-                                    </div>
-                                    <div class="uk-form-row">
-                                        <div class="md-input-wrapper md-input-filled"><select id="select_demo_1" class="md-input">
-                                        <option value="" disabled="" selected="" hidden="">Select type...</option>
-                                            <option value="a1">Cell</option>
-                                            <option value="b1">Prayer</option>
-                                            <option value="c1">Other</option>
-                                    </select><span class="md-input-bar "></span></div>
                                     </div>
                                     <div class="uk-form-row">
                                         <div class="uk-grid" data-uk-grid-margin="">
@@ -187,7 +200,7 @@
                 <div class="uk-modal-footer uk-text-right">
                     <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
                     <div class="md-input-wrapper">
-                        <button class="md-btn md-btn-success pull-right">Save</button>
+                        <button id="group_add_submit" class="md-btn md-btn-success pull-right">Save</button>
                     </div>
                 </div>
             </form> 
@@ -273,6 +286,17 @@
             // ie fixes
             altair_helpers.ie_fix();
         });
+
+        $("#group_type_select").on('change', function(){
+            type = $(this).val();
+            //todo: handle naming
+        });
+
+        $("#group_add_submit").on('click', function(e){
+            e.preventDefault();
+
+            //getting values
+        })
     </script>
     <script src="js/uploadFile.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpFRXdO-OSgHx_ZnZizVyAohoWEIU7gWg&callback=initMap">
