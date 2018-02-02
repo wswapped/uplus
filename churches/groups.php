@@ -141,51 +141,56 @@
 
     <div class="uk-modal" id="modal_default" aria-hidden="true" style="display: none; overflow-y: auto;">
         <div class="uk-modal-dialog" style="top: 339.5px;">
-            <button type="button" class="uk-modal-close uk-close"></button>
+            <div class="uk-modal-header uk-tile uk-tile-default">
+                <h3 class="d_inline">New Group</h3><button type="button" class="uk-modal-close uk-close d_inline pull-right"></button>
+            </div>
 
-            <div class="md-card">
-                <div class="md-card-toolbar">
-                    <h3 class="md-card-toolbar-heading-text">New Group</h3>
-                </div>
-                <div class="md-card-content">
-                    <div class="uk-grid">                  
-                        <div class="uk-width-medium-1-2 uk-row-first">
-                            <form action="operations.php" method="POST">
-                                <div class="uk-form-row">
-                                    <div class="uk-grid" data-uk-grid-margin="">
-                                        <div class="uk-width-medium-2-2 uk-row-first">
-                                            <div class="md-input-wrapper"><label>Group name</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>                                       
+            <form action="operations.php" method="POST">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-grid">                  
+                            <div class="uk-width-medium-1-2 uk-row-first">
+                                    <div class="uk-form-row">
+                                        <div class="uk-grid" data-uk-grid-margin="">
+                                            <div class="uk-width-medium-2-2 uk-row-first">
+                                                <div class="md-input-wrapper"><label>Group name</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>                                       
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="uk-form-row">
-                                    <div class="md-input-wrapper"><label>Location</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>     
-                                </div>
-                                <div class="uk-form-row">
-                                    <div class="md-input-wrapper md-input-filled"><select id="select_demo_1" class="md-input">
-                                    <option value="" disabled="" selected="" hidden="">Select type...</option>
-                                        <option value="a1">Cell</option>
-                                        <option value="b1">Prayer</option>
-                                        <option value="c1">Other</option>
-                                </select><span class="md-input-bar "></span></div>
-                                </div>
-                                <div class="uk-form-row">
-                                    <div class="uk-grid" data-uk-grid-margin="">
-                                        <div class="uk-width-medium-2-2 uk-row-first">
-                                            <div class="md-input-wrapper"><label>Representative phone number</label><input type="text" class="md-input"><span class="md-input-bar "></span>
-                                            <p class="uk-text-small uk-text-muted">like 0782331232</p>
-                                            </div>                                       
+                                    <div class="uk-form-row">
+                                        <div class="md-input-wrapper"><label>Location</label><input type="text" class="md-input"><span class="md-input-bar "></span></div>     
+                                    </div>
+                                    <div class="uk-form-row">
+                                        <div class="md-input-wrapper md-input-filled"><select id="select_demo_1" class="md-input">
+                                        <option value="" disabled="" selected="" hidden="">Select type...</option>
+                                            <option value="a1">Cell</option>
+                                            <option value="b1">Prayer</option>
+                                            <option value="c1">Other</option>
+                                    </select><span class="md-input-bar "></span></div>
+                                    </div>
+                                    <div class="uk-form-row">
+                                        <div class="uk-grid" data-uk-grid-margin="">
+                                            <div class="uk-width-medium-2-2 uk-row-first">
+                                                <div class="md-input-wrapper"><label>Representative phone number</label><input type="text" class="md-input"><span class="md-input-bar "></span>
+                                                <p class="uk-text-small uk-text-muted">like 0782331232</p>
+                                                </div>                                       
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="uk-width-medium-1-2">
-                            <div id="map"></div>
+                            </div>
+                            <div class="uk-width-medium-1-2">
+                                <div id="map"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="uk-modal-footer uk-text-right">
+                    <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
+                    <div class="md-input-wrapper">
+                        <button class="md-btn md-btn-success pull-right">Save</button>
+                    </div>
+                </div>
+            </form> 
         </div>
     </div>
 

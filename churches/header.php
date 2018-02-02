@@ -111,6 +111,9 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+    <!-- Selectize -->
+    <link rel="stylesheet" type="text/css" href="assets/css/selectize.css">
+
     <!-- themes -->
     <link rel="stylesheet" href="assets/css/themes/themes_combined.min.css" media="all">
 
