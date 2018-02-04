@@ -10,6 +10,14 @@
             return $userId;
         }else return false;
     }
+    function user_details($userid){
+        //Function to get user's details
+        global $conn;
+        $user = $conn->query("SELECT * FROM members WHERE id = \"$userid\" LIMIT 1 ") or die("Errror getting user's details $conn->error");
+
+        $user = $user->fetch_assoc();
+        return $user;
+    }
     function logMessages($messageID, $receivers, $status='pending'){
         global $conn;
 
@@ -156,7 +164,17 @@
                }
                var_dump($mail->ErrorInfo);  
 
-        }
+    }
+    function church_members($churchid){
+    	//returns members of $churchid
+    	global $conn;
+    	$query = $conn->query("SELECT members.* FROM members JOIN branches ON members.locationId = branches.id WHERE branches.church = $churchid ") or die("Can't get members $conn->error");
+    	$members = array();
+    	while ($data = $query->fetch_assoc()) {
+    		$members[] = $data;
+    	}
+    	return $members;
+    }
     function Semail($email, $subject, $body, $header=''){
         require_once 'mailer/PHPMailerAutoload.php';
         $email = "info@edorica.com";

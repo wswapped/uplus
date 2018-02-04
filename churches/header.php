@@ -111,6 +111,9 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
+    <!-- Bulmer for selectize -->
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/bulma.min.css"> -->
+
     <!-- Selectize -->
     <link rel="stylesheet" type="text/css" href="assets/css/selectize.css">
 

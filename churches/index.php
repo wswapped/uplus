@@ -6,7 +6,7 @@
     <div id="page_content">
         <div id="page_content_inner">
             <!-- circular charts -->
-            <div class="uk-grid uk-grid-width-small-1-2 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-4 uk-text-center uk-sortable sortable-handler" id="dashboard_sortable_cards" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-small-1-2 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-4 uk-text-center" id="dashboard_sortable_cards" data-uk-grid-margin>
                 
                 <div>
                     <div class="md-card md-card-hover md-card-overlay">

@@ -2,7 +2,6 @@ function _(el){
 	return document.getElementById(el);
 }
 function uploadFile(){
-	alert();
 	var file = _("file1").files[0];
 	//alert(file.name+" | "+file.size+" | "+file.type);
 	var formdata = new FormData();

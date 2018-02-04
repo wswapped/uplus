@@ -3,6 +3,8 @@
 	include "../class.message.php";
 	$Message = new broadcast();
 	$request = array_merge($_POST, $_GET); //$_GET for devt nd $_POST for production
+    $response = array();
+	
 	$action = $request['action']??"";
 
 	if($action == "export_members"){
@@ -12,8 +14,6 @@
 
 
 		//checking file
-		var_dump($_FILES['members-file']['size']);
-
 		if($_FILES['members-file']['size']>0){
 
 			$target_dir = "uploads/churchmembers/";
@@ -56,7 +56,48 @@
     	$data = $query->fetch_assoc();
     	$data['status'] =1;
     	echo json_encode($data);
+    }else if($action == 'create_group'){
+    	//api route for group creatinon
+    	$name = $request['name'];
+    	$type = $request['type'];
+    	$location = $request['location'];
+    	$rep = $request['rep'];
+    	$church = $request['church'];
+
+        if(!empty($_FILES)){
+            $pic = $_FILES['profile_picture'];
+            if($pic['error'] == 0){
+                //Image has no error
+                //checking if it's image
+                $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION));
+                if($ext == 'png' || $ext == 'jpg'){
+                    //moving file to disk
+                    $filename = "gallery/groups/$name"."_".time().".$ext";
+                    if(move_uploaded_file($pic['tmp_name'], "../$filename")){
+                        //Updating database
+
+
+                        //Creating group
+                        $sql = "INSERT INTO groups(name, branchId, representative, type, location, profile_picture) VALUES(\"$name\", \"$church\", $rep, \"$type\", \"$location\", \"$filename\" )";
+                        // echo "$sql\n";
+                        $conn->query($sql) or die("Error $conn->error");
+                        $response = array('status'=>true, 'msg'=>"Success");
+
+                    }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again");
+                }else{
+                    //We dont recognize this file format
+                    $response = array('status'=>false, 'msg'=>"The file uploaded seems to be not an image, $ext only png and jpeg are allowed\nPlease try again");
+                }
+            }else{
+                $response = array('status'=>false, 'msg'=>"Error uploading group image\nPlease try again");
+            }
+        }
+    	
     }else{
     	echo json_encode(array('status'=>false, 'msg'=>"Provide action"));
     }
+
+    echo json_encode($response);
+    flush();
+    die();
 ?>

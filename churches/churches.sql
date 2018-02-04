@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.3
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Feb 02, 2018 at 04:44 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 5.6.30
+-- Host: 127.0.0.1
+-- Generation Time: Feb 03, 2018 at 08:54 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `edoricac_churches`
+-- Database: `churches`
 --
 
 -- --------------------------------------------------------
@@ -3695,66 +3695,79 @@ ALTER TABLE `users`
 --
 ALTER TABLE `branches`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `church`
 --
 ALTER TABLE `church`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
   MODIFY `eventId` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `group_members`
 --
 ALTER TABLE `group_members`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1523;
+
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+
 --
 -- AUTO_INCREMENT for table `messageslog`
 --
 ALTER TABLE `messageslog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+
 --
 -- AUTO_INCREMENT for table `mthreads`
 --
 ALTER TABLE `mthreads`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3421;
+
 --
 -- AUTO_INCREMENT for table `prayer_requests`
 --
 ALTER TABLE `prayer_requests`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
 --
 -- AUTO_INCREMENT for table `smsbalance`
 --
 ALTER TABLE `smsbalance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- Constraints for dumped tables
 --
