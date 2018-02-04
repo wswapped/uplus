@@ -1399,8 +1399,7 @@
 					"eventLocation"		=> $row['Event_Location'],
 					"eventContact"		=> $row['phone'],
 					"eventStart"		=> $row['Event_Start'],
-					"eventEnd"			=> $row['Event_End'],
-					"eventActive"		=> $row['active']
+					"eventEnd"			=> $row['Event_End']
 					);
 			}
 			
