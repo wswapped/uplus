@@ -1384,6 +1384,34 @@
 			echo $events;
 		}
 
+		function eventList1()
+		{
+			include("db.php");
+			$sqlEvents = $eventDb->query("SELECT * FROM events WHERE active = 'YES'");
+			$events[] = array();
+			while ($row = mysqli_fetch_array($sqlEvents)) {
+			    
+				$events[] = array(
+					"eventId"			=> $row['id_event'],
+					"eventName"			=> $row['Event_Name'],
+					"eventDesc"			=> $row['Event_Desc'],
+					"eventCover"		=> $row['Event_Cover'],
+					"eventLocation"		=> $row['Event_Location'],
+					"eventContact"		=> $row['phone'],
+					"eventStart"		=> $row['Event_Start'],
+					"eventEnd"			=> $row['Event_End'],
+					"eventActive"		=> $row['active']
+					);
+			}
+			
+			mysqli_close($db);
+			mysqli_close($eventDb);
+			header('Content-Type: application/json');
+			$events = json_encode($events);
+			echo $events;
+		}
+
+		
 		function eventUpdate(){
 			global $eventDb;
 			$url = "http://akokanya.com/api/events/?email=muhirwaclement@gmail.com&password=clement123 ";
