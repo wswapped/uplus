@@ -1,3 +1,5 @@
+//Groups design
+//Sorting and searching
 $(function() {
     altair_contact_list.init()
 }),
@@ -31,3 +33,41 @@ altair_contact_list = {
         })
     }
 };
+
+
+//Map
+var google;
+function initMap() {
+    var kigali = {lat:-1.991019, lng:30.096819};
+    var map = new google.maps.Map(document.getElementById('group_map'), {
+      zoom: 10,
+      center: kigali
+    });
+    var marker = new google.maps.Marker({
+      position: kigali,
+      map: map
+    });
+
+    var autocomplete = new google.maps.places.Autocomplete(document.getElementById('loctest1'));
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        alert(0)
+        var place = autocomplete.getPlace();
+        placename = place.name;
+        lat = place.geometry.location.lat();
+        lng = place.geometry.location.lng();
+        log(placename)
+    });
+};
+
+//When the group's going to be created
+$("#launch_group_create").on('click', function(){
+    var autocomplete = new google.maps.places.Autocomplete(document.getElementById('loctestF'));
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        alert(0)
+        var place = autocomplete.getPlace();
+        placename = place.name;
+        lat = place.geometry.location.lat();
+        lng = place.geometry.location.lng();
+        log(placename)
+    });
+})

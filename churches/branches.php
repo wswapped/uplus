@@ -1,12 +1,49 @@
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php include("header.php");?>
+<?php 
+    include("header.php");
+    include("functions.php");
+?>
 
     <div id="page_content">
         <div id="page_content_inner">
             <!-- circular charts -->
-            <div class="uk-grid uk-grid-width-small-1-2 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-3 uk-text-center" >
+
+            <div class="uk-grid uk-grid-width-medium-1-2" data-uk-grid-margin="">
+                <?php
+                    //Getting branches
+                    $branches = churchbranches($churchID);
+                    for($n=0; $n<count($branches); $n++){
+                        $branch = $branches[$n];
+
+                        //getting representative
+                        $rep = user_details($branch['repId']);
+                ?>
+                <div class="uk-row-first">
+                    <div class="md-card">
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i class="md-icon material-icons md-color-blue-grey-500"></i>
+                                <i class="md-icon material-icons md-color-light-blue-500"></i>
+                                <i class="md-icon material-icons md-color-green-500">people</i>
+                            </div>
+                            <h3 class="md-card-toolbar-heading-text">
+                                <?php echo $branch['name']; ?>
+                            </h3>
+                        </div>
+                        <img src="<?php echo $branch['profile']; ?>">
+                        <div class="md-card-content">
+                            <p>Representative:<span><?php echo $rep['name'] ?></span></p> 
+                            <p>Phone:<span><?php echo $branch['phone']; ?></span></p>
+                            <p>Email:<span><?php echo $branch['mail']; ?></span></p>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+
+            <!-- div class="uk-grid uk-grid-width-small-1-2 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-3 uk-text-center" >
                 <?php echo $banchesCards;?>
                 <div>
                     <div style="padding-top: 77px;">
@@ -15,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 		</div>
     </div>
 

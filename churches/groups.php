@@ -118,7 +118,10 @@
                                 <div class="uk-vertical-align-middle">
                                     <ul id="contact_list_filter" class="uk-subnav uk-subnav-pill uk-margin-remove">
                                         <li class="uk-active" data-uk-filter=""><a href="#">All</a></li>
-                                        <?php
+                                        <li data-uk-filter="cell"><a href="#">Cell groups</a></li>
+                                        <li data-uk-filter="prayer"><a href="#">Prayer groups</a></li>
+                                        <li data-uk-filter="other"><a href="#">Other groups</a></li>
+                                        <!-- <?php
                                         	//looping through groups
                                         	for($n=0; $n<count($groups); $n++){
                                         		$groupname = $groups[$n]['name'];
@@ -126,7 +129,7 @@
                                         			<li data-uk-filter="<?php echo $groupname; ?>"><a href="#"><?php echo $groupname; ?></a></li>
                                         		<?php
                                         	}
-                                        ?>
+                                        ?> -->
                                     </ul>
                                 </div>
                             </div>
@@ -147,12 +150,15 @@
                 		$groupname = $group['name'];
                 		$branchname = $group['branchname'];
                 		$group_img = $group['profile_picture'];
+                		$group_type = $group['type'];
 
                 		$repdata = user_details($group['representative']);
                 		$repemail = $repdata['email'];
                 		$repphone = $repdata['phone'];
+
+                		$searchabledata = array(strtolower($groupname), strtolower($branchname), strtolower($group_type));
                 		?>
-                			<div data-uk-filter="<?php echo $groupname.", $branchname"; ?>" data-grid-prepared="true" style="position: absolute; box-sizing: border-box; padding-left: 20px; padding-bottom: 20px; top: 0px; opacity: 1; left: 0px;">
+                			<div data-uk-filter="<?php echo implode(", ", $searchabledata); ?>" data-grid-prepared="true" style="position: absolute; box-sizing: border-box; padding-left: 20px; padding-bottom: 20px; top: 0px; opacity: 1; left: 0px;">
 			                    <div class="md-card md-card-hover md-card-horizontal">
 			                        <div class="md-card-head">
 			                            <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-left'}">
@@ -202,16 +208,16 @@
             </div>
             <div class="md-fab-wrapper ">
                 <!-- <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">add</i></a> -->
-                <button class="md-fab md-fab-small md-fab-warning d_inline" id="launch_group_create" href="javascript:void(0)" data-uk-modal="{target:'#modal_default'}"><i class="material-icons">group_add</i></button>
+                <button class="md-fab md-fab-warning d_inline" id="launch_group_create" href="javascript:void(0)" data-uk-modal="{target:'#modal_default'}"><i class="material-icons">group_add</i></button>
             </div>             
         </div>
         <?php } ?>
     </div>
-    <div class="container">
+   <!--  <div class="container">
     	<div class="md-input-wrapper">
     		<input type="text" id="loctest1" class="md-input"><span class="md-input-bar "></span>
     	</div>
-    </div>
+    </div> -->
 
 
     <div class="uk-modal" id="modal_default" aria-hidden="true" style="display: none; overflow-y: auto;">
@@ -232,6 +238,7 @@
                                                 <option value="" disabled="" selected="" hidden="">Select type...</option>
                                                 <option value="cell">Cell group</option>
                                                 <option value="prayer">Prayer group</option>
+                                                <option value="youth">Youth group</option>
                                                 <option value="other">Other</option>
                                             </select>
                                             <span class="md-input-bar "></span>
@@ -250,7 +257,7 @@
                                     <div class="uk-form-row">
                                         <div class="uk-grid" data-uk-grid-margin="">
                                             <div class="uk-width-medium-2-2 uk-row-first">
-                                                <div class="md-input-wrapper md-input-filled">
+                                                <div class="md-input-wrapper md-input-filled change_selectize">
 	                                                <select id="group_rep" class="md-input">
 												      <option value="">Choose a representative</option>
 												      <?php
@@ -268,7 +275,11 @@
                                         </div>
                                     </div>
                                     <div class="uk-form-row">
-                                    	<div class="dropify-wrapper"><div class="dropify-message"><span class="file-icon"></span> <p>Drag and drop a file here or click</p><p class="dropify-error">Ooops, something wrong appended.</p></div><div class="dropify-loader"></div><div class="dropify-errors-container"><ul></ul></div><input type="file" id="input-fgroup-pic" class="dropify"><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p></div></div></div></div>
+                                    	<div class="dropify-wrapper">
+                                    		<div class="dropify-message"><span class="file-icon"></span> <p>Drag and drop a profile picture here or click</p><p class="dropify-error">Ooops, something wrong appended.</p></div><div class="dropify-loader"></div><div class="dropify-errors-container"><ul></ul></div><input type="file" id="input-fgroup-pic" class="dropify"><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace profile picture</p></div></div></div></div>
+			                        </div>
+			                        <div class="uk-form-row">
+			                        	<div class="group_create_status"></div>
 			                        </div>
                             </div>
                             <div class="uk-width-medium-1-2">
@@ -281,13 +292,34 @@
                 <div class="uk-modal-footer uk-text-right">
                     <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
                     <div class="md-input-wrapper">
-                        <button id="group_add_submit" class="md-btn md-btn-success pull-right">Save</button>
+                        <button id="group_add_submit" class="md-btn md-btn-success pull-right">Create</button>
                     </div>
                 </div>
             </form> 
         </div>
     </div>
 
+    <div class="uk-modal" id="group_created_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
+        <div class="uk-modal-dialog" style="width:400px; top: 339.5px;">
+            <div class="uk-modal-header uk-tile uk-tile-default">
+                <h3 class="d_inline">Group created!</h3><button type="button" class="uk-modal-close uk-close d_inline pull-right"></button>
+            </div>
+            <div class="md-card">
+                <div class="md-card-content">
+                	<div class="">
+                		<i class="material-icons uk-text-success">done</i><p class="uk-text-success">Your group was successfully created, It's now functioning</p>
+                	</div>	
+            	</div>
+        	</div>
+        	<div class="uk-modal-footer uk-text-right">
+		        <button class="md-btn md-btn-danger pull-left uk-modal-close">OK</button>
+		        <div class="md-input-wrapper">
+		            <button id="group_add_submit" class="md-btn md-btn-success pull-right">GOTO Group</button>
+		        </div>
+		    </div>
+        </div>
+
+    </div>
     <!-- google web fonts -->
     <script>
         WebFontConfig = {
@@ -407,7 +439,26 @@
                 var ajax = new XMLHttpRequest();
                 // ajax.upload.addEventListener("progress", progressHandler, false);
                 ajax.addEventListener("load", function(status, data){
-                	log(data);
+                	response = this.responseText;
+                	try{
+                		data = JSON.parse(response);
+                		if(data.status){
+                			$(".group_create_status").html("<p class='uk-text-success'><i class='material-icons'>done</i>Group created successfully</p>");
+
+                			//Closing current modal
+                			cmodal = UIkit.modal("#modal_default");
+                			cmodal.hide();
+
+                			//Opening the success modal
+                			var nmodal = UIkit.modal("#group_created_modal");
+                			nmodal.show();
+                		}else{
+                			$(".group_create_status").html("<p class='uk-text-danger'>Group cant be successfully<br />"+data.msg+"</p>");
+                		}
+                	}catch(err){
+                		log(err);
+
+                	}
                 }, false);
                 // ajax.addEventListener("error", errorHandler, false);
                 // ajax.addEventListener("abort", abortHandler, false);
@@ -438,46 +489,12 @@
     <script src="js/uploadFile.js"></script>
     <script async defer src="http://maps.google.com/maps/api/js?key=AIzaSyAlKttaE2WuI1xKpvt-f7dBOzcBEHRaUBA&libraries=places&callback=initMap"></script>
     </script>
-    <script type="text/javascript">
-        var google;
-        function initMap() {
-        var kigali = {lat:-1.991019, lng:30.096819};
-        var map = new google.maps.Map(document.getElementById('group_map'), {
-          zoom: 10,
-          center: kigali
-        });
-        var marker = new google.maps.Marker({
-          position: kigali,
-          map: map
-        });
+    <script type="text/javascript">    
+		function log(data){
+			console.log(data);
+		}
 
-        var autocomplete = new google.maps.places.Autocomplete(document.getElementById('loctest1'));
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        	alert(0)
-			var place = autocomplete.getPlace();
-			placename = place.name;
-			lat = place.geometry.location.lat();
-			lng = place.geometry.location.lng();
-			log(placename)
-        });
-      };
-
-    $("#launch_group_create").on('click', function(){
-    	var autocomplete = new google.maps.places.Autocomplete(document.getElementById('loctestF'));
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        	alert(0)
-			var place = autocomplete.getPlace();
-			placename = place.name;
-			lat = place.geometry.location.lat();
-			lng = place.geometry.location.lng();
-			log(placename)
-        });
-    })
-      function log(data){
-        console.log(data)
-      }
-
- //      $("#cgroup").selectize({
+		// $("#cgroup").selectize({
 	//     options: [
 	//         {id: 'avenger', make: 'dodge', model: 'Avenger'},
 	//         {id: 'caliber', make: 'dodge', model: 'Caliber'},
@@ -515,10 +532,10 @@
 	//     plugins: ['optgroup_columns']
 	// });
 
-
-      $(function() {
-		  $('#group_rep').selectize();
-		});
+	//Beautifying the representative pick-up
+	$(function() {
+		$('#group_rep').selectize();
+	});
 </script>
 <script type="text/javascript" src="js/groups.js">
 </script>
