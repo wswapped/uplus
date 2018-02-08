@@ -246,95 +246,95 @@
 					 <div style="color: #000; " class="uk-container uk-container-center" id="moreCard">
                         <div id="status">
 							<div class="slide_content_a" id="slide_content_a" style="height: 550px;
-    background-color: unset;
-    background-repeat: no-repeat;
-    background-image: url(frontassets/img/slider/phone1.png);
-}
+			    background-color: unset;
+			    background-repeat: no-repeat;
+			    background-image: url(frontassets/img/slider/phone1.png);
+			}
 
 
 
 
 
-">
-								
-								<!-- <div class="makegroupHeader">
-									<h2 class="slide_header" id="slide_header">UPLUS</h2>
-									<h4 class="text-center" style="color: #696969;margin: 0 0 30px;">
-										Collect money from friends and family here!
-									</h4>
-								</div>
-								<div class="makegroupBody" id="makegroupBody">
-									<table  width="100%" cellpadding="100px">
-										<tr>
-											<td width="33.3%"><label>Choose a Reason: </label></td>
-											<td width="33.3%">
-											<select class="newinput" style="width: 100%;" id="fundTag" placeholder="for">
-												<option></option>
-												<option>Wedding</option>
-												<option>Party</option>
-												<option>Event</option>
-												<option>Picnic</option>
-												<option>Bithday Surprise</option>
-												<option>Medecine</option>
-												<option>Funeral</option>
-												<option>School Fees</option>
-												<option>Other</option>
-											</select>
-											</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td><td style="color: red" id="fundTagError"></td><td></td>
-										</tr>
-										<tr>
-											<td width="33.3%">Target Amount</td>
-											<td width="33.3%">
-												<select class="newinput" style="width: 100%;"  id="targeted" onchange="changeTarget()">
-													<option value="target">Exactly</option>
-													<option value="any">Any Amount</option>
-												</select>
-											</td>
-											<td width="33.3%" id="changeTargetd">
-												<input id="isTargetChanged" hidden value="yes">
-												<input class="newinput" id="raiseAmount" type="number" placeholder="0.00"/> 
-											</td>
-										</tr>
-										<tr>
-											<td></td><td></td><td style="color: red" id="amountError"></td>
-										</tr>
-										<tr>
-											<td width="33.3%">Amount per person</td>
-											<td width="33.3%">
-												<select class="newinput" style="width: 100%;" id="perPerson" onchange="changeTargetPerPerson()">
-													<option value="target">Exactly</option>
-													<option value="atleast">Atleast</option>
-													<option value="any">Any Amount</option>
-												</select>
-											</td>
-											<td width="33.3%" id="changePerPerson">
-												<input id="isTargetPPChanged" hidden value="yes">
-												<input class="newinput" id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/> 
-											</td>
-										</tr>
-										<tr>
-											<td></td><td></td><td style="color: red" id="amountPerPersonError"></td>
-										</tr>
-										<tr>
-											<td></td><td id="amountError"></td>
-										</tr>
-									</table>
-								</div>
-								<div style="width: 100%;height: 1px;" id="raiseprog">
-									<span style="width: 33.33%;height: 100%;background: #007569;float: left;"></span>
-									<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>
-									<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>
-								</div>
-								<div class="makegroupFooter" id="makegroupFooter" style="height: 70px;border-radius: 0 0 4px 4px; padding: 10px 25px 10px 25px;">
-									
-									<span style="float: right">
-										<a href="javascript:void()" onclick="raise()" class="md-btn md-btn-large md-btn-warning">Collect</a>
-									</span>
-								</div> -->
+		">
+										
+										<!-- <div class="makegroupHeader">
+											<h2 class="slide_header" id="slide_header">UPLUS</h2>
+											<h4 class="text-center" style="color: #696969;margin: 0 0 30px;">
+												Collect money from friends and family here!
+											</h4>
+										</div>
+										<div class="makegroupBody" id="makegroupBody">
+											<table  width="100%" cellpadding="100px">
+												<tr>
+													<td width="33.3%"><label>Choose a Reason: </label></td>
+													<td width="33.3%">
+													<select class="newinput" style="width: 100%;" id="fundTag" placeholder="for">
+														<option></option>
+														<option>Wedding</option>
+														<option>Party</option>
+														<option>Event</option>
+														<option>Picnic</option>
+														<option>Bithday Surprise</option>
+														<option>Medecine</option>
+														<option>Funeral</option>
+														<option>School Fees</option>
+														<option>Other</option>
+													</select>
+													</td>
+													<td></td>
+												</tr>
+												<tr>
+													<td></td><td style="color: red" id="fundTagError"></td><td></td>
+												</tr>
+												<tr>
+													<td width="33.3%">Target Amount</td>
+													<td width="33.3%">
+														<select class="newinput" style="width: 100%;"  id="targeted" onchange="changeTarget()">
+															<option value="target">Exactly</option>
+															<option value="any">Any Amount</option>
+														</select>
+													</td>
+													<td width="33.3%" id="changeTargetd">
+														<input id="isTargetChanged" hidden value="yes">
+														<input class="newinput" id="raiseAmount" type="number" placeholder="0.00"/> 
+													</td>
+												</tr>
+												<tr>
+													<td></td><td></td><td style="color: red" id="amountError"></td>
+												</tr>
+												<tr>
+													<td width="33.3%">Amount per person</td>
+													<td width="33.3%">
+														<select class="newinput" style="width: 100%;" id="perPerson" onchange="changeTargetPerPerson()">
+															<option value="target">Exactly</option>
+															<option value="atleast">Atleast</option>
+															<option value="any">Any Amount</option>
+														</select>
+													</td>
+													<td width="33.3%" id="changePerPerson">
+														<input id="isTargetPPChanged" hidden value="yes">
+														<input class="newinput" id="amountPerPerson" style="width: 100%;" type="number" placeholder="0.00"/> 
+													</td>
+												</tr>
+												<tr>
+													<td></td><td></td><td style="color: red" id="amountPerPersonError"></td>
+												</tr>
+												<tr>
+													<td></td><td id="amountError"></td>
+												</tr>
+											</table>
+										</div>
+										<div style="width: 100%;height: 1px;" id="raiseprog">
+											<span style="width: 33.33%;height: 100%;background: #007569;float: left;"></span>
+											<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>
+											<span style="width: 33.33%;height: 100%;background: #bdbdbd;float: left;border-left: 1px solid #fff;"></span>
+										</div>
+										<div class="makegroupFooter" id="makegroupFooter" style="height: 70px;border-radius: 0 0 4px 4px; padding: 10px 25px 10px 25px;">
+											
+											<span style="float: right">
+												<a href="javascript:void()" onclick="raise()" class="md-btn md-btn-large md-btn-warning">Collect</a>
+											</span>
+										</div> -->
 							</div>
 						</div>
 					</div>
@@ -343,7 +343,7 @@
         </div>
     </section>
 
-    <section id="sect-fund" class="section" style="padding: 48px 0px 0px 0;">
+    <!-- <section id="sect-fund" class="section" style="padding: 48px 0px 0px 0;">
         <div class="uk-container uk-container-center">
 			<h4 class="heading_b" style="padding: 0px 0 15px 0px;">
 					Public Contributions  <input style="float: right;
@@ -368,17 +368,17 @@
 			</div>
         </div>
     </section>
+ -->
 
-<!--
     <section id="sect-dothis" onclick="smoothScroll(document.getElementById('sect-dothis'))"" class="section section_dark" style="padding: unset;">
         <div class="uk-grid">
             <div class="uk-width-1-3 currentHeader customheader">
 			<span class="currentSpan" style="left:0;"></span>CONTRIBUTE</div>
-            <div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=2)">SAVE</div>
-            <div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=3)">INVEST</div>
+            <div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=2)">U-SAVE</div>
+            <div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=3)">U-INVEST</div>
         </div>
     </section>
--->
+
 	<section id="sect-fund" class="section section_gallery md-bg-blue-grey-50">
         <div id="actions" class="uk-container uk-container-center uk-invisible" data-uk-scrollspy="{cls:'uk-animation-fade uk-invisible',delay:300,topoffset:-150}">
            
@@ -879,7 +879,7 @@
 				}
 			});
 	}
-
+</script>
 <?php 
 	$nowthis = date_create($eventStart);
 	$year = date_format($nowthis, "Y");
@@ -901,7 +901,7 @@
 
 <script type="text/javascript" src="assets/js/timer.js"></script>
 
-	
+<script type="text/javascript">
 function raiseBack(){
 	var raiseBack = 1;
 	var groupTargetType 	= document.getElementById('groupTargetType').value;

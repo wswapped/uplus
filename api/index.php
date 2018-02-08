@@ -140,42 +140,57 @@
 		{
 			require('db.php');
 			$userId	= mysqli_real_escape_string($db, $_POST['userId']);
-			$sql 	= $outCon->query("SELECT id, amount, status FROM `directtransfers` WHERE (`id` % 2) = 1 AND `userId` = '$userId' ORDER BY id DESC");
-		
+			$sql 	= $outCon->query("SELECT status, amount, pushnumber, pullnumber, myid, type, transactiontime FROM intouchapi WHERE myid = '$userId' ORDER BY id DESC");
+
 			$returnedinformation   = array();   
 			while ($row = mysqli_fetch_array($sql))
 			{
-				$pushId 	= $row['id'];
-				$pullId 	= $pushId + 1;
+				$pullnumber = $row['pullnumber'];
+				$pushnumber = $row['pushnumber'];
+				
+				if($row['type'] == "grouptransaction")
+				{
+					$pullnumber = "group";
+					$sqlStatus = $con->query("SELECT status FROM grouptransactions WHERE id = '$myId'");
+					$status = mysqli_fetch_array($sqlStatus)['status'];
+					$sqlPull = $db->query("SELECT GR.groupName FROM uplus.groups GR INNER JOIN rtgs.grouptransactions GT ON GT.groupId = GR.id WHERE GT.id= '$myId' LIMIT 1");
+					$pullName = mysqli_fetch_array($sqlPull)['groupName'];
+					$sqlPush = $con->query("SELECT GR.name FROM uplus.users GR INNER JOIN rtgs.grouptransactions GT ON GT.memberId = GR.id WHERE GT.id= '$myId' LIMIT 1");
+					$pushName = mysqli_fetch_array($sqlPush)['name'].'<em>('.$pushnumber.')</em>';
+				}
+				else
+				{
+					$sqlStatus = $con->query("SELECT status FROM directtransfers WHERE id = '$myId'");
+					$status = mysqli_fetch_array($sqlStatus)['status'];
+					$sqlPull = $con->query("SELECT actorName FROM directtransfers WHERE id = '$myId'+1");
+					$pullName = mysqli_fetch_array($sqlPull)['actorName'].'<em>('.$pullnumber.')</em>';
+					$sqlPush = $con->query("SELECT actorName FROM directtransfers WHERE id = '$myId'");
+					$pushName = mysqli_fetch_array($sqlPush)['actorName'].'<em>('.$pushnumber.')</em>';
+				}
 				$amount 	= $row['amount'];
-				$status 	= $row['status'];
 				if($status=="Failed"){
 					$color = "#eb4435";
 				}
-				elseif($status=="Pending"){
+				elseif($status=="Pending")
+				{
 					$color = "#fbbc03";
 				}
-				else{
+				else
+				{
 					$color = "#36a753";
 				}
-				$sql2 		= $outCon->query("SELECT accountNumber, actorName, transaction_date FROM `directtransfers` WHERE `id` = '$pullId' LIMIT 1");
-				$row2 		= mysqli_fetch_array($sql2);
-				$pullName 	= $row2['actorName'];
-				$pullPhone 	= $row2['accountNumber'];
-				$transactionDate 	= strftime("%b, %d", strtotime($row2["transaction_date"]));
-
+				$transactionDate 	= strftime("%d, %b%y", strtotime($row["transactiontime"]));
 				// GET THE USER TRANSATIONS
 			
 				$returnedinformation[] = array(
 					"amount" 				=> number_format($amount)." Rwf",
-			        	"pullName" 			=> $pullName,
-			        	"phone" 			=> $pullPhone,
-			        	"status"			=> $status,
-			        	"transactionDate"	=> $transactionDate,
-			        	"transactionColor"	=> $color
-			    	);
+		        	"pullName" 			=> $pullName,
+		        	"phone" 			=> $pullnumber,
+		        	"status"			=> $status,
+		        	"transactionDate"	=> $transactionDate,
+		        	"transactionColor"	=> $color
+		    	);
 			}
-		
 			header('Content-Type: application/json');
 			$returnedinformation = json_encode($returnedinformation);
 			echo $returnedinformation;
@@ -1562,53 +1577,7 @@
 			if($checkAvailb > 0)
 			{
 				$row = mysqli_fetch_array($sql);
-				$pullName	= $row['name'];
-				$pullId	= $row['id'];
-
-				
-				function send_notification ($tokens, $message)
-				{
-					$url = 'https://fcm.googleapis.com/fcm/send';
-					$fields = array(
-						 'registration_ids' => $tokens,
-						 'data' => $message
-						);
-
-					$headers = array(
-						'Authorization:key = AIzaSyCVsbSeN2qkfDfYq-IwKrnt05M1uDuJxjg',
-						'Content-Type: application/json'
-						);
-
-				   $ch = curl_init();
-			       curl_setopt($ch, CURLOPT_URL, $url);
-			       curl_setopt($ch, CURLOPT_POST, true);
-			       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-			       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
-			       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-			       $result = curl_exec($ch);           
-			       if ($result === FALSE) {
-			           die('Curl failed: ' . curl_error($ch));
-			       }
-			       curl_close($ch);
-			       return $result;
-				}	
-
-				$sqlTk = $db->query("SELECT token FROM users WHERE id = '$pullId'");
-				
-				$tokens = array();
-
-				if(mysqli_num_rows($sqlTk) > 0 ){
-					while ($rowTk = mysqli_fetch_assoc($sqlTk)) {
-						$tokens[] = $rowTk["token"];
-					}
-				}
-
-
-				
-				$message = array("message" => "Hi! ".$pushName." Is sending you ".number_format($amount)." Rwf.");
-				send_notification($tokens, $message);
+				$pullId		= $row['id'];
 			}
 			else
 			{
@@ -1625,8 +1594,7 @@
 
 			if($outCon)
 			{
-				$sqlRemovedId= $outCon->query("SELECT id FROM directtransfers ORDER BY id DESC LIMIT 1");
-				$remId = mysqli_fetch_array($sqlRemovedId);
+				$remId =mysqli_insert_id($outCon);
 				$pullTransactionId = $remId['id'];
 				$pushTransactionId = $pullTransactionId - 1;
 
@@ -1634,33 +1602,34 @@
 				//CHECK BALANCE
 				$url = 'https://www.intouchpay.co.rw/api/getbalance/';
 
-				$username="muhirwa.clement";
-				$var_time = time();
-				$generate =  $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
-				$generate_hash =  hash('sha256', $generate);
-				$txt_id = md5(time());
-				$data = array();
-				$data["username"] 				= $username;
-				$data["password"] 				= $generate_hash;
-				$data["timestamp"] 				= $var_time;
+				$userName 		= "muhirwa.clement";
+				$var_time 		= time();
+				$generate 		= $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
+				$generate_hash 	= hash('sha256', $generate);
+
+				$data 				= array();
+				$data["username"] 	= $username;
+				$data["password"] 	= $generate_hash;
+				$data["timestamp"]	= $var_time;
 				$options = array(
-					'http' => array(
+						'http' => array(
 						'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 						'method'  => 'POST',
 						'content' => http_build_query($data)
 					)
 				);
-				$context  = stream_context_create($options);
-				$result = file_get_contents($url, false, $context);
+				$context  	= stream_context_create($options);
+				$result 	= file_get_contents($url, false, $context);
 				//echo $result;
 				if ($result === FALSE) 
 				{ 
 					$returnedinformation	= array();
-					$returnedinformation[] = array(
-				       		"status" => "NETWORK ERROR"
+					$returnedinformation[] 	= array(
+				       		"status" => "NETWORK ERROR",
+						    "transactionid" => $pushTransactionId
 				    	);
 					header('Content-Type: application/json');
-					$returnedinformation = json_encode($returnedinformation);
+					$returnedinformation 	= json_encode($returnedinformation);
 					echo $returnedinformation;
 				}
 				else
@@ -2902,6 +2871,5 @@
 				}
 			}
 		}
-
 	// END PARTNERS
 ?>
