@@ -343,7 +343,7 @@
         </div>
     </section>
 
-    <!-- <section id="sect-fund" class="section" style="padding: 48px 0px 0px 0;">
+    <section id="sect-fund" class="section" style="padding: 48px 0px 0px 0;">
         <div class="uk-container uk-container-center">
 			<h4 class="heading_b" style="padding: 0px 0 15px 0px;">
 					Public Contributions  <input style="float: right;
@@ -368,16 +368,15 @@
 			</div>
         </div>
     </section>
- -->
 
-    <section id="sect-dothis" onclick="smoothScroll(document.getElementById('sect-dothis'))"" class="section section_dark" style="padding: unset;">
+   <!--  <section id="sect-dothis" onclick="smoothScroll(document.getElementById('sect-dothis'))"" class="section section_dark" style="padding: unset;">
         <div class="uk-grid">
             <div class="uk-width-1-3 currentHeader customheader">
 			<span class="currentSpan" style="left:0;"></span>CONTRIBUTE</div>
             <div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=2)">U-SAVE</div>
             <div class="uk-width-1-3 uncurrentHeader customheader" onclick="changeserv(tab=3)">U-INVEST</div>
         </div>
-    </section>
+    </section> -->
 
 	<section id="sect-fund" class="section section_gallery md-bg-blue-grey-50">
         <div id="actions" class="uk-container uk-container-center uk-invisible" data-uk-scrollspy="{cls:'uk-animation-fade uk-invisible',delay:300,topoffset:-150}">
