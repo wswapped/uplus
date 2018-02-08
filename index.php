@@ -536,7 +536,7 @@
     <a href="https://play.google.com/store/apps/details?id=info.androidhive.uplus" style="display: inline-block;-moz-background-size: cover;background-size: cover;background-position: center;background-repeat: no-repeat;width: 168px;height: 49px;background-image:url(frontassets/img/playstore.png);"></a>
     </section>
 
-<!-- 
+<!--  
     <section class="section md-bg-blue-grey-50" id="sect-team">
         <div class="uk-container uk-container-center uk-invisible" data-uk-scrollspy="{cls:'uk-animation-scale-up uk-invisible',delay:300,topoffset:-100}">
             <div class="uk-grid uk-margin-large-bottom">
