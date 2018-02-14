@@ -163,12 +163,11 @@
                             <div class="md-card-content">
                                 <div class="md-input-wrapper">
                                     <label>Select service</label>
-                                    <input type="text" name="memberaddress" class="md-input">
                                     <select name="memberlocation" class="md-input" required="required">
                                         <option value="">Branch...</option>
                                         <?php
                                             //Getting branches
-                                            $branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $churchID ") or die("Can't get branches ".$conn->error);
+                                            $branchesQuery = $conn->query("SELECT * FROM branches WHERE church = $churchID ") or die("Can't get branches ".$conn->error);
                                             $branches = array();
                                             while ($data = $branchesQuery->fetch_assoc()) {
                                                 $branches[] = $data;
@@ -288,7 +287,7 @@
         <div class="md-fab-wrapper-small">
             <button class="md-fab md-fab-small md-fab-warning d_inline" href="javascript:void(0)" data-uk-modal="{target:'#modal_default'}"><i class="material-icons">person_add</i></button>
             <a class="md-fab md-fab-small md-fab-danger d_inline" href="javascript:void(0)" data-uk-modal="{target:'#modal_upload_members'}"><i class="material-icons">file_upload</i></a>
-            <a class="md-fab md-fab-small md-fab-danger d_inline" href="javascript:void(0)" data-uk-modal="{target:'#head_counts_modal'}"><i class="material-icons">account_circle</i></a>
+            <a class="md-fab md-fab-small md-fab-success d_inline" href="javascript:void(0)" data-uk-modal="{target:'#head_counts_modal'}"><i class="material-icons">account_circle</i></a>
         </div>
     </div>
 

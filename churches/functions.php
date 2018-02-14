@@ -141,7 +141,16 @@
         $service = $service->fetch_assoc();
         return $service;
     }
+    function church_services($church, $branch=''){
+    	//function for services of church even in branch
+    	global $conn;
 
+    	//if branch was not specified
+    	if(empty($branch)){
+    		$branches = churchbranches($church);
+    	}
+
+    }
     function donations_by_service($church){
       //status of donations by service on church
       global $conn;
