@@ -1,0 +1,20 @@
+check if member exists
+	if(exists){
+		$mId= get member Id
+	}
+	else{
+		inster new meber and 
+		$mId= get the last ID
+	}
+
+transaction:
+-	amount
+-	accountNumber
+	memberId: $mId
+-	serviceId
+-	method
+
+services
+	name
+	description
+	service id

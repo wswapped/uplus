@@ -1,5 +1,5 @@
-<?php include ("db.php"); ?>
 <?php
+    include ("db.php");
     session_start();
     $userId ='';
     define("SMS_PRICE", 13); //Constant for SMS price
@@ -27,7 +27,7 @@
     {
         $branchName = $rowBranches['name'];
     	$branchId = $rowBranches['id'];
-    	$sqlCountMembers = $db->query("SELECT * FROM members WHERE locationId = '$branchId'")or die (mysqli_error());
+    	$sqlCountMembers = $db->query("SELECT * FROM members WHERE branchid = '$branchId'")or die ($db->error());
     	$countMembers = mysqli_num_rows($sqlCountMembers);
     	
     	$branchSelect .='
@@ -46,11 +46,7 @@
         	</div>
         ';
     }
-?>
-
-<!-- event card -->
-
-<?php
+    // event card
     $EventCards = '';
     $selectevent = $db ->query("SELECT * FROM event");
     while($rowevent = mysqli_fetch_array($selectevent))
@@ -92,10 +88,14 @@
     <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
     <!-- c3.js (charts) -->
     <link rel="stylesheet" href="bower_components/c3js-chart/c3.min.css">
-        
+
+    <!-- uikit original -->
+    <link rel="stylesheet" type="text/css" href="assets/css/uikit.min.css">        
     
     <!-- uikit -->
     <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+    
 
     <!-- flag icons -->
     <link rel="stylesheet" href="assets/icons/flags/flags.min.css" media="all">
@@ -156,11 +156,11 @@
         
         <div class="sidebar_main_header">
             <div class="sidebar_logo">
-                <a href="index.html" class="sSidebar_hide sidebar_logo_large">
+                <a href="index.php" class="sSidebar_hide sidebar_logo_large">
                     <img class="logo_regular" src="assets/img/logo_main.png" alt="" height="15" width="71"/>
                     <img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>
                 </a>
-                <a href="index.html" class="sSidebar_show sidebar_logo_small">
+                <a href="index.php" class="sSidebar_show sidebar_logo_small">
                     <img class="logo_regular" src="assets/img/logo_main_small.png" alt="" height="32" width="32"/>
                     <img class="logo_light" src="assets/img/logo_main_small_light.png" alt="" height="32" width="32"/>
                 </a>
@@ -230,6 +230,14 @@
                         <i class="material-icons"></i>
                         </span>
                         <span class="menu_title">Events</span>
+                    </a>
+                </li>
+                <li title="Events">
+                    <a href="settings.php">
+                        <span class="menu_icon">
+                        <i class="material-icons">settings</i>
+                        </span>
+                        <span class="menu_title">Settings</span>
                     </a>
                 </li>
             </ul>

@@ -29,7 +29,7 @@
     include("header.php");
 
     //getting prayer requests of this churche's users
-    $prayerquery = $conn->query("SELECT *, members.id as memberID, members.name as membername FROM prayer_requests JOIN members ON prayer_requests.member = members.id JOIN branches ON members.locationId = branches.id WHERE branches.church = $churchID ORDER BY sentTime ASC") or die ("can't get chats".$conn->error);
+    $prayerquery = $conn->query("SELECT *, members.id as memberID, members.name as membername FROM prayer_requests JOIN members ON prayer_requests.member = members.id JOIN branches ON members.branchid = branches.id WHERE branches.church = $churchID ORDER BY sentTime ASC") or die ("can't get chats".$conn->error);
 
     $memberprayers = $prayers = array();
     while ($data = $prayerquery->fetch_assoc()) {

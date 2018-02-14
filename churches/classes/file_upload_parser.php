@@ -59,7 +59,7 @@ function testupload(){
 			VALUES ('$names', '$phone', '$location', '$type', NOW());<br/>";
 		$sql = $db->query("INSERT INTO 
 			members 
-			(name, phone, email, locationId, type, createdDate) 
+			(name, phone, email, branchid, type, createdDate) 
 			VALUES ('$names', '$phone', '$email', '$location', '$type', NOW());") or die($conn->error);
 		$n++;
 		}

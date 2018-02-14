@@ -91,8 +91,43 @@
             }else{
                 $response = array('status'=>false, 'msg'=>"Error uploading group image\nPlease try again");
             }
+        }    	
+    }else if($action == 'addmembers'){
+        //Adding members to group
+        $group = $request['group'];
+        $members = $request['members'];
+
+        //Adding group members
+        $response = array('added'=>array(), 'not_added'=>array());
+        for($n=0; $n<count($members); $n++){
+            $member = $members[$n];
+            //testing if user is already member of group
+            $sql = "SELECT * FROM group_members WHERE member = \"$member\" AND groupid = \"$group\" ";
+            echo "$sql";
+            $test = $conn->query($sql) or die("$conn->error");
+            if($test->num_rows<1){
+                //add user to group
+                $query = $conn->query("INSERT INTO group_members(member, groupid) VALUES(\"$member\", \"$group\") ");
+                if($query){
+                    $response['added'] = array_merge($response['added'], array($member));
+                }else{
+                    //Not added
+                    $response['not_added'] = array_merge($response['not_added'], array("$member"=>$conn->error));
+                }                
+            }else{
+                // user already a member
+                 $response['not_added'][] = array("$member"=>"user already a member");
+            }
         }
-    	
+
+    }else if($action == 'remove_users'){
+        //removing user from group
+        $members = $request['members'];
+        $group = $request['group'];
+
+        //checking if it's one user or many user
+        print_r($members);
+
     }else{
     	echo json_encode(array('status'=>false, 'msg'=>"Provide action"));
     }

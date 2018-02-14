@@ -1,17 +1,17 @@
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php include("header.php");?>
-
+<?php
+    $title = "Members"; 
+    include("header.php");
+?>
     <div id="page_content">
         <div id="page_content_inner">
+            <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
+                <div class="uk-row-first"><h4 class="">All members</h4></div>
+            </div>
 
-            <div class=" uk-grid uk-margin-bottom">
-                <div class="uk-row-first">
-                    <h4 class="">All members </h4>
-                    <h3 class="status" id="status"></h3>
-                </div>
-            
+            <div class=" uk-grid uk-margin-bottom">            
                 <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
                     <div class="uk-width-large-4-4">
     					<div class="md-card">
@@ -44,8 +44,8 @@
                                         $sqlGetMembers = $db->query("SELECT * FROM `members` ORDER BY id DESC")or die (mysqli_error());
     									while($rowMember = mysqli_fetch_array($sqlGetMembers))
     										{
-                                                $locationId = $rowMember['locationId'];
-                                                $sqlGetMembersloc = $db->query("SELECT * FROM `branches` WHERE id = '$locationId'")or die (mysqli_error());
+                                                $branchid = $rowMember['branchid'];
+                                                $sqlGetMembersloc = $db->query("SELECT * FROM `branches` WHERE id = '$branchid'")or die (mysqli_error());
                                                 $branches = mysqli_fetch_array($sqlGetMembersloc);
     											$n++;
     											echo '<tr>
@@ -67,118 +67,117 @@
                             </div>
                         </div>
                     </div>
-    			</div>
-                
-        </div>
-    </div>
-    <div class="modals">            
-        <div class="uk-modal" id="modal_default" aria-hidden="true" style="display: none; overflow-y: auto;">
-            <div class="uk-modal-dialog" style="top: 339.5px;">
-                <div class="uk-modal-header uk-tile uk-tile-default">
-                    <h3 class="d_inline">New Member</h3><button type="button" class="uk-modal-close uk-close d_inline pull-right"></button>
-                </div>
-                <form action="operations.php" method="POST">
-                    <div class="md-card">
-                        <div class="md-card-content">
-                            <div class="md-input-wrapper">
-                                <label>Full Name</label>
-                                <input type="text" name="membername" class="md-input" required="required">
-                                <span class="md-input-bar "></span>
-                            </div>
-                            <div class="md-input-wrapper">
-                                <label>Phone</label>
-                                <input type="text" name="memberphone" class="md-input">
-                                <span class="md-input-bar "></span>
-                            </div>
-                            <div class="md-input-wrapper">
-                                <label>E-mail</label>
-                                <input type="email" name="memberemail" class="md-input">
-                                <span class="md-input-bar "></span>
-                            </div>
-                            <div class="md-input-wrapper">
-                                <label>Address</label>
-                                <input type="text" name="memberaddress" class="md-input">
-                                <select name="memberlocation" class="md-input" required="required">
-                                    <option value="">Branch...</option>
-                                    <?php
-                                        //Getting branches
-                                        $branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $churchID ") or die("Can't get branches ".$conn->error);
-                                        $branches = array();
-                                        while ($data = $branchesQuery->fetch_assoc()) {
-                                            $branches[] = $data;
-                                            ?>
-                                                <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
-                                            <?php
-                                        }
-                                    ?>
-                                </select>
-                                <span class="md-input-bar "></span>
-                            </div>
-                            <div class="md-input-wrapper">
-                                <select name="membertype" class="md-input"  required="required">
-                                    <option value="">Type...</option>
-                                    <option value="VISITOR">VISITOR<option>
-                                    <option value="FULL">FULL</option>
-                                </select>
-                                <span class="md-input-bar "></span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="uk-modal-footer uk-text-right">
-                        <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                        <div class="md-input-wrapper">
-                            <button class="md-btn md-btn-success pull-right">Save</button>
-                        </div>
-                    </div>
-                </form>
-
+    			</div>                
             </div>
         </div>
-        <div class="uk-modal" id="modal_upload_members" aria-hidden="true" style="display: none; overflow-y: auto;">
-            <div class="uk-modal-dialog" style="top: 339.5px;">
-                <div class="uk-modal-header uk-tile uk-tile-default">
-                    <h3 class="d_inline">Batch members upload</h3><button type="button" class="uk-modal-close uk-close d_inline pull-right"></button>
-                </div>
-                <form id="memExport" method="POST" enctype="multipart/form-data">
-                    <div class="md-card">
-                        <div class="md-card-content">
+        <div class="modals">            
+            <div class="uk-modal" id="modal_default" aria-hidden="true" style="display: none; overflow-y: auto;">
+                <div class="uk-modal-dialog" style="top: 339.5px;">
+                    <div class="uk-modal-header uk-tile uk-tile-default">
+                        <h3 class="d_inline">New Member</h3><button type="button" class="uk-modal-close uk-close d_inline pull-right"></button>
+                    </div>
+                    <form action="operations.php" method="POST">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="md-input-wrapper">
+                                    <label>Full Name</label>
+                                    <input type="text" name="membername" class="md-input" required="required">
+                                    <span class="md-input-bar "></span>
+                                </div>
+                                <div class="md-input-wrapper">
+                                    <label>Phone</label>
+                                    <input type="text" name="memberphone" class="md-input">
+                                    <span class="md-input-bar "></span>
+                                </div>
+                                <div class="md-input-wrapper">
+                                    <label>E-mail</label>
+                                    <input type="email" name="memberemail" class="md-input">
+                                    <span class="md-input-bar "></span>
+                                </div>
+                                <div class="md-input-wrapper">
+                                    <label>Address</label>
+                                    <input type="text" name="memberaddress" class="md-input">
+                                    <select name="memberlocation" class="md-input" required="required">
+                                        <option value="">Branch...</option>
+                                        <?php
+                                            //Getting branches
+                                            $branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $churchID ") or die("Can't get branches ".$conn->error);
+                                            $branches = array();
+                                            while ($data = $branchesQuery->fetch_assoc()) {
+                                                $branches[] = $data;
+                                                ?>
+                                                    <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
+                                                <?php
+                                            }
+                                        ?>
+                                    </select>
+                                    <span class="md-input-bar "></span>
+                                </div>
+                                <div class="md-input-wrapper">
+                                    <select name="membertype" class="md-input"  required="required">
+                                        <option value="">Type...</option>
+                                        <option value="VISITOR">VISITOR<option>
+                                        <option value="FULL">FULL</option>
+                                    </select>
+                                    <span class="md-input-bar "></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="uk-modal-footer uk-text-right">
+                            <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
                             <div class="md-input-wrapper">
-                                <label>Choose Excel file of members you want to export</label>
-                                <div class="dropify-wrapper">
-                                    <div class="dropify-message">
-                                        <span class="file-icon"></span> <p>Drag and drop a file here or click</p>
-                                        <p class="dropify-error">Ooops, something wrong appended.</p>
-                                    </div>
-                                    <div class="dropify-loader"></div>
-                                    <div class="dropify-errors-container">
-                                        <ul></ul>
-                                    </div>
-                                    <input data-default-file="file:///C:/xampp/htdocs/uplus/churches/Church%20members.xlsx" name = "file1" type="file" data-allowed-file-extensions="xls xlsx" id="file1" class="dropify">
-                                    <button type="button" class="dropify-clear">Remove</button>
-                                    <div class="dropify-preview">
-                                        <span class="dropify-render"></span>
-                                        <div class="dropify-infos">
-                                            <div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p>
+                                <button class="md-btn md-btn-success pull-right">Save</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="uk-modal" id="modal_upload_members" aria-hidden="true" style="display: none; overflow-y: auto;">
+                <div class="uk-modal-dialog" style="top: 339.5px;">
+                    <div class="uk-modal-header uk-tile uk-tile-default">
+                        <h3 class="d_inline">Batch members upload</h3><button type="button" class="uk-modal-close uk-close d_inline pull-right"></button>
+                    </div>
+                    <form id="memExport" method="POST" enctype="multipart/form-data">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="md-input-wrapper">
+                                    <label>Choose Excel file of members you want to export</label>
+                                    <div class="dropify-wrapper">
+                                        <div class="dropify-message">
+                                            <span class="file-icon"></span> <p>Drag and drop a file here or click</p>
+                                            <p class="dropify-error">Ooops, something wrong appended.</p>
+                                        </div>
+                                        <div class="dropify-loader"></div>
+                                        <div class="dropify-errors-container">
+                                            <ul></ul>
+                                        </div>
+                                        <input data-default-file="file:///C:/xampp/htdocs/uplus/churches/Church%20members.xlsx" name = "file1" type="file" data-allowed-file-extensions="xls xlsx" id="file1" class="dropify">
+                                        <button type="button" class="dropify-clear">Remove</button>
+                                        <div class="dropify-preview">
+                                            <span class="dropify-render"></span>
+                                            <div class="dropify-infos">
+                                                <div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <span class="md-input-bar "></span>
-                            </div>                                            
-                            <input type="hidden" name="action" value="export_members">
-                            <input type="hidden" name="church" value="<?php echo $churchID; ?>">
-                            <input type="hidden" name="user" value="<?php echo $userId; ?>">                       
+                                    <span class="md-input-bar "></span>
+                                </div>                                            
+                                <input type="hidden" name="action" value="export_members">
+                                <input type="hidden" name="church" value="<?php echo $churchID; ?>">
+                                <input type="hidden" name="user" value="<?php echo $userId; ?>">                       
+                            </div>
                         </div>
-                    </div>
-                    <div class="uk-modal-footer uk-text-right">
-                        <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                        <div class="md-input-wrapper">
-                            <button type="submit" class="md-btn md-btn-success pull-right">Save</button>
+                        <div class="uk-modal-footer uk-text-right">
+                            <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
+                            <div class="md-input-wrapper">
+                                <button type="submit" class="md-btn md-btn-success pull-right">Save</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

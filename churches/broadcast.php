@@ -1,9 +1,10 @@
 <?php
+    
+    include_once 'db.php';
 
     if (isset($_POST['msg'])) {
         $msg = $_POST['msg'];
         $receiver = $_POST['receiver'];
-        include 'db.php';
         $insertmsg = $db ->query("INSERT INTO message(receiver, msg, sendtime)
             VALUES('$receiver', '$msg', now())");
         echo "sent";
@@ -17,7 +18,7 @@
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 <?php include("header.php"); ?>
 <div id="page_content">
-        <div id="page_content_inner">
+    <div id="page_content_inner">
         <div class="uk-column-1-2">
             <h4 class="heading_a uk-margin-bottom">Broad Casts</h4>
             <!-- <p>Message Balance: </p> -->
@@ -43,6 +44,7 @@
             </div>
         </div>
     </div>
+</div>
     
     <!-- google web fonts -->
     <script>

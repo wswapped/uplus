@@ -13,7 +13,7 @@ if(isset($_POST['membername'])){
 	$type = $_POST['membertype'];
 	
 	$sqlAddMember = $db->query("
-		INSERT INTO members(name, phone, email, locationId, address, type, createdDate)
+		INSERT INTO members(name, phone, email, branchid, address, type, createdDate)
 		VALUES('$name', '$phone', '$email', '$location', '$address', '$type', now())
 	");
 	header("location: allmembers.php");

@@ -6,7 +6,7 @@
     if(isset($_GET['brancId'])){
     	$brancId = $_GET['brancId'];
     	$sqlGetBranch = $db->query("SELECT * FROM `branches` WHERE id = '$brancId'")or die (mysqli_error());
-        $Branchmember = $db->query("SELECT * FROM `members` WHERE locationId = '$brancId'")or die (mysqli_error());
+        $Branchmember = $db->query("SELECT * FROM `members` WHERE branchid = '$brancId'")or die (mysqli_error());
         $numberofmember = mysqli_num_rows($Branchmember);
     	$rowBranch = mysqli_fetch_array($sqlGetBranch);
         $Bname = $rowBranch['name'];

@@ -11,6 +11,7 @@
 	$userId = $User->getUser();
 
 	$church = $User->church($userId);
+
 	//Getting broadcasts of user
 	$cBroadcasts = $Broadcast->cBroadcast($userId, 105);
 ?>
@@ -112,91 +113,105 @@
 							<button class="btn btn-primary" id="transinvoiceprint">Print</button>
 						</div>
 						<div class="uk-width-medium-1-2 rdis">
-							<h4 class="card-title">Current Broadcasts</h4>
-							<?php 
-								if(count($cBroadcasts)>1){ ?>
-									<table class="uk-table" cellspacing=0 width="100%">
-										<thead>
-											<tr>
-												<th class="sorthead"># <span class="caret"> </span></th>
-												<th class="sorthead">Date<span class="caret"></span></th>
-												<th class="sorthead">Target number <span class="caret"></span></th>
-												<th class="sorthead">Message: <span class="caret"></span></th>
-												<!-- <th class="sorthead">Channels<span class="caret"></span></th> -->
-												<th class="sorthead">Cost(RWF) <span class="caret"></span></th>                
-												<th class="sorthead">Actions <span class="caret"></span></th>
-											</tr>
-										</thead>
-										<tbody class="mtable">
-											<?php
-													for($n=0; $n<count($cBroadcasts); $n++){
-														$broad = $cBroadcasts[$n];
-														$senttime = new dateTime($broad['time']);
-														$senttime = $senttime->format('d M Y - H:i:s');
-														$ntarget = $Broadcast->ntarget($broad['id']);
-														$nchannels = $Broadcast->channels($broad['id']);
-														$cost = $Broadcast->cost($broad['id']);
+							<div class="md-card">
+								<div class="md-card-toolbar">
+									<h4 class="card-title">Current Broadcasts</h4>
+								</div>
+								<div class="md-card-content">
+									<?php 
+										if(count($cBroadcasts)>1){ ?>
+											<table class="uk-table" cellspacing=0 width="100%">
+												<thead>
+													<tr>
+														<th class="sorthead"># <span class="caret"> </span></th>
+														<th class="sorthead">Date<span class="caret"></span></th>
+														<th class="sorthead">Target number <span class="caret"></span></th>
+														<th class="sorthead">Message: <span class="caret"></span></th>
+														<!-- <th class="sorthead">Channels<span class="caret"></span></th> -->
+														<th class="sorthead">Cost(RWF) <span class="caret"></span></th>                
+														<th class="sorthead">Actions <span class="caret"></span></th>
+													</tr>
+												</thead>
+												<tbody class="mtable">
+													<?php
+															for($n=0; $n<count($cBroadcasts); $n++){
+																$broad = $cBroadcasts[$n];
+																$senttime = new dateTime($broad['time']);
+																$senttime = $senttime->format('d M Y - H:i:s');
+																$ntarget = $Broadcast->ntarget($broad['id']);
+																$nchannels = $Broadcast->channels($broad['id']);
+																$cost = $Broadcast->cost($broad['id']);
 
-														//composing short message
-														$maxchar = 30;
-														if(!empty($broad['subject'])){
-															$smsg = strlen($broad['subject'])<$maxchar?$broad['subject']:substr($broad['subject'], 0, $maxchar);
-														}else{
-															$smsg = strlen($broad['message'])<$maxchar?$broad['message']:substr($broad['message'], 0, $maxchar);
-														}
-														?>
-														<tr class="broadMore" data-mid="<?php echo $broad['id']; ?>">
-															<td class="viewmore"><?php echo $n; ?></td>
-															<td><?php echo $senttime; ?></td>
-															<td><?php echo $ntarget; ?></td>
-															<td class="viewmore"><?php echo $smsg; ?></td>
-															<!-- <td><?php //echo implode(', ', array_keys($nchannels)); ?></td> -->
-															<td><?php echo $cost['total']; ?></td>
-															<td><button class="btn btn-primary pull-right md-btn-wave-light waves-effect waves-button waves-light showInvoice" data-mid="<?php echo $broad['id']; ?>">Invoice</button></td>
-														</tr>
-														<?php
-													}
-													?>
-												
-										</tbody>
-									</table>
-							<?php
-							}else{
-								 ?>
-								<p class="card-text">It looks like you haven't sent any message.</p>
-								<button href="#" class="btn btn-primary pull-right loadView" data-pagetoggle='send'>Send Messages</button>
-								<div class="clearfix"></div>
-							<?php } ?>
+																//composing short message
+																$maxchar = 30;
+																if(!empty($broad['subject'])){
+																	$smsg = strlen($broad['subject'])<$maxchar?$broad['subject']:substr($broad['subject'], 0, $maxchar);
+																}else{
+																	$smsg = strlen($broad['message'])<$maxchar?$broad['message']:substr($broad['message'], 0, $maxchar);
+																}
+																?>
+																<tr class="broadMore" data-mid="<?php echo $broad['id']; ?>">
+																	<td class="viewmore"><?php echo $n+1; ?></td>
+																	<td><?php echo $senttime; ?></td>
+																	<td><?php echo $ntarget; ?></td>
+																	<td class="viewmore"><?php echo $smsg; ?></td>
+																	<!-- <td><?php //echo implode(', ', array_keys($nchannels)); ?></td> -->
+																	<td><?php echo $cost['total']; ?></td>
+																	<td><button class="btn btn-primary pull-right md-btn-wave-light waves-effect waves-button waves-light showInvoice" data-mid="<?php echo $broad['id']; ?>">Invoice</button></td>
+																</tr>
+																<?php
+															}
+															?>
+														
+												</tbody>
+											</table>
+									<?php
+									}else{
+										 ?>
+										<p class="card-text">It looks like you haven't sent any message.</p>
+										<button href="#" class="btn btn-primary pull-right loadView" data-pagetoggle='send'>Send Messages</button>
+										<div class="clearfix"></div>
+									<?php } ?>
+								</div>
+							</div>
 						</div>
 						<div class="uk-width-medium-1-2">
-							<h4 class="card-title">Transactions <button class="loadView btn btn-default pull-right" data-pagetoggle="shop" id="buysms">Buy SMS</button></h4>
-							<div class="uk-overflow-container"><table id="dt_tableExport" class="uk-table dataTable no-footer" cellspacing="0" width="100%" role="grid" aria-describedby="dt_tableExport_info" style="width: 100%;">
-                                <thead>
-                                    <tr role="row"><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="#: activate to sort column ascending" style="width: 8px;">#</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 181px;">Account</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Branche: activate to sort column ascending" style="width: 53px;">Mode</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending" style="width: 62px;">Number</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 164px;">Cost</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending" style="width: 52px;">Date</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 39px;">Action</th></tr>
-                                </thead>
-                                <tbody>
-                                	<?php
-                                		$trans = $db->query("SELECT * FROM transactions") or die("Cant get Transactions ".$db->error);
-                                		$transactions = array();
-                                		$n=1;
-                                		while ($data = $trans->fetch_assoc()) {
-                                			?>
-                                				<tr role="row" class="<?php echo $n%2==0?'even':'odd'; ?>">
-                                					<td><?php echo $n; ?></td>
-                                					<td><?php echo $data['phone']; ?></td>
-                                					<td><?php echo $data['mode']; ?></td>
-                                					<td><?php echo $data['nsms']; ?></td>
-                                					<td><?php echo number_format($data['cost']); ?>Frw</td>
-                                					<td><?php echo $data['date'];; ?></td>
-                                					<td><button data-tid = "<?php echo $data['id']; ?>" class="md-btn md-btn-default showTransactionInvoice"><i class="md-icon material-icons">print</i></button></td>
-                                				</tr>
-                                			<?php
-                                			$n++;
-                                		}
-                                	?>
-                                	
-                            	</tbody>
-                            </table></div>
+							<div class="md-card">
+								<div class="md-card-toolbar">
+									<h4 class="card-title">Transactions <button class="loadView btn btn-default pull-right" data-pagetoggle="shop" id="buysms">Buy SMS</button></h4>
+								</div>
+								<div class="md-card-content">
+									<div class="uk-overflow-container">
+										<table id="dt_tableExport" class="uk-table dataTable no-footer" cellspacing="0" width="100%" role="grid" aria-describedby="dt_tableExport_info" style="width: 100%;">
+		                                <thead>
+		                                    <tr role="row"><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="#: activate to sort column ascending" style="width: 8px;">#</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 181px;">Account</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Branche: activate to sort column ascending" style="width: 53px;">Mode</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending" style="width: 62px;">Number</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 164px;">Cost</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending" style="width: 52px;">Date</th><th class="sorting" tabindex="0" aria-controls="dt_tableExport" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 39px;">Action</th></tr>
+		                                </thead>
+		                                <tbody>
+		                                	<?php
+		                                		$trans = $db->query("SELECT * FROM transactions") or die("Cant get Transactions ".$db->error);
+		                                		$transactions = array();
+		                                		$n=1;
+		                                		while ($data = $trans->fetch_assoc()) {
+		                                			?>
+		                                				<tr role="row" class="<?php echo $n%2==0?'even':'odd'; ?>">
+		                                					<td><?php echo $n; ?></td>
+		                                					<td><?php echo $data['phone']; ?></td>
+		                                					<td><?php echo $data['mode']; ?></td>
+		                                					<td><?php echo $data['nsms']; ?></td>
+		                                					<td><?php echo number_format($data['cost']); ?>Frw</td>
+		                                					<td><?php echo $data['date'];; ?></td>
+		                                					<td><button data-tid = "<?php echo $data['id']; ?>" class="md-btn md-btn-default showTransactionInvoice"><i class="md-icon material-icons">print</i></button></td>
+		                                				</tr>
+		                                			<?php
+		                                			$n++;
+		                                		}
+		                                	?>
+		                                	
+		                            	</tbody>
+		                            	</table>
+		                        	</div>
+		                        </div>
+	                        </div>
 						</div>  
 					</div>     
 						
@@ -220,7 +235,7 @@
 	        <p class="delivery"></p>        
 	        <div class="uk-modal-footer uk-text-right">
 	            <button type="button" class="uk-button uk-modal-close">Cancel</button>
-	            <button class="btn btn-primary pull-right md-btn-wave-light waves-effect waves-button waves-light showInvoice">Invoice</button>
+	            <button class="md-btn md-btn-wave waves-effect waves-button showInvoice">Invoice</button>
 	        </div>
 	    </div>
 	</div>

@@ -18,6 +18,65 @@
         $user = $user->fetch_assoc();
         return $user;
     }
+    function member_types(){
+      global $conn;
+      //Function to help us get member types
+      $query = $conn->query("SELECT * FROM member_types") or die("Can't get mtypes $conn->error");
+      $types = array();
+
+      while ($data = $query->fetch_assoc()) {
+      	$types[] = $data;
+      }
+      return $types;
+    }
+    function group_types(){
+      global $conn;
+      //Function to help us get group types
+      $query = $conn->query("SELECT * FROM group_types ORDER BY `group_types`.`drank` ASC") or die("Can't get mtypes $conn->error");
+      $types = array();
+
+      while ($data = $query->fetch_assoc()) {
+      	$types[] = $data;
+      }
+      return $types;
+    }
+    function group_details($group){
+      //group details
+      global $conn;
+      $query = $conn->query("SELECT * FROM groups WHERE groups.id = \"$group\" LIMIT 1");
+      if($query->num_rows > 0){
+        $group_data = $query->fetch_assoc();
+        //getting number of members
+        $members = $conn->query("SELECT COUNT(*) as num FROM group_members WHERE groupid = $group_data[id]");
+        $members = $members->fetch_assoc();
+        $group_data['members'] = $members['num'];
+
+        return $group_data;
+      }else{
+        return false;
+      }
+      var_dump($query);
+    }
+    function group_members($group){
+      //members details
+      global $conn;
+      $query = $conn->query("SELECT * FROM group_members WHERE group_members.groupid = \"$group\"") or die("Can;t get group members $conn->error");
+      $members = array();
+      while ($data = $query->fetch_assoc()) {
+        $members[] = $data;
+      }
+      return $members;
+    }
+    function group_non_members($group){
+      //members details
+      global $conn;
+      $query = $conn->query("SELECT * FROM members WHERE members.id NOT IN (SELECT member FROM group_members WHERE group_members.groupid = \"$group\") ") or die("Can;t get group non-members $conn->error");
+      $members = array();
+      while ($data = $query->fetch_assoc()) {
+        $members[] = $data;
+      }
+      return $members;
+    }
     function logMessages($messageID, $receivers, $status='pending'){
         global $conn;
 
@@ -168,7 +227,7 @@
     function church_members($churchid){
     	//returns members of $churchid
     	global $conn;
-    	$query = $conn->query("SELECT members.* FROM members JOIN branches ON members.locationId = branches.id WHERE branches.church = $churchid ") or die("Can't get members $conn->error");
+    	$query = $conn->query("SELECT members.* FROM members JOIN branches ON members.branchid = branches.id WHERE branches.church = $churchid ") or die("Can't get members $conn->error");
     	$members = array();
     	while ($data = $query->fetch_assoc()) {
     		$members[] = $data;

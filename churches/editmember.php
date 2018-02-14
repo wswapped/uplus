@@ -11,7 +11,7 @@
         $maddress   =  $_POST['maddress'];
     	$mtype 	    =  $_POST['mtype'];
     	$mid        =  $_POST['mid'];
-    	$sql        = $db->query("UPDATE  members SET name = '$mname', locationId = '$mlocation', address = '$maddress', type = '$mtype', email = '$mmail', phone = '$mcontact' WHERE id='$mid'");
+    	$sql        = $db->query("UPDATE  members SET name = '$mname', branchid = '$mlocation', address = '$maddress', type = '$mtype', email = '$mmail', phone = '$mcontact' WHERE id='$mid'");
     	?>
     	<script type="text/javascript">
     		window.location.href="allmembers.php";

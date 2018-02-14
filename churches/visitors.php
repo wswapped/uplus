@@ -35,8 +35,8 @@
                                         $fetchvisitor = $db ->query("SELECT * FROM members WHERE type = 'VISITOR' ORDER BY id DESC");
                                         $n = 0;
                                         while ($visitorinfo = mysqli_fetch_array($fetchvisitor)) {
-                                            $locationId = $visitorinfo['locationId'];
-                                            $fetchbranch = $db ->query("SELECT * FROM branches WHERE id = '$locationId'");
+                                            $branchid = $visitorinfo['branchid'];
+                                            $fetchbranch = $db ->query("SELECT * FROM branches WHERE id = '$branchid'");
                                             $branch = mysqli_fetch_array($fetchbranch);
                                             echo '
                                                 <tr>
