@@ -18,6 +18,7 @@
     <!-- main sidebar -->
     <?php
         include_once "sidebar.php";
+        $church_services = church_services($churchID);
     ?>
 
     <div id="page_content">
@@ -158,21 +159,18 @@
                     <div class="uk-modal-header uk-tile uk-tile-default">
                         <h3 class="d_inline">Enter head counts</h3>
                     </div>
-                    <form method="POST">
+                    <form method="POST" id="head_counts_form">
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="md-input-wrapper">
-                                    <label>Select service</label>
-                                    <select name="memberlocation" class="md-input" required="required">
-                                        <option value="">Branch...</option>
+                                    <select name="service" class="md-input" required="required">
+                                        <option value="">Service...</option>
                                         <?php
                                             //Getting branches
-                                            $branchesQuery = $conn->query("SELECT * FROM branches WHERE church = $churchID ") or die("Can't get branches ".$conn->error);
-                                            $branches = array();
-                                            while ($data = $branchesQuery->fetch_assoc()) {
-                                                $branches[] = $data;
+                                            for ($n=0; $n<count($church_services); $n++) {
+                                                $service = $church_services[$n];
                                                 ?>
-                                                    <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
+                                                    <option value="<?php echo $service['name']; ?>"><?php echo $service['name']; ?></option>
                                                 <?php
                                             }
                                         ?>
@@ -180,48 +178,13 @@
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    <label>Phone</label>
-                                    <input type="text" name="memberphone" class="md-input">
+                                    <label>Date</label>
+                                    <input type="text" name="date" class="md-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}>
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    <label>E-mail</label>
-                                    <input type="email" name="memberemail" class="md-input">
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <label>Address</label>
-                                    <input type="text" name="memberaddress" class="md-input">
-                                    <select name="memberlocation" class="md-input" required="required">
-                                        <option value="">Branch...</option>
-                                        <?php
-                                            //Getting branches
-                                            $branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $churchID ") or die("Can't get branches ".$conn->error);
-                                            $branches = array();
-                                            while ($data = $branchesQuery->fetch_assoc()) {
-                                                $branches[] = $data;
-                                                ?>
-                                                    <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
-                                                <?php
-                                            }
-                                        ?>
-                                    </select>
-                                    <span class="md-input-bar "></span>
-                                </div>
-                                <div class="md-input-wrapper">
-                                    <select name="membertype" class="md-input"  required="required">
-                                        <option value="">Type...</option>
-                                        <?php
-                                            //getting types
-                                            $member_types = member_types();
-                                            for($n=0; $n<count($member_types); $n++){
-                                                $mtype = $member_types[$n]['name'];
-                                                ?>
-                                                    <option value="<?php echo $mtype; ?>"><?php echo ucfirst($mtype); ?></option>
-                                                <?php
-                                            } 
-                                        ?>
-                                    </select>
+                                    <label>Number</label>
+                                    <input type="number" name="membername" class="md-input" required="required">
                                     <span class="md-input-bar "></span>
                                 </div>
                             </div>
@@ -229,7 +192,7 @@
                         </div>
                         <div class="uk-modal-footer uk-text-right">
                             <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                            <button class="md-btn md-btn-success pull-right">Save</button>
+                            <button class="md-btn md-btn-success pull-right">Record</button>
                         </div>
                     </form>
 
@@ -352,6 +315,13 @@
         function log(data){
             console.log(data)
         }
+
+        $("#head_counts_form").on('submit', function(e){
+            e.preventDefault();
+
+            //head counts modal on submission
+            
+        })
     </script>
 
     <script>

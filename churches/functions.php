@@ -147,9 +147,25 @@
 
     	//if branch was not specified
     	if(empty($branch)){
-    		$branches = churchbranches($church);
-    	}
+            $temp = array();
+        		$branches = churchbranches($church);
+            for($n=0; $n<count($branches); $n++){
+              $temp[] = $branches[$n]['id'];
+            }
+            $branch = $temp;
+    	}else{
+            $branch = array($branch);
+        };
 
+
+        $sql = "SELECT * FROM church_service WHERE church_service.branchid IN (".implode(", ", $branch).") ";
+        $query = $conn->query($sql) or die("Can't get cservices $conn->error");
+
+        $services = array();
+        while ($data = $query->fetch_assoc()) {
+            $services[]= $data;
+        }
+        return $services;
     }
     function donations_by_service($church){
       //status of donations by service on church
