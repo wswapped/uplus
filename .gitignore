@@ -5,10 +5,6 @@ proimg/31.jpg
 
 temp/group1.jpeg
 
-*.jpeg
 
-*.png
-
-*.jpg
-db.php
+db.php/
 monitor/db.php
