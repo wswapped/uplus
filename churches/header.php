@@ -1,9 +1,8 @@
-<?php include ("db.php"); ?>
 <?php
+    include ("db.php");
     session_start();
     $userId ='';
     define("SMS_PRICE", 13); //Constant for SMS price
-    include 'db.php';
 
     if (isset($_SESSION['loginusername'])) {
         $loginusername = $_SESSION['loginusername'];
@@ -26,31 +25,27 @@
     while($rowBranches = mysqli_fetch_array($sqlGetBranches))
     {
         $branchName = $rowBranches['name'];
-    	$branchId = $rowBranches['id'];
-    	$sqlCountMembers = $db->query("SELECT * FROM members WHERE locationId = '$branchId'")or die (mysqli_error());
-    	$countMembers = mysqli_num_rows($sqlCountMembers);
-    	
-    	$branchSelect .='
-    	<option value="'.$rowBranches['name'].'">'.$rowBranches['name'].'</option>';
-    	$banchesCards .='
+        $branchId = $rowBranches['id'];
+        $sqlCountMembers = $db->query("SELECT * FROM members WHERE branchid = '$branchId'")or die (mysqli_error());
+        $countMembers = mysqli_num_rows($sqlCountMembers);
+        
+        $branchSelect .='
+        <option value="'.$rowBranches['name'].'">'.$rowBranches['name'].'</option>';
+        $banchesCards .='
             <div>
-        		<a href="branche.php?brancId='.$rowBranches['id'].'">
-        			<div class="md-card">
-        				<img src="gallery/branches/'.$rowBranches['profile'].'" alt="'.$rowBranches['name'].'" height="60%" width="100%">
-        				<div class="md-card-content">
-        					<strong>'.$rowBranches['name'].'</strong><br>
-        					<span class="uk-text-muted">Members ('.$countMembers.') </span>
-        				</div>
-        			</div>
-        		</a>
-        	</div>
+                <a href="branche.php?brancId='.$rowBranches['id'].'">
+                    <div class="md-card">
+                        <img src="gallery/branches/'.$rowBranches['profile'].'" alt="'.$rowBranches['name'].'" height="60%" width="100%">
+                        <div class="md-card-content">
+                            <strong>'.$rowBranches['name'].'</strong><br>
+                            <span class="uk-text-muted">Members ('.$countMembers.') </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
         ';
     }
-?>
-
-<!-- event card -->
-
-<?php
+    // event card
     $EventCards = '';
     $selectevent = $db ->query("SELECT * FROM event");
     while($rowevent = mysqli_fetch_array($selectevent))
@@ -71,6 +66,10 @@
         ';
     }
 ?>
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -81,19 +80,9 @@
     <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
 
-    <title><?php echo !empty($title)?$title." | ":"" ?> U+ Church</title>
+    <title><title><?php echo !empty($title)?$title." | ":"" ?> U+ Church</title></title>
 
-    <!-- additional styles for plugins -->
-    <!-- weather icons -->
-    <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css" media="all">
-    <!-- metrics graphics (charts) -->
-    <link rel="stylesheet" href="bower_components/metrics-graphics/dist/metricsgraphics.css">
-    <!-- chartist -->
-    <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
-    <!-- c3.js (charts) -->
-    <link rel="stylesheet" href="bower_components/c3js-chart/c3.min.css">
-        
-    
+
     <!-- uikit -->
     <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
 
@@ -101,23 +90,22 @@
     <link rel="stylesheet" href="assets/icons/flags/flags.min.css" media="all">
 
     <!-- style switcher -->
-    <link rel="stylesheet" href="assets/css/style_switcher.min.css" media="all">
+    <!-- <link rel="stylesheet" href="assets/css/style_switcher.min.css" media="all"> -->
     
     <!-- altair admin -->
     <link rel="stylesheet" href="assets/css/main.min.css" media="all">
-    
-    <!-- Bootstrap-css -->
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
     <!-- themes -->
     <link rel="stylesheet" href="assets/css/themes/themes_combined.min.css" media="all">
 
-    <!-- Dropify -->
-    <link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- matchMedia polyfill for testing media queries in JS -->
+    <!--[if lte IE 9]>
+        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.js"></script>
+        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.addListener.js"></script>
+        <link rel="stylesheet" href="assets/css/ie.css" media="all">
+    <![endif]-->
 </head>
+
 <body class=" sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
     <header id="header_main">
@@ -146,15 +134,15 @@
         </div>
     </header><!-- main header end -->
     <!-- main sidebar -->
-    <aside id="sidebar_main" style="background: #ccc">
+    <aside id="sidebar_main">
         
         <div class="sidebar_main_header">
             <div class="sidebar_logo">
-                <a href="index.html" class="sSidebar_hide sidebar_logo_large">
+                <a href="index.php" class="sSidebar_hide sidebar_logo_large">
                     <img class="logo_regular" src="assets/img/logo_main.png" alt="" height="15" width="71"/>
                     <img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>
                 </a>
-                <a href="index.html" class="sSidebar_show sidebar_logo_small">
+                <a href="index.php" class="sSidebar_show sidebar_logo_small">
                     <img class="logo_regular" src="assets/img/logo_main_small.png" alt="" height="32" width="32"/>
                     <img class="logo_light" src="assets/img/logo_main_small_light.png" alt="" height="32" width="32"/>
                 </a>
@@ -163,8 +151,8 @@
         
         <div class="menu_section">
             <ul>
-                <li title="Dashboard" class="active" >
-                    <a href="index.php" class="active">
+                <li title="Dashboard">
+                    <a href="index.php">
                         <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
                         <span class="menu_title">Dashboard</span>
                     </a>
@@ -178,18 +166,18 @@
                         <span class="menu_title">Members</span>
                     </a>
                 </li>
-                <!-- <li title="Branches">
+                <li title="Branches">
                     <a href="branches.php">
                         <span class="menu_icon">
                         <i class="material-icons"></i>
                         </span>
                         <span class="menu_title">Branches</span>
                     </a>
-                </li> -->
+                </li>
                 <li title="Groups">
                     <a href="groups.php">
                         <span class="menu_icon">
-                        <i class="material-icons"></i>
+                        <i class="material-icons">group</i>
                         </span>
                         <span class="menu_title">Groups</span>
                     </a>
@@ -197,7 +185,7 @@
                 </li>
                 <li title="Finance">
                     <a href="allfinance.php">
-                        <span class="menu_icon"><i class="fa fa-money fa-3"></i></span>
+                        <span class="menu_icon"><i class="fa money fa-3"></i></span>
                         <span class="menu_title">Donations</span>
                     </a>
                 </li>
@@ -218,14 +206,22 @@
                         </li>
                     </ul>
                 </li>
-                <!-- <li title="Events">
+                <li title="Events">
                     <a href="event.php">
                         <span class="menu_icon">
                         <i class="material-icons"></i>
                         </span>
                         <span class="menu_title">Events</span>
                     </a>
-                </li> -->
+                </li>
+                <li title="Events">
+                    <a href="settings.php">
+                        <span class="menu_icon">
+                        <i class="material-icons">settings</i>
+                        </span>
+                        <span class="menu_title">Settings</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </aside><!-- main sidebar end -->

@@ -1,0 +1,978 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+
+
+<!-- Mirrored from altair_html.tzdthemes.com/components_modal.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Feb 2018 11:18:35 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
+
+    <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
+
+    <title>Altair Admin v2.13.0</title>
+
+
+    <!-- uikit -->
+    <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+    <!-- flag icons -->
+    <link rel="stylesheet" href="assets/icons/flags/flags.min.css" media="all">
+
+    <!-- style switcher -->
+    <link rel="stylesheet" href="assets/css/style_switcher.min.css" media="all">
+    
+    <!-- altair admin -->
+    <link rel="stylesheet" href="assets/css/main.min.css" media="all">
+
+    <!-- themes -->
+    <link rel="stylesheet" href="assets/css/themes/themes_combined.min.css" media="all">
+
+    <!-- matchMedia polyfill for testing media queries in JS -->
+    <!--[if lte IE 9]>
+        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.js"></script>
+        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.addListener.js"></script>
+        <link rel="stylesheet" href="assets/css/ie.css" media="all">
+    <![endif]-->
+
+</head>
+<body class="disable_transitions sidebar_main_open sidebar_main_swipe">
+    <!-- main header -->
+    <header id="header_main">
+        <div class="header_main_content">
+            <nav class="uk-navbar">
+                                
+                <!-- main sidebar switch -->
+                <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                    <span class="sSwitchIcon"></span>
+                </a>
+                
+                <!-- secondary sidebar switch -->
+                <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
+                    <span class="sSwitchIcon"></span>
+                </a>
+                
+                    <div id="menu_top_dropdown" class="uk-float-left uk-hidden-small">
+                        <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
+                            <a href="#" class="top_menu_toggle"><i class="material-icons md-24">&#xE8F0;</i></a>
+                            <div class="uk-dropdown uk-dropdown-width-3">
+                                <div class="uk-grid uk-dropdown-grid">
+                                    <div class="uk-width-2-3">
+                                        <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-bottom uk-text-center">
+                                            <a href="page_mailbox.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-light-green-600">&#xE158;</i>
+                                                <span class="uk-text-muted uk-display-block">Mailbox</span>
+                                            </a>
+                                            <a href="page_invoices.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-purple-600">&#xE53E;</i>
+                                                <span class="uk-text-muted uk-display-block">Invoices</span>
+                                            </a>
+                                            <a href="page_chat.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-cyan-600">&#xE0B9;</i>
+                                                <span class="uk-text-muted uk-display-block">Chat</span>
+                                            </a>
+                                            <a href="page_scrum_board.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-red-600">&#xE85C;</i>
+                                                <span class="uk-text-muted uk-display-block">Scrum Board</span>
+                                            </a>
+                                            <a href="page_snippets.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-blue-600">&#xE86F;</i>
+                                                <span class="uk-text-muted uk-display-block">Snippets</span>
+                                            </a>
+                                            <a href="page_user_profile.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-orange-600">&#xE87C;</i>
+                                                <span class="uk-text-muted uk-display-block">User profile</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="uk-width-1-3">
+                                        <ul class="uk-nav uk-nav-dropdown uk-panel">
+                                            <li class="uk-nav-header">Components</li>
+                                            <li><a href="components_accordion.html">Accordions</a></li>
+                                            <li><a href="components_buttons.html">Buttons</a></li>
+                                            <li><a href="components_notifications.html">Notifications</a></li>
+                                            <li><a href="components_sortable.html">Sortable</a></li>
+                                            <li><a href="components_tabs.html">Tabs</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav user_actions">
+                        <li><a href="#" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">&#xE5D0;</i></a></li>
+                        <li><a href="#" id="main_search_btn" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE8B6;</i></a></li>
+                        <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                            <a href="#" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE7F4;</i><span class="uk-badge">16</span></a>
+                            <div class="uk-dropdown uk-dropdown-xlarge">
+                                <div class="md-card-content">
+                                    <ul class="uk-tab uk-tab-grid" data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
+                                        <li class="uk-width-1-2 uk-active"><a href="#" class="js-uk-prevent uk-text-small">Messages (12)</a></li>
+                                        <li class="uk-width-1-2"><a href="#" class="js-uk-prevent uk-text-small">Alerts (4)</a></li>
+                                    </ul>
+                                    <ul id="header_alerts" class="uk-switcher uk-margin">
+                                        <li>
+                                            <ul class="md-list md-list-addon">
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-cyan">ow</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Quod labore soluta.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Iste illum explicabo est accusantium expedita sed esse.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_07_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Sed quos.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Enim accusamus dicta consequuntur dolore quia labore deleniti.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-light-green">oo</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Consectetur consequatur consequuntur.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Adipisci ad quam quia eius molestiae unde.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_02_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Consequatur excepturi voluptates.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">In sint expedita molestiae enim quo sit ipsum nesciunt.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_09_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Fugiat rerum facilis.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Aut exercitationem asperiores sequi ex voluptas vel amet debitis fugit explicabo.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="uk-text-center uk-margin-top uk-margin-small-bottom">
+                                                <a href="page_mailbox.html" class="md-btn md-btn-flat md-btn-flat-primary js-uk-prevent">Show All</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <ul class="md-list md-list-addon">
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-warning">&#xE8B2;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Laborum nostrum.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Dolor provident in ea.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-success">&#xE88F;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Error ducimus.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Rem laborum nisi neque.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-danger">&#xE001;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Qui quia fugit.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Et fugiat sit reiciendis accusantium aut ut voluptate.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-primary">&#xE8FD;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Et est.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Minima illum quasi consectetur quod ut aut eum.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                            <a href="#" class="user_action_image"><img class="md-user-image" src="assets/img/avatars/avatar_11_tn.png" alt=""/></a>
+                            <div class="uk-dropdown uk-dropdown-small">
+                                <ul class="uk-nav js-uk-prevent">
+                                    <li><a href="page_user_profile.html">My profile</a></li>
+                                    <li><a href="page_settings.html">Settings</a></li>
+                                    <li><a href="login.html">Login Page</a></li>
+                                    <li><a href="login_v2.html">Login Page v2</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="header_main_search_form">
+            <i class="md-icon header_main_search_close material-icons">&#xE5CD;</i>
+            <form class="uk-form uk-autocomplete" data-uk-autocomplete="{source:'data/search_data.json'}">
+                <input type="text" class="header_main_search_input" />
+                <button class="header_main_search_btn uk-button-link"><i class="md-icon material-icons">&#xE8B6;</i></button>
+                <script type="text/autocomplete">
+                    <ul class="uk-nav uk-nav-autocomplete uk-autocomplete-results">
+                        {{~items}}
+                        <li data-value="{{ $item.value }}">
+                            <a href="{{ $item.url }}" class="needsclick">
+                                {{ $item.value }}<br>
+                                <span class="uk-text-muted uk-text-small">{{{ $item.text }}}</span>
+                            </a>
+                        </li>
+                        {{/items}}
+                        <li data-value="autocomplete-value">
+                            <a class="needsclick">
+                                Autocomplete Text<br>
+                                <span class="uk-text-muted uk-text-small">Helper text</span>
+                            </a>
+                        </li>
+                    </ul>
+                </script>
+            </form>
+        </div>
+    </header><!-- main header end -->
+    <!-- main sidebar -->
+    <aside id="sidebar_main">
+        
+        <div class="sidebar_main_header">
+            <div class="sidebar_logo">
+                <a href="index-2.html" class="sSidebar_hide sidebar_logo_large">
+                    <img class="logo_regular" src="assets/img/logo_main.png" alt="" height="15" width="71"/>
+                    <img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>
+                </a>
+                <a href="index-2.html" class="sSidebar_show sidebar_logo_small">
+                    <img class="logo_regular" src="assets/img/logo_main_small.png" alt="" height="32" width="32"/>
+                    <img class="logo_light" src="assets/img/logo_main_small_light.png" alt="" height="32" width="32"/>
+                </a>
+            </div>
+            <div class="sidebar_actions">
+                <select id="lang_switcher" name="lang_switcher">
+                    <option value="gb" selected>English</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="menu_section">
+            <ul>
+                <li title="Dashboard">
+                    <a href="index-2.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
+                        <span class="menu_title">Dashboard</span>
+                    </a>
+                    
+                </li>
+                <li title="Mailbox">
+                    <a href="page_mailbox.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE158;</i></span>
+                        <span class="menu_title">Mailbox</span>
+                    </a>
+                    
+                </li>
+                <li title="Invoices">
+                    <a href="page_invoices.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE53E;</i></span>
+                        <span class="menu_title">Invoices</span>
+                    </a>
+                    
+                </li>
+                <li title="Chats">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE0B9;</i></span>
+                        <span class="menu_title">Chats</span>
+                    </a>
+                    <ul>
+                        <li><a href="page_chat.html">Regular Chat</a></li>
+                        <li><a href="page_chat_small.html">Chatboxes</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Scrum Board">
+                    <a href="page_scrum_board.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE85C;</i></span>
+                        <span class="menu_title">Scrum Board</span>
+                    </a>
+                    
+                </li>
+                <li title="Snippets">
+                    <a href="page_snippets.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE86F;</i></span>
+                        <span class="menu_title">Snippets</span>
+                    </a>
+                    
+                </li>
+                <li title="User Profile">
+                    <a href="page_user_profile.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>
+                        <span class="menu_title">User Profile</span>
+                    </a>
+                    
+                </li>
+                <li title="Sticky Notes">
+                    <a href="page_sticky_notes.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE8F0;</i></span>
+                        <span class="menu_title">Sticky Notes</span>
+                    </a>
+                    
+                </li>
+                <li title="Forms">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
+                        <span class="menu_title">Forms</span>
+                    </a>
+                    <ul>
+                        <li><a href="forms_regular.html">Regular Elements</a></li>
+                        <li><a href="forms_advanced.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Advanced Elements</a></li>
+                        <li><a href="forms_dynamic.html">Dynamic</a></li>
+                        <li><a href="forms_file_input.html">File Upload (dropify)</a></li>
+                        <li><a href="forms_file_upload.html">File Upload (uikit)</a></li>
+                        <li><a href="forms_validation.html">Validation</a></li>
+                        <li><a href="forms_wizard.html">Wizard</a></li>
+                        <li class="menu_subtitle">WYSIWYG Editors</li>
+                                <li><a href="forms_wysiwyg_ckeditor.html">CKeditor</a></li>
+                        <li><a href="forms_wysiwyg_inline.html">Ckeditor Inline</a></li>
+                        <li><a href="forms_wysiwyg_tinymce.html">TinyMCE</a></li>
+                            </ul>
+                
+                </li>
+                <li title="Layout">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE8F1;</i></span>
+                        <span class="menu_title">Layout</span>
+                    </a>
+                    <ul>
+                        <li><a href="layout_top_menu.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Top Menu</a></li>
+                        <li><a href="layout_header_full.html">Full Header</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Kendo UI Widgets">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE1BD;</i></span>
+                        <span class="menu_title">Kendo UI Widgets</span>
+                    </a>
+                    <ul>
+                        <li><a href="kendoui_autocomplete.html">Autocomplete</a></li>
+                        <li><a href="kendoui_calendar.html">Calendar</a></li>
+                        <li><a href="kendoui_colorpicker.html">ColorPicker</a></li>
+                        <li><a href="kendoui_combobox.html">ComboBox</a></li>
+                        <li><a href="kendoui_datepicker.html">DatePicker</a></li>
+                        <li><a href="kendoui_datetimepicker.html">DateTimePicker</a></li>
+                        <li><a href="kendoui_dropdown_list.html">DropDownList</a></li>
+                        <li><a href="kendoui_masked_input.html">Masked Input</a></li>
+                        <li><a href="kendoui_menu.html">Menu</a></li>
+                        <li><a href="kendoui_multiselect.html">MultiSelect</a></li>
+                        <li><a href="kendoui_numeric_textbox.html">Numeric TextBox</a></li>
+                        <li><a href="kendoui_panelbar.html">PanelBar</a></li>
+                        <li><a href="kendoui_timepicker.html">TimePicker</a></li>
+                        <li><a href="kendoui_toolbar.html">Toolbar</a></li>
+                        <li><a href="kendoui_window.html">Window</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Components">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE87B;</i></span>
+                        <span class="menu_title">Components</span>
+                    </a>
+                    <ul>
+                        <li><a href="components_accordion.html">Accordions</a></li>
+                        <li><a href="components_animations.html">MD Animations</a></li>
+                        <li><a href="components_autocomplete.html">Autocomplete</a></li>
+                        <li><a href="components_breadcrumbs.html">Breadcrumbs</a></li>
+                        <li><a href="components_buttons.html">Buttons</a></li>
+                        <li><a href="components_fab.html">Buttons: FAB</a></li>
+                        <li><a href="components_cards.html">Cards</a></li>
+                        <li><a href="components_colors.html">Colors</a></li>
+                        <li><a href="components_common.html">Common</a></li>
+                        <li><a href="components_dropdowns.html">Dropdowns</a></li>
+                        <li><a href="components_dynamic_grid.html">Dynamic Grid</a></li>
+                        <li><a href="components_footer.html">Footer</a></li>
+                        <li><a href="components_grid.html">Grid</a></li>
+                        <li><a href="components_icons.html">Icons</a></li>
+                        <li class="act_item"><a href="components_modal.html">Lightbox/Modal</a></li>
+                        <li><a href="components_list_grid_view.html">List/Grid View</a></li>
+                        <li><a href="components_lists.html">Lists</a></li>
+                        <li><a href="components_nestable.html">Nestable</a></li>
+                        <li><a href="components_notifications.html">Notifications</a></li>
+                        <li><a href="components_panels.html">Panels</a></li>
+                        <li><a href="components_preloaders.html">Preloaders</a></li>
+                        <li><a href="components_scroll_top.html">Scroll to Top</a></li>
+                        <li><a href="components_slider.html">Slider</a></li>
+                        <li><a href="components_slideshow.html">Slideshow</a></li>
+                        <li><a href="components_sortable.html">Sortable</a></li>
+                        <li><a href="components_switcher.html">Switcher</a></li>
+                        <li><a href="components_tables.html">Tables</a></li>
+                        <li><a href="components_tables_examples.html">Tables Examples</a></li>
+                        <li><a href="components_tabs.html">Tabs</a></li>
+                        <li><a href="components_timeline.html">Timeline</a></li>
+                        <li><a href="components_tooltips.html">Tooltips</a></li>
+                        <li><a href="components_typography.html">Typography</a></li>
+                    </ul>
+                
+                </li>
+                <li title="E-commerce">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE8CB;</i></span>
+                        <span class="menu_title">E-commerce</span>
+                    </a>
+                    <ul>
+                        <li><a href="ecommerce_product_details.html">Product Details</a></li>
+                        <li><a href="ecommerce_product_edit.html">Product Edit</a></li>
+                        <li><a href="ecommerce_products_grid.html">Products Grid</a></li>
+                        <li><a href="ecommerce_products_list.html">Products List</a></li>
+                        <li><a href="ecommerce_payment.html">Payment Page</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Plugins">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
+                        <span class="menu_title">Plugins</span>
+                    </a>
+                    <ul>
+                        <li><a href="plugins_calendar.html">Calendar</a></li>
+                        <li><a href="plugins_charts.html">Charts</a></li>
+                        <li><a href="plugins_charts_echarts.html">Charts (echarts)</a></li>
+                        <li><a href="plugins_code_editor.html">Code Editor</a></li>
+                        <li><a href="plugins_context_menu.html">Context Menu</a></li>
+                        <li><a href="plugins_crud_table.html">CRUD Table</a></li>
+                        <li><a href="plugins_datatables.html">Datatables</a></li>
+                        <li><a href="plugins_diff.html">Diff View</a></li>
+                        <li><a href="plugins_filemanager.html">File Manager</a></li>
+                        <li><a href="plugins_gantt_chart.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Gantt Chart</a></li>
+                        <li><a href="plugins_google_maps.html">Google Maps</a></li>
+                        <li><a href="plugins_image_cropper.html">Image Cropper</a></li>
+                        <li><a href="plugins_idle_timeout.html">Idle Timeout</a></li>
+                        <li><a href="plugins_push_notifications.html">Push Notifications</a></li>
+                        <li><a href="plugins_tour.html">Tour</a></li>
+                        <li><a href="plugins_tablesorter.html">Tablesorter</a></li>
+                        <li><a href="plugins_tree.html">Tree</a></li>
+                        <li><a href="plugins_vector_maps.html">Vector Maps</a></li>
+                        <li><a href="plugins_xeditable.html">X-editable</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Pages">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE24D;</i></span>
+                        <span class="menu_title">Pages</span>
+                    </a>
+                    <ul>
+                        <li><a href="page_blank.html">Blank</a></li>
+                        <li><a href="page_contact_list.html">Contact List</a></li>
+                        <li><a href="page_contact_list_horizontal.html">Contact List Horizontal</a></li>
+                        <li><a href="page_contact_list_v2.html">Contact List V2</a></li>
+                        <li><a href="page_gallery.html">Gallery</a></li>
+                        <li><a href="page_gallery_v2.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Gallery v2</a></li>
+                        <li><a href="page_help.html">Help/Faq</a></li>
+                        <li><a href="login.html">Login Page</a></li>
+                        <li><a href="login_v2.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Login Page v2</a></li>
+                        <li><a href="page_mailbox_v2.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Mailbox V2</a></li>
+                        <li><a href="page_notes.html">Notes</a></li>
+                        <li><a href="page_pricing_tables.html">Pricing Tables</a></li>
+                        <li><a href="page_pricing_tables_v2.html">Pricing Tables v2</a></li>
+                        <li><a href="page_search_results.html">Search Results</a></li>
+                        <li><a href="page_settings.html">Settings</a></li>
+                        <li><a href="page_todo.html">Todo</a></li>
+                        <li><a href="page_user_edit.html">User edit</a></li>
+                        <li><a href="page_quiz.html">Quiz</a></li>
+                        <li class="menu_subtitle">Issue Tracker</li>
+                                <li><a href="page_issues_list.html">List View</a></li>
+                        <li><a href="page_issue_details.html">Issue Details</a></li>
+                                <li class="menu_subtitle">Blog</li>
+                                <li><a href="page_blog_list.html">Blog List</a></li>
+                        <li><a href="page_blog_article.html">Blog Article</a></li>
+                                <li class="menu_subtitle">Errors</li>
+                                <li><a href="error_404.html">Error 404</a></li>
+                        <li><a href="error_500.html">Error 500</a></li>
+                            </ul>
+                
+                </li>
+                                <li>
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE241;</i></span>
+                        <span class="menu_title">Multi level</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">First level</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Second Level</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Long title to test</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Even longer title multi line</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </aside><!-- main sidebar end -->
+
+    <div id="page_content">
+        <div id="page_content_inner">
+
+            <div class="md-card">
+                <div class="md-card-content">
+                    <h3 class="heading_a">Modals</h3>
+
+                    <div class="uk-grid" data-uk-grid-margin>
+                        <div class="uk-width-medium-1-3">
+                            <p class="uk-text-large">Default</p>
+                            <button class="md-btn" data-uk-modal="{target:'#modal_default'}">Open</button>
+                            <div class="uk-modal" id="modal_default">
+                                <div class="uk-modal-dialog">
+                                    <button type="button" class="uk-modal-close uk-close"></button>
+                                    <p>Id veniam temporibus rem architecto corrupti expedita sint repellendus dolores impedit est natus veniam excepturi labore culpa nobis expedita hic sint rerum odio accusamus odit est dolorem voluptatem fugit placeat nisi quo distinctio nesciunt distinctio sed est quo quis aut dolorem ipsam animi aut id dignissimos minus.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-3">
+                            <p class="uk-text-large">Header/Footer</p>
+                            <button class="md-btn" data-uk-modal="{target:'#modal_header_footer'}">Open</button>
+                            <div class="uk-modal" id="modal_header_footer">
+                                <div class="uk-modal-dialog">
+                                    <div class="uk-modal-header">
+                                        <h3 class="uk-modal-title">Headline <i class="material-icons" data-uk-tooltip="{pos:'top'}" title="headline tooltip">&#xE8FD;</i></h3>
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aliquid amet animi aspernatur aut blanditiis doloribus eligendi est fugiat iure iusto laborum modi mollitia nemo pariatur, rem tempore. Dolor, excepturi.</p>
+                                    <div class="uk-modal-footer uk-text-right">
+                                        <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button data-uk-modal="{target:'#modal_new'}" type="button" class="md-btn md-btn-flat md-btn-flat-primary">Open New Modal</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-modal" id="modal_new">
+                                <div class="uk-modal-dialog">
+                                    <button type="button" class="uk-modal-close uk-close"></button>
+                                    <p class="uk-text-bold">New modal triggered from other modal.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, aliquid amet animi aspernatur aut blanditiis doloribus eligendi est fugiat iure iusto laborum modi mollitia nemo pariatur, rem tempore. Dolor, excepturi.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-3">
+                            <p class="uk-text-large">Lightbox</p>
+                            <button class="md-btn" data-uk-modal="{target:'#modal_lightbox'}">Open</button>
+                            <div class="uk-modal" id="modal_lightbox">
+                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                    <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
+                                    <img src="assets/img/gallery/Image01.jpg" alt=""/>
+                                    <div class="uk-modal-caption">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias animi autem consequuntur deleniti dolor ea expedita facere ipsum labore, libero magni, minus quas quibusdam quod quos saepe sequi veritatis vitae!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="uk-grid" data-uk-grid-margin>
+                        <div class="uk-width-medium-1-3">
+                            <p class="uk-text-large">Large dialog modifier</p>
+                            <button class="md-btn" data-uk-modal="{target:'#modal_large'}">Open</button>
+                            <div class="uk-modal" id="modal_large">
+                                <div class="uk-modal-dialog uk-modal-dialog-large">
+                                    <button type="button" class="uk-modal-close uk-close"></button>
+                                    <p>Illo et et reprehenderit est tempora facilis alias numquam architecto quasi numquam necessitatibus dolorem provident doloribus facere possimus ullam minima voluptatum rerum esse vero consequatur qui amet et molestiae dolorum excepturi sapiente vel tempora error aspernatur qui quasi et enim architecto rem ab molestiae dolorem hic atque impedit sit quam qui esse aut exercitationem porro et quo vero libero quo fugit ut iusto ut perspiciatis voluptatum sit repellendus deleniti sapiente dolor similique ut voluptatem qui cum necessitatibus et praesentium cupiditate deleniti fuga neque dolores ea voluptatibus iure est mollitia ut omnis consectetur maxime.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-3">
+                            <p class="uk-text-large">Overflow container in modal</p>
+                            <button class="md-btn" data-uk-modal="{target:'#modal_overflow'}">Open</button>
+                            <div id="modal_overflow" class="uk-modal">
+                                <div class="uk-modal-dialog">
+                                    <button type="button" class="uk-modal-close uk-close"></button>
+                                    <h2 class="heading_a">Some text above the scrollable box</h2>
+                                    <p>Iure maiores tenetur et eaque nesciunt et voluptatem velit eum quia quos sit ut ex quia exercitationem et nobis eaque ut rem autem quisquam ab et impedit dolores sint nulla illo earum sunt accusamus dolores velit blanditiis sunt omnis et eos corrupti sunt officia mollitia ut saepe aliquam non.</p>
+                                    <div class="uk-overflow-container">
+                                        <h2 class="heading_b">Overflow container</h2>
+                                        <img src="assets/img/gallery/Image06.jpg" alt=""/>
+                                        <p>Et dolores ullam rerum voluptatem quis praesentium neque ea magnam ut blanditiis ut qui voluptatem illum ut iure magnam aspernatur ut doloremque placeat ex repellat neque velit enim dolore aut labore qui quis dignissimos laudantium eum voluptatibus maxime dolores qui rerum sint quia voluptatem vel qui velit at et nisi qui sit illum unde modi distinctio veniam at inventore aliquam possimus natus dolorum ab veniam voluptas quidem nihil recusandae autem animi sit delectus delectus et rem perspiciatis sunt atque qui eligendi eos soluta et assumenda nemo explicabo veritatis voluptas earum dolores eligendi quisquam qui autem in debitis in nostrum facilis amet labore enim qui modi commodi dolorem laborum et magnam itaque aut non facilis dolor veritatis itaque vero iste ut voluptatum quisquam debitis quo minus optio laborum et non asperiores dolorem nemo distinctio illum voluptatem eos ut nihil nemo voluptate mollitia sed dolorem odit cumque velit vel officiis quo architecto eveniet eos eligendi similique corporis consectetur ut repellat quia impedit velit magni rem sunt necessitatibus iusto aliquam quis aspernatur beatae est possimus sint distinctio sint expedita repudiandae perferendis sit enim quae dolorum autem est quo non est et perferendis iusto rerum commodi eos sed officiis modi aliquam a ut iure sint explicabo tempore magnam illo porro ipsa quia veritatis quibusdam consequuntur dolorem quia eos vero qui deleniti nostrum illum doloribus vel ex saepe enim id deleniti recusandae expedita necessitatibus ad libero reprehenderit qui eveniet quae perspiciatis aut velit sit aut aperiam facere nesciunt quidem ab ex nobis quaerat mollitia earum consequatur veniam blanditiis suscipit deleniti adipisci et consequuntur enim autem quibusdam ullam sint voluptas qui sint et suscipit eos inventore sint nesciunt ex enim mollitia eum occaecati accusantium itaque repellat rerum minus voluptas ab blanditiis laudantium soluta reprehenderit praesentium voluptas tenetur nisi maiores aut quisquam eum temporibus ex temporibus quos aut unde commodi quibusdam nobis deserunt modi consequatur nam maiores qui quia non eos dolorem et laborum esse corporis nostrum eum sed labore reprehenderit quidem et consequatur qui illo consequatur nesciunt perferendis ut in quidem placeat soluta accusantium eaque placeat nihil sit sit illum laudantium in cumque nesciunt dolorem nisi exercitationem consequatur magnam id praesentium nemo nam minus ut aut ut ut cum iusto facilis dolore at maiores fugiat at et et quae velit pariatur consequatur tempore maiores et natus dignissimos rerum architecto molestiae non consequatur tempora architecto sunt ut recusandae nesciunt sit dolorem sunt sit et sapiente et facere sapiente qui ad eum sapiente corrupti facere aut vitae cumque et adipisci eum neque quaerat et illum quia earum architecto et ut quia quo ullam amet quia consequatur iste repudiandae suscipit dolor temporibus eius illum quas a ut odit voluptate deleniti itaque natus ut vel non similique aut beatae ducimus eos inventore magnam laboriosam hic non eum soluta fugit nemo dolores aperiam beatae adipisci quia voluptatem et minima voluptates quia aut dolorum consequatur sed sint nobis officia vero voluptatum explicabo ipsum reiciendis excepturi vitae ut possimus nihil quia et sed cumque quidem ipsum et aliquam iste voluptatibus ad cum aut quos.</p>
+                                        <p>Amet consequatur quaerat hic vel porro quo id ratione totam optio esse repellat commodi eum tempora culpa dolorem quod rerum provident soluta autem repellendus voluptates repudiandae voluptatem consequatur architecto numquam molestias quidem eos delectus aperiam quia ut sint aliquid libero porro non nulla velit quia hic sint dolor repudiandae quod corrupti odio id corporis totam veritatis minus nemo enim tempore totam repellendus eum quo voluptatem commodi voluptas debitis delectus tempore autem est nulla placeat alias qui velit maxime at voluptatem ut et eaque excepturi aut laborum ea voluptatem et neque corrupti aut deleniti est consequatur dolorem id dolor natus quos fuga vitae mollitia excepturi ad mollitia id et explicabo est deserunt dignissimos amet voluptatum error quae quasi maiores qui quidem ut aut voluptatem vitae consequatur perspiciatis velit maxime blanditiis repellendus est dolores alias repellat ea impedit praesentium cumque dolor necessitatibus et reprehenderit aut quia sequi voluptatem repellat aliquam veritatis veritatis totam nobis nisi beatae ut animi dolor esse et mollitia ut sit possimus sunt provident nesciunt voluptatem est quis est debitis sed eum voluptatibus voluptatem aut sint nulla facere maxime dolorem cumque sunt itaque velit voluptatem omnis minima illo suscipit aliquid molestiae vitae sit voluptatibus enim natus est quia commodi voluptates dolor et aperiam incidunt veritatis est et odit voluptatibus quam tempore laudantium non eligendi nostrum ipsam aut facere delectus mollitia voluptas molestiae eaque reprehenderit nulla omnis reiciendis dolorem repellendus suscipit libero hic voluptatem et commodi minima sequi earum omnis consequatur ab cum et quaerat distinctio aliquid aperiam blanditiis aut possimus magni et repudiandae voluptatem illum nulla nostrum quae autem vel dicta incidunt omnis magnam voluptatem sapiente consequatur at ut nemo soluta vero rerum possimus nam laboriosam deleniti est ratione accusantium ipsum est aliquam vitae reprehenderit est et consequatur unde et quae quo aut iste maiores et eligendi modi molestias et qui dolorem vel in eveniet praesentium dolor dolore tempora hic earum officia est deserunt labore aliquid eum est delectus repellendus qui iure quia iste dolore laboriosam nisi optio quibusdam dicta aut laudantium molestias cum omnis et aut ipsum deserunt unde et sapiente consectetur harum deleniti in esse natus quia deleniti ad nam.</p>
+                                        <p>Et non sit eos optio ipsa asperiores cum repellendus quaerat similique facere error rerum laborum tempora tempora quas sunt eaque dolor quisquam non fuga consequatur dolor cupiditate harum quae id ut repellendus ut qui ea et quidem ipsam sit odio omnis quibusdam inventore ullam consequuntur fuga itaque sit minus totam tenetur debitis aut nostrum enim inventore beatae minus nemo earum deleniti atque maxime consequuntur cum dolor sit dolores enim dignissimos et aut ducimus dignissimos iste aut iste accusamus animi nihil voluptatem asperiores non a ipsa non nemo adipisci necessitatibus facere magni sunt adipisci debitis est similique illum omnis suscipit qui dolor quia exercitationem est molestiae quo expedita est culpa tempore quo exercitationem rem culpa et sunt ab et eum illo cupiditate optio quisquam voluptate est hic quidem totam ab cum non incidunt optio et libero libero repudiandae ut consequatur tempore modi quia sit velit deleniti itaque aut rerum eum numquam dolore consequuntur voluptates cum ipsam et velit aliquam reiciendis quia maiores laudantium qui ut qui amet natus quas voluptates quis illum et et animi recusandae ad aliquid consequuntur aut quaerat perferendis delectus delectus ut sunt impedit corporis optio et et quo voluptate adipisci eum voluptas consequatur neque officia impedit laborum praesentium at eius quo earum id sed harum dolor dolore ut est ducimus ab quaerat iste molestiae et assumenda ut explicabo vero quaerat ab qui eveniet nisi voluptas sunt eveniet est odio nobis aliquam numquam et sit fugiat voluptas porro qui dignissimos nulla amet excepturi blanditiis quas voluptatem amet distinctio aut commodi et porro iste possimus labore neque vitae eum dolore laudantium similique quam cumque nesciunt et amet voluptatem iusto occaecati tenetur aliquam eos distinctio accusamus doloribus porro et sit iure rerum molestiae voluptas illo assumenda iusto nihil eos quasi velit in quae placeat non quo ipsum placeat ea nam ipsum quidem voluptate reiciendis vero molestiae aut odio est dolorum qui optio inventore earum libero velit commodi tenetur vel quam qui modi et atque dolorem ea architecto consequatur qui voluptatum vel est labore natus consequatur in maxime in et facere tempore aut culpa voluptatem perspiciatis explicabo voluptate vero alias possimus blanditiis et provident sed ea officiis perferendis et asperiores omnis qui quidem repudiandae voluptas aperiam et suscipit id voluptatem dolores eveniet tenetur distinctio recusandae distinctio ut non.</p>
+                                        <p>Mollitia veritatis in repudiandae amet fugiat qui quo doloribus tempore hic quaerat provident dolores quia harum qui quidem nihil consequatur rerum illum id nesciunt est molestias alias dolores facere placeat eligendi eos labore id sit provident velit quos alias ea mollitia quia porro laboriosam consectetur ab quisquam odit ad voluptas sed quia voluptatem vel assumenda quia ut quis sed excepturi sed sit officia voluptatibus vitae architecto sed corrupti et excepturi et recusandae et illo deleniti sequi est rerum voluptas sint nulla voluptatem vel cupiditate labore facere aut aut id similique omnis exercitationem eum totam rerum id aut sed minima voluptates sunt sint sit sint amet nisi distinctio consequatur eos voluptas quia sed quaerat fuga consectetur adipisci quod nam est voluptatum odit voluptatibus et nisi odit voluptates velit aut consequatur qui impedit sit aut reiciendis nostrum laboriosam impedit facere quaerat earum vel incidunt sit ea ab quo repellendus laborum perspiciatis doloremque excepturi ea labore nesciunt incidunt quia commodi veniam quisquam voluptatem dolorem molestiae atque est delectus laboriosam eum voluptas minus quo ut aliquid totam natus officiis est autem at quas explicabo architecto commodi nihil magnam et eum aut qui aut rerum voluptatum aut provident debitis magni ut est explicabo ex itaque labore cum dolor commodi voluptates natus aut quos qui excepturi numquam et incidunt debitis eos minima quibusdam delectus aut a sed eaque reiciendis laudantium in incidunt quo eveniet reiciendis ab dolor autem veniam pariatur earum nihil aperiam id autem quos quo ipsum rem tempore amet rerum expedita id velit incidunt tempora et molestiae tempora error omnis quasi quidem aut amet voluptas quaerat itaque distinctio ut fuga fugit facilis accusantium error et itaque qui adipisci ratione omnis tempore cum beatae quo molestias sit quidem explicabo consequatur quibusdam sed praesentium minus in consequatur corporis suscipit vero in magnam eveniet saepe nesciunt est perferendis alias pariatur quas repellat officiis sunt atque ducimus eaque eum labore illum voluptatem debitis sequi inventore provident atque quibusdam nesciunt nihil enim voluptatem ex ullam saepe possimus et commodi maxime corrupti occaecati ipsam illo quia et placeat numquam asperiores odit quidem et id itaque commodi et totam magnam.</p>
+                                    </div>
+                                    <h2 class="heading_a">Some text below the overflow container</h2>
+                                    <p>Cumque laudantium corrupti omnis accusamus voluptatem tempora repudiandae illum et accusantium est perspiciatis eum labore et ut incidunt ad asperiores iure non eum omnis ex iusto consectetur voluptatem dolores ducimus similique quidem eius nihil debitis itaque sit magni aut eos quasi autem velit quaerat eveniet possimus possimus rerum voluptatibus laboriosam aut dignissimos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-3">
+                            <p class="uk-text-large">Full screen card</p>
+                            <button class="md-btn" data-uk-modal="{target:'#modal_full'}">Open</button>
+                            <div class="uk-modal uk-modal-card-fullscreen" id="modal_full">
+                                <div class="uk-modal-dialog uk-modal-dialog-blank">
+                                    <div class="md-card uk-height-viewport">
+                                        <div class="md-card-toolbar">
+                                            <div class="md-card-toolbar-actions">
+                                                <div class="md-card-dropdown" data-uk-dropdown="{pos:'bottom-right'}">
+                                                    <i class="md-icon material-icons">&#xE5D4;</i>
+                                                    <div class="uk-dropdown">
+                                                        <ul class="uk-nav">
+                                                            <li><a href="#">Action 1</a></li>
+                                                            <li><a href="#">Action 2</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="md-icon material-icons uk-modal-close">&#xE5C4;</span>
+                                            <h3 class="md-card-toolbar-heading-text">
+                                                Card Heading
+                                            </h3>
+                                        </div>
+                                        <div class="md-card-content">
+                                            Eos necessitatibus odit eaque ut eos et tenetur laudantium quo ab minus porro nemo quia aut sed maiores repellat quia quia velit et asperiores est dolorum quia ducimus at consequatur doloribus sunt nobis at aut dolore reprehenderit ut ut voluptas qui odio aut omnis quisquam quia vel ut incidunt aut inventore quod praesentium sit odio reprehenderit illum quis dignissimos molestias harum sed harum suscipit voluptatem itaque corporis laboriosam dolore maiores quam quos et optio est quis voluptatibus est sit voluptatem est adipisci sit perspiciatis tempora rerum deleniti fugiat perspiciatis nemo aut culpa ut laboriosam natus et cupiditate quasi neque vel et dolorum quam deserunt vero natus ea labore eum laboriosam minima incidunt optio minima aut cupiditate quo rerum consequatur veniam enim rerum voluptas dolorem aut ut repudiandae eos quia eos quia qui ducimus repellat possimus numquam enim doloribus officiis eum enim dolorem ea assumenda aut tenetur reiciendis laborum aperiam qui numquam sed alias voluptate dolores error qui voluptatum illum atque sit nihil consequatur facere ab ut molestias consectetur voluptatem et corrupti explicabo tenetur excepturi praesentium sit est voluptate qui exercitationem exercitationem optio ut voluptas est quasi autem doloribus numquam nam iusto velit tempora consectetur ducimus blanditiis quia cum et corrupti aliquid sed incidunt aspernatur sit non id fuga inventore qui nemo neque nam non consequatur sit asperiores magni hic et earum tempora sunt dolorum molestiae nesciunt rerum ullam cupiditate eum non aut ipsa expedita vel sapiente ea ut occaecati autem autem eius quo velit quia nobis dolor mollitia aut sunt asperiores ex quibusdam occaecati rerum consequatur voluptas non esse reiciendis aspernatur animi quo voluptas excepturi quasi occaecati odit aut quasi minus harum voluptatem quis repellendus inventore quia expedita quod ipsam voluptates omnis nihil occaecati earum quis voluptatibus unde optio error porro et repudiandae ut harum itaque nihil non vitae laudantium alias ducimus et odit tenetur illum iure sit blanditiis sequi delectus recusandae voluptas placeat expedita molestias delectus quod dolores laboriosam voluptatem cum ut delectus aliquid est ad distinctio quia enim laborum assumenda odit et perferendis et adipisci sequi perspiciatis quis aut animi odio vitae in neque laudantium ut quam quo officia reprehenderit voluptatem id quia blanditiis suscipit esse sunt magni impedit aliquam incidunt quis incidunt facere consectetur qui dignissimos dicta modi in corporis aut nemo autem voluptates et voluptate eum tempora laborum qui consectetur velit est quaerat autem dolor ullam voluptatem non dolorum sed reiciendis sapiente maiores eos sed sit vel quasi nihil consequatur rerum ipsum perspiciatis beatae asperiores libero laudantium et mollitia dolore deleniti cum ipsum ipsum nostrum distinctio qui delectus occaecati possimus magni omnis consequatur cum et hic error enim enim optio assumenda ea deserunt quaerat ut voluptates est esse cum iusto ut et voluptatem dolore corporis vero aut temporibus quis necessitatibus reiciendis enim aut quidem laborum fugit quam magni est exercitationem nam aut doloribus illo ducimus iste est laudantium ut facere omnis a ut minima recusandae et et qui eos inventore quis distinctio et aliquam vel aut repellendus doloribus aliquid sint aut ipsa quibusdam aspernatur qui adipisci quia vel et quos voluptatem eligendi quod occaecati voluptatum odio odio non at tempora hic asperiores voluptas sit temporibus aut voluptatem.                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md-card">
+                <div class="md-card-content">
+                    <h3 class="heading_a">Dialogs</h3>
+
+                    <div class="uk-grid" data-uk-grid-margin>
+                        <div class="uk-width-medium-1-4">
+                            <button type="button" class="md-btn" onclick="UIkit.modal.alert('Attention!')">Alert</button>
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <button type="button" class="md-btn" onclick="UIkit.modal.confirm('Are you sure?', function(){ UIkit.modal.alert('Confirmed!'); });">Confirm</button>
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <button type="button" class="md-btn" onclick="UIkit.modal.prompt('Name:', '', function(val){ UIkit.modal.alert('Hello '+(val || 'Mr noname')+'!'); });">Prompt</button>
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <button type="button" class="md-btn" onclick="(function(modal){ modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Wait 5 sec...<br/><img class=\'uk-margin-top\' src=%27assets/img/spinners/spinner.gif/%27.html alt=\'\'>'); setTimeout(function(){ modal.hide() }, 5000) })();">Block UI</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="assets/js/altair_admin_common.min.js"></script>
+
+
+    <script>
+        $(function() {
+            if(isHighDensity()) {
+                $.getScript( "assets/js/custom/dense.min.js", function(data) {
+                    // enable hires images
+                    altair_helpers.retina_images();
+                });
+            }
+            if(Modernizr.touch) {
+                // fastClick (touch devices)
+                FastClick.attach(document.body);
+            }
+        });
+        $window.load(function() {
+            // ie fixes
+            altair_helpers.ie_fix();
+        });
+    </script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-65191727-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <div id="style_switcher">
+        <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>
+        <div class="uk-margin-medium-bottom">
+            <h4 class="heading_c uk-margin-bottom">Colors</h4>
+            <ul class="switcher_app_themes" id="theme_switcher">
+                <li class="app_style_default active_theme" data-app-theme="">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_a" data-app-theme="app_theme_a">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_b" data-app-theme="app_theme_b">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_c" data-app-theme="app_theme_c">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_d" data-app-theme="app_theme_d">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_e" data-app-theme="app_theme_e">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_f" data-app-theme="app_theme_f">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_g" data-app-theme="app_theme_g">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_h" data-app-theme="app_theme_h">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_i" data-app-theme="app_theme_i">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_dark" data-app-theme="app_theme_dark">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="uk-visible-large uk-margin-medium-bottom">
+            <h4 class="heading_c">Sidebar</h4>
+            <p>
+                <input type="checkbox" name="style_sidebar_mini" id="style_sidebar_mini" data-md-icheck />
+                <label for="style_sidebar_mini" class="inline-label">Mini Sidebar</label>
+            </p>
+            <p>
+                <input type="checkbox" name="style_sidebar_slim" id="style_sidebar_slim" data-md-icheck />
+                <label for="style_sidebar_slim" class="inline-label">Slim Sidebar</label>
+            </p>
+        </div>
+        <div class="uk-visible-large uk-margin-medium-bottom">
+            <h4 class="heading_c">Layout</h4>
+            <p>
+                <input type="checkbox" name="style_layout_boxed" id="style_layout_boxed" data-md-icheck />
+                <label for="style_layout_boxed" class="inline-label">Boxed layout</label>
+            </p>
+        </div>
+        <div class="uk-visible-large">
+            <h4 class="heading_c">Main menu accordion</h4>
+            <p>
+                <input type="checkbox" name="accordion_mode_main_menu" id="accordion_mode_main_menu" data-md-icheck />
+                <label for="accordion_mode_main_menu" class="inline-label">Accordion mode</label>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            var $switcher = $('#style_switcher'),
+                $switcher_toggle = $('#style_switcher_toggle'),
+                $theme_switcher = $('#theme_switcher'),
+                $mini_sidebar_toggle = $('#style_sidebar_mini'),
+                $slim_sidebar_toggle = $('#style_sidebar_slim'),
+                $boxed_layout_toggle = $('#style_layout_boxed'),
+                $accordion_mode_toggle = $('#accordion_mode_main_menu'),
+                $html = $('html'),
+                $body = $('body');
+
+
+            $switcher_toggle.click(function(e) {
+                e.preventDefault();
+                $switcher.toggleClass('switcher_active');
+            });
+
+            $theme_switcher.children('li').click(function(e) {
+                e.preventDefault();
+                var $this = $(this),
+                    this_theme = $this.attr('data-app-theme');
+
+                $theme_switcher.children('li').removeClass('active_theme');
+                $(this).addClass('active_theme');
+                $html
+                    .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g app_theme_h app_theme_i app_theme_dark')
+                    .addClass(this_theme);
+
+                if(this_theme == '') {
+                    localStorage.removeItem('altair_theme');
+                    $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                } else {
+                    localStorage.setItem("altair_theme", this_theme);
+                    if(this_theme == 'app_theme_dark') {
+                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.materialblack.min.css')
+                    } else {
+                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                    }
+                }
+
+            });
+
+            // hide style switcher
+            $document.on('click keyup', function(e) {
+                if( $switcher.hasClass('switcher_active') ) {
+                    if (
+                        ( !$(e.target).closest($switcher).length )
+                        || ( e.keyCode == 27 )
+                    ) {
+                        $switcher.removeClass('switcher_active');
+                    }
+                }
+            });
+
+            // get theme from local storage
+            if(localStorage.getItem("altair_theme") !== null) {
+                $theme_switcher.children('li[data-app-theme='+localStorage.getItem("altair_theme")+']').click();
+            }
+
+
+        // toggle mini sidebar
+
+            // change input's state to checked if mini sidebar is active
+            if((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
+                $mini_sidebar_toggle.iCheck('check');
+            }
+
+            $mini_sidebar_toggle
+                .on('ifChecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.setItem("altair_sidebar_mini", '1');
+                    localStorage.removeItem('altair_sidebar_slim');
+                    location.reload(true);
+                })
+                .on('ifUnchecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.removeItem('altair_sidebar_mini');
+                    location.reload(true);
+                });
+
+        // toggle slim sidebar
+
+            // change input's state to checked if mini sidebar is active
+            if((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
+                $slim_sidebar_toggle.iCheck('check');
+            }
+
+            $slim_sidebar_toggle
+                .on('ifChecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.setItem("altair_sidebar_slim", '1');
+                    localStorage.removeItem('altair_sidebar_mini');
+                    location.reload(true);
+                })
+                .on('ifUnchecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.removeItem('altair_sidebar_slim');
+                    location.reload(true);
+                });
+
+        // toggle boxed layout
+
+            if((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
+                $boxed_layout_toggle.iCheck('check');
+                $body.addClass('boxed_layout');
+                $(window).resize();
+            }
+
+            $boxed_layout_toggle
+                .on('ifChecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.setItem("altair_layout", 'boxed');
+                    location.reload(true);
+                })
+                .on('ifUnchecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.removeItem('altair_layout');
+                    location.reload(true);
+                });
+
+        // main menu accordion mode
+            if($sidebar_main.hasClass('accordion_mode')) {
+                $accordion_mode_toggle.iCheck('check');
+            }
+
+            $accordion_mode_toggle
+                .on('ifChecked', function(){
+                    $sidebar_main.addClass('accordion_mode');
+                })
+                .on('ifUnchecked', function(){
+                    $sidebar_main.removeClass('accordion_mode');
+                });
+
+
+        });
+    </script>
+</body>
+
+<!-- Mirrored from altair_html.tzdthemes.com/components_modal.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Feb 2018 11:18:36 GMT -->
+</html>

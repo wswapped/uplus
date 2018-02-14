@@ -103,7 +103,7 @@
 	    	global $conn;
 	    	$messageID = mysqli_real_escape_string($conn, $message);
 	    	$channel = mysqli_real_escape_string($conn, $channel);
-	    	$sql = "SELECT COUNT(*) AS sum, channel, status FROM `messageslog` JOIN message ON message.id = messageslog.message WHERE message=\"$message\" AND status LIKE \"%\" GROUP BY status, channel";
+	    	$sql = "SELECT COUNT(*) AS sum, channel, status FROM `messageslog` JOIN message ON message.id = messageslog.message WHERE messageslog.message=\"$message\" AND status LIKE \"%\" GROUP BY status, channel";
 	    	$query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
 	    	$chanStatus = array();

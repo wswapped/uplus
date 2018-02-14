@@ -5,17 +5,20 @@
     include_once "class.sms.php";
 ?>
 <div class="uk-grid uk-grid-medium" data-cont="send" id="page" data-uk-grid-margin>
-    <div class="uk-width-large-2-4">
+    <div class="uk-width-large-2-4 uk-width-1-2">
         <div class="md-card 1st-step">
             <div class="md-card-content">                        
                 <form action="broadcast.php" method="post" id="comform" enctype="multipart/form-data">
                     <div id="sendProg-cont" class="display-none">
                         <p>We are sending your messages</p>
-                        <div class = "progress progress-striped active">                                        
-                           <div class = "progress-bar progress-bar-success" role = "progressbar" 
+                        <!-- <div class = "progress progress-striped active">                                        
+                            <div class = "progress-bar progress-bar-success" role = "progressbar" 
                               aria-valuenow = "60" aria-valuemin = "0" aria-valuemax = "100" id="sendProg" style = "width: 10%;">
                               <span class=""><span id="sendProgLabel">10%</span> Complete</span>
-                           </div>
+                            </div>                            
+                        </div> -->
+                        <div class="uk-progress uk-progress-striped uk-active">
+                            <div class="uk-progress-bar" id="sendProg" style="width: 5%;">0%</div>
                         </div>
                         <p class="text-info">You can browse as normal, we'll handle it</p>
                         <div class="md-card-content" id="quantSendProg" style="display: none;">
@@ -34,24 +37,28 @@
                     <div style="height: .3vh"></div>
 
                     <div class="md-input-wrapper uk-hidden email-elem" id="subjField">
-                        <div><label class="fancy">Subject: </label></div>
-                        <input type="text" placeholder="Subject" name="subject" id="broadcastSubj" class="form-control" />
+                        <!-- <label class="fancy">Subject: </label> -->
+                        <input type="text" placeholder="Subject" name="subject" id="broadcastSubj" class="md-input label-fixed" />
                         <span class="md-input-bar "></span>
                     </div>
 
                     <div class="md-input-wrapper">
                         <div><label class="fancy">Message: </label></div>
-                        <textarea placeholder="Enter SMS to send - Limited to 160 characters" rows="3" cols="40" name="msg" id="broadcastMsg" class="form-control"></textarea>
+                        <textarea placeholder="Enter SMS to send - Limited to 160 characters" rows="3" cols="40" name="msg" id="broadcastMsg" class="md-input autosized"></textarea>
                         <span class="md-input-bar "></span>
                     </div>
 
-                    <div>
-                        <input type="hidden" name="mode" value="SMS">
-                        <button ype="submit" id="sendBtn" class="md-btn md-btn-success" value="Send">Send </button>
-                        <div class="pull-right">    
-                            <div class="inlineb moreSMSview" style="display: none;">Message: &nbsp;<span id="msgcount" class = "badge pull-right"> 0</span></div>
-                            <div class="inlineb">Length: &nbsp;<span id="charcount" class = "badge pull-right"> 0</span></div>                                      
-                            <div class="inlineb">Recipients&nbsp;<span id="recvCount" class = "badge pull-right"> 0</span></div>
+                    <div class="uk-grid uk-margin-top">
+                        <div class="uk-row-first">
+                            <input type="hidden" name="mode" value="SMS">
+                            <button ype="submit" id="sendBtn" class="md-btn md-btn-success" value="Send">Send </button>
+                        </div>
+                        <div class="">
+                            <div class="pull-right">    
+                                <div class="inlineb moreSMSview" style="display: none;">Message: &nbsp;<span id="msgcount" class = "badge pull-right"> 0</span></div>
+                                <div class="inlineb">Length:<span id="charcount" class = "uk-badge pull-right"> 0</span></div>                                      
+                                <div class="inlineb">Recipients:<span id="recvCount" class = "uk-badge pull-right"> 0</span></div>
+                            </div>
                         </div>
                     </div>                            
                 </div>
@@ -70,10 +77,10 @@
             </div>
 
     </div>
-    <div class="uk-width-large-2-4">
+    <div class="uk-width-large-2-4 uk-width-1-2">
         <div class="md-card">
             <div class="md-card-content scrollbar gscrollbar" id="response">
-                <div class="checkCont">
+                <div class="checkCont uk-overflow-auto">
 
                     <?php 
                         $sqlGetbra = $db->query("SELECT * FROM `branches`") or die (mysqli_error($conn));
@@ -82,13 +89,14 @@
                         //         <input type="checkbox" data-target="'.$thisinfo['name'].'" id="check'.strtolower($thisinfo['name']).'" class="controlOption" value="'.$thisinfo['id'].'" name="group"> <label for="check'.strtolower($thisinfo['name']).'">'.$thisinfo['name'].'</label>&nbsp;';
                         // }
                         ?>
+
                         <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
-                            <div class="inlineb">
-                                <input type="checkbox" value="all" class="selectall controlOption" data-target="all" name="all"><label>All&nbsp;</label>
+                            <div class="inlineb list-sep">
+                                <input type="checkbox" value="all" class="selectall controlOption uk-checkbox" data-target="all" name="all"><label> All&nbsp;</label>
                             </div>
-                            <div class="inlineb">
-                                <input type="checkbox" class="controlOption" id="checkrep" data-target="rep" value="rep" name="rep">
-                                <label for="checkrep">Representative</label>
+                            <div class="inlineb list-sep">
+                                <input type="checkbox" class="controlOption uk-checkbox" id="checkrep" data-target="rep" value="rep" name="rep">
+                                <label for="checkrep">Representative&nbsp;</label>
                             </div>
                              
                             <?php
@@ -96,9 +104,9 @@
 
                             while ($data = mysqli_fetch_assoc($sql)) {
                                 ?>
-                                <div class="inlineb">
-                                    <input type="checkbox" data-target="<?php echo $data['name']; ?>" id="check<?php echo strtolower($data['name']); ?>" class="controlOption" value="<?php echo $data['id']; ?>" name="group"> 
-                                    <label for="check<?php echo strtolower($data['name']); ?>"><?php echo $data['name']; ?> </label>
+                                <div class="inlineb list-sep">
+                                    <input type="checkbox" data-target="<?php echo $data['name']; ?>" id="check<?php echo strtolower($data['name']); ?>" class="controlOption uk-checkbox" value="<?php echo $data['id']; ?>" name="group"> 
+                                    <label for="check<?php echo strtolower($data['name']); ?>"><?php echo $data['name']; ?>&nbsp;</label>
                                 </div>
 
                                 <?php } ?>    
@@ -116,8 +124,8 @@
                             <tbody id="membersCont">
                                 <tr></tr>
                                 <?php
-                                    $mPhone = $membersdata = array();
-                                    $query = mysqli_query($conn, "SELECT DISTINCT(members.name) as t, members.*, branches.name as bname FROM members JOIN branches ON members.locationId = branches.id ORDER BY name ASC LIMIT 10") or die(mysqli_error($conn));
+                                    $mApp = $mPhone = $membersdata = array();
+                                    $query = mysqli_query($conn, "SELECT DISTINCT(members.name) as t, members.*, branches.name as bname FROM members JOIN branches ON members.branchid = branches.id ORDER BY name ASC LIMIT 10") or die(mysqli_error($conn));
                                     $n = 0;
                                     while($data = mysqli_fetch_assoc($query)){
                                         $n++;
@@ -138,7 +146,7 @@
                                         ?>
                                             <tr>
                                                 <td><?php echo $n; ?></td>
-                                                <td><input value="<?php echo $data['id']; ?>" class="all <?php echo $data['bname']; ?>" type="checkbox"></td>
+                                                <td><input value="<?php echo $data['id']; ?>" class="all <?php echo $data['bname']; ?> uk-checkbox" type="checkbox"></td>
                                                 <td><?php echo $data['name'] ?></td>
                                                 <td><?php echo $data['bname'] ?></td>
                                                 <td><?php echo $data['phone'] ?></td>

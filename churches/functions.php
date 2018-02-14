@@ -1,4 +1,5 @@
 <?php
+    include_once("db.php");
     function getUser(){
         global $conn;
         if (isset($_SESSION['loginusername'])) {
@@ -10,6 +11,161 @@
             return $userId;
         }else return false;
     }
+    function user_details($userid){
+        //Function to get user's details
+        global $conn;
+        $user = $conn->query("SELECT * FROM members WHERE id = \"$userid\" LIMIT 1 ") or die("Errror getting user's details $conn->error");
+
+        $user = $user->fetch_assoc();
+        return $user;
+    }
+
+    function member_types(){
+      global $conn;
+      //Function to help us get member types
+      $query = $conn->query("SELECT * FROM member_types") or die("Can't get mtypes $conn->error");
+      $types = array();
+
+      while ($data = $query->fetch_assoc()) {
+      	$types[] = $data;
+      }
+      return $types;
+    }
+    
+    function staff_details($userid){
+      //Function to return details for users
+      global $conn;
+      $query = $conn->query("SELECT * FROM users WHERE Id = \"$userid\" LIMIT 1 ") or die("Can't get staff: $conn->error");
+      return $query->fetch_assoc();
+    }
+
+    function branch_rep($branch){
+      //Group representative
+      global $conn;
+    }
+
+    function group_types(){
+      global $conn;
+      //Function to help us get group types
+      $query = $conn->query("SELECT * FROM group_types ORDER BY `group_types`.`drank` ASC") or die("Can't get mtypes $conn->error");
+      $types = array();
+
+      while ($data = $query->fetch_assoc()) {
+      	$types[] = $data;
+      }
+      return $types;
+    }
+
+    function group_details($group){
+      //group details
+      global $conn;
+      $query = $conn->query("SELECT * FROM groups WHERE groups.id = \"$group\" LIMIT 1");
+      if($query->num_rows > 0){
+        $group_data = $query->fetch_assoc();
+        //getting number of members
+        $members = $conn->query("SELECT COUNT(*) as num FROM group_members WHERE groupid = $group_data[id]");
+        $members = $members->fetch_assoc();
+        $group_data['members'] = $members['num'];
+
+        return $group_data;
+      }else{
+        return false;
+      }
+      var_dump($query);
+    }
+
+    function branch_groups($group){
+    	//Groups in a branch
+    }
+
+    function branch_leader($branch, $position=''){
+      //getting all branch leaders
+      global $conn;
+
+      $query = $conn->query("SELECT * FROM users JOIN branch_leaders ON users.Id = branch_leaders.user WHERE branch_leaders.branch = \"$branch\" AND position LIKE  \"%$position%\" ") or die("Error getting branch staff");
+      $leaders = array();
+      while ($data = $query->fetch_assoc()) {
+        $leaders[] = $data;
+      }
+      return $leaders;
+    }
+
+    function group_members($group){
+      //members details
+      global $conn;
+      $query = $conn->query("SELECT * FROM group_members WHERE group_members.groupid = \"$group\"") or die("Can;t get group members $conn->error");
+      $members = array();
+      while ($data = $query->fetch_assoc()) {
+        $members[] = $data;
+      }
+      return $members;
+    }
+
+    function church_donations($church){
+      //Function to return church donations
+      global $conn;
+
+      $query = $conn->query("SELECT *, members.name as membername, donations.id as donation_id, donations.date as donation_date, branches.name as branchname FROM donations JOIN members ON donations.member = members.id JOIN branches ON members.branchid = branches.id WHERE branches.church  = \"$church\" ") or die("Can't get donations $conn->error");
+      $donations = array();
+
+      while ($data = $query->fetch_assoc()){
+        $donations[] = $data;
+      }
+      return $donations;
+    }
+
+    function get_branch($branch){
+      //Getting details of a branch
+      global $conn;
+      $query = $conn->query("SELECT * FROM branches WHERE branches.id = \"$branch\" LIMIT 1 ") or die("Can't get branch $conn->error");
+      return $query->fetch_assoc();
+    }
+
+    function donation_sources($church){
+      //Function to return all donation source/payment methods
+      global $conn;
+      $query = $conn->query("SELECT DISTINCT(source) as source, SUM(donations.amount) as ammount, donations.* FROM donations JOIN members ON donations.member = members.id JOIN branches ON members.branchid = branches.id WHERE branches.church = \"$church\" GROUP BY source ") or die("Can't get the donation sources $conn->error");
+      $sources = array();
+
+      while ($data = $query->fetch_assoc()) {
+      	$sources[$data['source']] = $data;
+      }
+      return $sources;
+    }
+
+    function service_details($service_id){
+        //Function to get user's details
+        global $conn;
+        $service = $conn->query("SELECT * FROM service WHERE id = \"$service_id\" LIMIT 1 ") or die("Errror getting sevice's details $conn->error");
+
+        $service = $service->fetch_assoc();
+        return $service;
+    }
+
+    function donations_by_service($church){
+      //status of donations by service on church
+      global $conn;
+      $sql = "SELECT COUNT(*) as num, SUM(donations.amount) as total, service.name as servicename FROM donations JOIN service ON donations.service = service.id WHERE service.church = \"$church\" GROUP BY service.name ";
+      $query = $conn->query($sql) or die("Errror getting donations service status $conn->error");
+
+      $donations = array();
+      while($data = $query->fetch_assoc()){
+        $donations[] = $data;
+      }
+      return $donations;
+    }
+
+    function group_non_members($group){
+      //members details
+      global $conn;
+      $query = $conn->query("SELECT * FROM members WHERE members.id NOT IN (SELECT member FROM group_members WHERE group_members.groupid = \"$group\") ") or die("Can;t get group non-members $conn->error");
+      $members = array();
+      while ($data = $query->fetch_assoc()) {
+        $members[] = $data;
+      }
+      return $members;
+    }
+
     function logMessages($messageID, $receivers, $status='pending'){
         global $conn;
 
@@ -90,62 +246,43 @@
             return false;
         }       
     }
+    function list_groups($churchID){
+    	global $conn;
+    	$query = $conn->query("SELECT groups.*, branches.name as branchname FROM groups JOIN branches ON groups.branchid = branches.id WHERE branches.church = \"$churchID\" ") or die("Cant get groups ".$conn->error);
+
+    	$churches = array();
+
+    	while ($data = $query->fetch_assoc()) {
+    		$churches[] = $data;
+    	}
+    	return $churches;
+    }
     function email($email, $subject, $body, $header=''){
-        echo("dkfjdk");
-              require_once 'mailer/PHPMailerAutoload.php';
+    }
 
-                $headers  = $header.= "MIME-Version: 1.0\r\n";
-                $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-               $mail = new PHPMailer;
-               $mail->isSMTP();
-               $mail->SMTPSecure = 'tls';
-               $mail->SMTPAuth = true;
+    function branch_members($branch){
+    	//members of a branch
+    	global $conn;
+    	$query = $conn->query("SELECT * FROM members WHERE branchid = \"$branch\" ") or die("Can;t get branch members $conn->error");
+    	$members = array();
 
-               //Enable SMTP debugging.
-                //$mail->SMTPDebug = 3;
+    	while ($data  = $query->fetch_assoc()) {
+    		$members[] = $data;
+    	}
+    	return $members;
+    }
 
-               $mail->Host = 'tls://smtp.gmail.com:587';
-               $mail->Port = 587;
-               $mail->Username = 'wswapped@gmail.com';
-               $mail->Password = 'Laa1001Laa#';
-               $mail->setFrom('wswapped@gmail.com');
-               $mail->addAddress($email);
-               $mail->Subject = $subject;
-               $mail->SMTPDEbug = 4;    
-               $mail->Body = $body;
-               $mail->smtpConnect(
-                    array(
-                        "ssl" => array(
-                            "verify_peer" => false,
-                            "verify_peer_name" => false,
-                            "allow_self_signed" => true
-                        )
-                    )
-                );
-               $mail->addCustomHeader($headers);
-               //send the message, check for errors
-               if (!$mail->send()) {
-                   //Sending with traditional mailer
-                   $this->init("default"); //Initializing mail parameters SMPTP settings
+    function church_members($churchid){
+    	//returns members of $churchid
+    	global $conn;
+    	$query = $conn->query("SELECT members.* FROM members JOIN branches ON members.branchid = branches.id WHERE branches.church = $churchid ") or die("Can't get members $conn->error");
+    	$members = array();
+    	while ($data = $query->fetch_assoc()) {
+    		$members[] = $data;
+    	}
+    	return $members;
+    }
 
-                   $header = "From: "._FROM_EMAIL;
-                   if(mail($email, $subject, $body, $headers."From:"._FROM_EMAIL)){
-                       return true; //Here the e-mail was sent
-                       }
-                    else{
-                        //echo "ERROR: " . $mail->ErrorInfo;
-                        return false;
-                        }
-
-
-
-               }
-               else {
-                   return true;
-               }
-               var_dump($mail->ErrorInfo);  
-
-        }
     function Semail($email, $subject, $body, $header=''){
         require_once 'mailer/PHPMailerAutoload.php';
         $email = "info@edorica.com";
@@ -201,8 +338,8 @@
 
         echo json_encode($data);
     }
-    function sendsms($phone, $message, $subject){
-        die("Disabled!");
+
+    function sendsms($phone, $message, $subject=""){
         $recipients     = $phone;
         $data = array(
             "sender"        =>'Church Test',
@@ -233,6 +370,7 @@
             return "No";
         }
     }
+
     function addMessage($sender, $message, $channel, $subject){
         //$time = $time??date('Y-m-d h:m:s');
         global $conn;
@@ -241,6 +379,7 @@
         $query = mysqli_query($conn, $sql) or die("Okay".$conn->error);
         return mysqli_insert_id($conn);
     }
+
     function msgStat($id, $stat){
         global $conn;
         //Message logs of $id
@@ -267,7 +406,8 @@
 
         return $logs;
     }
-      function churchbranches($church){
+
+    function churchbranches($church){
         global $db;
         $query = $db->query("SELECT * FROM branches WHERE church = \"$church\" ") or die("Error getting church branches ".$db->conn);
         $branches = array();
@@ -275,7 +415,7 @@
           $branches[] = $data;
         }
         return $branches;
-      }
+    }
     function send_notification ($tokens, $message)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';

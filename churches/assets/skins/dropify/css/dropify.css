@@ -210,7 +210,7 @@
     opacity: 1; }
     .dropify-wrapper:hover .dropify-preview .dropify-infos .dropify-infos-inner {
       margin-top: -5px; }
-  .dropify-wrapper:hover:hover .dropify-errors-container  {
+  .dropify-wrapper:hover:hover .dropify-errors-container  {
     visibility: visible;
     opacity: 1;
     transition-delay: 0s; }

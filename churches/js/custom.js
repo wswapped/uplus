@@ -42,12 +42,16 @@ function indicateSendProgress(){
     //Function to just indicate that the message is sending
     $("#sendBtn").html("Sending <i class='fa fa-circle-o-notch fa-spin'></i>");
 
-    log("Monitor ID "+messageID)
+    log("Monitor ID "+messageID);
+    $(".sendProg-cont").removeClass('display-none');
+    $(".iforms").hide(600);
+
     ncount = checkNRecpts(); //People the message is to be sent
 
     $(".ncount").html(ncount);
 
     var source = new EventSource("api/mon.php?act=cont&id="+messageID);
+
     source.onmessage = function(event) {
         ///Indicating progress
         data = event.data;
@@ -56,13 +60,14 @@ function indicateSendProgress(){
             nsent = ncount - data.not_sent;
             percSent = (nsent*100)/ncount;
 
-            $(".nsent").html(nsent);                                                  
+            $(".nsent").html(nsent);                                             
 
             $("#sendProg").css('width', percSent.toFixed()+'%');
+            $("#sendProg").text(percSent.toFixed()+'%');
             $("#sendProgLabel").text(percSent.toFixed()+'%');
             $("#quantSendProg").show(200);
             $("#sendProg-cont").show(900)
-            $(".iforms").hide(600);
+            
 
 
             //closing session when 100% msgs are sent
@@ -85,48 +90,10 @@ function indicateSendProgress(){
 function logFormError(error){
     $(".md-card-content.errorHandle").append("<li>"+error+"</li>");
 }
-
-//Includede in individual pages
-// $(document).ready(function() {
-//   $('th').each(function(col) {
-//     $(this).hover(
-//     function() { $(this).addClass('focus'); },
-//     function() { $(this).removeClass('focus'); }
-//   );
-//     $(this).click(function() {
-//       if ($(this).is('.asc')) {
-//         $(this).removeClass('asc');
-//         $(this).addClass('desc selected');
-//         sortOrder = -1;
-//       }
-//       else {
-//         $(this).addClass('asc selected');
-//         $(this).removeClass('desc');
-//         sortOrder = 1;
-//       }
-//       $(this).siblings().removeClass('asc selected');
-//       $(this).siblings().removeClass('desc selected');
-//       var arrData = $('table').find('tbody >tr:has(td)').get();
-//       arrData.sort(function(a, b) {
-//         var val1 = $(a).children('td').eq(col).text().toUpperCase();
-//         var val2 = $(b).children('td').eq(col).text().toUpperCase();
-//         if($.isNumeric(val1) && $.isNumeric(val2))
-//         return sortOrder == 1 ? val1-val2 : val2-val1;
-//         else
-//            return (val1 < val2) ? -sortOrder : (val1 > val2) ? sortOrder : 0;
-//       });
-//       $.each(arrData, function(index, row) {
-//         $('tbody').append(row);
-//       });
-//     });
-//   });
-// });
-
-
 $("#buyform").on('submit', function(e){
     e.preventDefault(); 
-    phone = $("#phone-number").val();
-    if(phone.length != 9 ){
+    phone = "0"+$("#phone-number").val();
+    if(phone.length != 10 ){
         $(".phone-error").append("<p class='uk-text-danger'>Enter nine digits phone number as indicated below:</p>");
         return false;
     }
@@ -140,19 +107,26 @@ $("#buyform").on('submit', function(e){
     $.post("api/index.php", {action:'buy', phone:phone, count:nsms, church:churchID}, function(data){
         try{
             retdata = JSON.parse(data);
-            
+            if(retdata.status == true){
+                balance = retdata.balance;
+                $("#sendStatus").append("<div class=''><i class='material-icons md-bg-green-A400'>sentiment_very_satisfied</i>Transaction initiated successfully!<br /></div>");
+                 setTimeout(function(){
+                    alert("Closing modal as buying is done");
+                    var modal = UIkit.modal("#buymodal");
+                    modal.hide();
+                }, 2000);
+            }
         }catch(e){
-
+            log("Error with returned data, server problem ".e);
         }
-    })
+    });
+});
+smsInputElem = $("#nsms");
 
-})
-smsInputElem = $("#nsms"); 
 smsInputElem.on('keypress', function(){
     //Incrementing the SMS cost
     $("#smscost span")
 });
-
 
 smsInputElem.keyup(function(event){
     clickedKey = event.keyCode;

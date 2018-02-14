@@ -55,14 +55,6 @@ function broadMoreModal(){
 
 }
 
-
-
-
-
-
-
-
-
 $(document).ready(function() {
   $('th').each(function(col) {
     $(this).hover(
