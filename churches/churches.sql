@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2018 at 05:13 AM
--- Server version: 10.1.29-MariaDB
--- PHP Version: 7.1.12
+-- Generation Time: Feb 15, 2018 at 08:44 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `churches`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance`
+--
+
+CREATE TABLE `attendance` (
+  `id` int(11) NOT NULL,
+  `num` int(11) NOT NULL COMMENT 'headcounts',
+  `branch` int(11) NOT NULL,
+  `service` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Head counts';
 
 -- --------------------------------------------------------
 
@@ -94,6 +107,32 @@ INSERT INTO `church` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `church_service`
+--
+
+CREATE TABLE `church_service` (
+  `id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `branchid` int(11) NOT NULL COMMENT 'the branch where service happens',
+  `time_start` time NOT NULL,
+  `time_end` time NOT NULL,
+  `date_started` date DEFAULT NULL COMMENT 'when service was set up',
+  `date_ended` date DEFAULT NULL COMMENT 'when service was stoppped',
+  `date_entered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'when service was recorded'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `church_service`
+--
+
+INSERT INTO `church_service` (`id`, `name`, `branchid`, `time_start`, `time_end`, `date_started`, `date_ended`, `date_entered`) VALUES
+(1, 'Sunday service', 1, '09:00:00', '11:00:00', NULL, NULL, '2018-02-14 10:24:53'),
+(2, 'Youth service', 1, '06:00:00', '07:00:00', NULL, NULL, '2018-02-14 10:24:53'),
+(3, 'Evening service', 1, '07:00:00', '08:00:00', NULL, NULL, '2018-02-14 10:24:53');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `donations`
 --
 
@@ -143,10 +182,7 @@ CREATE TABLE `event` (
 INSERT INTO `event` (`eventId`, `eventName`, `eventDate`, `eventTime`, `eventLocation`, `church`, `picture`, `eventVip`, `eventV_Vip`, `eventOthers`, `eventStatus`) VALUES
 (1, 'sacrificee', '2017-06-30', '12:00:00', 'Muhima', 1, 'gallery/event/cantata.jpg', '10000', '5000', '2000', 'Unreached'),
 (2, 'Fundlaising', '2017-07-28', '01:30:00', 'Stadium Amahoro', 1, 'gallery/event/cantata.jpg', '0', '0', '0', 'Unreached'),
-(3, 'Sacrifice', '2017-07-22', '01:00:00', 'Stadium Amahoro', 1, 'gallery/event/cantata.jpg', '5000', '2000', '1000', 'Unreached'),
-(4, '', '0000-00-00', '00:12:00', '', 1, 'gallery/event/cantata.jpg', '', '', '', 'Unreached'),
-(5, '', '0000-00-00', '00:00:00', '', 1, 'gallery/event/cantata.jpg', '', '', '', 'Unreached'),
-(6, '', '0000-00-00', '00:00:00', '', 1, 'gallery/event/cantata.jpg', '', '', '', 'Unreached');
+(3, 'Sacrifice', '2017-07-22', '01:00:00', 'Stadium Amahoro', 1, 'gallery/event/cantata.jpg', '5000', '2000', '1000', 'Unreached');
 
 -- --------------------------------------------------------
 
@@ -4155,6 +4191,27 @@ INSERT INTO `service` (`id`, `name`, `church`, `description`, `createdDate`) VAL
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `service_days`
+--
+
+CREATE TABLE `service_days` (
+  `id` int(11) NOT NULL,
+  `service` int(11) NOT NULL,
+  `day` enum('monday','tuesday','wednesday','thursday','friday','saturday','sunday') NOT NULL,
+  `time_started` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'when the service started ',
+  `time_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'when the service finished '
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `service_days`
+--
+
+INSERT INTO `service_days` (`id`, `service`, `day`, `time_started`, `time_end`) VALUES
+(1, 3, 'monday', '2018-02-14 10:34:31', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `smsbalance`
 --
 
@@ -4169,7 +4226,7 @@ CREATE TABLE `smsbalance` (
 --
 
 INSERT INTO `smsbalance` (`id`, `church`, `balance`) VALUES
-(1, 1, 6397);
+(1, 1, 11257);
 
 -- --------------------------------------------------------
 
@@ -4193,24 +4250,7 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `church`, `phone`, `date`, `cost`, `nsms`, `mode`, `status`) VALUES
-(1, 1, '726396284', '2018-01-24 04:28:25', 5902, 454, 'mobile', '0'),
-(2, 1, '726396284', '2018-01-24 04:28:25', 5902, 454, 'mobile', '0'),
-(3, 1, '726396284', '2018-01-24 04:33:34', 5902, 454, 'mobile', 'pending'),
-(4, 1, '726396284', '2018-01-24 04:33:43', 5902, 454, 'mobile', 'pending'),
-(5, 1, '726396284', '2018-01-24 04:33:50', 5902, 454, 'mobile', 'pending'),
-(6, 1, '726396284', '2018-01-24 04:33:51', 5902, 454, 'mobile', 'pending'),
-(7, 1, '726396284', '2018-01-24 04:33:52', 5902, 454, 'mobile', 'pending'),
-(8, 1, '726396284', '2018-01-24 04:33:52', 5902, 454, 'mobile', 'pending'),
-(9, 1, '726396284', '2018-01-24 04:33:52', 5902, 454, 'mobile', 'pending'),
-(10, 1, '726396284', '2018-01-24 04:33:53', 5902, 454, 'mobile', 'pending'),
-(11, 1, '726396284', '2018-01-24 04:33:53', 5902, 454, 'mobile', 'pending'),
-(12, 1, '726396284', '2018-01-24 04:33:53', 5902, 454, 'mobile', 'pending'),
-(13, 1, '726396284', '2018-01-24 04:33:54', 5902, 454, 'mobile', 'pending'),
-(14, 1, '726396284', '2018-01-24 04:33:54', 5902, 454, 'mobile', 'pending'),
-(15, 1, '726396284', '2018-01-24 04:33:54', 5902, 454, 'mobile', 'pending'),
-(16, 1, '722222222', '2018-01-24 04:54:17', 65, 5, 'mobile', 'pending'),
-(17, 1, '777777777', '2018-01-24 04:57:40', 156, 12, 'mobile', 'pending'),
-(18, 1, '121212121', '2018-01-24 04:58:26', 156, 12, 'mobile', 'pending');
+(23, 1, '0726396284', '2018-02-14 08:37:20', 156, 12, 'mobile', 'pending');
 
 -- --------------------------------------------------------
 
@@ -4243,6 +4283,12 @@ INSERT INTO `users` (`Id`, `fname`, `lname`, `loginName`, `loginpsw`, `useremail
 --
 
 --
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `branches`
 --
 ALTER TABLE `branches`
@@ -4261,6 +4307,12 @@ ALTER TABLE `branch_leaders`
 -- Indexes for table `church`
 --
 ALTER TABLE `church`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `church_service`
+--
+ALTER TABLE `church_service`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -4344,6 +4396,13 @@ ALTER TABLE `service`
   ADD KEY `service-church` (`church`);
 
 --
+-- Indexes for table `service_days`
+--
+ALTER TABLE `service_days`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `day-service` (`service`);
+
+--
 -- Indexes for table `smsbalance`
 --
 ALTER TABLE `smsbalance`
@@ -4367,6 +4426,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `attendance`
+--
+ALTER TABLE `attendance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
@@ -4385,6 +4450,12 @@ ALTER TABLE `church`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `church_service`
+--
+ALTER TABLE `church_service`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
@@ -4394,7 +4465,7 @@ ALTER TABLE `donations`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `eventId` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `eventId` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -4445,6 +4516,12 @@ ALTER TABLE `service`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `service_days`
+--
+ALTER TABLE `service_days`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `smsbalance`
 --
 ALTER TABLE `smsbalance`
@@ -4454,7 +4531,7 @@ ALTER TABLE `smsbalance`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -4491,6 +4568,12 @@ ALTER TABLE `donations`
 --
 ALTER TABLE `service`
   ADD CONSTRAINT `service-church` FOREIGN KEY (`church`) REFERENCES `church` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `service_days`
+--
+ALTER TABLE `service_days`
+  ADD CONSTRAINT `day-service` FOREIGN KEY (`service`) REFERENCES `church_service` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

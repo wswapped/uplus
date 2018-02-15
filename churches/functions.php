@@ -124,7 +124,9 @@
     function donation_sources($church){
       //Function to return all donation source/payment methods
       global $conn;
-      $query = $conn->query("SELECT DISTINCT(source) as source, SUM(donations.amount) as ammount, donations.* FROM donations JOIN members ON donations.member = members.id JOIN branches ON members.branchid = branches.id WHERE branches.church = \"$church\" GROUP BY source ") or die("Can't get the donation sources $conn->error");
+      $sql = "SELECT DISTINCT(source) as source, SUM(donations.amount) as amount FROM donations JOIN members ON donations.member = members.id JOIN branches ON members.branchid = branches.id WHERE branches.church = \"$church\" GROUP BY source ";
+      echo "$sql<br/>";
+      $query = $conn->query($sql) or die("Can't get the donation sources $conn->error");
       $sources = array();
 
       while ($data = $query->fetch_assoc()) {
