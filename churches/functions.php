@@ -44,15 +44,30 @@
       global $conn;
     }
 
-    function group_types(){
+    function group_types($church = ""){
       global $conn;
       //Function to help us get group types
-      $query = $conn->query("SELECT * FROM group_types ORDER BY `group_types`.`drank` ASC") or die("Can't get mtypes $conn->error");
-      $types = array();
+      if($church){
+      	$sql = "SELECT DISTINCT(group_types.name) FROM group_types JOIN groups ON group_types.name = groups.type JOIN branches ON groups.branchid = branches.id WHERE church = \"$church\" ";
+      	$query = $conn->query($sql) or die("Error $conn->error");
 
-      while ($data = $query->fetch_assoc()) {
-      	$types[] = $data;
+      	$types = array();
+
+	    while ($data = $query->fetch_assoc()) {
+	      	$types[] = $data['name'];
+	    }
+
+      }else{
+      	$query = $conn->query("SELECT * FROM group_types ORDER BY `group_types`.`drank` ASC") or die("Can't get gtypes $conn->error");
+      	$types = array();
+
+	    while ($data = $query->fetch_assoc()) {
+	      	$types[] = $data;
+	    }
       }
+      
+      
+      
       return $types;
     }
 
@@ -100,7 +115,16 @@
       }
       return $members;
     }
-
+    function church_branches($church){
+		//Getting branches
+		global $conn;
+		$branchesQuery = $conn->query(  "SELECT * FROM branches WHERE church = $church ") or die("Can't get branches ".$conn->error);
+		$branches = array();
+		while ($data = $branchesQuery->fetch_assoc()) {
+			$branches[] = $data;
+        }
+        return $branches;
+    }
     function church_donations($church){
       //Function to return church donations
       global $conn;

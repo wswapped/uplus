@@ -31,8 +31,9 @@
                 <div class="uk-width-large-4-4">
                     <div class="md-card">
                         <div class="md-card-content">
-                            <h4 class="heading_c uk-margin-bottom">Visitors</h4>
-                            <div id="chartist_line_area" class="chartist"></div>
+                            <h4 class="heading_c uk-margin-bottom">Members attendance</h4>
+                            <!-- <div id="chartist_line_area" class="chartist"></div> -->
+                            <div id="mem_attendance" class="attendance"></div>
                         </div>
                     </div>
                     <div class="md-card">
@@ -154,6 +155,7 @@
 
                 </div>
             </div>
+            <!-- head count modal -->
             <div class="uk-modal" id="head_counts_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
                 <div class="uk-modal-dialog" style="top: 339.5px;">
                     <div class="uk-modal-header uk-tile uk-tile-default">
@@ -163,14 +165,30 @@
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="md-input-wrapper">
-                                    <select name="service" class="md-input" required="required">
+                                    <select name="service" class="md-input" required="required" id="service-input">
                                         <option value="">Service...</option>
                                         <?php
                                             //Getting branches
                                             for ($n=0; $n<count($church_services); $n++) {
                                                 $service = $church_services[$n];
                                                 ?>
-                                                    <option value="<?php echo $service['name']; ?>"><?php echo $service['name']; ?></option>
+                                                    <option value="<?php echo $service['id']; ?>"><?php echo $service['name']; ?></option>
+                                                <?php
+                                            }
+                                        ?>
+                                    </select>
+                                    <span class="md-input-bar "></span>
+                                </div>
+                                <div class="md-input-wrapper">
+                                    <select name="service" class="md-input" id="branch-input">
+                                        <option value="">Branch...</option>
+                                        <?php
+                                            //Getting branches
+                                            $branches = church_branches($churchID);
+                                            for ($n=0; $n<count($branches); $n++) {
+                                                $branch = $branches[$n];
+                                                ?>
+                                                    <option value="<?php echo $branch['id']; ?>"><?php echo $branch['name']; ?></option>
                                                 <?php
                                             }
                                         ?>
@@ -179,16 +197,15 @@
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>Date</label>
-                                    <input type="text" name="date" class="md-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}>
+                                    <input type="text" name="date" class="md-input" id="date-input" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2017-01-01'}>
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>Number</label>
-                                    <input type="number" name="membername" class="md-input" required="required">
+                                    <input type="number" name="membername" id="number-input" class="md-input" required="required">
                                     <span class="md-input-bar "></span>
                                 </div>
-                            </div>
-                            
+                            </div>                            
                         </div>
                         <div class="uk-modal-footer uk-text-right">
                             <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
@@ -290,11 +307,6 @@
     <script src="bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
     <!-- c3.js (charts) -->
     <script src="bower_components/c3js-chart/c3.min.js"></script>
-    <!-- chartist -->
-    <script src="bower_components/chartist/dist/chartist.min.js"></script>
-
-    <!--  charts functions -->
-    <script src="assets/js/pages/plugins_charts.min.js"></script>
 
     <!-- Dropify -->
     <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
@@ -320,6 +332,28 @@
             e.preventDefault();
 
             //head counts modal on submission
+            service = $("#service-input").val();
+            date = $("#date-input").val();
+            number = $("#number-input").val();
+            branch = $("#branch-input").val();
+
+            if(service && date && number){
+                //sending the data
+                $.post('api/index.php', {action:'record_headcount', church:<?php echo $churchID; ?>, branch:branch, service:service, date:date, number:number}, function(data){
+                        try{
+                            ret = JSON.parse(data);
+                            if(ret.status){
+                                //Saved
+                                $("#head_counts_form").html("Saved successfully!");
+                            }else{
+                                $("#head_counts_form").html("Error recording!"+data.msg);
+                            }
+                        }catch(err){
+                            log(err)
+                        }
+                })
+            }
+
             
         })
     </script>

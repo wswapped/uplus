@@ -52,7 +52,7 @@
     }else if($action == 'invoice'){
     	//Invoice for transaction
     	$transaction = $request['id']??"";
-    	$query = $db->query("SELECT *, status as transaction_status FROM transactions WHERE id = \"$transaction\" LIMIT 1 ") or die("Can't get transaction detasils ".$db->conn);
+    	$query = $db->query("SELECT *, status as transaction_status FROM transactions WHERE id = \"$transaction\" LIMIT 1 ") or die("Can't get transaction details ".$db->conn);
     	$data = $query->fetch_assoc();
     	$data['status'] =1;
     	echo json_encode($data);
@@ -190,8 +190,45 @@
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
 
+    }else if($action == "list_baskets"){
+        //listing the baskets
+        $church = $request['church']??"";
+        $query = $conn->query("SELECT * FROM service WHERE church = \"$church\" ");
+        if($query){
+            $baskets = array();
+            while ($data = $query->fetch_assoc()) {
+                $baskets[]  = $data;
+            }
+            $response = array('status'=>true, 'data'=>$baskets);
+        }else{
+          $response = array('status'=>false, 'msg'=>"Error: $conn->error");  
+        }
+
+    }else if($action == "record_headcount"){
+        //head counts recording
+        $church = $request['church']??"";
+        $service = $request['service']??"";
+        $date = $request['date']??"";
+        $number = $request['number']??"";
+        $branch = $request['branch']??'';
+
+        $date = date_format(date_create($date),"Y-m-d");
+
+        if(!empty($church) && !empty($service) && !empty($date) && !empty($number))
+        {
+            //Adding in the database
+            $query = $conn->query("INSERT INTO attendance(num, service, branch, date) VALUES(\"$number\", \"$service\", \"$branch\", \"$date\") ");
+            if($query){
+                $response = array('status'=>true);
+            }else{
+                $response = array('status'=>false, 'msg'=>"Error: $conn->error");
+            }
+        }else{
+            $response = array('status'=>false, 'msg'=>"Provide all the details");
+        }
+
     }else{
-    	echo json_encode(array('status'=>false, 'msg'=>"Provide action"));
+    	$response = array('status'=>false, 'msg'=>"Provide action");
     }
 
     echo json_encode($response);

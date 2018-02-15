@@ -20,9 +20,40 @@
 
     <div id="page_content">
         <div id="page_content_inner">
-            <h3 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Settings</h3>
+            <!-- circular charts -->
+            <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
+                <div class="uk-row-first"><h4 class=""><?php echo $churchname; ?>Settings</h4></div>
+            </div>
+            <div class="uk-grid uk-grid-width-small-1-2 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-3 uk-text-center" >
+                
+                <div class="uk-row-first">
+                    <div class="md-card">
+                        <div class="md-card-toolbar">
+                            <h3 class="md-card-toolbar-heading-text"><i class="material-icons">group</i> &nbsp;Group settings</h3>
+                        </div>
+                        <div class="md-card-content">
+                            <ul class="md-list">
+                                <?php
+                                    $group_types = group_types($churchID);
+                                    for($n=0; $n<count($group_types); $n++){
+                                        ?>
+                                        <li><?php echo $group_types[$n]; ?></li>
+                                        <?php
+                                    }
+                                ?>
+                                <li>
+                                    <form>
+                                        <div class="md-input-wrapper md-input-filled"><label>Add group type</label><input type="text" class="md-input label-fixed"><span class="md-input-bar "></span></div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
     <!-- jQuery -->
     <script type="text/javascript" src="js/jquery.js"></script>
 
