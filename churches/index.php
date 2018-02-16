@@ -643,15 +643,16 @@
                                     for($n=0; $n<count($groups); $n++){
                                         $group = $groups[$n];
                                         $maplocation = explode(",", $group['maplocation']);
+                                        $branchname = $group['branchname'];
                                         // var_dump($maplocation);
                                         ?>
-                                        <li data-gmap-lat="<?php echo $maplocation[0] ?>"  data-gmap-lon="<?php echo $maplocation[1] ?>" data-gmap-user="Dr. Rod Herman" data-gmap-user-company="Bogan Ltd">
+                                        <li data-gmap-lat="<?php echo $maplocation[0] ?>"  data-gmap-lon="<?php echo $maplocation[1] ?>" data-gmap-user="<?php echo $group['name']; ?>" data-gmap-user-company="<?php echo $branchname ?>">
                                             <div class="md-list-addon-element">
                                                 <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt=""/>
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading"><?php echo $group['name']; ?></span>
-                                                <span class="uk-text-small uk-text-muted">Bogan Ltd</span>
+                                                <span class="uk-text-small uk-text-muted"><?php echo $branchname ?></span>
                                             </div>
                                         </li>
                                         <?php
