@@ -299,7 +299,7 @@
     <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
 
     <!--  datatables functions -->
-    <!-- <script src="assets/js/pages/plugins_datatables.min.js"></script> -->
+    <script src="assets/js/pages/plugins_datatables.min.js"></script>
     
     <!-- d3 -->
     <script src="bower_components/d3/d3.min.js"></script>

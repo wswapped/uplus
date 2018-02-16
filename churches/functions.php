@@ -89,10 +89,6 @@
       var_dump($query);
     }
 
-    function branch_groups($group){
-    	//Groups in a branch
-    }
-
     function branch_leader($branch, $position=''){
       //getting all branch leaders
       global $conn;
@@ -297,15 +293,26 @@
         }       
     }
     function list_groups($churchID){
-    	global $conn;
-    	$query = $conn->query("SELECT groups.*, branches.name as branchname FROM groups JOIN branches ON groups.branchid = branches.id WHERE branches.church = \"$churchID\" ") or die("Cant get groups ".$conn->error);
+      global $conn;
+      $query = $conn->query("SELECT groups.*, branches.name as branchname FROM groups JOIN branches ON groups.branchid = branches.id WHERE branches.church = \"$churchID\" ") or die("Cant get groups ".$conn->error);
 
-    	$churches = array();
+      $churches = array();
 
-    	while ($data = $query->fetch_assoc()) {
-    		$churches[] = $data;
-    	}
-    	return $churches;
+      while ($data = $query->fetch_assoc()) {
+        $churches[] = $data;
+      }
+      return $churches;
+    }
+    function branch_groups($branch){
+      global $conn;
+      $query = $conn->query("SELECT * FROM groups WHERE branchid = \"$branch\" ") or die("Cant branch get groups ".$conn->error);
+
+      $branches = array();
+
+      while ($data = $query->fetch_assoc()) {
+        $branches[] = $data;
+      }
+      return $branches;
     }
     function email($email, $subject, $body, $header=''){
     }

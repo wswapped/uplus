@@ -24,6 +24,8 @@
 
         //Including common head configuration
         include_once "head.php";
+
+        $groups = branch_groups($branchid);
     ?>
 </head>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
@@ -70,7 +72,7 @@
                                             <h4 class="heading_a"><?php echo count($members); ?> <span class="sub-heading">Members</span></h4>
                                         </li>
                                         <li>
-                                            <h4 class="heading_a">81 <span class="sub-heading">Groups</span></h4>
+                                            <h4 class="heading_a"><?php echo count($groups); ?> <span class="sub-heading">Groups</span></h4>
                                         </li>
                                         <li>
                                             <h4 class="heading_a">1407 <span class="sub-heading">Broadcasts</span></h4>
@@ -119,283 +121,164 @@
                         </div>
                         <div class="user_content">
                             <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
-                                <li class="uk-active"><a href="#">Overview</a></li>
-                                <li><a href="#">Photos</a></li>
-                                <li><a href="#">Posts</a></li>
+                                <li class="uk-active"><a href="#">Members</a></li>
+                                <li><a href="#">Groups</a></li>
+                                <li><a href="#">Announcements</a></li>
                             </ul>
+
+                                
+
                             <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
                                 <li>
-                                    Ut natus accusantium quia dolor beatae saepe doloribus eos nostrum error repudiandae accusamus optio nobis sed quod perspiciatis est et unde ipsum aut error consequatur nemo dolores accusamus perspiciatis mollitia perferendis nihil cupiditate et quis et nesciunt voluptatem quam unde est dolorem at deserunt corrupti harum eum modi expedita eveniet voluptatibus dolorum fugiat distinctio laborum eum similique quis hic et quos ad qui fugiat totam qui hic adipisci occaecati perferendis amet est quos qui est asperiores exercitationem consequatur placeat ut deleniti ut delectus quo consequatur sequi dicta sit natus cupiditate ea sequi sit aut atque corporis tempora doloribus aut autem totam minima quis et dolores tenetur tenetur perspiciatis reprehenderit iste consequatur odio tempora voluptatem adipisci ut et labore voluptate porro adipisci adipisci magni exercitationem minus pariatur nam.                                    <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom" data-uk-grid-margin>
-                                        <div class="uk-width-large-1-2">
-                                            <h4 class="heading_c uk-margin-small-bottom">Contact Info</h4>
-                                            <ul class="md-list md-list-addon">
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon material-icons">&#xE158;</i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="c4bca7b6ababafb784bda5acababeaa7aba9">[email&#160;protected]</a></span>
-                                                        <span class="uk-text-small uk-text-muted">Email</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">07576056929</span>
-                                                        <span class="uk-text-small uk-text-muted">Phone</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon uk-icon-facebook-official"></i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">facebook.com/envato</span>
-                                                        <span class="uk-text-small uk-text-muted">Facebook</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon uk-icon-twitter"></i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">twitter.com/envato</span>
-                                                        <span class="uk-text-small uk-text-muted">Twitter</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                    <div class="md-card-content">
+                                        <div class="dt_colVis_buttons">
                                         </div>
-                                        <div class="uk-width-large-1-2">
-                                            <h4 class="heading_c uk-margin-small-bottom">My groups</h4>
-                                            <ul class="md-list">
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Cloud Computing</a></span>
-                                                        <span class="uk-text-small uk-text-muted">102 Members</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Account Manager Group</a></span>
-                                                        <span class="uk-text-small uk-text-muted">246 Members</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Digital Marketing</a></span>
-                                                        <span class="uk-text-small uk-text-muted">280 Members</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">HR Professionals Association - Human Resources</a></span>
-                                                        <span class="uk-text-small uk-text-muted">12 Members</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Branch</th>
+                                                    <th>Phone</th>
+                                                    <th>Email</th>
+                                                    <th>Address</th>
+                                                    <th>Type</th>
+                                                    <th>Date In</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+                                                $n=0;
+
+                                                $sqlGetMembers = $db->query("SELECT * FROM `members` WHERE branchid = \"$branchid\" ORDER BY id DESC")or die (mysqli_error());
+                                                while($rowMember = mysqli_fetch_array($sqlGetMembers))
+                                                    {
+                                                        $branchid = $rowMember['branchid'];
+                                                        $sqlGetMembersloc = $db->query("SELECT * FROM `branches` WHERE id = '$branchid'")or die (mysqli_error());
+                                                        $branches = mysqli_fetch_array($sqlGetMembersloc);
+                                                        $n++;
+                                                        echo '<tr>
+                                                        <td>'.$n.'</td>
+                                                        <td>'.$rowMember['name'].'</td>
+                                                        <td>'.$branches['name'].'</td>
+                                                        <td>'.$rowMember['phone'].'</td>
+                                                        <td>'.$rowMember['email'].'</td>
+                                                        <td>'.$rowMember['address'].'</td>
+                                                        <td>'.$rowMember['type'].'</td>
+                                                        <td>'.$rowMember['createdDate'].'</td>
+                                                        <td><a href="editmember.php?memberid='.$rowMember['id'].'"><i class="material-icons">mode_edit</i></a></td>
+                                                        </tr>';
+                                                    }
+                                                ?> 
+                                                
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <h4 class="heading_c uk-margin-bottom">Timeline</h4>
-                                    <div class="timeline">
-                                        <div class="timeline_item">
-                                            <div class="timeline_icon timeline_icon_success"><i class="material-icons">&#xE85D;</i></div>
-                                            <div class="timeline_date">
-                                                09 <span>Jan</span>
-                                            </div>
-                                            <div class="timeline_content">Created ticket <a href="#"><strong>#3289</strong></a></div>
-                                        </div>
-                                        <div class="timeline_item">
-                                            <div class="timeline_icon timeline_icon_danger"><i class="material-icons">&#xE5CD;</i></div>
-                                            <div class="timeline_date">
-                                                15 <span>Jan</span>
-                                            </div>
-                                            <div class="timeline_content">Deleted post <a href="#"><strong>Eius dolor voluptas quae ipsam veritatis minus repellat.</strong></a></div>
-                                        </div>
-                                        <div class="timeline_item">
-                                            <div class="timeline_icon"><i class="material-icons">&#xE410;</i></div>
-                                            <div class="timeline_date">
-                                                19 <span>Jan</span>
-                                            </div>
-                                            <div class="timeline_content">
-                                                Added photo
-                                                <div class="timeline_content_addon">
-                                                    <img src="assets/img/gallery/Image16.jpg" alt=""/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="timeline_item">
-                                            <div class="timeline_icon timeline_icon_primary"><i class="material-icons">&#xE0B9;</i></div>
-                                            <div class="timeline_date">
-                                                21 <span>Jan</span>
-                                            </div>
-                                            <div class="timeline_content">
-                                                New comment on post <a href="#"><strong>Laudantium itaque harum.</strong></a>
-                                                <div class="timeline_content_addon">
-                                                    <blockquote>
-                                                        Eos sit voluptates distinctio facilis praesentium id voluptatum esse consequatur laborum aspernatur sit reprehenderit nemo exercitationem velit vitae consequatur et in.&hellip;
-                                                    </blockquote>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="timeline_item">
-                                            <div class="timeline_icon timeline_icon_warning"><i class="material-icons">&#xE7FE;</i></div>
-                                            <div class="timeline_date">
-                                                29 <span>Jan</span>
-                                            </div>
-                                            <div class="timeline_content">
-                                                Added to Friends
-                                                <div class="timeline_content_addon">
-                                                    <ul class="md-list md-list-addon">
-                                                        <li>
-                                                            <div class="md-list-addon-element">
-                                                                <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_02_tn.png" alt=""/>
-                                                            </div>
-                                                            <div class="md-list-content">
-                                                                <span class="md-list-heading">Lydia Schumm</span>
-                                                                <span class="uk-text-small uk-text-muted">Vel animi consequatur voluptatibus dolorem.</span>
-                                                            </div>
-                                                        </li>
+                                </li>
+                                
+                                <li>
+                                    <div class="md-card uk-margin-medium-bottom">
+                                <div class="md-card-content">
+                                    <div class="uk-grid" data-uk-grid-margin>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-vertical-align">
+                                                <div class="uk-vertical-align-middle">
+                                                    <ul id="contact_list_filter" class="uk-subnav uk-subnav-pill uk-margin-remove">
+                                                        <li class="uk-active" data-uk-filter=""><a href="#">All</a></li>
+                                                        <?php
+                                                            //Looping through group types
+                                                            $group_types = group_types();
+                                                            for($n=0; $n<count($group_types); $n++){
+                                                                $gtype = $group_types[$n]['name'];
+                                                                ?>
+                                                                    <li data-uk-filter="<?php echo strtolower($gtype); ?>"><a href="#"><?php echo ucfirst($gtype); ?></a></li>
+                                                                <?php
+                                                            }
+                                                        ?>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div id="user_profile_gallery" data-uk-check-display class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4" data-uk-grid="{gutter: 4}">
-                                        <div>
-                                            <a href="assets/img/gallery/Image01.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image01.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image02.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image02.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image03.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image03.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image04.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image04.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image05.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image05.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image06.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image06.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image07.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image07.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image08.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image08.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image09.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image09.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image10.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image10.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image11.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image11.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image12.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image12.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image13.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image13.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image14.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image14.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image15.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image15.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image16.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image16.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image17.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image17.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image18.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image18.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image19.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image19.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image20.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image20.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image21.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image21.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image22.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image22.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image23.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image23.jpg" alt=""/>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="assets/img/gallery/Image24.jpg" data-uk-lightbox="{group:'user-photos'}">
-                                                <img src="assets/img/gallery/Image24.jpg" alt=""/>
-                                            </a>
+                                        <div class="uk-width-medium-1-2">
+                                            <label for="contact_list_search">Search... (min 3 char.)</label>
+                                            <input class="md-input" type="text" id="contact_list_search"/>
                                         </div>
                                     </div>
-                                    <ul class="uk-pagination uk-margin-large-top">
-                                        <li class="uk-disabled"><span><i class="uk-icon-angle-double-left"></i></span></li>
-                                        <li class="uk-active"><span>1</span></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><span>&hellip;</span></li>
-                                        <li><a href="#">20</a></li>
-                                        <li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>
-                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="heading_b uk-text-center grid_no_results" style="display:none">No results found</h3>
+
+                            <div class="uk-grid-width-medium-1-2 uk-grid-width-large-1-3 hierarchical_show" id="contact_list">
+                                <?php
+                                    //looping through groups
+                                    for($n=0; $n<count($groups); $n++){
+                                        $group = $groups[$n]; //current group
+                                        $groupname = $group['name'];
+                                        // $branchname = $group['branchname'];
+                                        $group_img = $group['profile_picture'];
+                                        $group_type = $group['type'];
+
+                                        $repdata = user_details($group['representative']);
+                                        $repemail = $repdata['email'];
+                                        $repphone = $repdata['phone'];
+
+                                        $searchabledata = array(strtolower($groupname), strtolower($group_type));
+                                ?>
+                                    <div data-uk-filter="<?php echo implode(", ", $searchabledata); ?>">
+                                        <div class="md-card md-card-hover md-card-horizontal">
+                                            <div class="md-card-head">
+                                                <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-left'}">
+                                                    <i class="md-icon material-icons">&#xE5D4;</i>
+                                                    <div class="uk-dropdown uk-dropdown-small">
+                                                        <ul class="uk-nav">
+                                                            <li><a href="#">Edit</a></li>
+                                                            <li><a class="grp_remove" data-grp = <?php echo $group['id'] ?> href="#">Remove</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-text-center">
+                                                    <img class="md-card-head-avatar" src="<?php echo $group_img;?>" alt=""/>
+                                                </div>
+                                                <!-- <h3 class="md-card-head-text uk-text-center">
+                                                    <?php echo $groupname; ?>                                <span class="uk-text-truncate"><?php echo $branchname; ?> </span>
+                                                </h3> -->
+                                                <div class="md-card-head-footmenu">
+                                                    <div class="uk-grid">
+                                                        <div class="uk-width-medium-1-3">
+                                                            <a class="md-btn md-btn-edit md-btn-wave-light waves-effect waves-button waves-light" href="groups.php?group=<?php echo $group['id']; ?>">GOTO</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="md-card-content">
+                                                <ul class="md-list">
+                                                    <li>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">Info</span>
+                                                            <span class="uk-text-small uk-text-muted">Type: <?php echo ucfirst($group['type']); ?></span>
+                                                            <span class="uk-text-small uk-text-muted">Location: <?php echo $group['location']; ?></span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">Email</span>
+                                                            <span class="uk-text-small uk-text-muted uk-text-truncate"><?php echo $repemail; ?></span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">Phone</span>
+                                                            <span class="uk-text-small uk-text-muted"><?php echo $repphone; ?></span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                              </div>
                                 </li>
                                 <li>
                                     <ul class="md-list">
@@ -814,6 +697,27 @@
     <script src="assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
     <script src="assets/js/altair_admin_common.min.js"></script>
+
+    <!--  contact list functions -->
+    <script src="assets/js/pages/page_contact_list.min.js"></script>
+
+    <!-- datatables -->
+    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <!-- datatables buttons-->
+    <script src="bower_components/datatables-buttons/js/dataTables.buttons.js"></script>
+    <script src="assets/js/custom/datatables/buttons.uikit.js"></script>
+    <script src="bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="bower_components/datatables-buttons/js/buttons.colVis.js"></script>
+    <script src="bower_components/datatables-buttons/js/buttons.html5.js"></script>
+    <script src="bower_components/datatables-buttons/js/buttons.print.js"></script>
+    
+      <!-- datatables custom integration -->
+    <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
+
+    <!--  datatables functions -->
+    <script src="assets/js/pages/plugins_datatables.min.js"></script>
 
 
     <script>

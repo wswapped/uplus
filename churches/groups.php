@@ -295,57 +295,57 @@
                                     $searchabledata = array(strtolower($groupname), strtolower($branchname), strtolower($group_type));
                                     // var_dump($searchabledata);
                                 ?>
-                                <div data-uk-filter="<?php echo implode(", ", $searchabledata); ?>">
-                                    <div class="md-card md-card-hover md-card-horizontal">
-                                        <div class="md-card-head">
-                                            <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-left'}">
-                                                <i class="md-icon material-icons">&#xE5D4;</i>
-                                                <div class="uk-dropdown uk-dropdown-small">
-                                                    <ul class="uk-nav">
-                                                        <li><a href="#">Edit</a></li>
-                                                        <li><a class="grp_remove" data-grp = <?php echo $group['id'] ?> href="#">Remove</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="uk-text-center">
-                                                <img class="md-card-head-avatar" src="<?php echo $group_img;?>" alt=""/>
-                                            </div>
-                                            <h3 class="md-card-head-text uk-text-center">
-                                                <?php echo $groupname; ?>                                <span class="uk-text-truncate"><?php echo $branchname; ?> </span>
-                                            </h3>
-                                            <div class="md-card-head-footmenu">
-                                                <div class="uk-grid">
-                                                    <div class="uk-width-medium-1-3">
-                                                        <a class="md-btn md-btn-edit md-btn-wave-light waves-effect waves-button waves-light" href="groups.php?group=<?php echo $group['id']; ?>">GOTO</a>
+                                    <div data-uk-filter="<?php echo implode(", ", $searchabledata); ?>">
+                                        <div class="md-card md-card-hover md-card-horizontal">
+                                            <div class="md-card-head">
+                                                <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-left'}">
+                                                    <i class="md-icon material-icons">&#xE5D4;</i>
+                                                    <div class="uk-dropdown uk-dropdown-small">
+                                                        <ul class="uk-nav">
+                                                            <li><a href="#">Edit</a></li>
+                                                            <li><a class="grp_remove" data-grp = <?php echo $group['id'] ?> href="#">Remove</a></li>
+                                                        </ul>
                                                     </div>
                                                 </div>
+                                                <div class="uk-text-center">
+                                                    <img class="md-card-head-avatar" src="<?php echo $group_img;?>" alt=""/>
+                                                </div>
+                                                <h3 class="md-card-head-text uk-text-center">
+                                                    <?php echo $groupname; ?>                                <span class="uk-text-truncate"><?php echo $branchname; ?> </span>
+                                                </h3>
+                                                <div class="md-card-head-footmenu">
+                                                    <div class="uk-grid">
+                                                        <div class="uk-width-medium-1-3">
+                                                            <a class="md-btn md-btn-edit md-btn-wave-light waves-effect waves-button waves-light" href="groups.php?group=<?php echo $group['id']; ?>">GOTO</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="md-card-content">
-                                            <ul class="md-list">
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">Info</span>
-                                                        <span class="uk-text-small uk-text-muted">Type: <?php echo ucfirst($group['type']); ?></span>
-                                                        <span class="uk-text-small uk-text-muted">Location: <?php echo $group['location']; ?></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">Email</span>
-                                                        <span class="uk-text-small uk-text-muted uk-text-truncate"><?php echo $repemail; ?></span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">Phone</span>
-                                                        <span class="uk-text-small uk-text-muted"><?php echo $repphone; ?></span>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                            <div class="md-card-content">
+                                                <ul class="md-list">
+                                                    <li>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">Info</span>
+                                                            <span class="uk-text-small uk-text-muted">Type: <?php echo ucfirst($group['type']); ?></span>
+                                                            <span class="uk-text-small uk-text-muted">Location: <?php echo $group['location']; ?></span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">Email</span>
+                                                            <span class="uk-text-small uk-text-muted uk-text-truncate"><?php echo $repemail; ?></span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading">Phone</span>
+                                                            <span class="uk-text-small uk-text-muted"><?php echo $repphone; ?></span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 <?php } ?>
                               </div>
                         </div>
