@@ -989,7 +989,7 @@
         <!-- chartist (charts) -->
         <script src="bower_components/chartist/dist/chartist.min.js"></script>
         <!-- maplace (google maps) -->
-        <script src="http://maps.google.com/maps/api/js?key=AIzaSyAlKttaE2WuI1xKpvt-f7dBOzcBEHRaUBA&libraries=places"></script>
+        <script src="https://maps.google.com/maps/api/js?key=AIzaSyAlKttaE2WuI1xKpvt-f7dBOzcBEHRaUBA&libraries=places"></script>
         <script src="bower_components/maplace-js/dist/maplace.min.js"></script>
         <!-- peity (small charts) -->
         <script src="bower_components/peity/jquery.peity.min.js"></script>
