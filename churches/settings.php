@@ -42,9 +42,29 @@
                                     }
                                 ?>
                                 <li>
-                                    <form>
+                                    <form action="settings.php" method="POST">
+                                        <div class="">
+                                            <?php
+                                                if(!empty($_POST['new_group_type'])){
+                                                    $type = $_POST['new_group_type'];
+
+                                                    $query = $conn->query("INSERT INTO group_types(name) VALUES (\"$type\") ");
+                                                    if($query){
+                                                        echo "Successfully added";
+                                                    }else{
+                                                        echo "Error adding group type $conn->error";
+                                                    }
+
+                                                }
+                                            ?>
+                                        </div>
                                         <div class="uk-grid">
-                                            <div class="md-input-wrapper md-input-filled"><label>Add group type</label><input type="text" class="md-input label-fixed"><span class="md-input-bar "></span><i class="material-icons">add</i></div>
+                                            <div class="uk-row-first">
+                                                <div class="md-input-wrapper md-input-filled"><label>Add group type</label><input type="text" name="new_group_type" class="md-input labelel-fixed"><span class="md-input-bar "></span></div>
+                                            </div>
+                                            <div class="">
+                                                <button class="md-btn md-btn-success"><i class="material-icons">add</i></button>
+                                            </div>
                                         </div>
                                     </form>
                                 </li>

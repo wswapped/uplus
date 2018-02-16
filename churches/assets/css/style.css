@@ -70,6 +70,9 @@
 .uk-badge-warning {
     background: #ffa000
 }
+.display-none{
+    display: none;
+}
 
 .uk-badge-success {
     background: #7cb342
