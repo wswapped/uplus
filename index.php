@@ -469,7 +469,7 @@
 						
 					}
 
-					$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE status = 1");
+					$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE status = '1'");
 					
 					while($rowEvents = mysqli_fetch_array($sqlEvents))
 					{
@@ -526,10 +526,10 @@
 
     <section  id="sect-team" class="section" style="text-align: center;">
     <?php 
-    	$sqlEvents = $eventDb->query("SELECT * FROM akokanya");
+    	//$sqlEvents = $eventDb->query("SELECT * FROM akokanya");
 					
-		while($rowEvents = mysqli_fetch_array($sqlEvents))
-		{}
+		//while($rowEvents = mysqli_fetch_array($sqlEvents))
+		//{}
     ?>
         <h1 style="margin-bottom: 30px;">Use uplus from your phone</h1>
         <p style="margin-bottom: 30px;font-size: 18px;font-weight: 100;">We guarantee, you will enjoye this app to the maximum. It’s that good!</p>
