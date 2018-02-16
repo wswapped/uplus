@@ -73,7 +73,7 @@
             </div>
 
             <!-- large chart -->
-            <div class="uk-grid">
+           <!--  <div class="uk-grid">
                 <div class="uk-width-1-1">
                     <div class="md-card">
                         <div class="md-card-toolbar">
@@ -161,10 +161,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- circular charts -->
-            <div class="uk-grid uk-grid-width-small-1-2 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-5 uk-text-center uk-sortable sortable-handler" id="dashboard_sortable_cards" data-uk-sortable data-uk-grid-margin>
+            <!-- <div class="uk-grid uk-grid-width-small-1-2 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-5 uk-text-center uk-sortable sortable-handler" id="dashboard_sortable_cards" data-uk-sortable data-uk-grid-margin>
                 <div>
                     <div class="md-card md-card-hover md-card-overlay">
                         <div class="md-card-content">
@@ -254,10 +254,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- tasks -->
-            <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+            <!-- <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
                 <div class="uk-width-medium-1-2">
                     <div class="md-card">
                         <div class="md-card-content">
@@ -346,10 +346,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- info cards -->
-            <div class="uk-grid uk-grid-medium uk-grid-width-medium-1-2 uk-grid-width-large-1-3" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+            <!-- <div class="uk-grid uk-grid-medium uk-grid-width-medium-1-2 uk-grid-width-large-1-3" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
                 <div>
                     <div class="md-card">
                         <div class="md-card-head md-bg-light-blue-600">
@@ -517,7 +517,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
                 <div class="uk-width-large-1-2">
