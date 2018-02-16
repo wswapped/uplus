@@ -190,7 +190,7 @@
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
 
-    }else if($action == "list_baskets"){
+    }else if($action == "listBaskets"){
         //listing the baskets
         $church = $request['church']??"";
         $query = $conn->query("SELECT * FROM service WHERE church = \"$church\" ");
