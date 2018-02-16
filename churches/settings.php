@@ -43,7 +43,9 @@
                                 ?>
                                 <li>
                                     <form>
-                                        <div class="md-input-wrapper md-input-filled"><label>Add group type</label><input type="text" class="md-input label-fixed"><span class="md-input-bar "></span></div>
+                                        <div class="uk-grid">
+                                            <div class="md-input-wrapper md-input-filled"><label>Add group type</label><input type="text" class="md-input label-fixed"><span class="md-input-bar "></span><i class="material-icons">add</i></div>
+                                        </div>
                                     </form>
                                 </li>
                             </ul>
