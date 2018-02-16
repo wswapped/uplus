@@ -299,12 +299,12 @@
     <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
 
     <!--  datatables functions -->
-    <script src="assets/js/pages/plugins_datatables.min.js"></script>
+    <!-- <script src="assets/js/pages/plugins_datatables.min.js"></script> -->
     
     <!-- d3 -->
     <script src="bower_components/d3/d3.min.js"></script>
     <!-- metrics graphics (charts) -->
-    <script src="bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
+    <!-- <script src="bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script> -->
     <!-- c3.js (charts) -->
     <script src="bower_components/c3js-chart/c3.min.js"></script>
 
@@ -352,10 +352,24 @@
                             log(err)
                         }
                 })
-            }
+            }            
+        });
 
-            
-        })
+        
+    var chart = c3.generate({
+        bindto: "#mem_attendance",
+        data: {
+            columns: [
+                ['data1', 300, 350, 300, 0, 0, 0],
+                ['data2', 130, 100, 140, 200, 150, 50]
+            ],
+            types: {
+                data1: 'line',
+                data2: 'line'
+            }
+        }
+    });
+
     </script>
 
     <script>
