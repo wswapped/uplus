@@ -140,31 +140,33 @@
 		{
 			require('db.php');
 			$userId	= mysqli_real_escape_string($db, $_POST['userId']);
-			$sql 	= $outCon->query("SELECT status, amount, pushnumber, pullnumber, myid, type, transactiontime FROM intouchapi WHERE myid = '$userId' ORDER BY id DESC");
-
+			$sql 	= $outCon->query("SELECT status,amount,pushnumber,pullnumber,myid,type, transactiontime FROM intouchapi ORDER BY id DESC");
+			$n=0;
 			$returnedinformation   = array();   
 			while ($row = mysqli_fetch_array($sql))
 			{
+				$n++;
 				$pullnumber = $row['pullnumber'];
 				$pushnumber = $row['pushnumber'];
+				$myId  		= $row['myid'];
 				
 				if($row['type'] == "grouptransaction")
 				{
 					$pullnumber = "group";
-					$sqlStatus = $con->query("SELECT status FROM grouptransactions WHERE id = '$myId'");
+					$sqlStatus = $outCon->query("SELECT status FROM grouptransactions WHERE id = '$myId'");
 					$status = mysqli_fetch_array($sqlStatus)['status'];
 					$sqlPull = $db->query("SELECT GR.groupName FROM uplus.groups GR INNER JOIN rtgs.grouptransactions GT ON GT.groupId = GR.id WHERE GT.id= '$myId' LIMIT 1");
 					$pullName = mysqli_fetch_array($sqlPull)['groupName'];
-					$sqlPush = $con->query("SELECT GR.name FROM uplus.users GR INNER JOIN rtgs.grouptransactions GT ON GT.memberId = GR.id WHERE GT.id= '$myId' LIMIT 1");
+					$sqlPush = $outCon->query("SELECT GR.name FROM uplus.users GR INNER JOIN rtgs.grouptransactions GT ON GT.memberId = GR.id WHERE GT.id= '$myId' LIMIT 1");
 					$pushName = mysqli_fetch_array($sqlPush)['name'].'<em>('.$pushnumber.')</em>';
 				}
 				else
 				{
-					$sqlStatus = $con->query("SELECT status FROM directtransfers WHERE id = '$myId'");
+					$sqlStatus = $outCon->query("SELECT status FROM directtransfers WHERE id = '$myId'");
 					$status = mysqli_fetch_array($sqlStatus)['status'];
-					$sqlPull = $con->query("SELECT actorName FROM directtransfers WHERE id = '$myId'+1");
+					$sqlPull = $outCon->query("SELECT actorName FROM directtransfers WHERE id = '$myId'+1");
 					$pullName = mysqli_fetch_array($sqlPull)['actorName'].'<em>('.$pullnumber.')</em>';
-					$sqlPush = $con->query("SELECT actorName FROM directtransfers WHERE id = '$myId'");
+					$sqlPush = $outCon->query("SELECT actorName FROM directtransfers WHERE id = '$myId'");
 					$pushName = mysqli_fetch_array($sqlPush)['actorName'].'<em>('.$pushnumber.')</em>';
 				}
 				$amount 	= $row['amount'];
@@ -191,9 +193,10 @@
 		        	"transactionColor"	=> $color
 		    	);
 			}
-			header('Content-Type: application/json');
-			$returnedinformation = json_encode($returnedinformation);
-			echo $returnedinformation;
+			//header('Content-Type: application/json');
+			//$returnedinformation = json_encode($returnedinformation);
+			//echo $returnedinformation;
+			echo $n;
 		}
 	// END ACCOUNTS
 
