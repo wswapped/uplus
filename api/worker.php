@@ -6,7 +6,7 @@ echo "Starting\n";
 $gmworker= new GearmanWorker();
 
 # Add default server (localhost).
-$gmworker->addServer();
+$gmworker->addServer('localhost');
 
 # Register function "reverse" with the server. Change the worker function to
 # "reverse_fn_fast" for a faster worker with no output.
