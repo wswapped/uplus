@@ -1,0 +1,1239 @@
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+
+
+<!-- Mirrored from altair_html.tzdthemes.com/page_mailbox_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Feb 2018 11:23:14 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
+
+    <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
+
+    <title>Altair Admin v2.13.0</title>
+
+
+    <!-- uikit -->
+    <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+    <!-- flag icons -->
+    <link rel="stylesheet" href="assets/icons/flags/flags.min.css" media="all">
+
+    <!-- style switcher -->
+    <link rel="stylesheet" href="assets/css/style_switcher.min.css" media="all">
+    
+    <!-- altair admin -->
+    <link rel="stylesheet" href="assets/css/main.min.css" media="all">
+
+    <!-- themes -->
+    <link rel="stylesheet" href="assets/css/themes/themes_combined.min.css" media="all">
+
+    <!-- matchMedia polyfill for testing media queries in JS -->
+    <!--[if lte IE 9]>
+        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.js"></script>
+        <script type="text/javascript" src="bower_components/matchMedia/matchMedia.addListener.js"></script>
+        <link rel="stylesheet" href="assets/css/ie.css" media="all">
+    <![endif]-->
+
+</head>
+<body class="disable_transitions sidebar_main_open sidebar_main_swipe">
+    <!-- main header -->
+    <header id="header_main">
+        <div class="header_main_content">
+            <nav class="uk-navbar">
+                                
+                <!-- main sidebar switch -->
+                <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                    <span class="sSwitchIcon"></span>
+                </a>
+                
+                <!-- secondary sidebar switch -->
+                <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
+                    <span class="sSwitchIcon"></span>
+                </a>
+                
+                    <div id="menu_top_dropdown" class="uk-float-left uk-hidden-small">
+                        <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
+                            <a href="#" class="top_menu_toggle"><i class="material-icons md-24">&#xE8F0;</i></a>
+                            <div class="uk-dropdown uk-dropdown-width-3">
+                                <div class="uk-grid uk-dropdown-grid">
+                                    <div class="uk-width-2-3">
+                                        <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-bottom uk-text-center">
+                                            <a href="page_mailbox.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-light-green-600">&#xE158;</i>
+                                                <span class="uk-text-muted uk-display-block">Mailbox</span>
+                                            </a>
+                                            <a href="page_invoices.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-purple-600">&#xE53E;</i>
+                                                <span class="uk-text-muted uk-display-block">Invoices</span>
+                                            </a>
+                                            <a href="page_chat.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-cyan-600">&#xE0B9;</i>
+                                                <span class="uk-text-muted uk-display-block">Chat</span>
+                                            </a>
+                                            <a href="page_scrum_board.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-red-600">&#xE85C;</i>
+                                                <span class="uk-text-muted uk-display-block">Scrum Board</span>
+                                            </a>
+                                            <a href="page_snippets.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-blue-600">&#xE86F;</i>
+                                                <span class="uk-text-muted uk-display-block">Snippets</span>
+                                            </a>
+                                            <a href="page_user_profile.html" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-orange-600">&#xE87C;</i>
+                                                <span class="uk-text-muted uk-display-block">User profile</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="uk-width-1-3">
+                                        <ul class="uk-nav uk-nav-dropdown uk-panel">
+                                            <li class="uk-nav-header">Components</li>
+                                            <li><a href="components_accordion.html">Accordions</a></li>
+                                            <li><a href="components_buttons.html">Buttons</a></li>
+                                            <li><a href="components_notifications.html">Notifications</a></li>
+                                            <li><a href="components_sortable.html">Sortable</a></li>
+                                            <li><a href="components_tabs.html">Tabs</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav user_actions">
+                        <li><a href="#" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">&#xE5D0;</i></a></li>
+                        <li><a href="#" id="main_search_btn" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE8B6;</i></a></li>
+                        <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                            <a href="#" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE7F4;</i><span class="uk-badge">16</span></a>
+                            <div class="uk-dropdown uk-dropdown-xlarge">
+                                <div class="md-card-content">
+                                    <ul class="uk-tab uk-tab-grid" data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
+                                        <li class="uk-width-1-2 uk-active"><a href="#" class="js-uk-prevent uk-text-small">Messages (12)</a></li>
+                                        <li class="uk-width-1-2"><a href="#" class="js-uk-prevent uk-text-small">Alerts (4)</a></li>
+                                    </ul>
+                                    <ul id="header_alerts" class="uk-switcher uk-margin">
+                                        <li>
+                                            <ul class="md-list md-list-addon">
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-cyan">yz</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Voluptatem dolor iste.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Qui ut quibusdam sit nemo inventore ut magni est molestiae quo.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_07_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Ab commodi sit.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Ex magnam non cupiditate dolor debitis est tempora sequi.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-light-green">ye</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Quas odit.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Vitae est voluptas deserunt culpa ut.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_02_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Incidunt mollitia ratione.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Corrupti sapiente eos inventore sed recusandae nisi velit.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_09_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading"><a href="page_mailbox.html">Quia repudiandae qui.</a></span>
+                                                        <span class="uk-text-small uk-text-muted">Numquam iusto inventore commodi in repellendus praesentium dolores.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="uk-text-center uk-margin-top uk-margin-small-bottom">
+                                                <a href="page_mailbox.html" class="md-btn md-btn-flat md-btn-flat-primary js-uk-prevent">Show All</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <ul class="md-list md-list-addon">
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-warning">&#xE8B2;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Repudiandae et amet.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Animi quia et quis id.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-success">&#xE88F;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Consectetur aut.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Suscipit aut repellat enim quis.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-danger">&#xE001;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Suscipit quod ab.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Deleniti nihil vero rerum officia sit necessitatibus.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-primary">&#xE8FD;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Eligendi qui laborum.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Ut culpa corporis molestiae qui repellendus assumenda.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                            <a href="#" class="user_action_image"><img class="md-user-image" src="assets/img/avatars/avatar_11_tn.png" alt=""/></a>
+                            <div class="uk-dropdown uk-dropdown-small">
+                                <ul class="uk-nav js-uk-prevent">
+                                    <li><a href="page_user_profile.html">My profile</a></li>
+                                    <li><a href="page_settings.html">Settings</a></li>
+                                    <li><a href="login.html">Login Page</a></li>
+                                    <li><a href="login_v2.html">Login Page v2</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="header_main_search_form">
+            <i class="md-icon header_main_search_close material-icons">&#xE5CD;</i>
+            <form class="uk-form uk-autocomplete" data-uk-autocomplete="{source:'data/search_data.json'}">
+                <input type="text" class="header_main_search_input" />
+                <button class="header_main_search_btn uk-button-link"><i class="md-icon material-icons">&#xE8B6;</i></button>
+                <script type="text/autocomplete">
+                    <ul class="uk-nav uk-nav-autocomplete uk-autocomplete-results">
+                        {{~items}}
+                        <li data-value="{{ $item.value }}">
+                            <a href="{{ $item.url }}" class="needsclick">
+                                {{ $item.value }}<br>
+                                <span class="uk-text-muted uk-text-small">{{{ $item.text }}}</span>
+                            </a>
+                        </li>
+                        {{/items}}
+                        <li data-value="autocomplete-value">
+                            <a class="needsclick">
+                                Autocomplete Text<br>
+                                <span class="uk-text-muted uk-text-small">Helper text</span>
+                            </a>
+                        </li>
+                    </ul>
+                </script>
+            </form>
+        </div>
+    </header><!-- main header end -->
+    <!-- main sidebar -->
+    <aside id="sidebar_main">
+        
+        <div class="sidebar_main_header">
+            <div class="sidebar_logo">
+                <a href="index-2.html" class="sSidebar_hide sidebar_logo_large">
+                    <img class="logo_regular" src="assets/img/logo_main.png" alt="" height="15" width="71"/>
+                    <img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>
+                </a>
+                <a href="index-2.html" class="sSidebar_show sidebar_logo_small">
+                    <img class="logo_regular" src="assets/img/logo_main_small.png" alt="" height="32" width="32"/>
+                    <img class="logo_light" src="assets/img/logo_main_small_light.png" alt="" height="32" width="32"/>
+                </a>
+            </div>
+            <div class="sidebar_actions">
+                <select id="lang_switcher" name="lang_switcher">
+                    <option value="gb" selected>English</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="menu_section">
+            <ul>
+                <li title="Dashboard">
+                    <a href="index-2.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
+                        <span class="menu_title">Dashboard</span>
+                    </a>
+                    
+                </li>
+                <li title="Mailbox">
+                    <a href="page_mailbox.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE158;</i></span>
+                        <span class="menu_title">Mailbox</span>
+                    </a>
+                    
+                </li>
+                <li title="Invoices">
+                    <a href="page_invoices.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE53E;</i></span>
+                        <span class="menu_title">Invoices</span>
+                    </a>
+                    
+                </li>
+                <li title="Chats">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE0B9;</i></span>
+                        <span class="menu_title">Chats</span>
+                    </a>
+                    <ul>
+                        <li><a href="page_chat.html">Regular Chat</a></li>
+                        <li><a href="page_chat_small.html">Chatboxes</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Scrum Board">
+                    <a href="page_scrum_board.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE85C;</i></span>
+                        <span class="menu_title">Scrum Board</span>
+                    </a>
+                    
+                </li>
+                <li title="Snippets">
+                    <a href="page_snippets.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE86F;</i></span>
+                        <span class="menu_title">Snippets</span>
+                    </a>
+                    
+                </li>
+                <li title="User Profile">
+                    <a href="page_user_profile.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE87C;</i></span>
+                        <span class="menu_title">User Profile</span>
+                    </a>
+                    
+                </li>
+                <li title="Sticky Notes">
+                    <a href="page_sticky_notes.html">
+                        <span class="menu_icon"><i class="material-icons">&#xE8F0;</i></span>
+                        <span class="menu_title">Sticky Notes</span>
+                    </a>
+                    
+                </li>
+                <li title="Forms">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE8D2;</i></span>
+                        <span class="menu_title">Forms</span>
+                    </a>
+                    <ul>
+                        <li><a href="forms_regular.html">Regular Elements</a></li>
+                        <li><a href="forms_advanced.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Advanced Elements</a></li>
+                        <li><a href="forms_dynamic.html">Dynamic</a></li>
+                        <li><a href="forms_file_input.html">File Upload (dropify)</a></li>
+                        <li><a href="forms_file_upload.html">File Upload (uikit)</a></li>
+                        <li><a href="forms_validation.html">Validation</a></li>
+                        <li><a href="forms_wizard.html">Wizard</a></li>
+                        <li class="menu_subtitle">WYSIWYG Editors</li>
+                                <li><a href="forms_wysiwyg_ckeditor.html">CKeditor</a></li>
+                        <li><a href="forms_wysiwyg_inline.html">Ckeditor Inline</a></li>
+                        <li><a href="forms_wysiwyg_tinymce.html">TinyMCE</a></li>
+                            </ul>
+                
+                </li>
+                <li title="Layout">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE8F1;</i></span>
+                        <span class="menu_title">Layout</span>
+                    </a>
+                    <ul>
+                        <li><a href="layout_top_menu.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Top Menu</a></li>
+                        <li><a href="layout_header_full.html">Full Header</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Kendo UI Widgets">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE1BD;</i></span>
+                        <span class="menu_title">Kendo UI Widgets</span>
+                    </a>
+                    <ul>
+                        <li><a href="kendoui_autocomplete.html">Autocomplete</a></li>
+                        <li><a href="kendoui_calendar.html">Calendar</a></li>
+                        <li><a href="kendoui_colorpicker.html">ColorPicker</a></li>
+                        <li><a href="kendoui_combobox.html">ComboBox</a></li>
+                        <li><a href="kendoui_datepicker.html">DatePicker</a></li>
+                        <li><a href="kendoui_datetimepicker.html">DateTimePicker</a></li>
+                        <li><a href="kendoui_dropdown_list.html">DropDownList</a></li>
+                        <li><a href="kendoui_masked_input.html">Masked Input</a></li>
+                        <li><a href="kendoui_menu.html">Menu</a></li>
+                        <li><a href="kendoui_multiselect.html">MultiSelect</a></li>
+                        <li><a href="kendoui_numeric_textbox.html">Numeric TextBox</a></li>
+                        <li><a href="kendoui_panelbar.html">PanelBar</a></li>
+                        <li><a href="kendoui_timepicker.html">TimePicker</a></li>
+                        <li><a href="kendoui_toolbar.html">Toolbar</a></li>
+                        <li><a href="kendoui_window.html">Window</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Components">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE87B;</i></span>
+                        <span class="menu_title">Components</span>
+                    </a>
+                    <ul>
+                        <li><a href="components_accordion.html">Accordions</a></li>
+                        <li><a href="components_animations.html">MD Animations</a></li>
+                        <li><a href="components_autocomplete.html">Autocomplete</a></li>
+                        <li><a href="components_breadcrumbs.html">Breadcrumbs</a></li>
+                        <li><a href="components_buttons.html">Buttons</a></li>
+                        <li><a href="components_fab.html">Buttons: FAB</a></li>
+                        <li><a href="components_cards.html">Cards</a></li>
+                        <li><a href="components_colors.html">Colors</a></li>
+                        <li><a href="components_common.html">Common</a></li>
+                        <li><a href="components_dropdowns.html">Dropdowns</a></li>
+                        <li><a href="components_dynamic_grid.html">Dynamic Grid</a></li>
+                        <li><a href="components_footer.html">Footer</a></li>
+                        <li><a href="components_grid.html">Grid</a></li>
+                        <li><a href="components_icons.html">Icons</a></li>
+                        <li><a href="components_modal.html">Lightbox/Modal</a></li>
+                        <li><a href="components_list_grid_view.html">List/Grid View</a></li>
+                        <li><a href="components_lists.html">Lists</a></li>
+                        <li><a href="components_nestable.html">Nestable</a></li>
+                        <li><a href="components_notifications.html">Notifications</a></li>
+                        <li><a href="components_panels.html">Panels</a></li>
+                        <li><a href="components_preloaders.html">Preloaders</a></li>
+                        <li><a href="components_scroll_top.html">Scroll to Top</a></li>
+                        <li><a href="components_slider.html">Slider</a></li>
+                        <li><a href="components_slideshow.html">Slideshow</a></li>
+                        <li><a href="components_sortable.html">Sortable</a></li>
+                        <li><a href="components_switcher.html">Switcher</a></li>
+                        <li><a href="components_tables.html">Tables</a></li>
+                        <li><a href="components_tables_examples.html">Tables Examples</a></li>
+                        <li><a href="components_tabs.html">Tabs</a></li>
+                        <li><a href="components_timeline.html">Timeline</a></li>
+                        <li><a href="components_tooltips.html">Tooltips</a></li>
+                        <li><a href="components_typography.html">Typography</a></li>
+                    </ul>
+                
+                </li>
+                <li title="E-commerce">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE8CB;</i></span>
+                        <span class="menu_title">E-commerce</span>
+                    </a>
+                    <ul>
+                        <li><a href="ecommerce_product_details.html">Product Details</a></li>
+                        <li><a href="ecommerce_product_edit.html">Product Edit</a></li>
+                        <li><a href="ecommerce_products_grid.html">Products Grid</a></li>
+                        <li><a href="ecommerce_products_list.html">Products List</a></li>
+                        <li><a href="ecommerce_payment.html">Payment Page</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Plugins">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
+                        <span class="menu_title">Plugins</span>
+                    </a>
+                    <ul>
+                        <li><a href="plugins_calendar.html">Calendar</a></li>
+                        <li><a href="plugins_charts.html">Charts</a></li>
+                        <li><a href="plugins_charts_echarts.html">Charts (echarts)</a></li>
+                        <li><a href="plugins_code_editor.html">Code Editor</a></li>
+                        <li><a href="plugins_context_menu.html">Context Menu</a></li>
+                        <li><a href="plugins_crud_table.html">CRUD Table</a></li>
+                        <li><a href="plugins_datatables.html">Datatables</a></li>
+                        <li><a href="plugins_diff.html">Diff View</a></li>
+                        <li><a href="plugins_filemanager.html">File Manager</a></li>
+                        <li><a href="plugins_gantt_chart.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Gantt Chart</a></li>
+                        <li><a href="plugins_google_maps.html">Google Maps</a></li>
+                        <li><a href="plugins_image_cropper.html">Image Cropper</a></li>
+                        <li><a href="plugins_idle_timeout.html">Idle Timeout</a></li>
+                        <li><a href="plugins_push_notifications.html">Push Notifications</a></li>
+                        <li><a href="plugins_tour.html">Tour</a></li>
+                        <li><a href="plugins_tablesorter.html">Tablesorter</a></li>
+                        <li><a href="plugins_tree.html">Tree</a></li>
+                        <li><a href="plugins_vector_maps.html">Vector Maps</a></li>
+                        <li><a href="plugins_xeditable.html">X-editable</a></li>
+                    </ul>
+                
+                </li>
+                <li title="Pages">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE24D;</i></span>
+                        <span class="menu_title">Pages</span>
+                    </a>
+                    <ul>
+                        <li><a href="page_blank.html">Blank</a></li>
+                        <li><a href="page_contact_list.html">Contact List</a></li>
+                        <li><a href="page_contact_list_horizontal.html">Contact List Horizontal</a></li>
+                        <li><a href="page_contact_list_v2.html">Contact List V2</a></li>
+                        <li><a href="page_gallery.html">Gallery</a></li>
+                        <li><a href="page_gallery_v2.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Gallery v2</a></li>
+                        <li><a href="page_help.html">Help/Faq</a></li>
+                        <li><a href="login.html">Login Page</a></li>
+                        <li><a href="login_v2.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Login Page v2</a></li>
+                        <li class="act_item"><a href="page_mailbox_v2.html"><span class="submenu-icon"><i class="material-icons md-color-red-600">&#xE031;</i></span>Mailbox V2</a></li>
+                        <li><a href="page_notes.html">Notes</a></li>
+                        <li><a href="page_pricing_tables.html">Pricing Tables</a></li>
+                        <li><a href="page_pricing_tables_v2.html">Pricing Tables v2</a></li>
+                        <li><a href="page_search_results.html">Search Results</a></li>
+                        <li><a href="page_settings.html">Settings</a></li>
+                        <li><a href="page_todo.html">Todo</a></li>
+                        <li><a href="page_user_edit.html">User edit</a></li>
+                        <li><a href="page_quiz.html">Quiz</a></li>
+                        <li class="menu_subtitle">Issue Tracker</li>
+                                <li><a href="page_issues_list.html">List View</a></li>
+                        <li><a href="page_issue_details.html">Issue Details</a></li>
+                                <li class="menu_subtitle">Blog</li>
+                                <li><a href="page_blog_list.html">Blog List</a></li>
+                        <li><a href="page_blog_article.html">Blog Article</a></li>
+                                <li class="menu_subtitle">Errors</li>
+                                <li><a href="error_404.html">Error 404</a></li>
+                        <li><a href="error_500.html">Error 500</a></li>
+                            </ul>
+                
+                </li>
+                                <li>
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">&#xE241;</i></span>
+                        <span class="menu_title">Multi level</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">First level</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Second Level</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Long title to test</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third level</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Even longer title multi line</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </aside><!-- main sidebar end -->
+
+    <div id="page_content">
+        <div id="page_heading">
+            <div class="heading_actions uk-visible-large">
+                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Print"><i class="md-icon material-icons">&#xE8AD;</i></a>
+                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Archive"><i class="md-icon material-icons">&#xE149;</i></a>
+                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Spam"><i class="md-icon material-icons">&#xE160;</i></a>
+                <a href="#" data-uk-tooltip="{pos:'bottom'}" title="Delete"><i class="md-icon material-icons">&#xE872;</i></a>
+                <div data-uk-dropdown>
+                    <a href="#" data-uk-tooltip="{pos:'top'}" title="Move to"><i class="md-icon material-icons">&#xE2C7;</i></a>
+                    <div class="uk-dropdown uk-dropdown-small">
+                        <ul class="uk-nav">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Other Action</a></li>
+                            <li><a href="#">Other Action</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="heading_actions uk-hidden-large">
+                <div data-uk-dropdown>
+                    <a href="#"><i class="md-icon material-icons">&#xE5D4;</i></a>
+                    <div class="uk-dropdown uk-dropdown-small">
+                        <ul class="uk-nav">
+                            <li><a href="#">Print</a></li>
+                            <li><a href="#">Archive</a></li>
+                            <li><a href="#">Spam</a></li>
+                            <li><a href="#">Delete</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div data-uk-dropdown>
+                    <a href="#"><i class="md-icon material-icons">&#xE2C7;</i></a>
+                    <div class="uk-dropdown uk-dropdown-small">
+                        <ul class="uk-nav">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Other Action</a></li>
+                            <li><a href="#">Other Action</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h1>Inbox</h1>
+            <span class="uk-text-muted uk-text-upper uk-text-small">247 messages</span>
+        </div>
+        <div class="uk-clearfix uk-position-relative">
+            <aside id="page_aside" class="page_aside md-bg-grey-200">
+                <div class="page_aside_inner">
+                    <ul class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
+                        <li class="uk-active"><a href="#"><i class="material-icons">&#xE0E1;</i>Inbox</a></li>
+                        <li><a href="#"><i class="material-icons">&#xE151;</i>Drafts</a></li>
+                        <li><a href="#"><i class="material-icons">&#xE872;</i>Deleted Items</a></li>
+                        <li><a href="#"><i class="material-icons">&#xE002;</i>Junk e-mail</a></li>
+                        <li><a href="#"><i class="material-icons">&#xE149;</i>Archive</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li class="uk-nav-header">Labels</li>
+                        <li><a href="#"><span class="uk-nav-label md-bg-orange-500"></span>Work</a></li>
+                        <li><a href="#"><span class="uk-nav-label md-bg-green-500"></span>Family</a></li>
+                        <li><a href="#"><span class="uk-nav-label md-bg-red-500"></span>Important</a></li>
+                        <li><a href="#"><span class="uk-nav-label md-bg-blue-500"></span>TODO</a></li>
+                    </ul>
+                </div>
+                <div class="page_aside_toggle"></div>
+            </aside>
+            <div id="page_overflow">
+                <div class="uk-overflow-container">
+                    <table class="uk-table uk-table-nowrap uk-table-hover md-bg-white" id="mailboxV2">
+                        <tbody>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="6a1802030b04040504585a2a19090207030e1e080b181e0f060644080310">[email&#160;protected]</a></td>
+                                <td>Enim voluptas non sunt non hic voluptatem ipsam necessitatibus tenetur.</td>
+                                <td>2017-10-30</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="cea9a7bdbdaba2a2abf6fc8eacafa2a7bdbabcabbca7e0ada1a3">[email&#160;protected]</a></td>
+                                <td>Fugiat odio odit qui alias esse consectetur omnis repellat dolores sunt voluptas non.</td>
+                                <td>1999-06-21</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="a5c9dccbc6cd8bcad2c0cbe5d2c0d6d18bc6cac8">[email&#160;protected]</a></td>
+                                <td>Facere eum voluptatem enim odit omnis vero blanditiis quo.</td>
+                                <td>1971-05-10</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="81e9e4e8e5e8aff2f5eeeae4f2c1e0efe5e4f3f2eeefafe3e8fb">[email&#160;protected]</a></td>
+                                <td>Omnis est non veniam est et fugit iusto minus cum ut.</td>
+                                <td>2007-03-01</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="b5c7ddd0c1c19bdedac6c6f5dfd0c7d1d0c6d6ddd4d1d0db9bd6dad8">[email&#160;protected]</a></td>
+                                <td>Voluptas rem possimus quibusdam explicabo itaque officiis aut.</td>
+                                <td>1984-08-17</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="473f282c3229223126073e262f28286924282a">[email&#160;protected]</a></td>
+                                <td>Repellendus sit recusandae sequi harum voluptas culpa ipsum.</td>
+                                <td>2009-10-28</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="8aeeebe4e4f3b3b9cafde3e6e1e3e4f9e5e4a4e4effe">[email&#160;protected]</a></td>
+                                <td>A expedita unde qui minima est aut blanditiis necessitatibus soluta repellendus voluptatibus facere consequatur.</td>
+                                <td>1987-03-07</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="8ce7e9edebede2b9bdccebe1ede5e0a2efe3e1">[email&#160;protected]</a></td>
+                                <td>Ut sapiente laboriosam aliquam exercitationem ab laboriosam consectetur nihil deserunt non autem omnis inventore.</td>
+                                <td>1998-03-15</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="2750424f494255094c465e4b4e4967424e444f4a4649494d425543420944484a">[email&#160;protected]</a></td>
+                                <td>Ex ut id ab cumque ut exercitationem provident numquam adipisci.</td>
+                                <td>1998-09-20</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="b5c2d4d0d9d6dddc9bc6c0c6dcd0f5c2c0dbc6d6dd9bd6dad8">[email&#160;protected]</a></td>
+                                <td>Natus praesentium et consequuntur autem quo saepe eius itaque.</td>
+                                <td>1970-09-15</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="e1858098808f80d6d4a1928c889589808c8d84808f8f8e8fcf828e8c">[email&#160;protected]</a></td>
+                                <td>Velit consequatur deleniti facere suscipit quibusdam illo magnam eum.</td>
+                                <td>1983-12-05</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="c8a6ada4bbe6a5a9bab9bda9baacbc88bba3a1a4adbbe6aba7a5">[email&#160;protected]</a></td>
+                                <td>Rem aut unde assumenda modi sit dolorem ea alias autem excepturi sapiente recusandae consequatur.</td>
+                                <td>1983-08-30</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="35475a46565a500207754c545d5a5a1b565a58">[email&#160;protected]</a></td>
+                                <td>Commodi ipsa est voluptas vel et aut et quia dolor atque sed incidunt est.</td>
+                                <td>2006-02-24</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="492c2527263b287c7d0921263d24282025672a2624">[email&#160;protected]</a></td>
+                                <td>Nulla ut sed delectus et iste qui.</td>
+                                <td>2001-11-04</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="accadec9c5c8cd82c8c5cfc7c5c2dfc3c2ecd5cdc4c3c382cfc3c1">[email&#160;protected]</a></td>
+                                <td>Debitis autem aut consectetur vel maxime provident.</td>
+                                <td>2007-05-10</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="ee9c868f808bae978f868181c08d8183">[email&#160;protected]</a></td>
+                                <td>Perferendis quia eos ex molestias officiis rerum et quia ut nihil perspiciatis.</td>
+                                <td>2017-02-19</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="1360677a7677767e727d7d3d7e767f6a7d72537b76727d766a3d707c7e">[email&#160;protected]</a></td>
+                                <td>Eveniet nihil repellendus ut dignissimos perferendis ut error et voluptatum quidem esse.</td>
+                                <td>1974-05-03</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="0d6965687f606c634d746c656262236e6260">[email&#160;protected]</a></td>
+                                <td>Aliquam odio doloremque sequi doloribus rerum dolores sed facilis soluta eaque veniam.</td>
+                                <td>1977-10-18</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="bfc8dacccbd3dac691d3dedddedbd6daffdddadacd91d1dacb">[email&#160;protected]</a></td>
+                                <td>Odit necessitatibus ratione ea repellendus totam optio numquam neque repudiandae.</td>
+                                <td>2006-09-30</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="c1a9a4adada4b3efafa8a2aaada0b4b281a6aca0a8adefa2aeac">[email&#160;protected]</a></td>
+                                <td>Laboriosam ipsam est sapiente qui accusamus atque quia repudiandae ea.</td>
+                                <td>1993-01-13</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="ff91969a919088d19e9b90939990bf869e979090d19c9092">[email&#160;protected]</a></td>
+                                <td>Sit facere facilis reprehenderit itaque corporis nihil ut laborum voluptatibus enim ut.</td>
+                                <td>1984-03-31</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="c3adaba2b1b1aab083abacb7aea2aaafeda0acae">[email&#160;protected]</a></td>
+                                <td>Eaque dolorem et dolorem blanditiis et tempora sit est nemo aut a perspiciatis et.</td>
+                                <td>1990-10-31</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="b8ced9d4ddd6ccd1d68c8ef8dfd5d9d1d496dbd7d5">[email&#160;protected]</a></td>
+                                <td>Et quis quia consequatur nam nostrum quod architecto deleniti ad corporis repudiandae.</td>
+                                <td>1990-09-28</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="1471787d757a71212d547f7b777c3a7d7a727b">[email&#160;protected]</a></td>
+                                <td>Mollitia consequatur consequatur magni dolor aut ipsa excepturi.</td>
+                                <td>2011-11-19</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="69100b081b1b061e1a2905080b080d000c1a0a011c05001a1d47070c1d">[email&#160;protected]</a></td>
+                                <td>Ad voluptatem facere ratione aut ducimus ullam soluta officia ea inventore nihil laborum pariatur officiis.</td>
+                                <td>2002-03-25</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="205357494e54484549534552605941484f4f0e434f4d">[email&#160;protected]</a></td>
+                                <td>Inventore commodi eaque aliquid nihil occaecati nobis.</td>
+                                <td>2008-07-23</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="610b0e040d0d044f130e0c0006140413002105001708124f020e0c">[email&#160;protected]</a></td>
+                                <td>Doloribus reiciendis est aut ut natus rem maxime dolorem.</td>
+                                <td>1971-03-29</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="4c2d20282d7e7f0c3e23212d2b39293e2d3f29222b293e6225222a23">[email&#160;protected]</a></td>
+                                <td>Ea odit dolor vitae asperiores officia rerum qui et.</td>
+                                <td>2000-10-05</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="83e7e2f5eae7b4b1c3ebeceee6edeae0e8ade0ecee">[email&#160;protected]</a></td>
+                                <td>Voluptatem explicabo perferendis voluptas est blanditiis mollitia ut quis temporibus rem quis est.</td>
+                                <td>2013-08-08</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="ef83809d8a81958ec18e8d8d809b9baf968e878080c18c8082">[email&#160;protected]</a></td>
+                                <td>Sit facilis qui facilis aut id voluptas et cumque dolorem at fuga.</td>
+                                <td>2004-05-07</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="e89f8d819b9b86899cc685918980a883899b9b9d84838dc68b8785">[email&#160;protected]</a></td>
+                                <td>Cupiditate voluptatem omnis consequatur autem corporis eligendi voluptas omnis.</td>
+                                <td>1988-11-01</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="ed888c9f83889e99dddead858299808c8481c38e8280">[email&#160;protected]</a></td>
+                                <td>Dolores ipsa numquam aperiam et voluptatum eum animi.</td>
+                                <td>1978-04-04</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="bed1dadbddd5d1c9fec7dfd6d1d190ddd1d3">[email&#160;protected]</a></td>
+                                <td>Maiores voluptatibus minima eos aut vel repudiandae qui est ducimus ab facilis eveniet.</td>
+                                <td>1993-02-03</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="8de2fae8e3bbbccde6fee5e1e8ffe4e3fef9ffe8e4eee5a3eee2e0">[email&#160;protected]</a></td>
+                                <td>Aut beatae facilis vitae sequi autem nostrum et est soluta.</td>
+                                <td>1986-03-22</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="6f040e1d030a0a5d5b2f081a030800181c04061b1a1d0c001b1b0a410c0002">[email&#160;protected]</a></td>
+                                <td>Officia ut beatae fugiat facere beatae ullam distinctio et maiores omnis quis magnam sit.</td>
+                                <td>1984-04-24</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="730b141f1c05160133111c141a001a101b5d101c1e">[email&#160;protected]</a></td>
+                                <td>Fuga aperiam magni saepe sint voluptas aut animi aut voluptatem illo.</td>
+                                <td>1970-11-21</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="d5bfbcb8b8ace1e095bdbaa1b8b4bcb9fbb6bab8">[email&#160;protected]</a></td>
+                                <td>Illo incidunt dolores laudantium alias tenetur excepturi repudiandae eaque.</td>
+                                <td>2011-03-02</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="f98c9d9680959cb991968d94989095d79a9694">[email&#160;protected]</a></td>
+                                <td>Et voluptas ducimus ipsa velit totam consequatur repellat delectus maxime cupiditate fugit possimus.</td>
+                                <td>2015-02-20</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="ff939e899691969ed19a969c97929e9191bf9d8d9e948a8c9e8a9a8dd19c9092">[email&#160;protected]</a></td>
+                                <td>Consequatur commodi veniam ipsa optio tempora voluptates dignissimos dolores debitis aut voluptas repudiandae.</td>
+                                <td>1975-03-10</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="fc9b8695999199bc949388919d9590d29f9391">[email&#160;protected]</a></td>
+                                <td>Et saepe et exercitationem eveniet ut unde dolorum repellendus sapiente repellendus cum ipsum quo soluta.</td>
+                                <td>1980-03-03</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="aed7c2cfc5c7c0eec9c3cfc7c280cdc1c3">[email&#160;protected]</a></td>
+                                <td>Debitis fuga ipsum et et ducimus eum ab error impedit qui.</td>
+                                <td>2008-11-28</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="e08881958592a0908f978c8f97938b8988898c8c93ce838f8d">[email&#160;protected]</a></td>
+                                <td>Nulla voluptate rerum repudiandae neque repellat eos officia fugit et iusto voluptatibus.</td>
+                                <td>1989-08-26</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="c4b6a1a9b4a1a8eaaaa1b0b0ada184aba7abaaaaa1a8a8a0abbda8a1eaa7aba9">[email&#160;protected]</a></td>
+                                <td>Debitis quo nesciunt non perferendis consequuntur blanditiis quisquam est facilis fugiat voluptas illo consequatur.</td>
+                                <td>2016-08-08</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="e388958c8da384829a8f8c91878982808c8190cd8d8697">[email&#160;protected]</a></td>
+                                <td>Est commodi ad beatae ea facilis quasi fugit architecto perspiciatis sit consequuntur voluptate fuga.</td>
+                                <td>2011-12-12</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="2a484b425843444d4f5804425f484f585e6a534b42454504494547">[email&#160;protected]</a></td>
+                                <td>Officia voluptas sapiente nesciunt ea in consequatur iure.</td>
+                                <td>1977-09-04</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="710310051a145f1c1810310810191e1e5f121e1c">[email&#160;protected]</a></td>
+                                <td>Repudiandae et aspernatur hic in non voluptatem voluptas voluptates officia.</td>
+                                <td>2004-08-15</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="d1b2a3b0a6b7bea3b5e7e991b6bcb0b8bdffb2bebc">[email&#160;protected]</a></td>
+                                <td>Ut quis et quia exercitationem et et molestiae neque et ea impedit quod.</td>
+                                <td>1979-10-03</td>
+                            </tr>
+                                                    <tr class="table-row">
+                                <td><input type="checkbox" name="checkbox_" id="checkbox_" data-md-icheck /></td>
+                                <td><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="3d53524f4a5252590e087d5a505c5451135e5250">[email&#160;protected]</a></td>
+                                <td>Sint ut numquam expedita repellendus distinctio aspernatur velit accusamus dolor voluptas ut occaecati nam.</td>
+                                <td>2004-03-27</td>
+                            </tr>
+                                                </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="md-fab-wrapper">
+        <a class="md-fab md-fab-accent md-fab-wave" href="#mailbox_new_message" data-uk-modal="{center:true}">
+            <i class="material-icons">&#xE150;</i>
+        </a>
+    </div>
+
+    <div class="uk-modal" id="mailbox_new_message">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <form>
+                <div class="uk-modal-header">
+                    <h3 class="uk-modal-title">Compose Message</h3>
+                </div>
+                <div class="uk-margin-medium-bottom">
+                    <label for="mail_new_to">To</label>
+                    <input type="text" class="md-input" id="mail_new_to"/>
+                </div>
+                <div class="uk-margin-large-bottom">
+                    <label for="mail_new_message">Message</label>
+                    <textarea name="mail_new_message" id="mail_new_message" cols="30" rows="6" class="md-input"></textarea>
+                </div>
+                <div id="mail_upload-drop" class="uk-file-upload">
+                    <p class="uk-text">Drop file to upload</p>
+                    <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
+                    <a class="uk-form-file md-btn">choose file<input id="mail_upload-select" type="file"></a>
+                </div>
+                <div id="mail_progressbar" class="uk-progress uk-hidden">
+                    <div class="uk-progress-bar" style="width:0">0%</div>
+                </div>
+                <div class="uk-modal-footer">
+                    <a href="#" class="md-icon-btn"><i class="md-icon material-icons">&#xE226;</i></a>
+                    <button type="button" class="uk-float-right md-btn md-btn-flat md-btn-flat-primary">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- google web fonts -->
+    <script data-cfasync="false" src="cdn-cgi/scripts/d07b1474/cloudflare-static/email-decode.min.js"></script><script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="assets/js/altair_admin_common.min.js"></script>
+
+    <!-- page specific plugins -->
+
+    <!--  mailbox v2 functions -->
+    <script src="assets/js/pages/page_mailbox_v2.min.js"></script>
+    
+    <script>
+        $(function() {
+            if(isHighDensity()) {
+                $.getScript( "assets/js/custom/dense.min.js", function(data) {
+                    // enable hires images
+                    altair_helpers.retina_images();
+                });
+            }
+            if(Modernizr.touch) {
+                // fastClick (touch devices)
+                FastClick.attach(document.body);
+            }
+        });
+        $window.load(function() {
+            // ie fixes
+            altair_helpers.ie_fix();
+        });
+    </script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-65191727-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <div id="style_switcher">
+        <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>
+        <div class="uk-margin-medium-bottom">
+            <h4 class="heading_c uk-margin-bottom">Colors</h4>
+            <ul class="switcher_app_themes" id="theme_switcher">
+                <li class="app_style_default active_theme" data-app-theme="">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_a" data-app-theme="app_theme_a">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_b" data-app-theme="app_theme_b">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_c" data-app-theme="app_theme_c">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_d" data-app-theme="app_theme_d">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_e" data-app-theme="app_theme_e">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_f" data-app-theme="app_theme_f">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_g" data-app-theme="app_theme_g">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_h" data-app-theme="app_theme_h">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_i" data-app-theme="app_theme_i">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_dark" data-app-theme="app_theme_dark">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="uk-visible-large uk-margin-medium-bottom">
+            <h4 class="heading_c">Sidebar</h4>
+            <p>
+                <input type="checkbox" name="style_sidebar_mini" id="style_sidebar_mini" data-md-icheck />
+                <label for="style_sidebar_mini" class="inline-label">Mini Sidebar</label>
+            </p>
+            <p>
+                <input type="checkbox" name="style_sidebar_slim" id="style_sidebar_slim" data-md-icheck />
+                <label for="style_sidebar_slim" class="inline-label">Slim Sidebar</label>
+            </p>
+        </div>
+        <div class="uk-visible-large uk-margin-medium-bottom">
+            <h4 class="heading_c">Layout</h4>
+            <p>
+                <input type="checkbox" name="style_layout_boxed" id="style_layout_boxed" data-md-icheck />
+                <label for="style_layout_boxed" class="inline-label">Boxed layout</label>
+            </p>
+        </div>
+        <div class="uk-visible-large">
+            <h4 class="heading_c">Main menu accordion</h4>
+            <p>
+                <input type="checkbox" name="accordion_mode_main_menu" id="accordion_mode_main_menu" data-md-icheck />
+                <label for="accordion_mode_main_menu" class="inline-label">Accordion mode</label>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            var $switcher = $('#style_switcher'),
+                $switcher_toggle = $('#style_switcher_toggle'),
+                $theme_switcher = $('#theme_switcher'),
+                $mini_sidebar_toggle = $('#style_sidebar_mini'),
+                $slim_sidebar_toggle = $('#style_sidebar_slim'),
+                $boxed_layout_toggle = $('#style_layout_boxed'),
+                $accordion_mode_toggle = $('#accordion_mode_main_menu'),
+                $html = $('html'),
+                $body = $('body');
+
+
+            $switcher_toggle.click(function(e) {
+                e.preventDefault();
+                $switcher.toggleClass('switcher_active');
+            });
+
+            $theme_switcher.children('li').click(function(e) {
+                e.preventDefault();
+                var $this = $(this),
+                    this_theme = $this.attr('data-app-theme');
+
+                $theme_switcher.children('li').removeClass('active_theme');
+                $(this).addClass('active_theme');
+                $html
+                    .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g app_theme_h app_theme_i app_theme_dark')
+                    .addClass(this_theme);
+
+                if(this_theme == '') {
+                    localStorage.removeItem('altair_theme');
+                    $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                } else {
+                    localStorage.setItem("altair_theme", this_theme);
+                    if(this_theme == 'app_theme_dark') {
+                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.materialblack.min.css')
+                    } else {
+                        $('#kendoCSS').attr('href','bower_components/kendo-ui/styles/kendo.material.min.css');
+                    }
+                }
+
+            });
+
+            // hide style switcher
+            $document.on('click keyup', function(e) {
+                if( $switcher.hasClass('switcher_active') ) {
+                    if (
+                        ( !$(e.target).closest($switcher).length )
+                        || ( e.keyCode == 27 )
+                    ) {
+                        $switcher.removeClass('switcher_active');
+                    }
+                }
+            });
+
+            // get theme from local storage
+            if(localStorage.getItem("altair_theme") !== null) {
+                $theme_switcher.children('li[data-app-theme='+localStorage.getItem("altair_theme")+']').click();
+            }
+
+
+        // toggle mini sidebar
+
+            // change input's state to checked if mini sidebar is active
+            if((localStorage.getItem("altair_sidebar_mini") !== null && localStorage.getItem("altair_sidebar_mini") == '1') || $body.hasClass('sidebar_mini')) {
+                $mini_sidebar_toggle.iCheck('check');
+            }
+
+            $mini_sidebar_toggle
+                .on('ifChecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.setItem("altair_sidebar_mini", '1');
+                    localStorage.removeItem('altair_sidebar_slim');
+                    location.reload(true);
+                })
+                .on('ifUnchecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.removeItem('altair_sidebar_mini');
+                    location.reload(true);
+                });
+
+        // toggle slim sidebar
+
+            // change input's state to checked if mini sidebar is active
+            if((localStorage.getItem("altair_sidebar_slim") !== null && localStorage.getItem("altair_sidebar_slim") == '1') || $body.hasClass('sidebar_slim')) {
+                $slim_sidebar_toggle.iCheck('check');
+            }
+
+            $slim_sidebar_toggle
+                .on('ifChecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.setItem("altair_sidebar_slim", '1');
+                    localStorage.removeItem('altair_sidebar_mini');
+                    location.reload(true);
+                })
+                .on('ifUnchecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.removeItem('altair_sidebar_slim');
+                    location.reload(true);
+                });
+
+        // toggle boxed layout
+
+            if((localStorage.getItem("altair_layout") !== null && localStorage.getItem("altair_layout") == 'boxed') || $body.hasClass('boxed_layout')) {
+                $boxed_layout_toggle.iCheck('check');
+                $body.addClass('boxed_layout');
+                $(window).resize();
+            }
+
+            $boxed_layout_toggle
+                .on('ifChecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.setItem("altair_layout", 'boxed');
+                    location.reload(true);
+                })
+                .on('ifUnchecked', function(event){
+                    $switcher.removeClass('switcher_active');
+                    localStorage.removeItem('altair_layout');
+                    location.reload(true);
+                });
+
+        // main menu accordion mode
+            if($sidebar_main.hasClass('accordion_mode')) {
+                $accordion_mode_toggle.iCheck('check');
+            }
+
+            $accordion_mode_toggle
+                .on('ifChecked', function(){
+                    $sidebar_main.addClass('accordion_mode');
+                })
+                .on('ifUnchecked', function(){
+                    $sidebar_main.removeClass('accordion_mode');
+                });
+
+
+        });
+    </script>
+</body>
+
+<!-- Mirrored from altair_html.tzdthemes.com/page_mailbox_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Feb 2018 11:23:17 GMT -->
+</html>

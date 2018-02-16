@@ -12,16 +12,15 @@
         $str = json_encode(array('status'=>false, 'data'=>'Auth failed'));
         die("data: $str\n\n");
     }
-
+    
     $req = array_merge($_POST, $_GET);
 
     if(!empty($req['id'])){
         //Checking for the message loads
         $id = $req['id'];
 
-        //Unsent messages logs - instances  
+        //Unsent messages logs - instances
         $unsent = msgStat($id, 'pending');
-        var_dump($unsent);
 
         for($n=0; $n<count($unsent); $n++){
             //sending one message
