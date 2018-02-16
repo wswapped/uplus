@@ -637,16 +637,28 @@
                         <div id="map_users" class="gmap"></div>
                         <div class="md-card-content">
                             <ul class="md-list md-list-addon gmap_list" id="map_users_list">
-                                <li data-gmap-lat="37.406267"  data-gmap-lon="-122.06742" data-gmap-user="Dr. Rod Herman" data-gmap-user-company="Bogan Ltd">
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Dr. Rod Herman</span>
-                                        <span class="uk-text-small uk-text-muted">Bogan Ltd</span>
-                                    </div>
-                                </li>
-                                <li data-gmap-lat="37.379267"  data-gmap-lon="-122.02148" data-gmap-user="Prof. Davin Huels" data-gmap-user-company="Bartoletti LLC">
+                                <?php
+                                    $groups = list_groups($churchID);
+                                    // var_dump($groups);
+                                    for($n=0; $n<count($groups); $n++){
+                                        $group = $groups[$n];
+                                        $maplocation = explode(",", $group['maplocation']);
+                                        // var_dump($maplocation);
+                                        ?>
+                                        <li data-gmap-lat="<?php echo $maplocation[0] ?>"  data-gmap-lon="<?php echo $maplocation[1] ?>" data-gmap-user="Dr. Rod Herman" data-gmap-user-company="Bogan Ltd">
+                                            <div class="md-list-addon-element">
+                                                <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt=""/>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading"><?php echo $group['name']; ?></span>
+                                                <span class="uk-text-small uk-text-muted">Bogan Ltd</span>
+                                            </div>
+                                        </li>
+                                        <?php
+                                    }
+                                ?>
+                                
+                                <!-- <li data-gmap-lat="37.379267"  data-gmap-lon="-122.02148" data-gmap-user="Prof. Davin Huels" data-gmap-user-company="Bartoletti LLC">
                                     <div class="md-list-addon-element">
                                         <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_02_tn.png" alt=""/>
                                     </div>
@@ -681,7 +693,7 @@
                                         <span class="md-list-heading">Johnson Stoltenberg</span>
                                         <span class="uk-text-small uk-text-muted">Reynolds, Blanda and Nader</span>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
