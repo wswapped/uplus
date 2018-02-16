@@ -84,7 +84,7 @@
                     </div>
                     <div class="md-card">
                         <div class="user_heading">
-                            <div class="user_heading_menu hidden-print">
+                            <!-- <div class="user_heading_menu hidden-print">
                                 <div class="uk-display-inline-block" data-uk-dropdown="{pos:'left-top'}">
                                     <i class="md-icon material-icons md-icon-light">&#xE5D4;</i>
                                     <div class="uk-dropdown uk-dropdown-small">
@@ -95,13 +95,13 @@
                                     </div>
                                 </div>
                                 <div class="uk-display-inline-block"><i class="md-icon md-icon-light material-icons" id="page_print">&#xE8ad;</i></div>
-                            </div>
-                            <div class="user_heading_avatar">
+                            </div> -->
+                            <!-- <div class="user_heading_avatar">
                                 <div class="thumbnail">
                                     <img src="assets/img/avatars/avatar_11.png" alt="user avatar"/>
                                 </div>
-                            </div>
-                            <div class="user_heading_content">
+                            </div> -->
+                            <!-- <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom"><span class="uk-text-truncate">Makayla Glover</span><span class="sub-heading">Land acquisition specialist</span></h2>
                                 <ul class="user_stats">
                                     <li>
@@ -114,10 +114,10 @@
                                         <h4 class="heading_a">284 <span class="sub-heading">Following</span></h4>
                                     </li>
                                 </ul>
-                            </div>
-                            <a class="md-fab md-fab-small md-fab-accent hidden-print" href="page_user_edit.html">
+                            </div> -->
+                            <!-- <a class="md-fab md-fab-small md-fab-accent hidden-print" href="page_user_edit.html">
                                 <i class="material-icons">&#xE150;</i>
-                            </a>
+                            </a> -->
                         </div>
                         <div class="user_content">
                             <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
