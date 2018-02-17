@@ -5,7 +5,7 @@
     include_once "class.sms.php";
 ?>
 <div class="uk-grid uk-grid-medium" data-cont="send" id="page" data-uk-grid-margin>
-    <div class="uk-width-large-2-4 uk-width-1-2">
+    <div class="uk-width-large-2-4">
         <div class="md-card 1st-step">
             <div class="md-card-content">                        
                 <form action="broadcast.php" method="post" id="comform" enctype="multipart/form-data">
@@ -77,7 +77,7 @@
             </div>
 
     </div>
-    <div class="uk-width-large-2-4 uk-width-1-2">
+    <div class="uk-width-large-2-4">
         <div class="md-card">
             <div class="md-card-content scrollbar gscrollbar" id="response">
                 <div class="checkCont uk-overflow-auto">

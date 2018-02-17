@@ -38,7 +38,7 @@
 
     <div id="page_content">
         <div id="page_content_inner">
-            <h3 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Broad Casts</h3>        
+            <h4 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Broadcasts</h4>        
             <div class="pagesCont" data-page='send'>            
             </div>
         </div>

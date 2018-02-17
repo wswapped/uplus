@@ -189,6 +189,9 @@
     margin: 0;
     font: 500 18px/28px Roboto,sans-serif
 }
+.inlineb{
+    display: inline-block;
+}
 
 .uk-modal-dialog .uk-modal-header .uk-modal-title span {
     font-size: 16px;
