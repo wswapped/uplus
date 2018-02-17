@@ -513,7 +513,7 @@
 			$groups 		= array();
 			WHILE($group 	= mysqli_fetch_array($sqlInvits))
 			{
-				$groupId		= $group['groupId'];
+				//$groupId		= $group['groupId'];
 				$sqlGroupBalance= $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupId'))),0) AS groupBalance FROM rtgs.groups g");
 				$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
 				$groups[] = array(
