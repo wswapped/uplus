@@ -1406,10 +1406,10 @@
 		{
 			include("db.php");
 			$sqlMembers = $eventDb->query("SELECT * FROM `events`") or die(mysqli_error());
-			$members 	= array();
+			$events 	= array();
 			while($member 	= mysqli_fetch_array($sqlMembers))
 			{
-				$members[] = array(
+				$events[] = array(
 					"eventId"			=> $member['id_event'],
 					"eventName"			=> $member['Event_Name'],
 					"eventDesc"			=> $member['Event_Desc'],
@@ -1420,7 +1420,11 @@
 					"eventEnd"			=> $member['Event_End']
 				);
 			}
-			print_r($members);
+			mysqli_close($db);
+			mysqli_close($eventDb);
+			header('Content-Type: application/json');
+			$events = json_encode($events);
+			echo $events;
 		}
 
 		
