@@ -1405,7 +1405,7 @@
 		function eventList1()
 		{
 			include("db.php");
-			$sqlEvents1 = $eventDb->query("SELECT * FROM events WHERE active = 'NO'");
+			$sqlEvents1 = $eventDb->query("SELECT * FROM events WHERE active = 'YES'");
 			$events1[] = array();
 			while ($eventRow = mysqli_fetch_array($sqlEvents1)) {
 			    
