@@ -1415,7 +1415,7 @@
 					"memberName" = $member['memberName']
 				);
 			}
-			print_r($member);
+			print_r($members);
 			
 			//$events1[] = array();
 			/*
