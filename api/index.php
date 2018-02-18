@@ -1409,7 +1409,7 @@
 			$members 	= array();
 			while($member 	= mysqli_fetch_array($sqlMembers))
 			{
-				$members[] = array(
+				$member[] = array(
 					"memberName" = $member['memberName']
 				);
 			}
