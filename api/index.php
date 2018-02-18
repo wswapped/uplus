@@ -1374,7 +1374,6 @@
 					"eventActive"		=> $row['active'],
 					);
 			}
-/*
 			foreach ($events as $i => $event) {
 				$eventId = $event['eventId'];
 				$tickets = array();
@@ -1395,7 +1394,7 @@
 			    }
 			    $events[$i]['eventTickets'] = $tickets;
 			}
-			*/
+		
 			mysqli_close($db);
 			mysqli_close($eventDb);
 			header('Content-Type: application/json');
@@ -1406,27 +1405,27 @@
 		function eventList1()
 		{
 			include("db.php");
-			$sqlEvents = $eventDb->query("SELECT * FROM events WHERE active = 'YES'");
-			$events[] = array();
-			while ($row = mysqli_fetch_array($sqlEvents)) {
+			$sqlEvents1 = $eventDb->query("SELECT * FROM events WHERE active = 'YES'");
+			$events1[] = array();
+			while ($eventRow = mysqli_fetch_array($sqlEvents1)) {
 			    
-				$events[] = array(
-					"eventId"			=> $row['id_event'],
-					"eventName"			=> $row['Event_Name'],
-					"eventDesc"			=> $row['Event_Desc'],
-					"eventCover"		=> $row['Event_Cover'],
-					"eventLocation"		=> $row['Event_Location'],
-					"eventContact"		=> $row['phone'],
-					"eventStart"		=> $row['Event_Start'],
-					"eventEnd"			=> $row['Event_End']
+				$events1[] = array(
+					"eventId"			=> $eventRow['id_event'],
+					"eventName"			=> $eventRow['Event_Name'],
+					"eventDesc"			=> $eventRow['Event_Desc'],
+					"eventCover"			=> $eventRow['Event_Cover'],
+					"eventLocation"			=> $eventRow['Event_Location'],
+					"eventContact"			=> $eventRow['phone'],
+					"eventStart"			=> $eventRow['Event_Start'],
+					"eventEnd"			=> $eventRow['Event_End']
 					);
 			}
 			
 			mysqli_close($db);
 			mysqli_close($eventDb);
 			header('Content-Type: application/json');
-			$events = json_encode($events);
-			echo $events;
+			$events1 = json_encode($events1);
+			echo $events1;
 		}
 
 		
