@@ -1405,9 +1405,21 @@
 		function eventList1()
 		{
 			include("db.php");
-			$sqlEvents1 = $eventDb->query("SELECT * FROM events WHERE active = 'YES'");
-			$events1[] = array();
-			while ($eventRow = mysqli_fetch_array($sqlEvents1)) {
+			$sqlMembers = $db->query("SELECT memberImage, groupId, targetAmount, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc, memberId, memberPhone, COALESCE(`memberName`, `memberPhone`) `memberName`, memberDate, memberType FROM `members` WHERE groupId = '79' ORDER BY memberType DESC") or die(mysqli_error());
+			$members 	= array();
+			
+			//$sqlEvents1 = $eventDb->query("SELECT * FROM events WHERE active = 'YES'");
+			WHILE($member 	= mysqli_fetch_array($sqlMembers))
+			{
+				$members[] = array(
+					"memberName" = $member['memberName']
+				);
+			}
+			print_r($member);
+			
+			//$events1[] = array();
+			/*
+				while ($eventRow = mysqli_fetch_array($sqlEvents1)) {
 			    
 				$events1[] = array(
 					"eventId"			=> $eventRow['id_event'],
@@ -1420,12 +1432,12 @@
 					"eventEnd"			=> $eventRow['Event_End']
 					);
 			}
-			
+			*/
 			//mysqli_close($db);
 			//mysqli_close($eventDb);
 			//header('Content-Type: application/json');
 			//$events1 = json_encode($events1);
-			 print_r($events1);
+			// print_r($events1);
 		}
 
 		
