@@ -1410,14 +1410,14 @@
 			while($member 	= mysqli_fetch_array($sqlMembers))
 			{
 				$members[] = array(
-					"eventId"			=> $row['id_event'],
-					"eventName"			=> $row['Event_Name'],
-					"eventDesc"			=> $row['Event_Desc'],
-					"eventCover"			=> $row['Event_Cover'],
-					"eventLocation"			=> $row['Event_Location'],
-					"eventContact"			=> $row['phone'],
-					"eventStart"			=> $row['Event_Start'],
-					"eventEnd"			=> $row['Event_End']
+					"eventId"			=> $member['id_event'],
+					"eventName"			=> $member['Event_Name'],
+					"eventDesc"			=> $member['Event_Desc'],
+					"eventCover"			=> $member['Event_Cover'],
+					"eventLocation"			=> $member['Event_Location'],
+					"eventContact"			=> $member['phone'],
+					"eventStart"			=> $member['Event_Start'],
+					"eventEnd"			=> $member['Event_End']
 				);
 			}
 			print_r($members);
