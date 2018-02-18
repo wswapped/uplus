@@ -1425,7 +1425,7 @@
 			//mysqli_close($eventDb);
 			//header('Content-Type: application/json');
 			//$events1 = json_encode($events1);
-			echo $events1;
+			 print_r($events1);
 		}
 
 		
