@@ -1405,7 +1405,7 @@
 		function eventList1()
 		{
 			include("db.php");
-			$sqlEvents1 = $eventDb->query("SELECT * FROM events WHERE active = 'YES'");
+			$sqlEvents1 = $eventDb->query("SELECT * FROM events WHERE active = 'NO'");
 			$events1[] = array();
 			while ($eventRow = mysqli_fetch_array($sqlEvents1)) {
 			    
@@ -1421,10 +1421,10 @@
 					);
 			}
 			
-			mysqli_close($db);
-			mysqli_close($eventDb);
-			header('Content-Type: application/json');
-			$events1 = json_encode($events1);
+			//mysqli_close($db);
+			//mysqli_close($eventDb);
+			//header('Content-Type: application/json');
+			//$events1 = json_encode($events1);
 			echo $events1;
 		}
 
