@@ -1405,12 +1405,12 @@
 		function eventList1()
 		{
 			include("db.php");
-			$sqlMembers = $eventDb->query("SELECT * FROM `users`") or die(mysqli_error());
+			$sqlMembers = $eventDb->query("SELECT * FROM `events`") or die(mysqli_error());
 			$members 	= array();
 			while($member 	= mysqli_fetch_array($sqlMembers))
 			{
 				$members[] = array(
-					"memberName" => $member['fullname']
+					"memberName" => $member['Event_Name']
 				);
 			}
 			print_r($members);
