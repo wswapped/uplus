@@ -1361,7 +1361,7 @@
 			$sqlEvents = $eventDb->query("SELECT * FROM events");
 			$events[] = array();
 			while ($row = mysqli_fetch_array($sqlEvents)) {
-				$eventId = $row['id_event'];
+				//$eventId = $row['id_event'];
 				$events[] = array(
 					"eventId"			=> $row['id_event'],
 					"eventName"			=> $row['Event_Name'],
@@ -1374,7 +1374,7 @@
 					"eventActive"		=> $row['active'],
 					);
 			}
-
+/*
 			foreach ($events as $i => $event) {
 				$eventId = $event['eventId'];
 				$tickets = array();
@@ -1395,6 +1395,7 @@
 			    }
 			    $events[$i]['eventTickets'] = $tickets;
 			}
+			*/
 			mysqli_close($db);
 			mysqli_close($eventDb);
 			header('Content-Type: application/json');
