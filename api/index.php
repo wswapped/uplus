@@ -1405,15 +1405,14 @@
 		function eventList1()
 		{
 			include("db.php");
-			$sqlMembers = $db->query("SELECT memberImage, groupId, targetAmount, groupName, groupTargetType, perPersonType, targetAmount, perPerson, adminId, adminName, groupDesc, memberId, memberPhone, COALESCE(`memberName`, `memberPhone`) `memberName`, memberDate, memberType FROM `members` WHERE groupId = '79' ORDER BY memberType DESC") or die(mysqli_error());
+			$sqlMembers = $eventDb->query("SELECT * FROM `users`") or die(mysqli_error());
 			$members 	= array();
 			while($member 	= mysqli_fetch_array($sqlMembers))
 			{
 				$members[] = array(
-					"memberName" => $member['memberName']
+					"memberName" => $member['fullname']
 				);
 			}
-			echo "yes";
 			print_r($members);
 		}
 
