@@ -1546,6 +1546,30 @@
 			header('Content-Type: application/json');
 			echo $ticktes = json_encode($ticktes);
 		}
+
+		function eventSeatsList()
+		{
+			include 'db.php';
+			$eventId 		= mysqli_real_escape_string($db, $_POST['eventId']);
+			$sqlTicketsList = $eventDb->query("
+				SELECT EP.pricing_code ticketCode, P.price, P.event_property ticketsName
+				FROM eventing_pricing EP 
+				INNER JOIN pricing P 
+				ON P.pricing_id = EP.pricing_code
+				WHERE EP.event_code like '$eventId'");
+			$ticktes = array();
+			while ($rowTicketsList = mysqli_fetch_array($sqlTicketsList)) {
+				$ticktes[] = array(
+				   "ticketCode"		=> $rowTicketsList['ticketCode'],
+				   "price"			=> $rowTicketsList['price'],
+				   "ticketsName"	=> $rowTicketsList['ticketsName']
+				);
+			}
+			mysqli_close($db);
+			mysqli_close($outCon);	
+			header('Content-Type: application/json');
+			echo $ticktes = json_encode($ticktes);
+		}
 	// END EVENT
 
 	// START TRANSFERS
