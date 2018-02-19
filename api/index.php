@@ -1560,8 +1560,9 @@
 			$ticktes = array();
 			while ($rowTicketsList = mysqli_fetch_array($sqlTicketsList)) {
 				$ticktes[] = array(
+				   "eventBack"		=> $eventId,
 				   "ticketCode"		=> $rowTicketsList['ticketCode'],
-				   "price"			=> $rowTicketsList['price'],
+				   "price"		=> $rowTicketsList['price'],
 				   "ticketsName"	=> $rowTicketsList['ticketsName']
 				);
 			}
