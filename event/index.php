@@ -273,8 +273,9 @@ else
 			        <section class="section--center contSection">
 						<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
 							<div class="mdl-cell mdl-cell--8-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
-								To date<i style="float: right;">Target</i>
-								<div style="font-size: 20px; font-weight: 800;">
+								<p>Location: <?php echo $eventLocation; ?></p>
+								<p>When: <?php echo $eventStart; ?></p>
+								<!-- <div style="font-size: 20px; font-weight: 800;">
 									<?php 
 										echo number_format($currentAmount);
 									?>RWF
@@ -288,21 +289,21 @@ else
 											echo 'any amount';
 											}
 										?></b>
-								</div>
-								<div class="progress" style="background-color: #e1eae9;">
+								</div> -->
+								<!-- <div class="progress" style="background-color: #e1eae9;">
 								
 									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="<?php echo $prog;?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php if($prog < 10){echo 10;} else{echo $prog;}?>%">
 									  <?php echo number_format($prog);?>%
 									</div>
-								</div>
-								<span style="float: right" id="countDown"></span>
+								</div> -->
+								<!-- <span style="float: right" id="countDown"></span> -->
 							</div>
 							<div class="mdl-cell mdl-cell--4-col contribution2" id="contdiv">
 							    <span class="sharing">
 									<i class="fa fa-share shareicon"></i>
 								</span>	
 								<span class="contshare">
-							    		<button  href="#sendMoney" class="mdl-button mdl-button--raised fancybox" id="contbtn">Contribute Now</button>
+							    		<button  href="#sendMoney" class="mdl-button mdl-button--raised fancybox" id="contbtn">GET TICKETS</button>
 								</span>
 								<span class="sharing">
 							    	<i class="fa fa-comment shareicon"></i>
@@ -328,7 +329,39 @@ else
 					<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
 						<div id="1" class="tabcontent mdl-card" style="min-height: 80px;    width: 100%;">
 							<div id="tabsCont" style="padding: 12px; ">
-								<?php echo $groupStory;?>
+								<ul class="demo-list-two mdl-list">
+								  <li class="mdl-list__item mdl-list__item--two-line">
+								    <span class="mdl-list__item-primary-content">
+								      <i class="material-icons mdl-list__item-avatar">person</i>
+								      <span>Bryan Cranston</span>
+								      <span class="mdl-list__item-sub-title">62 Episodes</span>
+								    </span>
+								    <span class="mdl-list__item-secondary-content">
+								      <span class="mdl-list__item-secondary-info">Actor</span>
+								      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+								    </span>
+								  </li>
+								  <li class="mdl-list__item mdl-list__item--two-line">
+								    <span class="mdl-list__item-primary-content">
+								      <i class="material-icons mdl-list__item-avatar">person</i>
+								      <span>Aaron Paul</span>
+								      <span class="mdl-list__item-sub-title">62 Episodes</span>
+								    </span>
+								    <span class="mdl-list__item-secondary-content">
+								      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+								    </span>
+								  </li>
+								  <li class="mdl-list__item mdl-list__item--two-line">
+								    <span class="mdl-list__item-primary-content">
+								      <i class="material-icons mdl-list__item-avatar">person</i>
+								      <span>Bob Odenkirk</span>
+								      <span class="mdl-list__item-sub-title">62 Episodes</span>
+								    </span>
+								    <span class="mdl-list__item-secondary-content">
+								      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+								    </span>
+								  </li>
+								</ul>
 							</div>
 							<div id="membersMob">
 								<div id="membersMobCont" style="padding-top: 15px">
@@ -403,49 +436,6 @@ else
 							</section>
 						</div>
 					</section>
-					<section class="section--center mdl-grid mdl-grid--no-spacing" style="margin-bottom: 30px; max-width: 730px;">
-						<div class="fb-comments" data-href="https://www.uplus.rw/f/index.php?groupId=<?php echo $groupID;?>" data-width="650" data-numposts="5"></div>
-						<div class="tab">
-						</div>
-					</section>
-				</div>
-				<div class="rightSidePanel" style="width: 20%; float: left; padding-top: 80px;">
-					<div id="membersWeb">
-						<h5 style="text-align: center; font-size: 17px;"><i class="fa fa-group"></i> <?php 
-												$sqlcountcontr = $db->query("SELECT memberId FROM members WHERE groupId = '$groupID'");
-												echo $countContr = mysqli_num_rows($sqlcountcontr);
-												?> Members</h5><hr style="margin-top: 18px;margin-bottom: 20px;border: 0; border-top: 1px solid #616161;">
-						<div style="overflow: scroll;height: 500px; padding: 0 20px;">
-							<?php
-								$sqlcontributors = $db->query("SELECT memberId, memberImage, COALESCE(memberName, memberPhone) memberName FROM members WHERE groupId = '$groupID'");
-								$ncontrib = 0;
-								while($member = mysqli_fetch_array($sqlcontributors))
-								{
-									$memberId	= $member['memberId'];
-									$sqlContribution = $db->query("SELECT  
-									IFNULL(
-											(
-												SELECT sum(t.amount) 
-												FROM rtgs.grouptransactions t 
-												WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.memberId = '$memberId' AND t.groupId = '$groupID'))
-											),0
-										) AS memberContribution 
-										FROM uplus.members m")	or die(mysql_error($sqlContribution));
-										$contributionRow = mysqli_fetch_array($sqlContribution);
-										$memberContribution = $contributionRow['memberContribution'];
-
-									$ncontrib++;
-									echo '
-									<div style="padding-bottom: 15px; float: left; min-width: 235px;">
-									<div class="avatars" style="cursor: pointer; background-image: url('.$member['memberImage'].');"></div>
-									<div style="cursor: pointer; padding-top: 5px;padding-left: 40px;"><a style="cursor: pointer; text-decoration: none;
-									font-weight: 400;
-									">'.$member['memberName'].'</a><br/>'.number_format($memberContribution).' Rwf</div>
-									</div>';
-								}
-							?>
-						</div>
-					</div> 
 				</div>
 			</div>
 		</div>
