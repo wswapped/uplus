@@ -1,5 +1,5 @@
 <?php
-$db = new mysqli("localhost", "clement", "clement123" , "uplus");
+$db = $conn = new mysqli("localhost", "clement", "clement123" , "uplus");
 include_once 'functions.php';
 header("Content-Type: text/plain");
 session_start(); //For web testing only
