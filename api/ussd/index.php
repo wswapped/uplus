@@ -1,5 +1,6 @@
 <?php
-require('../db.php');
+$db = new mysqli("localhost", "clement", "clement123" , "climate");
+include_once '../cli-functions.php';
 header("Content-Type: text/plain");
 session_start(); //For web testing only
 
@@ -15,7 +16,7 @@ if(isset($_GET['ses'])){
 $response = "";
 $tdata = array();
 
-$conn = $db;
+$conn = $db = $conn;
 $req = array_merge($_POST, $_GET); //Keeping get and post for testing and productin handling concurently
 $sessionId   = $req["sessionId"]?? session_id();
 $serviceCode = $req["serviceCode"]??"*801#";
@@ -25,27 +26,6 @@ $text        = $req["text"];
 //CLEAN and sanitize PHONE
 $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
 $phoneNumber  = substr($phoneNumber, -10);
-	//Checking if user exists
-	$query  = mysqli_query($conn, "SELECT *, COALESCE(name, phone) as name FROM users WHERE phone = '$phoneNumber' LIMIT 1");
-	if(mysqli_num_rows($query))
-	{
-		//Here user already exists		
-		$signInfo     = array();
-		$userData = mysqli_fetch_array($query);
-		$userName = $userData['name'];
-		$userId = $userData['id'];
-	}
-	else{
-		//Here the user is new, should I ask the name?
-		$code         = rand(1000, 9999);
-	    $sqlsavePin = $db->query("INSERT INTO `users`(
-	    phone, active, createdDate, password, visits, updatedBy, updatedDate) 
-	    VALUES('$phoneNumber', '0', now(), '$code', '0', '1', now())")or die (mysqli_error());
-	    $sqlcheckPin = $db->query("SELECT * FROM users ORDER BY id DESC LIMIT 1");
-	      $userData = mysqli_fetch_array($sqlcheckPin);
-	      $userName = $userData['name'];
-	      $userId = $userData['id'];
-	}
 
 	//Handling further requests
 	$requests = explode("*", $text);
@@ -73,7 +53,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 	//Application logic
 	if(empty($text) || $text == "#" || $text == "1*#"){
 		//First request
-		$response .="CON Ikaze ku kimina cya Uplus!\n1. Gurupe ndimo\n2. Konti yanjye\n3. Ubusobanuro\n# Exit\n";
+		$response .="CON Ikaze ku iteganyagihe n'ubuhinzi!\n1. Iteganyagihe\n2. Imirima yanjye\n3. Gutanga amakuru\n# Exit\n";
 	}else{
 		//Level1 requests
 		if(is_numeric($requests[0])){
@@ -83,232 +63,27 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 				if($nrequests == 1){
 					//Checking for groups a user is in
-					$query = mysqli_query($conn, "SELECT groupId, groupName FROM `members` WHERE memberPhone = \"$phoneNumber\"") or die("Error getting groups you belong in, ".mysqli_error($conn));
-
-					$groups = usergroups($phoneNumber);
-
-					if(empty($groups)){
-						//User does not belong in any group
-						$response =  "CON ".$userName." Nta gurupe urimo.\nKugirango ujye muri gurupe shyiramo umubare uyiranga\n";
-					}else{
-						//Showing groups
-						$response.="CON ".$userName.", Hitamo gurupe\n";
-
-						$n=0;
-						foreach ($groups as $groupid => $groupname) {
-							$n++;
-							$tdata[$n] = $groupid;
-							$response .= "$n. $groupname\n";
-						}
-						$response .="0. Jya muri gurupe\n";
-						//Logging the tempdata
-						keeptempdata($sessionId, $tdata, 'groups');
-					}
+					$t = rand(19,25);
+					$response.="Uyu munsi hari ubushyuhe bwa $t - ubushyuhe buringaniye, nta mvura iragwa\nreba iteganyagihe ry'\n1.Icyumweru cyose\n2. Ukwezi kose\n3. Igihembwe cy'ihinga\n4. Iyandiishe kubona amakuru\n0. Gusubira inyuma";
 				}else{
-					//Further requests were issued
-					$smenu = $requests[1];
-
-					if($nrequests == 2){
-
-						//Checking if user belongs
-						$groups = usergroups($phoneNumber);
-
-						if(count($groups)>0){
-							//Here the user belongs in a group
-							//Here going to handle first request, going to check if sent text is among the groups shown
-
-							//checking chose group's and it's menu
-							$tdata = gettempdata($sessionId, 'groups');
-							$tdata = json_decode($tdata, true);
-
-							if(is_array($tdata)){
-								if(!empty($tdata[$smenu])){
-									//User chose correct group
-									$groupid = $tdata[$smenu];
-									$groupname = groupname($groupid);
-									$response.="CON Ikaze muri $groupname\n";
-									$response.="1. Tanga umusanzu\n2. Bikuza\n3. Abanyamuryango\n4. Amakuru ya gurupe\n# Ahabanza";
-								}else if($smenu == 0){
-									//Joining a group
-									$response.="CON Mushyiremo umubare uranga gurupe\nComing soon";
-								}else{
-									$response.="Ibyo mwahisemo sibyo\n# Gutangira";
-								}
-
-							}else{
-								//No data stored or invalid JSON
-							}
-
-						}else{
-							//The user is new and might have put the group code
-							//Checking if group exists
-							$groupname = is_group($smenu);
-							if($groupname){
-								//The group requested to join exists
-								$response.="CON Mwasabye kwinjira muri gurupe '$groupname'\n";
-								$response.="Turacyari gutunganya ubu buryo\n";
-							}
-						}
-
-							
-					}else{
-						//Group was chose or group code was input
-						$tmenu = $requests[2]; //Third menu choice
-
-						$tdata = json_decode(gettempdata($sessionId, 'groups'), true);
-						$groupid = $tdata[$smenu];
-						$groupname = is_group($groupid);
-
-						if($nrequests == 3){
-							$groups = usergroups($phoneNumber);
-
-							//Group chose earlier
-							$groupId = json_decode(gettempdata($sessionId, 'groups'), true)[$requests[1]];
-							$groupname = is_group($groupId);
-
-							if(!empty($groups)){
-								//User chose from the group menu
-								if($tmenu == 1){
-									//gutanga umusanzu
-									$response.="CON $groupname\nShyiramo amafaranga(FRW) ushaka kwitanga\n";
-								}else if($tmenu == 2){
-									//Kubikuza
-									$response.="CON $groupname\nShyiramo amafaranga(FRW) ushaka kubikuza\n";
-								}elseif ($tmenu == 3) {
-									# members
-									$members = groupmembers($groupId);																		
-									$response.="CON $groupname\nUrutonde rw'abanyamuryango\n";
-									$n=0;
-									$tdata = array(); //To keep temparary dta
-									foreach ($members as $memberid => $membername) {
-										$n++;
-										$response.="$n. $membername\n";
-										$tdata[$n]= $memberid;
-									}
-									$response.="#. Ahabanza\n";
-									keeptempdata($sessionId, $tdata, '$groupname members');
-
-								}elseif ( $tmenu == 4) {
-									// group info
-									$api_call = api(array('action'=>'listGroups', 'memberId'=>$userId));
-
-									$groupdata=0; //init
-									$groups_data = json_decode($api_call, true);
-									foreach ($groups_data as $key => $value) {
-										if($value['groupId'] == $groupId){
-											$groupdata = $value;
-											break;
-										}
-									}
-
-									//Group admins
-									$query = mysqli_query($conn, "SELECT COALESCE(memberName, memberPhone) as admin FROM members WHERE memberType = \"Group treasurer\" AND groupId = \"$groupId\"") or die("END Error: ".mysqli_error($conn));
-									$admins = array();
-									while ($temp = mysqli_fetch_assoc($query)) {
-										$admins[] = $temp['admin']; 
-									}
-									$admins = implode($admins, ', ');
-									$response.="CON Ibyerekeye gurupe '$groupname'\n";
-									$groupinfo = groupinfo($groupId);									
-									$response.="Amafaranga ifite:".number_format($groupdata['groupBalance'])."FRW\n";
-									$response.="Ayo ishaka kugeraho: ".number_format($groupinfo['targetAmount'])."FRW\n";
-									$response.="Yatangiye: ".date("d-m-Y", strtotime($groupinfo['createdDate']))."\n";
-									// $response.="Itangizwa: \n";
-									$response.="Iyobowe: $admins\n";
-									$response.="#.Ahabanza\n";
-
-								}else{
-									//Wrong choice
-									$response.="CON Mwashyizemo ibitari byo.\n#.Ahabanza\n";
-								}
-							}
-						}else{
-							$fomenu = $requests[3]; //Fourth menu item
-
-							if($nrequests ==4){
-
-								if($tmenu == 1){
-									//Kwizigama
-									if(is_numeric($fomenu) && $fomenu>=100 && $fomenu<=2000000){
-										$contmoney = $fomenu;
-										$api_call = contribute(array('action'=>'contribute', 'memberId'=>$userId, 'groupId'=>$groupid, 'amount'=>$contmoney, 'pushnumber'=>$phoneNumber, 'senderBank'=>senderbank($phoneNumber)));
-
-										if($api_call === false){
-											$response .= "END Twagize ikibazo k'ihuzanzira\nMwongere mukanya\nNetwork failed!\n";
-										}
-										else if($api_call=='failed' || $api_call == 'pending'){
-											$response = "END $userName gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname' ntibyashobotse.\nMurebe ko mufite amafaranga ahagije kuri konti ya mobile money\n";											
-										}else{
-											$response .= "END $userName ugiye gutanga umusanzu wa ".number_format($contmoney)."FRW muri '$groupname'\n";
-										}
-									}else if($fomenu<100 || $fomenu>2000000){
-										$response .="END Mushyiremo amafaranga(FRW) ahagije ari hagati ya RWF 100 kugeza kuri FRW 2 000 000 yo kwitanga"; 
-									}else{
-										$response.="END Shyiramo umubare w'amafaranga(FRW) ushaka gutanga, wishyiramo amagambo\n";
-									}
-								}else if ($tmenu == 2) {
-									# Kubikuza
-									if(is_numeric($fomenu) && $fomenu>=100 && $fomenu<=2000000){
-										$contmoney = $fomenu;
-										
-										$api_call = withdraw(array('groupId'=>$groupid, 'memberId'=>$userId, 'amount'=>$contmoney,  'withdrawAccount'=>$phoneNumber, 'withdrawBank'=>senderbank($phoneNumber), 'action'=>'withdrawrequest' ));
-										
-										$response.="END $api_call\n";
-									}else if($fomenu<100 || $fomenu<2000000){}else{
-										$response.="CON Mushobora kubikuza amafaranga(FRW) ari hagati ya 100 na 2 000 000 gusa\n";
-									}
-
-								}
-							}
-						}
-						
-					}
+					echo "Turacyari kubikoraho, uzabona amakuru vuba";
 					
 				}
 				
 			}else if($fmenu == 2){
-				//konti
-
-				//Getting
-				$groups = usergroups($phoneNumber);
 
 				$conts = $withs = 0;
+				$fields = get_fields(1);
 
+				$response.="CON Amakuru ajyanye n'imirima yanyu\nHitamo umurima\n";
+				for ($n=0; $n < count($fields) ; $n++) {
+					$response .= ($n+1).".".$fields[$n]['locationName']."\n";	
 
-				//Getting contributions in groups
-				foreach ($groups as $groupid => $groupname) {
-					$contributions = api(array('action'=>'listMembers', 'groupId'=>$groupid));
-					//Looking for this user
-					$contributions = json_decode($contributions, true);
-					foreach ($contributions as $key => $value) {
-						if($value['memberId'] == $userId){
-							$conts+=$value['memberContribution'];
-							break;
-						}
-					}
-
-
-					//Withdrawals
-					$withdrawals = api(array('action'=>'withdrawlist', 'groupId'=>$groupid));
-					$withdrawals = json_decode($withdrawals, true);
-					foreach ($withdrawals as $key => $value) {
-						if($value['memberName'] == $userName){
-							$withs+=$value['amount'];
-							break;
-						}
-					}
 				}
-
-				$response.="CON Konti ya $userName\n";
-				$response.="Uri muri gurupe: ".count($groups)."\n";
-				$response.="Umaze kwitanga: ".number_format($conts)."Rwf\n";
-				$response.="Umaze kubikuza: ".number_format($withs)."Rwf\n";
-				$response.="#. Ahabanza\n";
 			}
 			else if($fmenu == 3){
 				//konti
-				$response.="END Uplus igufasha gukusanya no kugenzura amafaranga 
-		mu bimina n'amagurupe kuburyo bworoshe kandi bunoze\nKu bindi bisobanuro sura www.uplus.rw\n";
+				$response.="CON Gutanga amakuru!\n1.Umusaruro\n2.Ikirere\n";
 			}
 
 
