@@ -212,8 +212,14 @@
         $account = $request['account']??"";
         $member = $request['member']??"";
 
+        $query = $conn->query("INSERT INTO donations(member, church, service, amount, amount, account, source) VALUES(\"$member\", \"$church\", \"$service\", \"$amount\", \"$account\", \"$method\" ");
 
-        
+        if($query){
+            $response = array('status'=>true, 'data'=>$baskets);
+        }else{
+            $response = array('status'=>false, 'msg'=>"Error: $conn->error"); 
+        }
+
     }else if($action == "record_headcount"){
         //head counts recording
         $church = $request['church']??"";

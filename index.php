@@ -487,7 +487,7 @@
 						if($prog < 10){$size=10;} else{$size=$prog;}
 					echo'<li>
 							<div class="md-card" style="border-radius: 5px;">
-								<a href="f/e'.$eventId.'">
+								<a href="event/'.$eventId.'">
 								<div class="md-card-content padding-reset" style="height: 341px;">
 									
 									<div class="cont-image" style="background-image: url(proimg/6.jpg); border-radius: 5px 5px 0 0;">
@@ -495,7 +495,7 @@
 									</div>
 									
 									
-									<a class="fundname" style="text-decoration:  none;" href="f/e'.$eventId.'">
+									<a class="fundname" style="text-decoration:  none;" href="event/'.$eventId.'">
 										<h4 class="fundtitle">'.$eventName.' </h4>
 									</a>
 									<div style="width: 70%;float: left; height: 141px;">
