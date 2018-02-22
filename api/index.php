@@ -1546,10 +1546,10 @@
 		$url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=".$ticketCode."";
 		//Here is the file we are downloading, replace spaces with %20
 		$ch = curl_init(str_replace(" ","%20",$url));
-		curl_setopt($ch, CURLOPT_TIMEOUT, 50); 
+		curl_setopt($ch, CURLOPT_TIMEOUT, 500); 
 		//give curl the file pointer so that it can write to it
 		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
 		$data = curl_exec($ch);//get curl response
 		//done
 		curl_close($ch);
