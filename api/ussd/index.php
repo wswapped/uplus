@@ -32,7 +32,8 @@ $md = $mq->fetch_assoc();
 $ms = $md['text'];
 
 $message = str_ireplace("\$name", $name, str_ireplace("\$date_today", date("D-M-Y"), str_ireplace("\$fert_kg", rand(6, 9), str_ireplace("\$temperature", rand(19, 29), $ms))));
-
+$phone = $phoneNumber;
+$name = "Umuhinzi";
 if($phone && $name){
 	//Adding user
 	$conn->query("INSERT INTO farmer(name, phone) VALUES(\"$name\", \"$phone\")");
