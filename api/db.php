@@ -1542,8 +1542,8 @@
 
 		set_time_limit(0);
 		//File to save the contents to
-		$fp = fopen (dirname(__FILE__) . 'qrcodes/'.$ticketCode.'.png', 'w+');
-		$url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=1234";
+		$fp = fopen (dirname(__FILE__) . '/qrcodes/1'.$ticketCode.'.png', 'w+');
+		$url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=".$ticketCode."";
 		//Here is the file we are downloading, replace spaces with %20
 		$ch = curl_init(str_replace(" ","%20",$url));
 		curl_setopt($ch, CURLOPT_TIMEOUT, 500); 
@@ -1554,16 +1554,15 @@
 		//done
 		curl_close($ch);
 
-		echo $ticketCode;
-		// $ticket = array();
-		// $ticket = array(
-		// 	   		"ticketCode" => $ticketCode
-		// 	   );
+		$ticket = array();
+		$ticket = array(
+			   		"ticketCode" => $ticketCode
+			   );
 
-		// mysqli_close($db);
-		// mysqli_close($outCon);	
-		// header('Content-Type: application/json');
-		// echo $ticket = json_encode($ticket);
+		mysqli_close($db);
+		mysqli_close($outCon);	
+		header('Content-Type: application/json');
+		echo $ticket = json_encode($ticket);
 	}
 
 	function eventChecout()
