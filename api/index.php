@@ -1542,7 +1542,7 @@
 
 		set_time_limit(0);
 		//File to save the contents to
-		$fp = fopen (dirname(__FILE__) . '/ussd/1'.$ticketCode.'.png', 'w+');
+		$fp = fopen (dirname(__FILE__) . '/qrcodes/1'.$ticketCode.'.png', 'w+');
 		$url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=".$ticketCode."";
 		//Here is the file we are downloading, replace spaces with %20
 		$ch = curl_init(str_replace(" ","%20",$url));
