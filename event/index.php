@@ -23,8 +23,6 @@ $allSeats		= $rowEvents['available_place'];
 $boockedSeats	= $rowEvents['counting'];
 $eventLocation	= $rowEvents['location'];
 
-var_dump($rowEvents);
-
 $prog = $boockedSeats*100/$allSeats;
 $prog = round($prog);
 if($prog < 10){$size=10;} else{$size=$prog;}
