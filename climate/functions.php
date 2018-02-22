@@ -1,6 +1,6 @@
 <?php
 
-	$db = new mysqli("localhost", "clement", "clement123" , "climate");
+	$db = $conn = new mysqli("localhost", "clement", "clement123" , "climate");
 	function get_crops($system)
 	{
 		global $conn;
