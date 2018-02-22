@@ -131,8 +131,7 @@
             $sql = "DELETE FROM group_members WHERE member = \"$members[$n]\" AND groupid = \"$group\" ";
             $conn->query($sql) or die("Can't remove user from group $conn->error");            
         }
-    }else if($action == 'invoice'){
-        
+    }else if($action == 'invoice'){        
     }else if($action == "create_branch"){
         //creating branch
         $name  = $request['name']??"";
@@ -204,6 +203,17 @@
           $response = array('status'=>false, 'msg'=>"Error: $conn->error");  
         }
 
+    }else if($action == "addDonation"){
+        //adding donation
+        $church = $request['church']??"";
+        $branch = $request['branch']??"";
+        $service = $request['service']??"";
+        $method = $request['method']??"";
+        $account = $request['account']??"";
+        $member = $request['member']??"";
+
+
+        
     }else if($action == "record_headcount"){
         //head counts recording
         $church = $request['church']??"";
