@@ -1515,14 +1515,14 @@
 		include("db.php");
 		$phone		= mysqli_real_escape_string($db, $_POST['pullNumber']);
 		$event		= mysqli_real_escape_string($db, $_POST['eventId']);
-		$property	= mysqli_real_escape_string($db, $_POST['ticketCode']);
+		$property	= mysqli_real_escape_string($db, $_POST['seatCode']);
 		$userid		= mysqli_real_escape_string($db, $_POST['userId']);
 		
 		$selectprice = $eventDb->query("SELECT price  FROM pricing WHERE pricing_id LIKE '$property'");
 		$fetchrow = mysqli_fetch_assoc($selectprice);
 		$price = $fetchrow['price'];
 		$eventDb->query("INSERT INTO transaction (customer_pay_id, cust_event_choose, cust_pay_phone, amount, cust_event_seats,user_id, createdBy, paidStatus, status) 
-			VALUES('','$event','$phone','$price','$property','$userid','$userid', 'PAID', 'UNUSED')") or die("error please in inserting".mysqli_error());
+			VALUES('','$event','$phone','$price','$property','$userid','$userid', 'PAID', 'UNUSED')") or die("error please in inserting".mysqli_error($eventDb));
 		if($eventDb)
 		{
 			$ticketId 	= mysqli_insert_id($eventDb);
