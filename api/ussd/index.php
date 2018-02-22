@@ -1,6 +1,6 @@
 <?php
-$db = new mysqli("localhost", "clement", "clement123" , "uplus");
-include_once '../functions.php';
+require('../admin/db.php');
+include_once 'functions.php';
 header("Content-Type: text/plain");
 session_start(); //For web testing only
 
@@ -22,36 +22,31 @@ $sessionId   = $req["sessionId"]?? session_id();
 $serviceCode = $req["serviceCode"]??"*801#";
 $phoneNumber = $req["phoneNumber"];
 $text        = $req["text"];
-
-
-//sending 
-
 //IN USSD phone number is always sent
 //CLEAN and sanitize PHONE
 $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
 $phoneNumber  = substr($phoneNumber, -10);
 
-//sending SMS
 $mq = $conn->query("SELECT * FROM messages WHERE name = 'location' LIMIT 1");
-		$md = $mq->fetch_assoc();
-		$ms = $md['text'];
+$md = $mq->fetch_assoc();
+$ms = $md['text'];
 
-		$message = str_ireplace("\$name", $name, str_ireplace("\$date_today", date("D-M-Y"), str_ireplace("\$fert_kg", rand(6, 9), str_ireplace("\$temperature", rand(19, 29), $ms))));
+$message = str_ireplace("\$name", $name, str_ireplace("\$date_today", date("D-M-Y"), str_ireplace("\$fert_kg", rand(6, 9), str_ireplace("\$temperature", rand(19, 29), $ms))));
 
-		if($phone && $name){
-			//Adding user
-			$conn->query("INSERT INTO farmer(name, phone) VALUES(\"$name\", \"$phone\")");
+if($phone && $name){
+	//Adding user
+	$conn->query("INSERT INTO farmer(name, phone) VALUES(\"$name\", \"$phone\")");
 
-			$id = $conn->insert_id;
+	$id = $conn->insert_id;
 
-			$sms = sendsms($phone, $message);
-			$query = $conn->query("INSERT INTO location_subscribers(location, username, phone, subscribed) VALUES(\"$location\", \"$name\", \"$phone\", 'true')  ");
-			if($query){
-				$response = array("status"=>true);
-			}else{
-				$response = array("status"=>false, 'msg database error $db->error');
-			}
-		}
+	$sms = sendsms($phone, $message);
+	$query = $conn->query("INSERT INTO location_subscribers(location, username, phone, subscribed) VALUES(\"$location\", \"$name\", \"$phone\", 'true')  ");
+	if($query){
+		$response = array("status"=>true);
+	}else{
+		$response = array("status"=>false, 'msg database error $db->error');
+	}
+}
 
 	//Handling further requests
 	$requests = explode("*", $text);
