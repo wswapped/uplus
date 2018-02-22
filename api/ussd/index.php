@@ -42,11 +42,6 @@ if($phone && $name){
 
 	$sms = sendsms($phone, $message);
 	$query = $conn->query("INSERT INTO location_subscribers(location, username, phone, subscribed) VALUES(\"$location\", \"$name\", \"$phone\", 'true')  ");
-	if($query){
-		$response = array("status"=>true);
-	}else{
-		$response = array("status"=>false, 'msg database error $db->error');
-	}
 }
 
 	//Handling further requests
