@@ -1554,15 +1554,16 @@
 		//done
 		curl_close($ch);
 
-		$ticket = array();
-		$ticket = array(
-			   		"ticketCode" => $ticketCode
-			   );
+		echo $ticketCode;
+		// $ticket = array();
+		// $ticket = array(
+		// 	   		"ticketCode" => $ticketCode
+		// 	   );
 
-		mysqli_close($db);
-		mysqli_close($outCon);	
-		header('Content-Type: application/json');
-		echo $ticket = json_encode($ticket);
+		// mysqli_close($db);
+		// mysqli_close($outCon);	
+		// header('Content-Type: application/json');
+		// echo $ticket = json_encode($ticket);
 	}
 
 	function eventChecout()
