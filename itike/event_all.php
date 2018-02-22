@@ -9,7 +9,7 @@ else
 {
 $userid = $_SESSION['user_id'];
 include("dbconnect.php");
-$selectevent = $eventDb->query("SELECT * FROM Events") or die("error in selecting of the events");
+$selectevent = $eventDb->query("SELECT * FROM events") or die("error in selecting of the events");
  ?>
  <!DOCTYPE html>
  <html>
