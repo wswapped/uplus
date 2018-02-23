@@ -3,7 +3,8 @@ $db = $conn = new mysqli("localhost", "clement", "clement123" , "climate");
 include_once 'functions.php';
 header("Content-Type: text/plain");
 session_start(); //For web testing only
-
+echo "END Iteganyagihe";
+die();
 
 //For browser-based testing
 if(isset($_GET['ses'])){
