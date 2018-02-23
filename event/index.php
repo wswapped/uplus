@@ -30,6 +30,8 @@ if($eventData){
 	$prog = 10;
 	$prog = round($prog);
 	if($prog < 10){$size=10;} else{$size=$prog;}
+
+	$tickets = $eventData['tickets'];
 }else{
 	$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE id = \"$eventId\" ");
 	$rowEvents = $sqlEvents->fetch_assoc();			
@@ -332,7 +334,7 @@ if($eventData){
 					<section id="tabing" class="section--center mdl-grid mdl-grid--no-spacing ">
 						<div onclick="openCity(event, '1')" id="defaultOpen" class="mdl-card mdl-cell mdl-cell--3-col activeTab">
 							<span class="currentSpan" style="height: 20%"></span>
-							<div id="webTabTitle1">Story</div>
+							<div id="webTabTitle1">TICKETS</div>
 							<div id="mobTabTitle1"><i class="fa fa-group"></i> <?php echo $countContr;?> Members</div>
 						</div>
 						<div onclick="openCity(event, '2'), changeTab(tab=2)" class=" mdl-card mdl-cell mdl-cell--3-col otherTab">
@@ -348,6 +350,26 @@ if($eventData){
 						<div id="1" class="tabcontent mdl-card" style="min-height: 80px;    width: 100%;">
 							<div id="tabsCont" style="padding: 12px; ">
 								<ul class="demo-list-two mdl-list">
+									<?php
+										for($n=0; $n<count($tickets); $n++){
+											$ticket = $tickets[$n];
+											?>
+												<li class="mdl-list__item mdl-list__item--two-line">
+												    <span class="mdl-list__item-primary-content">
+												    	<i class="fas fa-ticket-alt"></i>
+												      <!-- <i class="material-icons mdl-list__item-avatar">person</i> -->
+												      <span><?php echo $ticket['name']; ?></span>
+												      <span class="mdl-list__item-sub-title"><?php echo $ticket['num'] ?> remaining</span>
+												    </span>
+												    <span class="mdl-list__item-secondary-content">
+												      <span class="mdl-list__item-secondary-info">Actor</span>
+												      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+												    </span>
+												  </li>
+											<?php
+										}
+									?>
+
 								  <li class="mdl-list__item mdl-list__item--two-line">
 								    <span class="mdl-list__item-primary-content">
 								    	<i class="fas fa-ticket-alt"></i>
