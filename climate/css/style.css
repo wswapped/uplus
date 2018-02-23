@@ -1,0 +1,65 @@
+.container-full{
+    padding:0;
+}
+.menu-item {}
+
+.menu-stick-footer {
+    background: #f3f3f3;
+    padding: 10px;
+    position: fixed;
+    top: 94vh;
+}
+.container-full{
+    padding:0;
+}
+body{
+    /* background: url('../assets/images/home-intro.jpg') no-repeat; */
+    background-size: cover;
+    min-height: 100vh;
+}
+.page {
+    background: #d0dcdb;
+    min-height: 100vh;
+    margin-top: -30px;
+    padding-top: 40px;
+}
+/*.home-intro-cont{
+    background: url('../assets/images/home-intro.jpg');
+}*/
+.home-intro{
+
+}
+.menu-item {
+    text-align: center;
+}
+.menu-item.m_active {
+    color: green;
+}
+a.btn.btn-primary.umurima-cta {
+    position: relative;
+    bottom: 0;
+    left: 40%;
+}
+
+.menu-stick-footer {
+    background: #f3f3f3;
+    padding: 10px;
+    position: fixed;
+    top: 94vh;
+}
+.col.col-4:not(:last-child) .menu-item{
+    border-right:5px solid #c3b8b8;
+    
+}
+.col.col-4:not(:first-child) .menu-item{
+    padding-left: 5px;
+}
+a.no-deco, .menu-item a{
+    color: inherit;
+    text-decoration: none;
+}
+.mod-title{
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
