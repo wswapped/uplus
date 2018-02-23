@@ -10,6 +10,11 @@ if(!$_GET['groupId']){
 
 include "../db.php";
 $eventId = $eventDb->real_escape_string($_GET['groupId']??"");
+// var_dump($eventId);
+if($eventId[0] == 'l'){
+	echo "string";
+	die(0);
+}
 
 $sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE id = \"$eventId\" ");
 $rowEvents = $sqlEvents->fetch_assoc();			
@@ -114,7 +119,7 @@ else
 
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>uplus</title>
+	<title>Event | Uplus</title>
 
 	<!-- Add to homescreen for Chrome on Android -->
 	<meta name="mobile-web-app-capable" content="yes">
@@ -221,26 +226,18 @@ else
 				<div class="leftSidePanel" style="position: relative; width: 20%; margin-left: 0px;float: left; padding-top: 80px;">
 					<div>
 						<div>Event organiser</div>
-						<div class="profile" style="background-image: url(<?php echo $adminImage;?>);"></div>
+						<div class="profile" style="background-image: url(images/eap.png);"></div>
 						<div style="padding: 15px 0;">
 							<table border="0">
 								<tr style="border-bottom: 1px #ccc solid;">
 									<td>
-										<b><?php echo $adminName;?></b>
-									</td>
-								</tr>
-								<tr style="border-bottom: 1px #ccc solid;">
-									<td>
-										<b style="
-											color: #000;
-											opacity: 0.5;
-										"><i class="fa fa-facebook-square"></i> Facebook Verified</b>
+										<b>EAP Events</b>
 									</td>
 								</tr>
 								<tr>	
 									<td onclick="alert('We are still working on this module.')" style="cursor: pointer;">
-									 <i  class="fa fa-envelope"></i>
-										Contact <?php if($adminGender == 'male' || $adminGender == 'MALE'){echo 'him';}else{echo 'her';}?>
+									<i  class="fa fa-envelope"></i>
+										Contact +250734815714
 									</td>
 								</tr>
 							</table>	
@@ -332,7 +329,8 @@ else
 								<ul class="demo-list-two mdl-list">
 								  <li class="mdl-list__item mdl-list__item--two-line">
 								    <span class="mdl-list__item-primary-content">
-								      <i class="material-icons mdl-list__item-avatar">person</i>
+								    	<i class="fas fa-ticket-alt"></i>
+								      <!-- <i class="material-icons mdl-list__item-avatar">person</i> -->
 								      <span>Bryan Cranston</span>
 								      <span class="mdl-list__item-sub-title">62 Episodes</span>
 								    </span>

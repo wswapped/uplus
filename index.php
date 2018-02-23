@@ -485,7 +485,7 @@
 						$prog = $boockedSeats*100/$allSeats;
 						$prog = round($prog);
 						if($prog < 10){$size=10;} else{$size=$prog;}
-					echo'<li>
+						echo'<li>
 							<div class="md-card" style="border-radius: 5px;">
 								<a href="event/'.$eventId.'">
 								<div class="md-card-content padding-reset" style="height: 341px;">
@@ -496,6 +496,54 @@
 									
 									
 									<a class="fundname" style="text-decoration:  none;" href="event/'.$eventId.'">
+										<h4 class="fundtitle">'.$eventName.' </h4>
+									</a>
+									<div style="width: 70%;float: left; height: 141px;">
+										<div class="md-card-content" style="min-height: 110px;">
+											';?>
+												<?php echo $eventDesc;?>
+											<?php
+											echo'
+
+										</div>
+										<div class="bottomLocation" style="float: right;padding-right: 10px;">At '.$eventLocation.'</div> 
+									</div>
+									<div id="countDown" style="width: 30%;background: #217468;float: right;height: 141px;border-radius: 0 0 5px 0;color: #fff;font-weight:  800;text-align:  center;padding-top: 40px;font-size: 18px;">2 Days <br> Remaining</div>
+								</div>
+								</a>
+							</div>
+							<br>
+						</li>';
+						
+					}
+
+					$sqlEvents = $eventDb->query("SELECT * FROM events WHERE status = '1'");
+					
+					while($rowEvents = mysqli_fetch_array($sqlEvents))
+					{
+						$eventId 		= $rowEvents['id_event'];
+						$eventName 		= $rowEvents["Event_Name"];
+						$eventImage 	= $rowEvents["Event_Cover"];
+						$eventDesc		= $rowEvents['Event_Desc'];
+						$eventStart		= $rowEvents['Event_End'];
+						// $allSeats		= $rowEvents['available_place'];
+						// $boockedSeats	= $rowEvents['counting'];
+						$eventLocation	= $rowEvents['Event_Location'];
+						
+						$prog = $boockedSeats*100/$allSeats;
+						$prog = round($prog);
+						if($prog < 10){$size=10;} else{$size=$prog;}
+						echo'<li>
+							<div class="md-card" style="border-radius: 5px;">
+								<a href="event/l'.$eventId.'">
+								<div class="md-card-content padding-reset" style="height: 341px;">
+									
+									<div class="cont-image" style="background-image: url(proimg/6.jpg); border-radius: 5px 5px 0 0;">
+										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(event/'.$eventImage.');"></div>
+									</div>
+									
+									
+									<a class="fundname" style="text-decoration:  none;" href="event/l'.$eventId.'">
 										<h4 class="fundtitle">'.$eventName.' </h4>
 									</a>
 									<div style="width: 70%;float: left; height: 141px;">
