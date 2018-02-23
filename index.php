@@ -384,6 +384,7 @@
 			
 			
 				<?php
+					error_reporting(E_ALL);
 					echo '<ul class="uk-grid uk-grid-small  uk-grid-width-medium-1-3 uk-grid-width-large-1-3">';
 						
 					include 'db.php';
@@ -517,7 +518,7 @@
 						
 					}
 
-					$sqlEvents = $eventDb->query("SELECT * FROM events WHERE status = '1'");
+					$sqlEvents = $eventDb->query("SELECT * FROM events WHERE status = '1'") or die("Error getting events $eventDb->error");
 					
 					while($rowEvents = mysqli_fetch_array($sqlEvents))
 					{
