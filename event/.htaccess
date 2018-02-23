@@ -2,4 +2,3 @@ RewriteEngine On
 RewriteRule ^embed([0-9]+) embed.php?groupId=$1 [NC,L]
 RewriteRule ^receipt([0-9]+) receipt.php?receiptCode=$1 [NC,L]
 RewriteRule ^([0-9]+) index.php?groupId=$1 [NC,L]
-RewriteRule ^([0-9]+) index.php?groupId=$2 [NC,L]

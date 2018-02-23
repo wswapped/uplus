@@ -9,6 +9,7 @@ if(!$_GET['groupId']){
 }
 
 include "../db.php";
+include_once 'functions.php';
 $eventId = $eventDb->real_escape_string($_GET['groupId']??"");
 // var_dump($eventId);
 if($eventId[0] == 'l'){
@@ -16,90 +17,110 @@ if($eventId[0] == 'l'){
 	die(0);
 }
 
-$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE id = \"$eventId\" ");
-$rowEvents = $sqlEvents->fetch_assoc();			
+//Gettting data on events
 
-$eventId 		= $rowEvents['id'];
-$eventName 		= $rowEvents["name"];
-$eventImage 	= "http://akokanya.com/".$rowEvents["file2"];
-$eventDesc		= $rowEvents['details'];
-$eventStart		= $rowEvents['to_time'];
-$allSeats		= $rowEvents['available_place'];
-$boockedSeats	= $rowEvents['counting'];
-$eventLocation	= $rowEvents['location'];
+$rowEvents = $eventData = get_event($eventId);
+if($eventData){
+	$eventName 		= $rowEvents["Event_Name"];
+	$eventImage 	= $rowEvents["Event_Cover"];
+	$eventDesc		= $rowEvents['Event_Desc'];
+	$eventStart		= $rowEvents['Event_End'];
+	$eventLocation	= $rowEvents['Event_Location'];
 
-$prog = $boockedSeats*100/$allSeats;
-$prog = round($prog);
-if($prog < 10){$size=10;} else{$size=$prog;}
+	$prog = 10;
+	$prog = round($prog);
+	if($prog < 10){$size=10;} else{$size=$prog;}
+}else{
+	$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE id = \"$eventId\" ");
+	$rowEvents = $sqlEvents->fetch_assoc();			
+
+	$eventId 		= $rowEvents['id'];
+	$eventName 		= $rowEvents["name"];
+	$eventImage 	= "http://akokanya.com/".$rowEvents["file2"];
+	$eventDesc		= $rowEvents['details'];
+	$eventStart		= $rowEvents['to_time'];
+	$allSeats		= $rowEvents['available_place'];
+	$boockedSeats	= $rowEvents['counting'];
+	$eventLocation	= $rowEvents['location'];
+
+	$prog = 10;
+	$prog = round($prog);
+	if($prog < 10){$size=10;} else{$size=$prog;}
+
+}
 
 
 
-if (isset($_GET['groupId']))
-{	
-	$groupID = (int)$_GET['groupId'];
-	require_once "parsedown/Parsedown.php";
-	$parsedown = new parsedown();
+
+
+
+
+// if (isset($_GET['groupId']))
+// {	
+// 	$groupID = (int)174;
+// 	require_once "parsedown/Parsedown.php";
+// 	$parsedown = new parsedown();
 	
-	$sql2 = $db->query("SELECT * FROM groups WHERE archive is null AND id='$groupID' "); 
-	$countAvail = mysqli_num_rows($sql2);
-	if($countAvail > 0){
-	while($row = mysqli_fetch_array($sql2)){ 
-		$groupName = $row["groupName"];
-		$groupImage = $row["groupImage"];
-		$groupTargetType= $row['groupTargetType'];
-		$targetAmount 	= round($row['targetAmount']);
-		$perPersonType 	= $row['perPersonType'];
-		$perPerson 		= round($row['perPerson']);
-		$adminId 		= $row['adminId'];
+// 	$sql2 = $db->query("SELECT * FROM groups WHERE archive is null AND id='$groupID' "); 
+// 	$countAvail = mysqli_num_rows($sql2);
+// 	if($countAvail > 0){
+// 	while($row = mysqli_fetch_array($sql2)){ 
+// 		$groupName = $row["groupName"];
+// 		$groupImage = $row["groupImage"];
+// 		$groupTargetType= $row['groupTargetType'];
+// 		$targetAmount 	= round($row['targetAmount']);
+// 		$perPersonType 	= $row['perPersonType'];
+// 		$perPerson 		= round($row['perPerson']);
+// 		$adminId 		= $row['adminId'];
 
-		$sql3 = $db->query("SELECT * FROM users WHERE id='$adminId' "); 
-		$rowAdmin = mysqli_fetch_array($sql3); 
+// 		$sql3 = $db->query("SELECT * FROM users WHERE id='$adminId' "); 
+// 		$rowAdmin = mysqli_fetch_array($sql3); 
 
-		$adminPhone 	= $rowAdmin['phone'];
-		$adminImage 	= $rowAdmin['userImage'];
-		$adminName 		= $rowAdmin['name'];
-		$groupDesc 		= $row["groupDesc"];
-		$groupStory 	= $parsedown->text($row["groupStory"]);
-		$createdDate 	= $row["createdDate"];
-		$contributionDate = $row["expirationDate"];
-		$visits 		= $row["visits"];
+// 		$adminPhone 	= $rowAdmin['phone'];
+// 		$adminImage 	= $rowAdmin['userImage'];
+// 		$adminName 		= $rowAdmin['name'];
+// 		$groupDesc 		= $row["groupDesc"];
+// 		$groupStory 	= $parsedown->text($row["groupStory"]);
+// 		$createdDate 	= $row["createdDate"];
+// 		$contributionDate = $row["expirationDate"];
+// 		$visits 		= $row["visits"];
 		
-		$newVisit 		= $visits + 1;
-		$sqlVisits = $db->query("UPDATE `groups` SET visits = '$newVisit' WHERE id ='$groupID'");
+// 		$newVisit 		= $visits + 1;
+// 		$sqlVisits = $db->query("UPDATE `groups` SET visits = '$newVisit' WHERE id ='$groupID'");
 		
 		
-		$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupID'))),0) AS groupBalance FROM rtgs.groups g");
-		$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
+// 		$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupID'))),0) AS groupBalance FROM rtgs.groups g");
+// 		$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
 				
-		$currentAmount = $gBalanceRow['groupBalance'];
-		if ($targetAmount == 0) {
-			$targetAmount =1;
-		}
-		$prog = $currentAmount*100/$targetAmount;
-		$progressing =$prog + (20*$prog/100);
+// 		$currentAmount = $gBalanceRow['groupBalance'];
+// 		if ($targetAmount == 0) {
+// 			$targetAmount =1;
+// 		}
+// 		$prog = $currentAmount*100/$targetAmount;
+// 		$progressing =$prog + (20*$prog/100);
 		
-	}
-	$sqladminId = $db->query("SELECT id adminId, gender adminGender FROM users WHERE id = '$adminId'");
-	$rowAdminId = mysqli_fetch_array($sqladminId);
-	$adminGender = $rowAdminId["adminGender"];
+// 	}
+// 	$sqladminId = $db->query("SELECT id adminId, gender adminGender FROM users WHERE id = '$adminId'");
+// 	$rowAdminId = mysqli_fetch_array($sqladminId);
+// 	$adminGender = $rowAdminId["adminGender"];
 	
-		if($currentAmount == ''){
-			$currentAmount = 0;
-		}
-		$sqlcountcontr = $db->query("SELECT memberId FROM members WHERE groupId = '$groupID'");
-		$countContr = mysqli_num_rows($sqlcountcontr);
+// 		if($currentAmount == ''){
+// 			$currentAmount = 0;
+// 		}
+// 		$sqlcountcontr = $db->query("SELECT memberId FROM members WHERE groupId = '$groupID'");
+// 		$countContr = mysqli_num_rows($sqlcountcontr);
 														
-	}
-	else
-	{
-		echo 'This Group Does Not Exist';
-		exit();
-	}
-}
-else
-{
-	echo 'Error';
-}
+// 	}
+// 	else
+// 	{
+// 		echo 'This Group Does Not Exist';
+// 		exit();
+// 	}
+// }
+// else
+// {
+// 	echo 'Error';
+// }
 ?>
 
 <!doctype html>
@@ -108,7 +129,7 @@ else
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta property="fb:app_id"             content="1822800737957483">
-	<meta property="og:url"                content="https://www.uplus.rw/f/i<?php echo $groupID?>" >
+	<meta property="og:url"                content="https://www.uplus.rw/event/<?php echo $eventId?>" >
 	<meta property="og:type"               content="article" >
 	<meta property="og:title"              content="<?php echo $groupName?> (<?php echo number_format($targetAmount);?> Rwf)">
 	<meta property="og:description"        content="<?php echo $groupDesc?>">
@@ -262,7 +283,7 @@ else
 						<div class="titleOverlay">
 							<div class="fundTitle">
 								<h4 class="fundName"><?php echo $eventName;?></h4>
-								<h6 class="fundDesc"><?php echo $groupDesc;?><br><br></h6>
+								<h6 class="fundDesc"><?php echo $eventDesc;?><br><br></h6>
 							</div>
 						</div>
 						<div class="fundImg" style="background-image: url(<?php echo $eventImage;?>);"></div>
