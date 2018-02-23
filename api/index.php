@@ -1553,10 +1553,10 @@
 		$data = curl_exec($ch);//get curl response
 		//done
 		curl_close($ch);
-
+		
 		$ticket = array();
-		$ticket = array(
-			   		"ticketCode" => $ticketCode
+		$ticket[] = array(
+			   	"ticketCode" => $ticketCode
 			   );
 
 		mysqli_close($db);
