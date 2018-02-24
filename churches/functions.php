@@ -399,7 +399,7 @@
     function sendsms($phone, $message, $subject=""){
         $recipients     = $phone;
         $data = array(
-            "sender"        =>'Church Test',
+            "sender"        =>'INTWARI',
             "recipients"    =>$recipients,
             "message"       =>$message,
         );

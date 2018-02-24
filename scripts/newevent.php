@@ -29,11 +29,27 @@ if (isset($_POST['eventTitle'])) {
 
 	$withdrawAccount 	= $_POST['withdrawAccount'];
 	$withdrawAccountNo 	= $_POST['withdrawAccountNo'];
+	$event_cover = $_POST['event_cover']??"";
+
+
+	//checking file
+	$file_input_name = 'event_cover';
+	if($_FILES[$file_input_name]['size']>0){
+
+		$target_dir = "assets/images/events/";
+		$tmp_file = basename($_FILES[$file_input_name]['tmp_name']);
+		$target_file = $target_dir.basename($_FILES[$file_input_name]['name']);
+		$uploadOk = 1;
+		$FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+		move_uploaded_file(basename($_FILES[$file_input_name]['tmp_name']), $target_file);
+	}else{
+		echo "No file uploaded";
+	}
 
 	//mysql_query for inserting of the events
 	$eventDb->query("INSERT INTO 
 		events (Event_Name, Event_Cover, Event_Desc, Event_Location, phone, Event_Start, Event_End, user_id, createdBy) 
-		VALUES('$eventTitle','test.jpg', 'testDesc', '$eventLocation', '0788556677', '$eventStarting', '$eventEnding', '1', '1')")or die(mysqli_error($eventDb));
+		VALUES('$eventTitle', \"$event_cover\", 'testDesc', '$eventLocation', '0788556677', '$eventStarting', '$eventEnding', '1', '1')")or die(mysqli_error($eventDb));
 	if($eventDb){
 	 $event_last_id =mysqli_insert_id($eventDb);
 	}

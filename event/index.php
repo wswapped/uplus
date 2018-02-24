@@ -11,6 +11,7 @@ if(!$_GET['groupId']){
 include "../db.php";
 include_once 'functions.php';
 $eventId = $eventDb->real_escape_string($_GET['groupId']??"");
+$eventLink = 'https://uplus.rw/event/'.$eventId;
 // var_dump($eventId);
 if($eventId[0] == 'l'){
 	echo "string";
@@ -51,6 +52,7 @@ if($eventData){
 
 }
 
+$social_media_message = "";
 
 
 
@@ -133,11 +135,11 @@ if($eventData){
 	<meta property="fb:app_id"             content="1822800737957483">
 	<meta property="og:url"                content="https://www.uplus.rw/event/<?php echo $eventId?>" >
 	<meta property="og:type"               content="article" >
-	<meta property="og:title"              content="<?php echo $groupName?> (<?php echo number_format($targetAmount);?> Rwf)">
-	<meta property="og:description"        content="<?php echo $groupDesc?>">
-	<meta property="og:image"              content="<?php echo $groupImage;?>" >
+	<meta property="og:title"              content="<?php echo $eventName?>">
+	<meta property="og:description"        content="<?php echo $eventDesc?>">
+	<meta property="og:image"              content="<?php echo $eventImage;?>" >
 
-	<meta name="description" content="<?php echo $groupDesc?>">
+	<meta name="description" content="<?php echo $eventDesc?>">
 
 
 
@@ -156,7 +158,7 @@ if($eventData){
 	<!-- Tile icon for Win8 (144x144 + tile color) -->
 
 	<link rel="shortcut icon" href="images/favicon.png">
-	<link rel="canonical" href="https://www.uplus.rw/f/i<?php echo $groupID?>">
+	<link rel="canonical" href="https://www.uplus.rw/event/<?php echo $eventId?>">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!--<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.green-indigo.min.css" />
@@ -232,6 +234,7 @@ if($eventData){
 	 js.src = "//connect.facebook.net/en_US/sdk.js";
 	 fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+*/
 </script>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -272,9 +275,9 @@ if($eventData){
 							</div>
 							<div style="margin: -5px 0 0 -5px; max-height: 176px;overflow: hidden;">
 							<p>
-								<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="<?php echo $groupImage;?>"><span style="background-image: url(<?php echo $groupImage;?>);" class="gallery"></span></a>
-								<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="<?php echo $groupImage;?>"><span style="background-image: url(<?php echo $groupImage;?>);" class="gallery"></span></a>
-								<a class="fancybox-thumbs" title="<?php echo $groupName;?>" data-fancybox-group="thumb" href="<?php echo $groupImage;?>"><span style="background-image: url(<?php echo $groupImage;?>);" class="gallery"></span></a>
+								<a class="fancybox-thumbs" title="<?php echo $eventName;?>" data-fancybox-group="thumb" href="<?php echo $eventImage;?>"><span style="background-image: url(<?php echo $eventImage;?>);" class="gallery"></span></a>
+								<a class="fancybox-thumbs" title="<?php echo $eventName;?>" data-fancybox-group="thumb" href="<?php echo $eventImage;?>"><span style="background-image: url(<?php echo $eventImage;?>);" class="gallery"></span></a>
+								<a class="fancybox-thumbs" title="<?php echo $eventName;?>" data-fancybox-group="thumb" href="<?php echo $eventImage;?>"><span style="background-image: url(<?php echo $eventImage;?>);" class="gallery"></span></a>
 							</p>
 							</div>
 						</div>
@@ -295,35 +298,12 @@ if($eventData){
 							<div class="mdl-cell mdl-cell--8-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
 								<p>Location: <?php echo $eventLocation; ?></p>
 								<p>When: <?php echo $eventStart; ?></p>
-								<!-- <div style="font-size: 20px; font-weight: 800;">
-									<?php 
-										echo number_format($currentAmount);
-									?>RWF
-									<b style="float: right;">
-
-										<?php 
-										if($groupTargetType == 'fixed'){
-											echo number_format($targetAmount).'Rwf';
-											}
-										elseif($groupTargetType == 'any'){
-											echo 'any amount';
-											}
-										?></b>
-								</div> -->
-								<!-- <div class="progress" style="background-color: #e1eae9;">
-								
-									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="<?php echo $prog;?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php if($prog < 10){echo 10;} else{echo $prog;}?>%">
-									  <?php echo number_format($prog);?>%
-									</div>
-								</div> -->
-								<!-- <span style="float: right" id="countDown"></span> -->
 							</div>
 							<div class="mdl-cell mdl-cell--4-col contribution2" id="contdiv">
 							    <span class="sharing">
 									<i class="fa fa-share shareicon"></i>
 								</span>	
 								<span class="contshare">
-							    		<button  href="#sendMoney" class="mdl-button mdl-button--raised fancybox" id="contbtn">GET TICKETS</button>
 								</span>
 								<span class="sharing">
 							    	<i class="fa fa-comment shareicon"></i>
@@ -335,7 +315,7 @@ if($eventData){
 						<div onclick="openCity(event, '1')" id="defaultOpen" class="mdl-card mdl-cell mdl-cell--3-col activeTab">
 							<span class="currentSpan" style="height: 20%"></span>
 							<div id="webTabTitle1">TICKETS</div>
-							<div id="mobTabTitle1"><i class="fa fa-group"></i> <?php echo $countContr;?> Members</div>
+							<!-- <div id="mobTabTitle1"><i class="fa fa-group"></i> Members</div> -->
 						</div>
 						<div onclick="openCity(event, '2'), changeTab(tab=2)" class=" mdl-card mdl-cell mdl-cell--3-col otherTab">
 							<span class="updatesLogo"><i class="fa fa-globe"></i></span>
@@ -343,7 +323,7 @@ if($eventData){
 							<div id="mobTabTitle2">Chat</div>
 						</div>
 						<div class="mdl-card mdl-cell mdl-cell--3-col fbShare" id="shareBtn">Share facebook</div>
-						<div onclick="javascript:window.open('http://twitter.com/share?url=https://www.uplus.rw/f/i<?php echo $groupID;?>;text=<?php echo $adminName;?> Is rasing <?php echo number_format($targetAmount);?>Rwf for <?php echo $groupName;?>. You can contribute using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
+						<div onclick="javascript:window.open('http://twitter.com/share?url=$eventLink;text=Get your tickets to <?php echo $eventName ?> via uPlus. You can buy using using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
 							share Twitter</div>
 					</section>
 					<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
@@ -353,123 +333,39 @@ if($eventData){
 									<?php
 										for($n=0; $n<count($tickets); $n++){
 											$ticket = $tickets[$n];
+											$ticket_price = $ticket['price'];
 											?>
 												<li class="mdl-list__item mdl-list__item--two-line">
 												    <span class="mdl-list__item-primary-content">
 												    	<i class="fas fa-ticket-alt"></i>
 												      <!-- <i class="material-icons mdl-list__item-avatar">person</i> -->
-												      <span><?php echo $ticket['name']; ?></span>
-												      <span class="mdl-list__item-sub-title"><?php echo $ticket['num'] ?> remaining</span>
+												      <span><?php echo $ticket['name']." - ".number_format($ticket_price); ?> RWF</span>
+												      <span class="mdl-list__item-sub-title"><?php echo $ticket['number'] ?> remaining</span>
 												    </span>
 												    <span class="mdl-list__item-secondary-content">
-												      <span class="mdl-list__item-secondary-info">Actor</span>
-												      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+												    	<button href="#sendMoney" class="mdl-button mdl-button--raised getTicket fancybox" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket['name'] ?>" id="contbtn">BOOK</button>
+												      <!-- <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a> -->
 												    </span>
 												  </li>
 											<?php
 										}
 									?>
-
-								  <li class="mdl-list__item mdl-list__item--two-line">
-								    <span class="mdl-list__item-primary-content">
-								    	<i class="fas fa-ticket-alt"></i>
-								      <!-- <i class="material-icons mdl-list__item-avatar">person</i> -->
-								      <span>Bryan Cranston</span>
-								      <span class="mdl-list__item-sub-title">62 Episodes</span>
-								    </span>
-								    <span class="mdl-list__item-secondary-content">
-								      <span class="mdl-list__item-secondary-info">Actor</span>
-								      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
-								    </span>
-								  </li>
-								  <li class="mdl-list__item mdl-list__item--two-line">
-								    <span class="mdl-list__item-primary-content">
-								      <i class="material-icons mdl-list__item-avatar">person</i>
-								      <span>Aaron Paul</span>
-								      <span class="mdl-list__item-sub-title">62 Episodes</span>
-								    </span>
-								    <span class="mdl-list__item-secondary-content">
-								      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
-								    </span>
-								  </li>
-								  <li class="mdl-list__item mdl-list__item--two-line">
-								    <span class="mdl-list__item-primary-content">
-								      <i class="material-icons mdl-list__item-avatar">person</i>
-								      <span>Bob Odenkirk</span>
-								      <span class="mdl-list__item-sub-title">62 Episodes</span>
-								    </span>
-								    <span class="mdl-list__item-secondary-content">
-								      <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
-								    </span>
 								  </li>
 								</ul>
 							</div>
 							<div id="membersMob">
 								<div id="membersMobCont" style="padding-top: 15px">
-									<?php
-										$sqlcontributors = $db->query("SELECT memberId, memberImage, COALESCE(memberName, memberPhone) memberName FROM members WHERE groupId = '$groupID'");
-										$ncontrib = 0;
-										while($member = mysqli_fetch_array($sqlcontributors))
-										{
-											$memberId	= $member['memberId'];
-											$sqlContribution = $db->query("SELECT  
-											IFNULL(
-													(
-														SELECT sum(t.amount) 
-														FROM rtgs.grouptransactions t 
-														WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.memberId = '$memberId' AND t.groupId = '$groupID'))
-													),0
-												) AS memberContribution 
-												FROM uplus.members m")	or die(mysql_error($sqlContribution));
-												$contributionRow = mysqli_fetch_array($sqlContribution);
-												$memberContribution = $contributionRow['memberContribution'];
-
-											$ncontrib++;
-											echo '
-											<div style="padding-bottom: 15px; float: left; min-width: 235px;">
-											<div class="avatars" style="cursor: pointer; background-image: url('.$member['memberImage'].');"></div>
-											<div style="cursor: pointer; padding-top: 5px;padding-left: 40px;"><a style="cursor: pointer; text-decoration: none;
-											font-weight: 400;
-											">'.$member['memberName'].'</a><br/>'.number_format($memberContribution).' Rwf</div>
-											</div>';
-										}
-									?>
 								</div>
 							</div> 
 						</div>
 						<div id="2" class="tabcontent">
-							<?php
-								$sqlgetUpdates = $db->query("SELECT * FROM updatestransaction WHERE groupId = '$groupID' ORDER  BY id DESC");
-								 $countUpdates = mysqli_num_rows($sqlgetUpdates);
-								if($countUpdates > 0){
-									while($rowUpdates = mysqli_fetch_array($sqlgetUpdates)){
-							?>
-							<section class="section--center mdl-grid mdl-grid--no-spacing" style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
-				            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: unset;">
-									<table>
-										<tr>
-											<td style=" padding-right: 8px;">
-												<img src=""></td>
-											<td>
-												<small style="#657786">On (<?php echo strftime("%d %b", strtotime($rowUpdates['createdDate']));?>)</small>
-												<p style="font-size: 16px; font-weight: normal;line-height: 1.38;"><?php echo $rowUpdates['body'];?>.</p> 
-											</td> 
-										</tr>
-									</table>
-									<textarea hidden><iframe src="https://www.uplus.rw/f/embed<?php echo $groupID;?>" width="300px" height="445px" frameborder="0" scrolling="no"></iframe></textarea>
-								</div> 
-							</section>
-							<?php }
-								}
-							?>
 							<section class="section--center mdl-grid mdl-grid--no-spacing " style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
 				            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: unset;">
 									<table>
 										<tr>
 											<td style=" padding-right: 8px;">
 														<img src=""></td>
-											<td>
-												<p style="font-size: 14px;font-weight: normal;line-height: 1.38;">On (<?php echo '<small>'.$createdDate.'</small>) <br/>'; if($adminGender == 'male'){echo '<a href="javascript:void()" style="color: #006157;">Mr. ';}else{echo '<a href="javascript:void()" style="color: #006157;">Mrs. ';} echo ''.$adminName.'</a>';?>.<span style="color:#90949c">Created this contribution group.</span></p> 
+											<td> 
 											</td> 
 										</tr>
 									</table>
@@ -480,18 +376,11 @@ if($eventData){
 				</div>
 			</div>
 		</div>
-        <!--<footer class="mdl-mega-footer" style="background: #007569 !important;z-index: 50;position: relative;">
-          <div class="mdl-mega-footer--bottom-section">
-            <div class="mdl-logo">
-              Copyright © 2016 uplus mutual partner, All rights reserved.
-            </div>
-          </div>
-        </footer>-->
 	</main>
 </div>
 <div id="sendMoney">
 	<div class="dialogHeader">
-		Money Transfer
+		Buy Ticket
 	</div>
 	<div id="contBody">
 		<div style="padding:0px; border-bottom: solid #ccc 0.1px;" >
@@ -515,29 +404,10 @@ if($eventData){
 					</div>
 				</div>
 			</div>
-		<input name="forGroupId" value="<?php echo $groupID;?>" hidden />
 		<div class="form-style-2" style="padding: 40px 20px 15px 20px;">
 			<label for="field1" style="width: 100%; text-align:center">
-				<span style="font-size: 14px; ">Amount <span class="required">*</span>
+				<span style="font-size: 14px; ">Pay <span id="modalTicketAmount" class="required"></span>
 				</span>
-				<?php 
-
-				if($perPersonType=='atleast')
-				{	?>
-					<input min="<?php echo $perPerson;?>" value="<?php echo $perPerson;?>" class="form-control input-field" name="field1" type="number" id="contributedAmount">
-					<?php 
-				}
-				elseif($perPersonType=='fixed')
-				{	?>
-					<input value="<?php echo $perPerson;?>" disabled class="form-control input-field" name="field1" type="number" id="contributedAmount">
-					<?php 
-				}
-				else
-				{	?>
-					<input placeholder="Rwf..." class="form-control input-field" name="field1" type="number" id="contributedAmount">
-					<?php 
-				}
-				?>
 				
 				<span>
 					<select HIDDEN disabled style="width: 33%;height: 30px; padding-top: 3px; font-size: 16px;" class="select-field" name="currency" id="currency">
@@ -553,7 +423,7 @@ if($eventData){
 			</label>
 			<div class="mdl-grid mdl-grid--no-spacing" >
 				<div class="transferBtn" style="padding: 0 8px 0 0"> 
-					<div onclick="frontpayement2(method=1)" class="payBtn" style="background-image: url(images/1.jpg);"></div>
+					<div onclick="frontpayement2(method = 1)" class="payBtn" style="background-image: url(images/1.jpg);"></div>
 				</div>
 				<div class="transferBtn"> 
 					<div onclick="frontpayement2(method=2)" class="payBtn" style="background-image: url(images/2.jpg);"></div>
@@ -585,7 +455,7 @@ document.getElementById('shareBtn').onclick = function() {
 	method: 'share',
 	mobile_iframe: true,
 	display: 'popup',
-	href: 'https://www.uplus.rw/f/index.php?groupId=<?php echo $groupID?>',
+	href: "$eventLink",
 	hashtag: '#kusanya',
 	quote: 'You can contribute with MTN mobile money, Tigo Cash and Visa Card.',
   }, function(response){});
@@ -594,7 +464,7 @@ document.getElementById('shareBtn').onclick = function() {
 <script>
 function changeTab(tab)
 {
-	var twitter="('http://twitter.com/share?url=https://www.uplus.rw/f/i<?php echo $groupID;?>;text=<?php echo $adminName;?> Is rasing <?php echo number_format($targetAmount);?>Rwf for <?php echo $groupName;?>. You can contribute using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')";
+	var twitter="('http://twitter.com/share?url=<?php echo $eventLink ?>;text=<?php echo $social_media_message; ?>size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')";
 	var shares = '<div class="mdl-card mdl-cell mdl-cell--3-col fbShare" id="shareBtn">Share facebook</div>'
 	+'<div onclick="javascript:window.open'+twitter+'" class="mdl-card mdl-cell mdl-cell--3-col twtShare">share Twitter</div>';
 	if(tab == 1)
@@ -640,7 +510,7 @@ function openCity(evt, cityName) {
 document.getElementById("defaultOpen").click();
 </script>
 <?php 
-	$nowthis = date_create($contributionDate);
+	$nowthis = date_create($eventStart);
 	$year = date_format($nowthis, "Y");
 	$month = date_format($nowthis, "n");
 	$day = date_format($nowthis, "j");
@@ -665,13 +535,13 @@ document.getElementById("defaultOpen").click();
 <script>
 function frontpayement2(method)
 {
-	var forGroupId = <?php echo $groupID;?>;
-	var adminName = '<?php echo $adminName;?>';
-	var adminId = '<?php echo $adminId;?>';
+	var forGroupId = <?php echo $eventId;?>;
+	var adminName = 'Clement';
+	var adminId = '1';
 	var contributedAmount =$("#contributedAmount").val();
 	var currency =$("#currency").val();
-	var minAmount = <?php echo $perPerson;?>;
-	var perPersonType = '<?php echo $perPersonType;?>';
+	var minAmount = 100;
+	var perPersonType = 100;
 	
 	if(perPersonType == 'atleast'){
 		if (contributedAmount < minAmount) 
@@ -788,7 +658,7 @@ function firtFinish(){
 }
 
 $.get("http://ipinfo.io", function (response) {
-pageId	= <?php echo $groupID;?>;
+pageId	= <?php echo $eventId;?>;
 //alert(pageId);
 country = response.country;
 region 	= response.region;
@@ -823,8 +693,8 @@ $.ajax({
 
 function errorselect(){
 	var contributedAmount =$("#contributedAmount").val();
-	var minAmount = <?php echo $perPerson;?>;
-	var perPersonType = '<?php echo $perPersonType;?>';
+	var minAmount = 100;
+	var perPersonType = 1000;
 	
 	if(perPersonType == 'min'){
 		if (contributedAmount < minAmount) 
@@ -841,7 +711,18 @@ function errorselect(){
 	document.getElementById('amountError').innerHTML = 'Please choose a payment method';
 			return false;
 }
+$(".getTicket").on("click", function(){
+	//Here we have to show the modal information
+	eventName = $(this).data('eventname')
+	price = $(this).data('price');
+	ticketName = $(this).data('ticket');
 
+	$("#modalTicketAmount").html(price+" Frw");
+
+})
+function log(data){
+	console.log(data)
+}
 </script>
 </body>
 </html>
