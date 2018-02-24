@@ -404,10 +404,14 @@ $social_media_message = "";
 					</div>
 				</div>
 			</div>
+		<input name="forGroupId" value="<?php echo $eventId;?>" hidden />
 		<div class="form-style-2" style="padding: 40px 20px 15px 20px;">
 			<label for="field1" style="width: 100%; text-align:center">
-				<span style="font-size: 14px; ">Pay <span id="modalTicketAmount" class="required"></span>
+				<span style="font-size: 14px; ">Amount <span class="required">*</span>
 				</span>
+				
+					<input value="500000" disabled class="form-control input-field" name="field1" type="number" id="contributedAmount">
+					
 				
 				<span>
 					<select HIDDEN disabled style="width: 33%;height: 30px; padding-top: 3px; font-size: 16px;" class="select-field" name="currency" id="currency">
@@ -423,7 +427,7 @@ $social_media_message = "";
 			</label>
 			<div class="mdl-grid mdl-grid--no-spacing" >
 				<div class="transferBtn" style="padding: 0 8px 0 0"> 
-					<div onclick="frontpayement2(method = 1)" class="payBtn" style="background-image: url(images/1.jpg);"></div>
+					<div onclick="frontpayement2(method=1)" class="payBtn" style="background-image: url(images/1.jpg);"></div>
 				</div>
 				<div class="transferBtn"> 
 					<div onclick="frontpayement2(method=2)" class="payBtn" style="background-image: url(images/2.jpg);"></div>
@@ -590,6 +594,8 @@ function backBtn()
 			data : {
 				back : back,
 				backMethod : method,
+				action: 'back',
+				event: <?php echo $eventId; ?>
 			},
 			success : function(html, textStatus){
 				$("#contBody").html(html);
@@ -718,6 +724,7 @@ $(".getTicket").on("click", function(){
 	ticketName = $(this).data('ticket');
 
 	$("#modalTicketAmount").html(price+" Frw");
+	$("#contributedAmount").val(price)
 
 })
 function log(data){

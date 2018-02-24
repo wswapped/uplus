@@ -532,72 +532,69 @@ function stopit()
 </script>
 
 <?php
-if(isset($_GET['back'])){
-	
-?>
-<div style="padding:0px; border-bottom: solid #ccc 0.1px;" >
-					<div class="sendMoneyProgress" id="sendMoneyProgress">
-						<div class="progressTab proTabActive">
-							<span class="step-number num-active">1</span>
-							<div class="step-desc">
-								<span class="step-title stepActive">Finance</span>
-							</div>
+if(isset($_GET['back'])){	
+	?>
+	<div style="padding:0px; border-bottom: solid #ccc 0.1px;" >
+		<div class="sendMoneyProgress" id="sendMoneyProgress">
+			<div class="progressTab proTabActive">
+						<span class="step-number num-active">1</span>
+						<div class="step-desc">
+							<span class="step-title stepActive">Finance</span>
 						</div>
-						<div class="progressTab proTabNormal">
-							<span class="step-number num-normal">2</span>
-							<div class="step-desc">
-								<span class="step-title stepNormal">Info</span>
-							</div>
-						</div>
-						<div class="progressTab proTabNormal">
-							<span class="step-number num-normal">3</span>
-							<div class="step-desc">
-								<span class="step-title stepNormal">Confirm</span>
-							</div>
-						</div>
+			</div>
+			<div class="progressTab proTabNormal">
+				<span class="step-number num-normal">2</span>
+				<div class="step-desc">
+					<span class="step-title stepNormal">Info</span>
+				</div>
+			</div>
+			<div class="progressTab proTabNormal">
+					<span class="step-number num-normal">3</span>
+					<div class="step-desc">
+						<span class="step-title stepNormal">Confirm</span>
 					</div>
-					<form id="payform" method="post" action="../3rdparty/rtgs/transfer.php">
-						<input name="bkVisa" hidden />
-						<input name="forGroupId" value="<?php echo $groupID;?>" hidden />
-						<div class="form-style-2" style="padding: 40px 20px 15px 20px;">
-							<label for="field1" style="width: 100%; text-align:center">
-								<span style="font-size: 14px; ">Amount <span class="required" style="color: red;">*</span>
-								</span>
-								<input value="<?php echo $_GET['back'];?>" class="form-control input-field" name="field1" type="number" id="contributedAmount">
-								<span>
-									<select HIDDEN disabled style="width: 33%;height: 30px; padding-top: 3px; font-size: 16px;" class="select-field" name="currency" id="currency">
-										<option value="RWF">RWF</option>
-										<option value="USD">USD</option>
-									</select>
-								</span>
-							</label>
-							<h6><div id="amountError" style="color: #f44336;"></div></h6><br>
-							<div class="mdl-grid mdl-grid--no-spacing" >
-								<div class="transferBtn" style="padding: 0 8px 0 0"> 
-									<div onclick="frontpayement2(method=1)" class="payBtn" style="background-image: url(images/1.jpg);"></div>
-									
-								</div>
-								<div class="transferBtn"> 
-									<div onclick="frontpayement2(method=2)" class="payBtn" style="background-image: url(images/2.jpg);"></div>
-									
-								</div>
-								<div class="transferBtn"> 
-									<div  onclick="frontpayement2(method=5)" class="payBtn" style="background-image: url(../proimg/banks/4.png);"></div>
-									
-								</div>
-								<div class="transferBtn" style="padding:0 0 0 8px"> 
-									<div  onclick="frontpayement2(method=6)" class="payBtn" style="background-image: url(../proimg/banks/5.png);"></div>
+			</div>
+		</div>
+		<form id="payform" method="post" action="../3rdparty/rtgs/transfer.php">
+							<input name="bkVisa" hidden />
+							<input name="forGroupId" value="<?php echo $groupID;?>" hidden />
+							<div class="form-style-2" style="padding: 40px 20px 15px 20px;">
+								<label for="field1" style="width: 100%; text-align:center">
+									<span style="font-size: 14px; ">Amount <span class="required" style="color: red;">*</span>
+									</span>
+									<input value="<?php echo $_GET['back'];?>" class="form-control input-field" name="field1" type="number" id="contributedAmount">
+									<span>
+										<select HIDDEN disabled style="width: 33%;height: 30px; padding-top: 3px; font-size: 16px;" class="select-field" name="currency" id="currency">
+											<option value="RWF">RWF</option>
+											<option value="USD">USD</option>
+										</select>
+									</span>
+								</label>
+								<h6><div id="amountError" style="color: #f44336;"></div></h6><br>
+								<div class="mdl-grid mdl-grid--no-spacing" >
+									<div class="transferBtn" style="padding: 0 8px 0 0"> 
+										<div onclick="frontpayement2(method=1)" class="payBtn" style="background-image: url(images/1.jpg);"></div>
+										
+									</div>
+									<div class="transferBtn"> 
+										<div onclick="frontpayement2(method=2)" class="payBtn" style="background-image: url(images/2.jpg);"></div>
+										
+									</div>
+									<div class="transferBtn"> 
+										<div  onclick="frontpayement2(method=5)" class="payBtn" style="background-image: url(../proimg/banks/4.png);"></div>
+										
+									</div>
+									<div class="transferBtn" style="padding:0 0 0 8px"> 
+										<div  onclick="frontpayement2(method=6)" class="payBtn" style="background-image: url(../proimg/banks/5.png);"></div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
-				</div>
-				<div class="mdl-dialog__actions" id="actionbc" style="padding:15px; display: block;">
-					<button type="button" style="background-color: #eee; color:#757575;" class="mdl-button btn-default">Back</button>
-					<button type="button" onclick="frontpayement2(method=<?php echo $_GET['backMethod'];?>)" style="float:right;background-color: #00897b;" class="mdl-button btn-success">Next</button>
-				</div>
-
-
+		</form>
+	</div>
+	<div class="mdl-dialog__actions" id="actionbc" style="padding:15px; display: block;">
+		<button type="button" style="background-color: #eee; color:#757575;" class="mdl-button btn-default">Back</button>
+		<button type="button" onclick="frontpayement2(method=<?php echo $_GET['backMethod'];?>)" style="float:right;background-color: #00897b;" class="mdl-button btn-success">Next</button>
+	</div>
 <?php
 }
 ?>
