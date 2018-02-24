@@ -295,6 +295,58 @@ if (!isset($_SESSION["phone1"])) {
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <td>ID</td>
+                      <td>Event Name</td>
+                      <td>Total Tickets</td>
+                      <td>Sold Tickets</td>
+                      <td>Remaining Tickets</td>
+                      <td>Shares</td>
+                      <td>Clicks</td>
+                      <td>Action</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                      $n=0;
+                      $sql = $eventDb->query("
+                        SELECT SUM(P.event_seats) seats, SUM(P.price*P.event_seats) price, E.Event_Name, E.id_event
+                        FROM pricing P 
+                        INNER JOIN eventing_pricing EP
+                        ON P.pricing_id = EP.pricing_code
+                        INNER JOIN events E
+                        ON E.id_event = EP.event_code
+                        WHERE E.id_event ='$eventId'");
+                      
+                        $row = mysqli_fetch_array($sql);
+
+                        $eventName      = $row['Event_Name'];
+                        $eventId      = $row['id_event'];
+                        $totalTickets     = $row['seats'];
+                        $ticketPrice    = $row['price'];
+                        $rowSold      = mysqli_fetch_array($eventDb->query("SELECT SUM(amount) soldAmount, COUNT(amount) soldTickets FROM transaction WHERE cust_event_choose = '$eventId'"));
+                        $totalSoldTickets = $rowSold['soldTickets'];
+                        $totalSoldAmount  = $rowSold['soldAmount'];
+                        $n++;
+                      echo'<tr>
+                        <td>'.$n.'</td>
+                        <td>'.$eventName.'</td>
+                        <td>'.number_format($totalTickets).' ('.number_format($ticketPrice).' Rwf)</td>
+                        <td>'.number_format($totalSoldTickets).' ('.number_format($totalSoldAmount).' Rwf)</td>
+                        <td>'.number_format($totalTickets-$totalSoldTickets).' ('.number_format($ticketPrice-$totalSoldAmount).' Rwf)</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><a href="editevent'.$eventId.'" class="btn btn-dark btn-xs" style="text-decoration: none;">Manage</a> | <a data-target="#addTopicForm" data-toggle="modal" class="btn btn-warning btn-xs" style="text-decoration: none;">Edit</a></td>
+                      </tr>';
+                      ?>
+                  </tbody>
+                </table>
+            </div>
+        </div>
         <div class="col-lg-12 col-sm-12">
         <div class="panel">
             <div class="panel-heading">
