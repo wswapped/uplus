@@ -7,7 +7,6 @@ ini_set('display_errors', 1);
 		die('Sorry we have some problem with the Social Database!');
 	}
 	
-	
 	$investdb = new mysqli("localhost", "clement", "clement123" , "commerce_db");
 	
 	if($investdb->connect_errno){

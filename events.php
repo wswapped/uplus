@@ -2,7 +2,7 @@
 
 <?php
  if (!isset($_SESSION["phone1"])) {
-    header("location: logout.php"); 
+    header("location: logout.php");
     exit();
 }
 
@@ -123,9 +123,8 @@
   
   <!-- Fonts 
   <link rel="stylesheet" href="assets/global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0">-->
-  <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0">
   <link rel="stylesheet" href="assets/global/fonts/material-design/material-design.min3f0d.css?v2.2.0">
-  <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0">
+  <!-- <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0"> -->
   <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700'>
 
   <link rel="stylesheet" type="text/css" href="assets/css/timeline.css">
@@ -311,7 +310,7 @@ WHERE E.user_id ='$thisid' GROUP BY E.id_event");
 										<td>'.number_format($totalTickets-$totalSoldTickets).' ('.number_format($ticketPrice-$totalSoldAmount).' Rwf)</td>
 										<td>0</td>
 										<td>0</td>
-										<td><a href="editCont'.$eventId.'" class="btn btn-dark btn-xs" style="text-decoration: none;">Manage</a> | <a data-target="#addTopicForm" data-toggle="modal" class="btn btn-warning btn-xs" style="text-decoration: none;">Edit</a></td>
+										<td><a href="editevent'.$eventId.'" class="btn btn-dark btn-xs" style="text-decoration: none;">Manage</a> | <a data-target="#addTopicForm" data-toggle="modal" class="btn btn-warning btn-xs" style="text-decoration: none;">Edit</a></td>
 									</tr>';
 									}
 									?>
@@ -396,9 +395,13 @@ WHERE E.user_id ='$thisid' GROUP BY E.id_event");
 							<input type="text" class="form-control" id="eventTitle" required name="eventTitle" placeholder="Event Title">
 						</div>
 						<div class="form-group">
-							<label class="control-label" for="eventLocation">Lacation</label>
-							<input type="text" class="form-control" id="eventLocation" required name="eventLocation" placeholder="Event Loacation">
-						</div>
+              <label class="control-label" for="eventLocation">Location</label>
+              <input type="text" class="form-control" id="eventLocation" required name="eventLocation" placeholder="Event Location">
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="eventLocation">Cover Image</label>
+              <input type="text" class="form-control" id="eventLocation" required name="event_cover" placeholder="Event Cover Image">
+            </div>
 						<div class="row">
 							<div class="col-md-6">
 								<label class="control-label" for="eventStarting">Starting</label>
@@ -526,7 +529,7 @@ WHERE E.user_id ='$thisid' GROUP BY E.id_event");
   <script src="assets/examples/js/forms/advanced.min.js"></script>
  
 <script>
- //  GROUP CREATION
+ //  Event CREATION
 
 	//1 Pass Info Then Finance // 2 Pass Finance Then Invite
 function nexttoaccounts(){

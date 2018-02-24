@@ -540,7 +540,7 @@
 								<div class="md-card-content padding-reset" style="height: 341px;">
 									
 									<div class="cont-image" style="background-image: url(proimg/6.jpg); border-radius: 5px 5px 0 0;">
-										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url(event/'.$eventImage.');"></div>
+										<div class="cont-image" style="height: 100%; width: 100%; border-radius: 5px 5px 0 0; background-image: url('.$eventImage.');"></div>
 									</div>
 									
 									
