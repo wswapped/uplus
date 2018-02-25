@@ -91,7 +91,6 @@ asiaO
                                         $first_user = $prayers[0];
                                         $fmessages = $memberprayers[$first_user['membername']];
 
-
                                     ?>
                                     <span class="uk-text-muted">Chat with</span> <a href="#" id="chat_user_name"><?php echo $first_user['membername']; ?></a>
                                 </h3>

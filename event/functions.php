@@ -7,12 +7,20 @@ function get_event($event){
 	if($eventData)
 	{
 		//getting tickets
+		// $tic = $eventDb->query("SELECT * FROM ticket WHERE event = \"$event\" ");
+		// $eventData['tickets'] = array();
+		// while ($ticket = $tic->fetch_assoc()) {
+		// 	# code...
+		// 	$eventData['tickets'][] = $ticket;
+		// }
+
 		$tic = $eventDb->query("SELECT * FROM ticket WHERE event = \"$event\" ");
-		$eventData['tickets'] = array();
-		while ($ticket = $tic->fetch_assoc()) {
-			# code...
-			$eventData['tickets'][] = $ticket;
-		}
+		// $eventData['tickets'] = array();
+		// while ($ticket = $tic->fetch_assoc()) {
+		// 	# code...
+		// 	$eventData['tickets'][] = $ticket;
+		// }
+
 	}
 	$eventData['agents'] = get_agents($event);
 	return $eventData;

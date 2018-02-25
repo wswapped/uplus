@@ -16,6 +16,7 @@
         //Getting broadcasts of user
         $cBroadcasts = $Broadcast->cBroadcast($userId, 105);
     ?>
+    <meta http-equiv="Content-Type" content="text/pdf">
 </head>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
@@ -457,9 +458,6 @@
         $(".showInvoice").on('click', function(){
             messageID = $(this).attr('data-mid');
 
-            mod = UIkit.modal("#loadInvoice");
-            mod.show();
-            return 0;
 
             //Getting current use details
             <?php
@@ -471,6 +469,8 @@
 
             fillindata('ifillin', 'name', usernames);
             fillindata('ifillin', 'church', church);
+
+            
 
             $.post('api/msg.php', {act:'det', id:messageID}, function(data){
                 try{

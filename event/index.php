@@ -25,7 +25,7 @@ if($eventData){
 	$eventName 		= $rowEvents["Event_Name"];
 	$eventImage 	= $rowEvents["Event_Cover"];
 	$eventDesc		= $rowEvents['Event_Desc'];
-	$eventStart		= $rowEvents['Event_End'];
+	$eventStart		= $rowEvents['Event_Start'];
 	$eventLocation	= $rowEvents['Event_Location'];
 
 	$prog = 10;
@@ -53,78 +53,6 @@ if($eventData){
 }
 
 $social_media_message = "";
-
-
-
-
-
-
-// if (isset($_GET['groupId']))
-// {	
-// 	$groupID = (int)174;
-// 	require_once "parsedown/Parsedown.php";
-// 	$parsedown = new parsedown();
-	
-// 	$sql2 = $db->query("SELECT * FROM groups WHERE archive is null AND id='$groupID' "); 
-// 	$countAvail = mysqli_num_rows($sql2);
-// 	if($countAvail > 0){
-// 	while($row = mysqli_fetch_array($sql2)){ 
-// 		$groupName = $row["groupName"];
-// 		$groupImage = $row["groupImage"];
-// 		$groupTargetType= $row['groupTargetType'];
-// 		$targetAmount 	= round($row['targetAmount']);
-// 		$perPersonType 	= $row['perPersonType'];
-// 		$perPerson 		= round($row['perPerson']);
-// 		$adminId 		= $row['adminId'];
-
-// 		$sql3 = $db->query("SELECT * FROM users WHERE id='$adminId' "); 
-// 		$rowAdmin = mysqli_fetch_array($sql3); 
-
-// 		$adminPhone 	= $rowAdmin['phone'];
-// 		$adminImage 	= $rowAdmin['userImage'];
-// 		$adminName 		= $rowAdmin['name'];
-// 		$groupDesc 		= $row["groupDesc"];
-// 		$groupStory 	= $parsedown->text($row["groupStory"]);
-// 		$createdDate 	= $row["createdDate"];
-// 		$contributionDate = $row["expirationDate"];
-// 		$visits 		= $row["visits"];
-		
-// 		$newVisit 		= $visits + 1;
-// 		$sqlVisits = $db->query("UPDATE `groups` SET visits = '$newVisit' WHERE id ='$groupID'");
-		
-		
-// 		$sqlGroupBalance = $outCon->query("SELECT IFNULL((SELECT sum(t.amount) FROM rtgs.grouptransactions t WHERE ((t.status = 'Successfull' AND t.operation = 'DEBIT') AND (t.groupId = '$groupID'))),0) AS groupBalance FROM rtgs.groups g");
-// 		$gBalanceRow 	= mysqli_fetch_array($sqlGroupBalance);
-				
-// 		$currentAmount = $gBalanceRow['groupBalance'];
-// 		if ($targetAmount == 0) {
-// 			$targetAmount =1;
-// 		}
-// 		$prog = $currentAmount*100/$targetAmount;
-// 		$progressing =$prog + (20*$prog/100);
-		
-// 	}
-// 	$sqladminId = $db->query("SELECT id adminId, gender adminGender FROM users WHERE id = '$adminId'");
-// 	$rowAdminId = mysqli_fetch_array($sqladminId);
-// 	$adminGender = $rowAdminId["adminGender"];
-	
-// 		if($currentAmount == ''){
-// 			$currentAmount = 0;
-// 		}
-// 		$sqlcountcontr = $db->query("SELECT memberId FROM members WHERE groupId = '$groupID'");
-// 		$countContr = mysqli_num_rows($sqlcountcontr);
-														
-// 	}
-// 	else
-// 	{
-// 		echo 'This Group Does Not Exist';
-// 		exit();
-// 	}
-// }
-// else
-// {
-// 	echo 'Error';
-// }
 ?>
 
 <!doctype html>
@@ -323,7 +251,7 @@ $social_media_message = "";
 							<div id="mobTabTitle2">Chat</div>
 						</div>
 						<div class="mdl-card mdl-cell mdl-cell--3-col fbShare" id="shareBtn">Share facebook</div>
-						<div onclick="javascript:window.open('http://twitter.com/share?url=$eventLink;text=Get your tickets to <?php echo $eventName ?> via uPlus. You can buy using using MTN mobile money, Tigo cash, Visa cards here:;size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
+						<div onclick="javascript:window.open('http://twitter.com/share?url=$eventLink;text=Get your tickets to <?php echo $eventName ?> via uPlus. You can buy using using MTN mobile money, Tigo cash, Visa cards here:<?php echo $eventLink; ?> size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
 							share Twitter</div>
 					</section>
 					<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
