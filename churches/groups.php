@@ -134,7 +134,7 @@
                                     <div class="md-card-toolbar-actions">
                                     <!-- <i class="md-icon material-icons md-color-blue-grey-500"></i>
                                         <i class="md-icon material-icons md-color-light-blue-500"></i> -->
-                                        <i class="md-icon material-icons md-color-red-500" title="Add a member" id="grp_add_member">delete</i>
+                                        <i class="md-icon material-icons md-color-red-500" title="Add a member" id="grp_remove" data-grp = <?php echo $group_id; ?> >delete</i>
                                     </div>
                                 </div>
                                 <div class="md-card-content">
@@ -566,17 +566,17 @@
     <script type="text/javascript" src="js/groups.js"></script>
     <script type="text/javascript">
         function loadmaps(){
-            return 0;
             //Checking pagename
             pagename = $("#page_content_inner").attr('data-page');
-            group_location = $(".group_map").attr("data-location");s
+
+            group_location = $(".group_map").attr("data-location");
             if(pagename == 'group'){
                 //Loading the group's map
                 var kigali = {lat:-1.991019, lng:30.096819};
                 var map_location = {lat:parseFloat(group_location.split(",")[0]), lng:parseFloat(group_location.split(",")[1])};
                 log(map_location);
                 var map = new google.maps.Map(document.querySelector('.group_map'), {
-                    zoom: 16,
+                    zoom: 17,
                     center: map_location
                 });
                 var marker = new google.maps.Marker({

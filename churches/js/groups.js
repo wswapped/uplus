@@ -91,6 +91,18 @@ $("#grp_add_member").on('click', function(){
     modal.show();
 });
 
+//Grouo removing
+$("#grp_remove").on('click', function(){
+    ok = window.confirm("Are you sure you want to delete this group, No recovery!");
+    groupid = $(this).data('grp')
+
+    if(ok){
+        $.post('api/index.php', {action:'delete_group', group:groupid}, function(){
+            window.location = 'groups.php'
+        })
+    }
+})
+
 //Checkall enables the checking of all other members
 $(".checkall").on('change', function(){
     //getting all members to be checked

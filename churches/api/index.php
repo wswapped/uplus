@@ -131,6 +131,12 @@
             $sql = "DELETE FROM group_members WHERE member = \"$members[$n]\" AND groupid = \"$group\" ";
             $conn->query($sql) or die("Can't remove user from group $conn->error");            
         }
+    }else if($action == 'delete_group'){
+        //Deleting group
+        $groupid = $request['group']??0;
+
+        $conn->query("DELETE FROM groups WHERE id = \"$groupid\" ");
+
     }else if($action == 'invoice'){        
     }else if($action == "create_branch"){
         //creating branch

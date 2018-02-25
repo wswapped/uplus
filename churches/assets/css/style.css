@@ -9174,7 +9174,9 @@ pre.line-numbers>code {
     position: relative;
     padding-right: 24px!important
 }
-
+.group_map {
+    min-height: 400px;
+}
 .selectize-control.plugin-remove_button [data-value] .remove {
     z-index: 1;
     position: absolute;
