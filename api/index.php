@@ -1428,7 +1428,8 @@
 	}
 
 	
-	function eventUpdate(){
+	function eventUpdate()
+	{
 		global $eventDb;
 		$url = "http://akokanya.com/api/events/?email=muhirwaclement@gmail.com&password=clement123 ";
 
@@ -1602,7 +1603,7 @@
 	function addAgent()
 	{
 		include 'db.php';
-		include 'event/functions.php'
+		include '../event/functions.php';
 		//adding agent to the event
 		$agentPhone = $_POST['phone']??"";
 		$event = $_POST['event']??""; 
@@ -1648,8 +1649,8 @@
 						}
 					}
 
-					//Adding user as an agent
-					addAgent($user, $event, $tickets);
+					//Adding user as an agent and tickets
+					addAgentTickets($user, $event, $tickets);
 
 					mysqli_close($db);
 					mysqli_close($outCon);

@@ -27,7 +27,7 @@
         <div id="page_content_inner">
 
             <!-- statistics (small charts) -->
-            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium hierarchical_show" data-uk-grid-margin>
                 <div>
                     <div class="md-card">
                         <?php
@@ -42,6 +42,9 @@
                 </div>
                 <div>
                     <div class="md-card">
+                        <?php
+
+                        ?>
                         <div class="md-card-content">
                             <?php
                                 $groups = list_groups($churchID);
@@ -56,8 +59,8 @@
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_orders peity_data">64/100</span></div>
-                            <span class="uk-text-muted uk-text-small">Orders Completed</span>
-                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript>64</noscript></span>%</h2>
+                            <span class="uk-text-muted uk-text-small">SMS Remaining</span>
+                            <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo(smsbalance($churchID)); ?></noscript></span></h2>
                         </div>
                     </div>
                 </div>

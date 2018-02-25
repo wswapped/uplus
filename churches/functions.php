@@ -230,7 +230,14 @@
 
         return true;
     }
+    function smsbalance($churchID){
+      //SMS Balance
+      global $conn;
 
+      $query = $conn->query("SELECT * FROM smsbalance WHERE church = \"$churchID\" LIMIT 1 ") or die("Cant get the balance $conn->error");
+      $data = $query->fetch_assoc();
+      return $data['balance'];
+    }
     function msend($logID){
         include 'db.php';
         //Getting details of the message log

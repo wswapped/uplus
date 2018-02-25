@@ -128,17 +128,12 @@ if (!isset($_SESSION["phone1"])) {
 
       <!-- Page -->
       <link rel="stylesheet" href="assets/examples/css/forms/advanced.min3f0d.css?v2.2.0">
-
-      
-      
-      
-      
       
       <!-- Fonts 
       <link rel="stylesheet" href="assets/global/fonts/web-icons/web-icons.min3f0d.css?v2.2.0">-->
-      <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0">
+      <!-- <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0"> -->
       <link rel="stylesheet" href="assets/global/fonts/material-design/material-design.min3f0d.css?v2.2.0">
-      <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0">
+      <!-- <link rel="stylesheet" href="assets/global/fonts/brand-icons/brand-icons.min3f0d.css?v2.2.0"> -->
       <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700'>
 
       <link rel="stylesheet" type="text/css" href="assets/css/timeline.css">
@@ -156,7 +151,7 @@ if (!isset($_SESSION["phone1"])) {
 
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
       </script>
-      <script src="assets/js/ajax_call.js"></script>
+      <!-- <script src="assets/js/ajax_call.js"></script> -->
 </head>
 <body >
 
@@ -471,7 +466,7 @@ if (!isset($_SESSION["phone1"])) {
     <!-- End Steps -->
       <div class="modal-body wizard-content">
       <!-- Panel Wizard Form -->
-      <div class="panel-body ">
+      <div class="panel-body addAgentMod">
        <!-- Wizard Content -->
       <form id="addAgent" action="scripts/newevent.php" method="POST">
         <div class="wizard-pane active" id="exampleAccount" role="tabpanel">
@@ -481,7 +476,7 @@ if (!isset($_SESSION["phone1"])) {
             </div>
             <div class="form-group">
               <label class="control-label" for="eventTitle">Agent phone:</label>
-              <input type="text" maxlength="13" class="form-control" id="eventTitle" required name="eventTitle" placeholder="Enter phone to search user u want to make agent">
+              <input type="text" maxlength="13" class="form-control" id="agentPhone" required name="eventTitle" placeholder="Enter phone to search user u want to make agent">
             </div>
             <div class="row tickets-allocation">
                 <div class="col-md-12">
@@ -495,69 +490,19 @@ if (!isset($_SESSION["phone1"])) {
                         <div class="mt3"></div>
                         <div class="col-md-3 alloc-col">
                             <label><?php echo $ticket['name']; ?></label>
-                            <input type="text" class="allocation_input" data-max="<?php echo $ticketmax; ?>">
+                            <input type="number" class="allocation_input" data-ticket="<?php echo $ticket['id'] ?>" data-max="<?php echo $ticketmax; ?>">
                         </div>
 
                         <?php
                     }
                 ?>
             </div>
+            <input type="hidden" id="eventId" value="<?php echo $eventId; ?>">
             <br>
           </div>
         </div>
-        <div class="wizard-pane" id="exampleBilling" role="tabpanel">
-          <div id="exampleBillingForm">
-            <div class="row" id="moreTickets">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="control-label" for="ticketName1[]">Ticket</label>
-                  <input type="text" class="form-control" id="ticketName1[]" required name="ticketName1[]" placeholder="eg: VIP"/> 
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label" for="ticketPrice1[]">Price</label>
-                  <input type="number" class="form-control" id="ticketPrice1[]" required name="ticketPrice1[]" placeholder="RWF"/> 
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="control-label" for="ticketSeats1[]">Seats</label>
-                  <input type="number" class="form-control" id="ticketSeats1[]" required name="ticketSeats1[]" placeholder="eg: 10"/> 
-                </div>
-              </div>
-              <div class="col-md-2">
-                <label class="control-label" for="addTicket">Action</label>
-                <button class="btn btn-default btn-sm" id="addTicket">Add</button>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-lg-6 col-sm-6">
-                  <label class="control-label margin-bottom-15" for="withdrawAccount">Account Holder:</label>
-                  <select class="form-control" id="withdrawAccount" required name="withdrawAccount">
-                    <option>--Select--</option>
-                    <?php 
-                      $sqlBank = $outCon->query("SELECT * FROM banks");
-                      while($rowBank = mysqli_fetch_array($sqlBank))
-                      {
-                        echo '<option>'.$rowBank['name'].'</option>';
-                      }
-                    ?>
-                  </select>
-                  <br/>
-              </div>
-              <div class="col-lg-6 col-sm-6">
-                  <label class="control-label margin-bottom-15" for="withdrawAccountNo">Account</label>
-                  <input type="text" class="form-control" id="withdrawAccountNo" name="withdrawAccountNo"/><br/>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="wizard-pane" id="exampleGetting" role="tabpanel">
-          <div id="invite">
-            
-          </div>
+        <div class="form-group">
+        		<button type="submit" class="btn btn-primary pull-right">ADD</button>
         </div>
       </form>
        <!-- End Wizard Content -->
@@ -581,7 +526,7 @@ if (!isset($_SESSION["phone1"])) {
    
 <?php include('template/notifications.php');?>
  
-  <script src="assets/js/ajax_call.js"></script>
+  <!-- <script src="assets/js/ajax_call.js"></script> -->
 
   <!-- Core  -->
   <script src="assets/global/vendor/jquery/jquery.min.js"></script>
@@ -591,6 +536,37 @@ if (!isset($_SESSION["phone1"])) {
   <script src="assets/global/vendor/mousewheel/jquery.mousewheel.min.js"></script>
   <script src="assets/global/vendor/ashoverscroll/jquery-asHoverScroll.min.js"></script>
 
+
+
+  <script>
+	//agent
+		
+	  function log(data){
+	  	console.log(data)
+	  }
+
+	  $("#addAgent").on('submit', function(e){
+	  	e.preventDefault();
+	  	agentPhone = $("#agentPhone").val();
+	  	event = $("#eventId").val();
+
+
+	  	tickets = {};
+	  	allocation_elems = $(".alloc-col input.allocation_input");
+	  	for(n = 0; n<allocation_elems.length; n++){
+	  		ticket_unit = allocation_elems[n];
+	  		ticket_id = $(ticket_unit).data('ticket')
+	  		ticket_number = $(ticket_unit).val()
+
+	  		tickets.ticket_id = ticket_number
+
+	  	}
+	  	console.log("fdkslfklslsdlfksl")
+	  	$.post('api/index.php', {action:'addAgent', phone:agentPhone, tick:{tickets}, tickets:tickets,event:event})
+
+	  });
+	</script>
+
   <!-- Plugins -->
   <script src="assets/global/vendor/switchery/switchery.min.js"></script>
   <script src="assets/global/vendor/slidepanel/jquery-slidePanel.min.js"></script>
@@ -599,7 +575,7 @@ if (!isset($_SESSION["phone1"])) {
   <script src="assets/global/vendor/formvalidation/formValidation.min.js"></script>
   <script src="assets/global/vendor/formvalidation/framework/bootstrap.min.js"></script>
   <script src="assets/global/vendor/matchheight/jquery.matchHeight-min.js"></script>
-  <script src="assets/global/vendor/jquery-wizard/jquery-wizard.min.js"></script>
+  <!-- <script src="assets/global/vendor/jquery-wizard/jquery-wizard.min.js"></script> -->
 
   <!-- Scripts -->
   <script src="assets/global/js/core.min.js"></script>
@@ -611,117 +587,10 @@ if (!isset($_SESSION["phone1"])) {
 
   <script src="assets/global/js/components/asscrollable.min.js"></script>
   <script src="assets/global/js/components/animsition.min.js"></script>
-
-  <script src="assets/global/js/components/jquery-wizard.min.js"></script>
   <script src="assets/global/js/components/matchheight.min.js"></script>
-
-  <script src="assets/examples/js/forms/wizard.min.js"></script>
   <script src="assets/examples/js/forms/advanced.min.js"></script>
  
-<script>
- //  GROUP CREATION
-  //1 Pass Info Then Finance // 2 Pass Finance Then Invite
-function nexttoaccounts(){
-  var step = document.getElementById('step').value;
-  //alert (step);
-  if(step == 'info')
-  {
-    var eventTitle = document.getElementById('eventTitle').value;
-      if (eventTitle == null || eventTitle == "") {
-        //alert("groupType must be filled out");
-        return false;
-      }
-      var eventLocation = document.getElementById('eventLocation').value;
-      if (eventLocation == null || eventLocation == "") {
-        //alert("contType must be filled out");
-        return false;
-      }
-      var eventStarting = document.getElementById('eventStarting').value;
-      
-      var eventEnding = document.getElementById('eventEnding').value;
-      document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="finance">'
-      
-      document.getElementById('finance').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
-  
-  }
-  ////////////////////////////////////////////////////////////////
-  
-  //2.a Pass IKIMINA Finance Then Invite people
-  else if(step == 'finance')
-  {
-    
-      document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="confirm">';
-      document.getElementById('invite').innerHTML = '<div style="padding-left:40%;padding-bottom:40px;padding-top:40px;"><div class="loader-wrapper active"><div class="loader-layer loader-red-only"><div class="loader-circle-left"><div class="circle"></div> </div><div class="loader-circle-gap"></div><div class="loader-circle-right"><div class="circle"></div></div></div> </div></div>';
-      $.ajax({
-        type : "GET",
-        url : "scripts/newevent.php",
-        dataType : "html",
-        cache : "false",
-        data : {
-        
-        page : "finance"
-        },
-        success : function(html, textStatus){
-        $("#invite").html(html);
-        },
-        error : function(xht, textStatus, errorThrown){
-        alert("Error : " + errorThrown);
-        }
-      });
-  }
-  /////////////////////////////////////////////////////////////////
-}
-function finishGroup(){
-  //alert("Submiting the form");
-  document.forms["eventForm"].submit();
-}
-function backtoaccounts(){
-  var step = document.getElementById('step').value;
-  //alert (step);
-  if(step == 'info')
-  {
-    document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="info">';
-  }
-  else if(step == 'finance')
-  {
-    document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="info">';
-  }
-  else if(step == 'confirm')
-  {
-    document.getElementById('stepFill').innerHTML = '<input id="step" hidden value="finance">';
-  }
-}
-$(document).ready(function()
-{
 
-  $("#addTicket").click(function()
-  {
-
-    $("#moreTickets").append('<div class="col-md-4">'
-                  +'<div class="form-group">'
-                    +'<label class="control-label" for="ticketName1[]">Ticket</label>'
-                    +'<input type="text" class="form-control" id="ticketName1[]" required name="ticketName1[]" placeholder="eg: VIP"/>'
-                  +'</div>'
-                +'</div>'
-                +'<div class="col-md-3">'
-                  +'<div class="form-group">'
-                    +'<label class="control-label" for="ticketPrice1[]">Price</label>'
-                    +'<input type="number" class="form-control" id="ticketPrice1[]" required name="ticketPrice1[]" placeholder="RWF"/>'
-                  +'</div>'
-                +'</div>'
-                +'<div class="col-md-3">'
-                  +'<div class="form-group">'
-                    +'<label class="control-label" for="ticketSeats1[]">Seats</label>'
-                    +'<input type="number" class="form-control" id="ticketSeats1[]" required name="ticketSeats1[]" placeholder="eg: 10"/>'
-                  +'</div>'
-                +'</div>'
-                +'<div class="col-md-2">'
-                +'</div>');
-  });
-
-
-});
-</script>
 
 </body>
 

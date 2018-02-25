@@ -34,7 +34,7 @@ function get_agents($event){
 	}
 	return $agents;
 }
-function addAgent($user, $event, $tickets){
+function addAgentTickets($user, $event, $tickets){
 	//Adding event agent
 	global $eventDb, $db;
 
@@ -49,6 +49,10 @@ function addAgent($user, $event, $tickets){
 		$agent = $check->fetch_assoc();
 		$agentId = $agent['id'];
 	}
+	echo "string";
+
+	//Attaching tickets to agent
+	var_dump($tickets);
 
 	
 }

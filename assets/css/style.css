@@ -1,3 +1,7 @@
 .tickets-allocation .alloc-col{
 	margin:2px;
 }
+
+.addAgentMod .wizard-buttons {
+    display: none;
+}
