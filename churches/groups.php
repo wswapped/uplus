@@ -583,6 +583,20 @@
                   position: map_location,
                   map: map
                 });
+            }else if(pagename == 'home'){
+                //Loading map for choosing location
+                var kigali = {lat:-1.991019, lng:30.096819};
+                var map_location = map_location;
+
+                var map = new google.maps.Map(document.querySelector('#group_map'), {
+                    zoom: 17,
+                    center: map_location
+                });
+                var marker = new google.maps.Marker({
+                  position: map_location,
+                  map: map
+                });
+
             }
         }
     </script>

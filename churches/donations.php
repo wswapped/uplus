@@ -206,7 +206,7 @@
         <div class="uk-modal" id="service_create" aria-hidden="true" style="display: none; overflow-y: auto;">
             <div class="uk-modal-dialog" style="width:600px; top: 339.5px;">
                 <div class="uk-modal-header uk-tile uk-tile-default">
-                    <h3 class="d_inline">Add service</h3>
+                    <h3 class="d_inline">Add Basket</h3>
                 </div>
                 <form method="POST">
                     <div class="md-card">
