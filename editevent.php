@@ -275,8 +275,6 @@ if (!isset($_SESSION["phone1"])) {
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <?php echo $eventName; ?>
-                      <!-- <span class="badge badge-info" style="background-color: #00897b;">
-                      </span> -->
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -296,56 +294,65 @@ if (!isset($_SESSION["phone1"])) {
             </div>
         </div>
         <div class="col-md-12">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                  <thead>
-                    <tr>
-                      <td>ID</td>
-                      <td>Event Name</td>
-                      <td>Total Tickets</td>
-                      <td>Sold Tickets</td>
-                      <td>Remaining Tickets</td>
-                      <td>Shares</td>
-                      <td>Clicks</td>
-                      <td>Action</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                      $n=0;
-                      $sql = $eventDb->query("
-                        SELECT SUM(P.event_seats) seats, SUM(P.price*P.event_seats) price, E.Event_Name, E.id_event
-                        FROM pricing P 
-                        INNER JOIN eventing_pricing EP
-                        ON P.pricing_id = EP.pricing_code
-                        INNER JOIN events E
-                        ON E.id_event = EP.event_code
-                        WHERE E.id_event ='$eventId'");
-                      
-                        $row = mysqli_fetch_array($sql);
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Details
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                          <thead>
+                            <tr>
+                              <td>ID</td>
+                              <td>Event Name</td>
+                              <td>Total Tickets</td>
+                              <td>Sold Tickets</td>
+                              <td>Remaining Tickets</td>
+                              <td>Shares</td>
+                              <td>Clicks</td>
+                              <!-- <td>Action</td> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                              $n=0;
+                              $sql = $eventDb->query("
+                                SELECT SUM(P.event_seats) seats, SUM(P.price*P.event_seats) price, E.Event_Name, E.id_event
+                                FROM pricing P 
+                                INNER JOIN eventing_pricing EP
+                                ON P.pricing_id = EP.pricing_code
+                                INNER JOIN events E
+                                ON E.id_event = EP.event_code
+                                WHERE E.id_event ='$eventId'");
+                              
+                                $row = mysqli_fetch_array($sql);
 
-                        $eventName      = $row['Event_Name'];
-                        $eventId      = $row['id_event'];
-                        $totalTickets     = $row['seats'];
-                        $ticketPrice    = $row['price'];
-                        $rowSold      = mysqli_fetch_array($eventDb->query("SELECT SUM(amount) soldAmount, COUNT(amount) soldTickets FROM transaction WHERE cust_event_choose = '$eventId'"));
-                        $totalSoldTickets = $rowSold['soldTickets'];
-                        $totalSoldAmount  = $rowSold['soldAmount'];
-                        $n++;
-                      echo'<tr>
-                        <td>'.$n.'</td>
-                        <td>'.$eventName.'</td>
-                        <td>'.number_format($totalTickets).' ('.number_format($ticketPrice).' Rwf)</td>
-                        <td>'.number_format($totalSoldTickets).' ('.number_format($totalSoldAmount).' Rwf)</td>
-                        <td>'.number_format($totalTickets-$totalSoldTickets).' ('.number_format($ticketPrice-$totalSoldAmount).' Rwf)</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td><a href="editevent'.$eventId.'" class="btn btn-dark btn-xs" style="text-decoration: none;">Manage</a> | <a data-target="#addTopicForm" data-toggle="modal" class="btn btn-warning btn-xs" style="text-decoration: none;">Edit</a></td>
-                      </tr>';
-                      ?>
-                  </tbody>
-                </table>
-            </div>
+                                $eventName      = $row['Event_Name'];
+                                $eventId      = $row['id_event'];
+                                $totalTickets     = $row['seats'];
+                                $ticketPrice    = $row['price'];
+                                $rowSold      = mysqli_fetch_array($eventDb->query("SELECT SUM(amount) soldAmount, COUNT(amount) soldTickets FROM transaction WHERE cust_event_choose = '$eventId'"));
+                                $totalSoldTickets = $rowSold['soldTickets'];
+                                $totalSoldAmount  = $rowSold['soldAmount'];
+                                $n++;
+                              echo'<tr>
+                                <td>'.$n.'</td>
+                                <td>'.$eventName.'</td>
+                                <td>'.number_format($totalTickets).' ('.number_format($ticketPrice).' Rwf)</td>
+                                <td>'.number_format($totalSoldTickets).' ('.number_format($totalSoldAmount).' Rwf)</td>
+                                <td>'.number_format($totalTickets-$totalSoldTickets).' ('.number_format($ticketPrice-$totalSoldAmount).' Rwf)</td>
+                                <td>0</td>
+                                <td>0</td>
+                                
+                              </tr>';
+                              ?>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>            
         </div>
         <div class="col-lg-12 col-sm-12">
         <div class="panel">
@@ -360,44 +367,46 @@ if (!isset($_SESSION["phone1"])) {
                   </span>
                 </h3>
             </div>
-          <div class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <td>ID</td>
-                  <td>Agent Name</td>
-                  <td>Given Tickets</td>
-                  <td>Sold Tickets</td>
-                  <td>Remaining Tickets</td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php                  
-                  for($n=0; $n<$n_agents; $n++)
-                  {
-                    $ag = $agents[$n];
-                    $agentName      = $ag['agentName'];
-                    $totalTickets     = $ag['number'];
-                    $totalSoldTickets = 10;
-                    $ticketPrice    = $row['price'];
-                    $rowSold      = mysqli_fetch_array($eventDb->query("SELECT SUM(amount) soldAmount, COUNT(amount) soldTickets FROM transaction WHERE cust_event_choose = '$eventId'"));
-                    $totalSoldTickets = $rowSold['soldTickets'];
-                    $totalSoldAmount  = $rowSold['soldAmount'];
-                    $n++;
-                  echo'<tr>
-                    <td>'.$n.'</td>
-                    <td>'.$agentName.'</td>
-                    <td>'.number_format($totalTickets).' ('.number_format($ticketPrice).' Rwf)</td>
-                    <td>'.number_format($totalSoldTickets).' ('.number_format($totalSoldAmount).' Rwf)</td>
-                    <td>'.number_format($totalTickets-$totalSoldTickets).' ('.number_format($ticketPrice-$totalSoldAmount).' Rwf)</td>
-                    <td><a href="editevent'.$eventId.'" class="btn btn-dark btn-xs" style="text-decoration: none;">Manage</a> | <a data-target="#addTopicForm" data-toggle="modal" class="btn btn-warning btn-xs" style="text-decoration: none;">Edit</a></td>
-                  </tr>';
-                  }
-                  ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <td>ID</td>
+                          <td>Agent Name</td>
+                          <td>Given Tickets</td>
+                          <td>Sold Tickets</td>
+                          <td>Remaining Tickets</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php                  
+                          for($n=0; $n<$n_agents; $n++)
+                          {
+                            $ag = $agents[$n];
+                            $agentName      = $ag['agentName'];
+                            $totalTickets     = $ag['number'];
+                            $totalSoldTickets = 10;
+                            $ticketPrice    = $row['price'];
+                            $rowSold      = mysqli_fetch_array($eventDb->query("SELECT SUM(amount) soldAmount, COUNT(amount) soldTickets FROM transaction WHERE cust_event_choose = '$eventId'"));
+                            $totalSoldTickets = $rowSold['soldTickets'];
+                            $totalSoldAmount  = $rowSold['soldAmount'];
+                            $n++;
+                          echo'<tr>
+                            <td>'.$n.'</td>
+                            <td>'.$agentName.'</td>
+                            <td>'.number_format($totalTickets).' ('.number_format($ticketPrice).' Rwf)</td>
+                            <td>'.number_format($totalSoldTickets).' ('.number_format($totalSoldAmount).' Rwf)</td>
+                            <td>'.number_format($totalTickets-$totalSoldTickets).' ('.number_format($ticketPrice-$totalSoldAmount).' Rwf)</td>
+                            <td><a href="editevent'.$eventId.'" class="btn btn-dark btn-xs" style="text-decoration: none;">Manage</a> | <a data-target="#addTopicForm" data-toggle="modal" class="btn btn-warning btn-xs" style="text-decoration: none;">Edit</a></td>
+                          </tr>';
+                          }
+                          ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
           </div>
       </div>
   </div>
@@ -464,7 +473,7 @@ if (!isset($_SESSION["phone1"])) {
       <!-- Panel Wizard Form -->
       <div class="panel-body ">
        <!-- Wizard Content -->
-      <form id="eventForm" action="scripts/newevent.php" method="POST">
+      <form id="addAgent" action="scripts/newevent.php" method="POST">
         <div class="wizard-pane active" id="exampleAccount" role="tabpanel">
           <div id="exampleAccountForm">
             <div id="stepFill">
@@ -479,6 +488,9 @@ if (!isset($_SESSION["phone1"])) {
               <input type="text" class="form-control" id="agentLocation" required name="agentLocation" placeholder="Event Loacation">
             </div>
             <div class="row tickets-allocation">
+                <div class="col-md-12">
+                    <p class="text-muted">Enter number of tickets you assign to agent</p>
+                </div>
                 <?php
                     for($n=0; $n<count($tickets); $n++){
                         $ticket = $tickets[$n];
@@ -493,16 +505,6 @@ if (!isset($_SESSION["phone1"])) {
                         <?php
                     }
                 ?>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label class="control-label" for="eventStarting">Starting</label>
-                <input type="date" class="form-control" required name="eventStarting" id="eventStarting">
-              </div>
-              <div class="col-md-6">
-                <label class="control-label" for="eventEnding">Ending</label>
-                <input type="date" class="form-control" required name="eventEnding" id="eventEnding">
-              </div>
             </div>
             <br>
           </div>
@@ -573,7 +575,7 @@ if (!isset($_SESSION["phone1"])) {
 
   <!-- Footer -->
   <footer class="site-footer" style="text-align: center;">
-    <div class="site-footer-legal">© 2017 uPlus Mutual Partners LTD</div>
+    <div class="site-footer-legal">© <?php echo date("Y") ?> uPlus Mutual Partners LTD</div>
   <a  href="apps/"><i class="icon md-android"></i></a> 
   <div class="site-footer-right">
       Digital Contribution <i class="red-600 wb wb-globe"></i> Platform
@@ -622,7 +624,6 @@ if (!isset($_SESSION["phone1"])) {
  
 <script>
  //  GROUP CREATION
-
   //1 Pass Info Then Finance // 2 Pass Finance Then Invite
 function nexttoaccounts(){
   var step = document.getElementById('step').value;
