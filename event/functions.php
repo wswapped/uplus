@@ -14,12 +14,12 @@ function get_event($event){
 		// 	$eventData['tickets'][] = $ticket;
 		// }
 
-		$tic = $eventDb->query("SELECT * FROM ticket WHERE event = \"$event\" ");
-		// $eventData['tickets'] = array();
-		// while ($ticket = $tic->fetch_assoc()) {
-		// 	# code...
-		// 	$eventData['tickets'][] = $ticket;
-		// }
+		$tic = $eventDb->query("SELECT * FROM pricing JOIN eventing_pricing ON pricing.pricing_id =  eventing_pricing.pricing_code WHERE event_code = \"$event\" ");
+		$eventData['tickets'] = array();
+		while ($ticket = $tic->fetch_assoc()) {
+			# code...
+			$eventData['tickets'][] = $ticket;
+		}
 
 	}
 	$eventData['agents'] = get_agents($event);

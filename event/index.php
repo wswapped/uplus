@@ -19,11 +19,10 @@ if($eventId[0] == 'l'){
 }
 
 //Gettting data on events
-
 $rowEvents = $eventData = get_event($eventId);
 if($eventData){
 	$eventName 		= $rowEvents["Event_Name"];
-	$eventImage 	= $rowEvents["Event_Cover"];
+	$eventImage 	= $_SERVER['HTTP_HOST']."/".$rowEvents["Event_Cover"];
 	$eventDesc		= $rowEvents['Event_Desc'];
 	$eventStart		= $rowEvents['Event_Start'];
 	$eventLocation	= $rowEvents['Event_Location'];
@@ -261,18 +260,19 @@ $social_media_message = "";
 									<?php
 										for($n=0; $n<count($tickets); $n++){
 											$ticket = $tickets[$n];
+											$ticket_name = $ticket['event_property'];
 											$ticket_price = $ticket['price'];
+											$ticket_numer = $ticket['event_seats'];
 											?>
 												<li class="mdl-list__item mdl-list__item--two-line">
 												    <span class="mdl-list__item-primary-content">
 												    	<i class="fas fa-ticket-alt"></i>
 												      <!-- <i class="material-icons mdl-list__item-avatar">person</i> -->
-												      <span><?php echo $ticket['name']." - ".number_format($ticket_price); ?> RWF</span>
-												      <span class="mdl-list__item-sub-title"><?php echo $ticket['number'] ?> remaining</span>
+												      <span><?php echo $ticket_name." - ".number_format($ticket_price); ?> RWF</span>
+												      <span class="mdl-list__item-sub-title"><?php echo $ticket_numer; ?> remaining</span>
 												    </span>
 												    <span class="mdl-list__item-secondary-content">
-												    	<button href="#sendMoney" class="mdl-button mdl-button--raised getTicket fancybox" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket['name'] ?>" id="contbtn">BOOK</button>
-												      <!-- <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a> -->
+												    	<button href="#sendMoney" class="mdl-button mdl-button--raised getTicket fancybox" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">BOOK</button>
 												    </span>
 												  </li>
 											<?php
@@ -375,7 +375,38 @@ $social_media_message = "";
 			<button type="button" onclick="errorselect()" style="float:right;background-color: #00897b;" class="mdl-button btn-success">Next</button>
 		</div>
 	</div>
-</div>		
+</div>
+<div class="modal fade" id="freedialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Book your ticket</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<p>Enter your details</p>
+      	<div class="form-group">
+		    <label for="exampleInputPassword1">Name</label>
+		    <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
+		</div>
+      	<div class="form-group">
+		    <label for="exampleInputEmail1">Email address</label>
+		    <input type="email" class="form-control" id="emailInput" placeholder="Enter email">
+		</div>
+		<div class="form-group">
+		    <label for="exampleInputEmail1">Phone number</label>
+		    <input type="text" class="form-control" id="phoneInput" placeholder="Enter phone number">
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" id="getFreeTicket" class="btn btn-success">REGISTER</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/popup-polyfill.min.js"></script>
 <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -645,16 +676,53 @@ function errorselect(){
 	document.getElementById('amountError').innerHTML = 'Please choose a payment method';
 			return false;
 }
-$(".getTicket").on("click", function(){
+$(".getTicket").on("click", function(e){
 	//Here we have to show the modal information
 	eventName = $(this).data('eventname')
 	price = $(this).data('price');
 	ticketName = $(this).data('ticket');
 
-	$("#modalTicketAmount").html(price+" Frw");
-	$("#contributedAmount").val(price)
+	if(price == 0)
+	{
+		e.preventDefault();
+		$("#freedialog").modal('show')
+		return 0;
+	}else{
+		$("#modalTicketAmount").html(price+" Frw");
+		$("#contributedAmount").val(price)
+	}	
 
+});
+
+//When free ticket modal is submitted
+$("#getFreeTicket").on('click', function(e){
+	e.preventDefault();
+
+	name = $("#nameInput").val();
+	phone = $("#phoneInput").val()
+	email = $("#emailInput").val();
+
+	if(name && phone && email){
+		//User can be put in database
+		$.post('api.php', {action:'free_ticket_submission', name:name, phone:phone, email:email}, function(data){
+			try{
+				ret = JSON.parse(data);
+				if(ret.status){
+					alert("REGISTERED");
+					clearTimeout(function(){
+						location.reload()
+					}, 3000)
+				}
+			}catch(e){
+				alert(e)
+			}
+		})
+	}else{
+		alert("Please add all detail")
+	}
 })
+
+$("#contbtn")
 function log(data){
 	console.log(data)
 }
