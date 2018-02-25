@@ -446,7 +446,7 @@ if (!isset($_SESSION["phone1"])) {
         <h4 class="modal-title" id="exampleModalTabs">Add agent</h4>
       </div>
     <!-- Steps -->
-    <div style="margin-bottom: unset;" class="steps steps-sm row" data-plugin="matchHeight" data-by-row="true" role="tablist">
+    <!-- <div style="margin-bottom: unset;" class="steps steps-sm row" data-plugin="matchHeight" data-by-row="true" role="tablist">
       <div class="step col-md-4 current" data-target="#exampleAccount" role="tab">
         <span class="step-number">1</span>
         <div class="step-desc">
@@ -467,7 +467,7 @@ if (!isset($_SESSION["phone1"])) {
         <span class="step-title">Confirm</span>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- End Steps -->
       <div class="modal-body wizard-content">
       <!-- Panel Wizard Form -->
@@ -482,10 +482,6 @@ if (!isset($_SESSION["phone1"])) {
             <div class="form-group">
               <label class="control-label" for="eventTitle">Agent phone:</label>
               <input type="text" maxlength="13" class="form-control" id="eventTitle" required name="eventTitle" placeholder="Enter phone to search user u want to make agent">
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="eventLocation">Agent Location</label>
-              <input type="text" class="form-control" id="agentLocation" required name="agentLocation" placeholder="Event Loacation">
             </div>
             <div class="row tickets-allocation">
                 <div class="col-md-12">

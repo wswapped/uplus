@@ -1599,6 +1599,75 @@
 		echo $ticktes = json_encode($ticktes);
 	}
 
+	function addAgent()
+	{
+		include 'db.php';
+		include 'event/functions.php'
+		//adding agent to the event
+		$agentPhone = $_POST['phone']??"";
+		$event = $_POST['event']??""; 
+		$tickets = $_POST['tickets'];
+
+		$response = array();
+
+		if($agentPhone && $event && $tickets){
+			//checking if the event exist
+			$query = $eventDb->query("SELECT * FROM events WHERE id = \"$event\" ");
+			if($query){
+				if($query->num_rows){
+					//Here the event exist
+					//let's check member and invite
+
+					//CLEAN PHONE
+					$agentPhone = $invitedPhone 	= preg_replace( '/[^0-9]/', '', $agentPhone );
+					$agentPhone = $invitedPhone 	= substr($agentPhone, -10); 
+
+					//CHECKING USER EXISTENCE
+					$sql = $db->query("SELECT id FROM users WHERE phone =  $agentPhone LIMIT 1") or (mysqli_error());
+
+					$countUsers = mysqli_num_rows($sql);
+					if($sql->num_rows)
+					{
+						//GET EXISTING USER
+						$invitedArray = mysqli_fetch_array($sql);
+						$userid = $invitedId = $invitedArray['id'];
+					}
+					else
+					{
+						//CREATE THE NEW USER
+						$code = rand(0000, 9999);
+						$db->query("INSERT INTO 
+							users (phone,createdBy,createdDate, password, updatedBy, updatedDate) 
+							VALUES  ('$invitedPhone', '$invitorId', now(), '$code', '$invitorId', now() )
+							");
+
+
+						if($db)
+						{
+							$userid = $invitedId = $db->insert_id;
+						}
+					}
+
+					//Adding user as an agent
+					addAgent($user, $event, $tickets);
+
+					mysqli_close($db);
+					mysqli_close($outCon);
+
+
+					
+				}else{
+					$response = array('status'=>true, 'msg'=>'Event does not exist');
+				}
+			}else{
+				$response = array('status'=>true, 'msg'=>'Error checking event $eventDb->error');
+			}
+
+		}else{
+			$response = array('status'=>true, 'msg'=>'Provide all required paramenters');
+		}
+	}
+
 	function eventSeatsList()
 	{
 		include 'db.php';

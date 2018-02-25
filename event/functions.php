@@ -34,4 +34,22 @@ function get_agents($event){
 	}
 	return $agents;
 }
+function addAgent($user, $event, $tickets){
+	//Adding event agent
+	global $eventDb, $db;
+
+	//checking if the agent exists
+	$check = $eventDb->query("SELECT * FROM event_agents as agent WHERE agent.event = \"$event\" ") or die("Error checking agent $eventDb->error");
+
+	if(!$chech->num_rows){
+		$query = $eventDb->query("INSERT INTO event_agent(user, event) VALUES(\"$user\", \"$event\") ") or die("Cant insert $eventDb->error");
+		$agentId = $eventDb->insert_id;
+	}else{
+		//getting agent id
+		$agent = $check->fetch_assoc();
+		$agentId = $agent['id'];
+	}
+
+	
+}
 ?>
