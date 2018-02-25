@@ -58,10 +58,9 @@
                     $memberprayers[$prayer['membername']][] = $prayer;
                 }
 
-                $first_user = $prayers[0];
-                $fmessages = $memberprayers[$first_user['membername']];
+                
             ?>
-
+asiaO
             <div class="uk-width-medium-8-10 uk-container-center">
                 <div class="uk-grid uk-grid-collapse" data-uk-grid-margin>
                     <div class="uk-width-large-7-10">
@@ -83,6 +82,17 @@
                                     <i class="md-icon  material-icons">&#xE5CD;</i>
                                 </div> -->
                                 <h3 class="md-card-toolbar-heading-text large">
+                                    <?php
+                                        if(empty($memberprayers)){
+                                            echo "You have received no prayer request yet";
+                                            die();
+                                        }
+
+                                        $first_user = $prayers[0];
+                                        $fmessages = $memberprayers[$first_user['membername']];
+
+
+                                    ?>
                                     <span class="uk-text-muted">Chat with</span> <a href="#" id="chat_user_name"><?php echo $first_user['membername']; ?></a>
                                 </h3>
                             </div>
