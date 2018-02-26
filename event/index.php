@@ -76,7 +76,7 @@ $social_media_message = "";
 	<meta property="fb:app_id"             content="1822800737957483">
 	<meta property="og:url"                content="https://www.uplus.rw/event/<?php echo $eventId?>" >
 	<meta property="og:type"               content="article" >
-	<meta property="og:title"              content="<?php echo $eventName?>">
+	<meta property="og:title"              content="Register for <?php echo $eventName?>">
 	<meta property="og:description"        content="<?php echo $eventDesc?>">
 	<meta property="og:image"              content="<?php echo $eventImage;?>" >
 
