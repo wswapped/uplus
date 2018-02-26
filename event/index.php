@@ -244,7 +244,7 @@ $social_media_message = "";
 							<div class="mdl-cell mdl-cell--12-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
 								<h4 class="fundName"><?php echo $eventName;?></h4>
 								<p>Location: <?php echo $eventLocation; ?></p>
-								<p>When:<span style="float: right" id="countDown">Finish</span> <?php echo strftime("%d, %b %Y  %H%p", strtotime($eventStart)); ?></p>
+								<p>When:<?php echo strftime("%d, %b %Y  %H%p", strtotime($eventStart)); ?></p>
 							</div>
 						</div>	
 		        	</section>
