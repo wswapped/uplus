@@ -85,7 +85,7 @@ $social_media_message = "";
 
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>Event | Uplus</title>
+	<title><?php echo $eventName; ?> | Uplus</title>
 
 	<!-- Add to homescreen for Chrome on Android -->
 	<meta name="mobile-web-app-capable" content="yes">
@@ -721,6 +721,7 @@ $("#getFreeTicket").on('click', function(e){
 	email = $("#emailInput").val();
 
 	if(name && phone && email){
+		$(this).html("")
 		//User can be put in database
 		$.post('api.php', {action:'free_ticket_submission', name:name, phone:phone, email:email}, function(data){
 			try{
