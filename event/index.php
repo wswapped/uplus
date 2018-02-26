@@ -265,8 +265,8 @@ $social_media_message = "";
 						</div>
 						<div onclick="openCity(event, '2'), changeTab(tab=2)" class=" mdl-card mdl-cell mdl-cell--3-col otherTab">
 							<span class="updatesLogo"><i class="fa fa-globe"></i></span>
-							<div id="webTabTitle2">UPdates</div>
-							<div id="mobTabTitle2">Chat</div>
+							<div id="webTabTitle2">INFO</div>
+							<div id="mobTabTitle2">INFO</div>
 						</div>
 						<div class="mdl-card mdl-cell mdl-cell--3-col fbShare" id="shareBtn">Share facebook</div>
 						<div onclick="javascript:window.open('http://twitter.com/share?url=<?php echo $eventLink; ?>&	text=Get your tickets to <?php echo $eventName ?> via uPlus. You can buy using using MTN mobile money, Tigo cash, Visa cards here:<?php echo $eventLink; ?> size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
