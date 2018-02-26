@@ -461,22 +461,22 @@ function changeTab(tab)
 	{
 		document.getElementById('tabing').innerHTML = 
 			'<div class="activeTab mdl-card mdl-cell mdl-cell--3-col">'
-				+'<span class="currentSpan" style="height: 20%"></span>Story'
+				+'<span class="currentSpan" style="height: 20%"></span>TICKETS'
 			+'</div>'
 			+'<div onclick="openCity(event, 2), changeTab(tab=2)" class="otherTab mdl-card mdl-cell mdl-cell--3-col ">'
 				+'<span class="updatesLogo"><i class="fa fa-globe"></i></span>'
-				+'UPdates'
+				+'INFO'
 			+'</div>'+shares;
 	}
 	else if(tab == 2)
 	{
 		document.getElementById('tabing').innerHTML = 
 			'<div onclick="openCity(event, 1),  changeTab(tab=1)" class="otherTab mdl-card mdl-cell mdl-cell--3-col">'
-				+'Story'
+				+'TICKETS'
 			+'</div>'
 			+'<div  class="activeTab  mdl-card mdl-cell mdl-cell--3-col ">'
 				+'<span class="updatesLogo"><i class="fa fa-globe"></i></span>'
-				+'<span class="currentSpan" style="height: 20%"></span>UPdates'
+				+'<span class="currentSpan" style="height: 20%"></span>INFO'
 			+'</div>'+shares;
 	}
 }	
