@@ -208,7 +208,7 @@ $social_media_message = "";
 										Contact 
 										<p><?php echo $organizerPhone; ?></p>
 										<p><?php echo $organizerEmail; ?></p>
-										<p><?php echo $organizerWebsite; ?></p>
+										<p><a href="<?php echo $organizerWebsite; ?>" target='_blank'><?php echo $organizerWebsite; ?></a></p>
 									</td>
 								</tr>
 							</table>	
@@ -238,7 +238,7 @@ $social_media_message = "";
 						</div>
 						<div class="fundImg" style="background-image: url(<?php echo $eventImage;?>);"></div>
 					</section>
-			        <section class="section--center contSection">
+			        <section class="section--center contSection" style="margin-top: -100px;">
 						<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
 							<div class="mdl-cell mdl-cell--8-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
 								<p>Location: <?php echo $eventLocation; ?></p>
