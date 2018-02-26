@@ -277,9 +277,8 @@ $social_media_message = "";
 												<li class="mdl-list__item mdl-list__item--two-line">
 												    <span class="mdl-list__item-primary-content">
 												    	<i class="fas fa-ticket-alt"></i>
-												      <!-- <i class="material-icons mdl-list__item-avatar">person</i> -->
 												      <span><?php echo $ticket_name." - ".number_format($ticket_price); ?> RWF</span>
-												      <span class="mdl-list__item-sub-title"><?php echo $ticket_numer; ?> remaining</span>
+												      <span class="mdl-list__item-sub-title"><?php echo ($ticket_numer -(mysqli_num_rows($eventDb->query("SELECT * FROM free_tickets_buy"))) ); ?> remaining</span>
 												    </span>
 												    <span class="mdl-list__item-secondary-content">
 												    	<?php
