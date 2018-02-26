@@ -159,23 +159,23 @@ $social_media_message = "";
 
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base" style='' font-family: "Helvetica Neue",HelveticaNeueRoman,Helvetica,Arial,sans-serif!important;'>
 <script>
-/*  window.fbAsyncInit = function() {
-	FB.init({
-	  appId      : '1822800737957483',
-	  xfbml      : true,
-	  version    : 'v2.8'
-	});
-	FB.AppEvents.logPageView();
-  };
+ //  window.fbAsyncInit = function() {
+	// FB.init({
+	//   appId      : '1822800737957483',
+	//   xfbml      : true,
+	//   version    : 'v2.8'
+	// });
+	// FB.AppEvents.logPageView();
+ //  };
 
-  (function(d, s, id){
-	 var js, fjs = d.getElementsByTagName(s)[0];
-	 if (d.getElementById(id)) {return;}
-	 js = d.createElement(s); js.id = id;
-	 js.src = "//connect.facebook.net/en_US/sdk.js";
-	 fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-*/
+ //  (function(d, s, id){
+	//  var js, fjs = d.getElementsByTagName(s)[0];
+	//  if (d.getElementById(id)) {return;}
+	//  js = d.createElement(s); js.id = id;
+	//  js.src = "//connect.facebook.net/en_US/sdk.js";
+	//  fjs.parentNode.insertBefore(js, fjs);
+ //   }(document, 'script', 'facebook-jssdk'));
+
 </script>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -205,8 +205,8 @@ $social_media_message = "";
 								<tr>	
 									<td onclick="alert('We are still working on this module.')" style="cursor: pointer;">
 									<i  class="fa fa-envelope"></i>
-										Contact 
-										<p><?php echo $organizerPhone; ?></p>
+										 
+										<p>Contact:<?php echo $organizerPhone; ?></p>
 										<p><?php echo $organizerEmail; ?></p>
 										<p><a href="<?php echo $organizerWebsite; ?>" target='_blank'><?php echo $organizerWebsite; ?></a></p>
 									</td>
@@ -278,7 +278,7 @@ $social_media_message = "";
 					</section>
 					<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
 						<div id="1" class="tabcontent mdl-card" style="min-height: 80px;    width: 100%;">
-							<div id="tabsCont" style="padding: 12px; ">
+							<div id="tabsCont" style="padding: 25px; ">
 								<ul class="demo-list-two mdl-list">
 									<?php
 										for($n=0; $n<count($tickets); $n++){
@@ -319,7 +319,7 @@ $social_media_message = "";
 						</div>
 						<div id="2" class="tabcontent">
 							<section class="section--center mdl-grid mdl-grid--no-spacing " style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
-				            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: unset;">
+				            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 25px; min-height: unset;">
 									<div>
 										Organized by: <?php echo $organizerName; ?>
 										<h5>Contacts:</h5>
