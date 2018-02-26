@@ -244,7 +244,7 @@ $social_media_message = "";
 								<p>Location: <?php echo $eventLocation; ?></p>
 								<p>When: <?php echo $eventStart; ?></p>
 							</div>
-							<div class="mdl-cell mdl-cell--4-col contribution2" id="contdiv">
+							<!-- <div class="mdl-cell mdl-cell--4-col contribution2" id="contdiv">
 							    <span class="sharing">
 									<i class="fa fa-share shareicon"></i>
 								</span>	
@@ -253,7 +253,7 @@ $social_media_message = "";
 								<span class="sharing">
 							    	<i class="fa fa-comment shareicon"></i>
 							    </span>
-							</div>
+							</div> -->
 						</div>	
 		        	</section>
 					<section id="tabing" class="section--center mdl-grid mdl-grid--no-spacing ">
