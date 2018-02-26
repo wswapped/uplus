@@ -236,7 +236,7 @@ $social_media_message = "";
 								<h6 class="fundDesc"><?php echo $eventDesc;?><br><br></h6>
 							</div>
 						</div>
-						<div class="fundImg" style="background-image: url(<?php echo $eventImage;?>);"></div>
+						<a  data-fancybox-group="thumb" href="<?php echo $eventImage;?>"><div class="fundImg" style="background-image: url(<?php echo $eventImage;?>);"></div></a>
 					</section>
 			        <section class="section--center contSection" style="margin-top: -100px;">
 						<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
