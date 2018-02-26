@@ -232,10 +232,7 @@ $social_media_message = "";
 					<section class="section--center mdl-grid mdl-grid--no-spacing" style="margin-bottom: 95px; max-width: 730px;">
 						<div class="titleOverlay">
 							<div class="fundTitle">
-								
-		
 
-								<h6 class="fundDesc"><?php echo $eventDesc;?><br><br></h6>
 							</div>
 						</div>
 							<a style="background-image: url(<?php echo $eventImage;?>);" class="fundImg fancybox-thumbs" title="<?php echo $eventName;?>" data-fancybox-group="thumb" href="<?php echo $eventImage;?>">
