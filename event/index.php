@@ -232,7 +232,7 @@ $social_media_message = "";
 					<section class="section--center mdl-grid mdl-grid--no-spacing" style="margin-bottom: 95px; max-width: 730px;">
 						<div class="titleOverlay">
 							<div class="fundTitle">
-								<h4 class="fundName"><?php echo $eventName;?></h4>
+								
 								<h6 class="fundDesc"><?php echo $eventDesc;?><br><br></h6>
 							</div>
 						</div>
@@ -241,6 +241,7 @@ $social_media_message = "";
 			        <section class="section--center contSection" style="margin-top: -100px;">
 						<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
 							<div class="mdl-cell mdl-cell--8-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
+								<h4 class="fundName"><?php echo $eventName;?></h4>
 								<p>Location: <?php echo $eventLocation; ?></p>
 								<p>When: <?php echo $eventStart; ?></p>
 							</div>
