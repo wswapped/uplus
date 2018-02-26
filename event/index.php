@@ -318,9 +318,8 @@ $social_media_message = "";
 							<section class="section--center mdl-grid mdl-grid--no-spacing " style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
 				            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 25px; min-height: unset;">
 									<div>
-										Organized by: <?php echo $organizerName; ?>
-										<h5>Contacts:</h5>
-										<p><?php echo $organizerPhone; ?></p>
+										<p><b>Organized by:</b> <?php echo $organizerName; ?></p>									
+										<p><b style="display: inline-block;">Contacts:</b><?php echo $organizerPhone; ?></p>
 										<p><?php echo $organizerEmail; ?></p>
 										<p><a href="<?php echo $organizerWebsite; ?>" target='_blank'><?php echo $organizerWebsite; ?></a></p>
 									</div>
