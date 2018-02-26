@@ -531,9 +531,9 @@
 						// $boockedSeats	= $rowEvents['counting'];
 						$eventLocation	= $rowEvents['Event_Location'];
 						
-						$prog = $boockedSeats*100/$allSeats;
-						$prog = round($prog);
-						if($prog < 10){$size=10;} else{$size=$prog;}
+						// $prog = $boockedSeats*100/$allSeats;
+						// $prog = round($prog);
+						// if($prog < 10){$size=10;} else{$size=$prog;}
 						echo'<li>
 							<div class="md-card" style="border-radius: 5px;">
 								<a href="event/'.$eventId.'">
