@@ -233,14 +233,18 @@ $social_media_message = "";
 						<div class="titleOverlay">
 							<div class="fundTitle">
 								
+		
+
 								<h6 class="fundDesc"><?php echo $eventDesc;?><br><br></h6>
 							</div>
 						</div>
-						<a  data-fancybox-group="thumb" href="<?php echo $eventImage;?>"><div class="fundImg" style="background-image: url(<?php echo $eventImage;?>);"></div></a>
+							<a style="background-image: url(<?php echo $eventImage;?>);" class="fundImg fancybox-thumbs" title="<?php echo $eventName;?>" data-fancybox-group="thumb" href="<?php echo $eventImage;?>">
+							
+							</a>
 					</section>
 			        <section class="section--center contSection" style="margin-top: -100px;">
 						<div  style="max-width: 680px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" style="width: 700px;margin: -140px 0px 0 282px;position: absolute; z-index: 100;">
-							<div class="mdl-cell mdl-cell--8-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
+							<div class="mdl-cell mdl-cell--12-col " style="background: #007569; color: #fff; padding: 7px 25px 7px 25px;">
 								<h4 class="fundName"><?php echo $eventName;?></h4>
 								<p>Location: <?php echo $eventLocation; ?></p>
 								<p>When: <?php echo $eventStart; ?></p>
@@ -294,11 +298,11 @@ $social_media_message = "";
 												    	<?php
 												    		if($ticket_price == 0){
 												    			?>
-												    			<button class="getTicket btn" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">BOOK</button>
+												    			<button class="getTicket btn" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">REGISTER</button>
 												    			<?php
 												    		}else{
 												    	?>
-												    	<button href="#sendMoney" class="mdl-button mdl-button--raised getTicket fancybox" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">BOOK</button>
+												    	<button href="#sendMoney" class="mdl-button mdl-button--raised getTicket fancybox" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">REGISTER</button>
 												    	<?php } ?>
 												    </span>
 												  </li>
@@ -316,14 +320,16 @@ $social_media_message = "";
 						<div id="2" class="tabcontent">
 							<section class="section--center mdl-grid mdl-grid--no-spacing " style="box-shadow:0 1px 1px 0px rgba(0,0,0,.14), 0px 1px 1px -1px rgba(0,0,0,.2), 0 0px 2px 0px rgba(0,0,0,.12);margin-bottom: 10px; max-width: 730px;">
 				            	<div class="mdl-card mdl-cell mdl-cell--12-col" id="tabsCont" style="padding: 12px; min-height: unset;">
-									<table>
-										<tr>
-											<td style=" padding-right: 8px;">
-														<img src=""></td>
-											<td> 
-											</td> 
-										</tr>
-									</table>
+									<div>
+										Organized by: <?php echo $organizerName; ?>
+										<h5>Contacts:</h5>
+										<p><?php echo $organizerPhone; ?></p>
+										<p><?php echo $organizerEmail; ?></p>
+										<p><a href="<?php echo $organizerWebsite; ?>" target='_blank'><?php echo $organizerWebsite; ?></a></p>
+									</div>
+									<div class="">
+										<p><?php echo $eventDesc; ?></p>
+									</div>
 								</div> 
 							</section>
 						</div>
