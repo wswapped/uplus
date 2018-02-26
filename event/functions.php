@@ -21,6 +21,11 @@ function get_event($event){
 			$eventData['tickets'][] = $ticket;
 		}
 
+		//Organizer
+		$org_id = $eventData['Event_organizer'];
+		$org = $eventDb->query("SELECT * FROM event_organizer WHERE id = $org_id ") or die("Can't get organizer $eventDb->error");
+		$eventData['organizer'] = $org->fetch_assoc();
+
 	}
 	$eventData['agents'] = get_agents($event);
 	return $eventData;

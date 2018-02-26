@@ -18,11 +18,13 @@ if($eventId[0] == 'l'){
 	die(0);
 }
 
+$host = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
+
 //Gettting data on events
 $rowEvents = $eventData = get_event($eventId);
 if($eventData){
 	$eventName 		= $rowEvents["Event_Name"];
-	$eventImage 	= $_SERVER['HTTP_HOST']."/".$rowEvents["Event_Cover"];
+	$eventImage 	= $host.$rowEvents["Event_Cover"];
 	$eventDesc		= $rowEvents['Event_Desc'];
 	$eventStart		= $rowEvents['Event_Start'];
 	$eventLocation	= $rowEvents['Event_Location'];
@@ -32,6 +34,18 @@ if($eventData){
 	if($prog < 10){$size=10;} else{$size=$prog;}
 
 	$tickets = $eventData['tickets'];
+
+	$organiser = $eventData['organizer'];
+	$organizerImage = $host.$organiser['organizer_image'];
+	$organizerName = $organiser['organizer_name'];
+	$organizerPhone = $organiser['organizer_phone'];
+	$organizerEmail = $organiser['organizer_email'];
+	$organizerWebsite = $organiser['organizer_website'];
+
+
+
+
+
 }else{
 	$sqlEvents = $eventDb->query("SELECT * FROM akokanya WHERE id = \"$eventId\" ");
 	$rowEvents = $sqlEvents->fetch_assoc();			
@@ -179,18 +193,22 @@ $social_media_message = "";
 				<div class="leftSidePanel" style="position: relative; width: 20%; margin-left: 0px;float: left; padding-top: 80px;">
 					<div>
 						<div>Event organiser</div>
-						<div class="profile" style="background-image: url(images/eap.png);"></div>
+						<?php  ?>
+						<div class="profile" style="background-image: url(<?php echo $organizerImage ?>);"></div>
 						<div style="padding: 15px 0;">
 							<table border="0">
 								<tr style="border-bottom: 1px #ccc solid;">
 									<td>
-										<b>EAP Events</b>
+										<b><?php echo $organizerName; ?></b>
 									</td>
 								</tr>
 								<tr>	
 									<td onclick="alert('We are still working on this module.')" style="cursor: pointer;">
 									<i  class="fa fa-envelope"></i>
-										Contact +250734815714
+										Contact 
+										<p><?php echo $organizerPhone; ?></p>
+										<p><?php echo $organizerEmail; ?></p>
+										<p><?php echo $organizerWebsite; ?></p>
 									</td>
 								</tr>
 							</table>	
@@ -250,7 +268,7 @@ $social_media_message = "";
 							<div id="mobTabTitle2">Chat</div>
 						</div>
 						<div class="mdl-card mdl-cell mdl-cell--3-col fbShare" id="shareBtn">Share facebook</div>
-						<div onclick="javascript:window.open('http://twitter.com/share?url=$eventLink;text=Get your tickets to <?php echo $eventName ?> via uPlus. You can buy using using MTN mobile money, Tigo cash, Visa cards here:<?php echo $eventLink; ?> size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
+						<div onclick="javascript:window.open('http://twitter.com/share?url=<?php echo $eventLink; ?>&	text=Get your tickets to <?php echo $eventName ?> via uPlus. You can buy using using MTN mobile money, Tigo cash, Visa cards here:<?php echo $eventLink; ?> size=l&amp;count=none', '_blank','toolbar=no, scrollbars=no, menubar=no, resizable=no, width=700,height=220')" class="mdl-card mdl-cell mdl-cell--3-col twtShare">
 							share Twitter</div>
 					</section>
 					<section class="section--center mdl-grid--no-spacing mdl-shadow--2dp" style="margin: 0 auto; margin-bottom: 10px; max-width: 730px;">
@@ -272,7 +290,15 @@ $social_media_message = "";
 												      <span class="mdl-list__item-sub-title"><?php echo $ticket_numer; ?> remaining</span>
 												    </span>
 												    <span class="mdl-list__item-secondary-content">
+												    	<?php
+												    		if($ticket_price == 0){
+												    			?>
+												    			<button class="getTicket btn" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">BOOK</button>
+												    			<?php
+												    		}else{
+												    	?>
 												    	<button href="#sendMoney" class="mdl-button mdl-button--raised getTicket fancybox" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">BOOK</button>
+												    	<?php } ?>
 												    </span>
 												  </li>
 											<?php
@@ -397,7 +423,7 @@ $social_media_message = "";
 		</div>
 		<div class="form-group">
 		    <label for="exampleInputEmail1">Phone number</label>
-		    <input type="text" class="form-control" id="phoneInput" placeholder="Enter phone number">
+		    <input type="number" class="form-control" id="phoneInput" placeholder="Enter phone number">
 		</div>
       </div>
       <div class="modal-footer">
@@ -709,9 +735,9 @@ $("#getFreeTicket").on('click', function(e){
 				ret = JSON.parse(data);
 				if(ret.status){
 					alert("REGISTERED");
-					clearTimeout(function(){
+					setTimeout(function(){
 						location.reload()
-					}, 3000)
+					}, 1000)
 				}
 			}catch(e){
 				alert(e)
