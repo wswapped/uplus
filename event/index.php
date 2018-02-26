@@ -230,13 +230,13 @@ $social_media_message = "";
 				</div>
 				<div class="midlePage">
 					<section class="section--center mdl-grid mdl-grid--no-spacing" style="margin-bottom: 95px; max-width: 730px;">
-						<div class="titleOverlay">
-							<div class="fundTitle">
-
-							</div>
-						</div>
+						
 							<a style="background-image: url(<?php echo $eventImage;?>);" class="fundImg fancybox-thumbs" title="<?php echo $eventName;?>" data-fancybox-group="thumb" href="<?php echo $eventImage;?>">
-							
+								<div class="titleOverlay">
+									<div class="fundTitle">
+
+									</div>
+								</div>
 							</a>
 					</section>
 			        <section class="section--center contSection" style="margin-top: -100px;">
@@ -246,16 +246,6 @@ $social_media_message = "";
 								<p>Location: <?php echo $eventLocation; ?></p>
 								<p>When:<span style="float: right" id="countDown">Finish</span> <?php echo strftime("%d, %b %Y  %H%p", strtotime($eventStart)); ?></p>
 							</div>
-							<!-- <div class="mdl-cell mdl-cell--4-col contribution2" id="contdiv">
-							    <span class="sharing">
-									<i class="fa fa-share shareicon"></i>
-								</span>	
-								<span class="contshare">
-								</span>
-								<span class="sharing">
-							    	<i class="fa fa-comment shareicon"></i>
-							    </span>
-							</div> -->
 						</div>	
 		        	</section>
 					<section id="tabing" class="section--center mdl-grid mdl-grid--no-spacing ">
