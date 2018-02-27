@@ -406,7 +406,7 @@
     function sendsms($phone, $message, $subject=""){
         $recipients     = $phone;
         $data = array(
-            "sender"        =>'INTWARI',
+            "sender"        =>'Church',
             "recipients"    =>$recipients,
             "message"       =>$message,
         );
