@@ -195,6 +195,55 @@
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
 
+    }else if($action == "add_podcast"){
+        //adding podcast
+        $name  = $request['name']??"";
+        $church = $request['church']??"";
+        $intro = $request['intro']??"";
+        // $representative = $request['representative']??"";
+
+        if(!empty($name) && !empty($church) ){
+            //checking file
+            if(!empty($_FILES)){
+                $pic = $_FILES['file'];
+                if($pic['error'] == 0){
+                    //file has no error
+                    //checking if it's image
+                    $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION));
+                    if($ext == 'mp3' || $ext == 'aac'){
+                        //moving file to disk
+                        $filename = "gallery/podcasts/$name"."_".time().".$ext";
+                        if(move_uploaded_file($pic['tmp_name'], "../$filename")){
+                            //Creating podcast
+
+                            $insert = $conn->query("INSERT INTO podcasts(name, file, intro, church) VALUES(\"$name\", \"$filename\", \"$intro\", \"$church\") ");
+
+                            if($insert){
+                                $response = array('status'=>true, 'msg'=>"Created");
+                            }else{
+                                $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
+                            }
+
+                            $response = array('status'=>true, 'msg'=>"Success");
+
+                        }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again");
+                    }else{
+                        //We dont recognize this file format
+                        $response = array('status'=>false, 'msg'=>"The file uploaded seems to be not an audio file, $ext only mp3 and aac are allowed\nPlease try again");
+                    }
+                }else{
+                    $response = array('status'=>false, 'msg'=>"Error uploading group image\nPlease try again");
+                }
+            }else{
+                $response = array('status'=>false, 'message'=>'upload the podcast');
+            }
+
+            
+
+        }else{
+            $response = array('status'=>false, 'message'=>'fillin all the details');
+        }
+
     }else if($action == "listBaskets"){
         //listing the baskets
         $church = $request['church']??"";

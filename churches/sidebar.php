@@ -72,6 +72,9 @@
                     <li>
                         <a href="invoices.php">Invoices</a>
                     </li>
+                    <li>
+                        <a href="podcasts.php">Podcasts</a>
+                    </li>
                 </ul>
             </li>
             <li title="Events">
