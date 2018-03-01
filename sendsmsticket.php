@@ -9,7 +9,7 @@ while ($data = $query->fetch_assoc()) {
 	//adding people to transaction database
 	$phone = $data['phone'];
 	$send_data = array('action'=>'eventBook', 'pullNumber'=>$data['phone'], 'name'=>$data['name'], 'email'=>$data['email'], 'eventId'=>9, 'seatCode'=>1, 'userId'=>2);
-	$ret_data = curl('api/index.php', $send_data);
+	$ret_data = curl('https://uplus.rw/api/index.php', $send_data);
 	$ret = json_decode($ret_data, 1);
 	var_dump($ret);
 	$ticket_code = $ret[0]['ticketCode'];
