@@ -277,12 +277,16 @@ $social_media_message = "";
 												<li class="mdl-list__item mdl-list__item--two-line">
 												    <span class="mdl-list__item-primary-content">
 												    	<i class="fas fa-ticket-alt"></i>
+
+												    	<?php
+												    		$remaining_tickets = ($ticket_numer -(mysqli_num_rows($eventDb->query("SELECT * FROM free_tickets_buy"))) );
+												    	?>
 												      <span><?php echo $ticket_name." - ".number_format($ticket_price); ?> RWF</span>
-												      <span class="mdl-list__item-sub-title"><?php echo ($ticket_numer -(mysqli_num_rows($eventDb->query("SELECT * FROM free_tickets_buy"))) ); ?> remaining</span>
+												      <span class="mdl-list__item-sub-title"><?php echo  $remaining_tickets; ?> remaining</span>
 												    </span>
 												    <span class="mdl-list__item-secondary-content">
 												    	<?php
-												    		if($ticket_price == 0){
+												    		if($ticket_price == 0 || $remaining_tickets>0){
 												    			?>
 												    			<button class="getTicket btn" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">REGISTER</button>
 												    			<?php

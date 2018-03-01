@@ -14,7 +14,7 @@ while ($data = $query->fetch_assoc()) {
 	$ticket_code = $ret[0]['ticketCode'];
 
 	$message = "Congratulations!
-	Your registration for Youth Financial Literacy Seminal has been confirmed.
+	Your registration for Youth Financial Literacy Seminar has been confirmed.
 	Ticket code: $ticket_code
 	Any inquiry call 0785054743";
 
