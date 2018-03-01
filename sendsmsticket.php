@@ -24,9 +24,8 @@ while ($data = $query->fetch_assoc()) {
 
 	echo "<div>To: $phone<br />message:$message</div>";
 
-	// sendsms($phone, $message);
+	sendsms($phone, $message);
 
-	die();
 }
 function curl($url, $data, $method = "POST"){
 	// Get cURL resource
