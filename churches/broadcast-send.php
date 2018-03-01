@@ -51,7 +51,8 @@
                     <div class="uk-grid uk-margin-top">
                         <div class="uk-row-first">
                             <input type="hidden" name="mode" value="SMS">
-                            <button ype="submit" id="sendBtn" class="md-btn md-btn-success" value="Send">Send </button>
+                            <button type="submit" id="sendBtn" class="md-btn md-btn-success" value="Send">Send </button>
+                            <button type="button" id="contributeBtn" class="md-btn md-btn-primary" value="Send"><i class="material-icons">schedule</i> </button>
                         </div>
                         <div class="">
                             <div class="pull-right">    
@@ -62,10 +63,7 @@
                         </div>
                     </div>                            
                 </div>
-                    
-                                                     
-                     
-                </form>
+            </form>
             </div>
             <div class="md-card-content errorHandle"></div>
         </div>

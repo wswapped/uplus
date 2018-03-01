@@ -178,430 +178,86 @@
                                 </li>
                                 
                                 <li>
-                                    <div class="md-card uk-margin-medium-bottom">
-                                <div class="md-card-content">
-                                    <div class="uk-grid" data-uk-grid-margin>
-                                        <div class="uk-width-medium-1-2">
-                                            <div class="uk-vertical-align">
-                                                <div class="uk-vertical-align-middle">
-                                                    <ul id="contact_list_filter" class="uk-subnav uk-subnav-pill uk-margin-remove">
-                                                        <li class="uk-active" data-uk-filter=""><a href="#">All</a></li>
-                                                        <?php
-                                                            //Looping through group types
-                                                            $group_types = group_types();
-                                                            for($n=0; $n<count($group_types); $n++){
-                                                                $gtype = $group_types[$n]['name'];
-                                                                ?>
-                                                                    <li data-uk-filter="<?php echo strtolower($gtype); ?>"><a href="#"><?php echo ucfirst($gtype); ?></a></li>
-                                                                <?php
-                                                            }
-                                                        ?>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                    <div class="md-card-content">
+                                        <div class="dt_colVis_buttons">
                                         </div>
-                                        <div class="uk-width-medium-1-2">
-                                            <label for="contact_list_search">Search... (min 3 char.)</label>
-                                            <input class="md-input" type="text" id="contact_list_search"/>
-                                        </div>
+                                        <table id="dt_tableExport" class="uk-table" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Group name</th>
+                                                    <th>Type</th>
+                                                    <th>Location</th>
+                                                    <th>Representative name</th>
+                                                    <th>Representative phone</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+
+                                                for($n=0; $n<count($groups); $n++){
+                                                    $group = $groups[$n]; //current group
+                                                    $groupname = $group['name'];
+                                                    // $branchname = $group['branchname'];
+                                                    $group_img = $group['profile_picture'];
+                                                    $group_type = $group['type'];
+
+                                                    $repdata = user_details($group['representative']);
+                                                    $repemail = $repdata['email'];
+                                                    $repphone = $repdata['phone'];
+
+                                                    $searchabledata = array(strtolower($groupname), strtolower($group_type));
+
+                                                        $branchid = $rowMember['branchid'];
+                                                        $sqlGetMembersloc = $db->query("SELECT * FROM `branches` WHERE id = '$branchid'")or die (mysqli_error());
+                                                        $branches = mysqli_fetch_array($sqlGetMembersloc);
+                                                        $n++;
+                                                        echo '<tr>
+                                                        <td>'.$n.'</td>
+                                                        <td>'.$groupname.'</td>
+                                                        <td>'.$group_type.'</td>
+                                                        <td>'.$group['location'].'</td>
+                                                        <td>'.$repdata['name'].'</td>
+                                                        <td>'.$repphone.'</td>
+                                                        <td><a href="groups.php?group=='.$group['id'].'"><i class="material-icons">mode_edit</i></a></td>
+                                                        </tr>';
+                                                    }
+                                                ?> 
+                                                
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                            </div>
-
-                            <h3 class="heading_b uk-text-center grid_no_results" style="display:none">No results found</h3>
-
-                            <div class="uk-grid-width-medium-1-2 uk-grid-width-large-1-3 hierarchical_show" id="contact_list">
-                                <?php
-                                    //looping through groups
-                                    for($n=0; $n<count($groups); $n++){
-                                        $group = $groups[$n]; //current group
-                                        $groupname = $group['name'];
-                                        // $branchname = $group['branchname'];
-                                        $group_img = $group['profile_picture'];
-                                        $group_type = $group['type'];
-
-                                        $repdata = user_details($group['representative']);
-                                        $repemail = $repdata['email'];
-                                        $repphone = $repdata['phone'];
-
-                                        $searchabledata = array(strtolower($groupname), strtolower($group_type));
-                                ?>
-                                    <div data-uk-filter="<?php echo implode(", ", $searchabledata); ?>">
-                                        <div class="md-card md-card-hover md-card-horizontal">
-                                            <div class="md-card-head">
-                                                <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-left'}">
-                                                    <i class="md-icon material-icons">&#xE5D4;</i>
-                                                    <div class="uk-dropdown uk-dropdown-small">
-                                                        <ul class="uk-nav">
-                                                            <li><a href="#">Edit</a></li>
-                                                            <li><a class="grp_remove" data-grp = <?php echo $group['id'] ?> href="#">Remove</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="uk-text-center">
-                                                    <img class="md-card-head-avatar" src="<?php echo $group_img;?>" alt=""/>
-                                                </div>
-                                                <!-- <h3 class="md-card-head-text uk-text-center">
-                                                    <?php echo $groupname; ?>                                <span class="uk-text-truncate"><?php echo $branchname; ?> </span>
-                                                </h3> -->
-                                                <div class="md-card-head-footmenu">
-                                                    <div class="uk-grid">
-                                                        <div class="uk-width-medium-1-3">
-                                                            <a class="md-btn md-btn-edit md-btn-wave-light waves-effect waves-button waves-light" href="groups.php?group=<?php echo $group['id']; ?>">GOTO</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="md-card-content">
-                                                <ul class="md-list">
-                                                    <li>
-                                                        <div class="md-list-content">
-                                                            <span class="md-list-heading">Info</span>
-                                                            <span class="uk-text-small uk-text-muted">Type: <?php echo ucfirst($group['type']); ?></span>
-                                                            <span class="uk-text-small uk-text-muted">Location: <?php echo $group['location']; ?></span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="md-list-content">
-                                                            <span class="md-list-heading">Email</span>
-                                                            <span class="uk-text-small uk-text-muted uk-text-truncate"><?php echo $repemail; ?></span>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="md-list-content">
-                                                            <span class="md-list-heading">Phone</span>
-                                                            <span class="uk-text-small uk-text-muted"><?php echo $repphone; ?></span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                              </div>
                                 </li>
                                 <li>
                                     <ul class="md-list">
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Ut porro maxime id dolor aut quasi.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">24 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">24</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">681</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Ut quasi qui velit accusamus nobis quisquam.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">06 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">26</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">720</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Mollitia maiores dolorem id.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">14 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">1</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">531</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Ipsum nemo esse et nostrum nulla ea.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">18 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">22</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">430</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Provident ab cumque voluptas.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">19 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">20</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">721</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Molestiae voluptatibus inventore porro sit.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">17 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">17</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">806</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Beatae dolorem nostrum dolores sunt autem esse.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">23 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">22</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">488</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Distinctio quam sit minus.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">10 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">27</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">768</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Maiores voluptatum repellat omnis corporis dolore quaerat eum.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">17 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">7</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">803</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Nobis quia magnam quasi aperiam.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">26 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">2</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">739</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Totam est voluptas dolorem ipsam iste tempora veritatis.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">26 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">24</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">598</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Vitae laudantium ex sed.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">16 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">1</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">532</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Numquam quos corrupti aut quo.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">08 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">13</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">535</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Ad illum dolorem esse aperiam neque.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">21 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">1</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">323</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Totam rerum sunt eligendi dolor.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">03 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">19</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">952</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Non velit ipsum vero deleniti autem.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">23 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">6</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">583</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Saepe voluptatem laudantium tenetur.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">17 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">28</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">376</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Magnam rerum vero ut aut esse.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">29 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">8</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">334</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Modi totam et ratione cumque voluptatem iusto vitae.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">21 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">24</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">546</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Corrupti voluptatem a veritatis repudiandae.</a></span>
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small">15 Jan 2018</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">20</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">589</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        <?php
+                                            //getting podcasts
+                                            $podcasts = church_podcasts($churchID);
+
+                                            for($n=0; $n<count($podcasts); $n++){
+                                                $podcast = $podcasts[$n];
+                                                ?>
+                                                    <li>
+                                                        <div class="md-list-content">
+                                                            <span class="md-list-heading"><a href="#"><?php echo $podcast['name']; ?></a></span>
+                                                            <div class="uk-margin-small-top">
+                                                            <span class="uk-margin-right">
+                                                                <i class="material-icons">&#xE192;</i> <span class="uk-text-muted uk-text-small"><?php echo date("d-M-Y", strtotime($podcast['date_uploaded'])) ?></span>
+                                                            </span>
+                                                            <span class="uk-margin-right">
+                                                                <i class="material-icons">&#xE0B9;</i> <span class="uk-text-muted uk-text-small">24</span>
+                                                            </span>
+                                                            <span class="uk-margin-right">
+                                                                <i class="material-icons">&#xE417;</i> <span class="uk-text-muted uk-text-small">681</span>
+                                                            </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                <?php
+                                            }
+                                        ?>
                                     </ul>
                                 </li>
                             </ul>

@@ -46,7 +46,7 @@
 	function sendsms($phone, $message, $subject=""){
         $recipients     = $phone;
         $data = array(
-            "sender"        =>'Fata Isuka',
+            "sender"        =>'New life',
             "recipients"    =>$recipients,
             "message"       =>$message,
         );

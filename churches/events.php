@@ -24,9 +24,8 @@
         
             <div class="uk-grid" data-uk-grid-margin>
                 <?php
-                    $events = $conn->query("SELECT * FROM event WHERE church = \"$churchID\" ORDER BY CONCAT(eventDate, eventTime) DESC LIMIT 20") or die("$conn->error");
-                    while ($data = $events->fetch_assoc()) {
-                        $event = $data;
+                    $events = church_event($churchID);
+                    foreach ($events as $key=>$event) {;
                 ?>
                 <div class="uk-width-medium-1-3">
                     <div class="md-card">
@@ -35,11 +34,10 @@
                                 <?php echo $event['eventName']; ?>
                             </h3>
                         </div>
-                        <a href="events.php?branch=<?php //echo $branch['id']; ?>"><img class="img-full branch_img" src="<?php echo $event['picture']; ?>" /></a>
+                        <a href="events.php?branch=<?php //echo $branch['id']; ?>"><img  style="height: 250px;width: 100%" class="img-full branch_img" src="<?php echo $event['picture']; ?>" /></a>
                         <div class="md-card-content">
-
-                            <p>Date:<span><?php echo $event['eventDate']." - ".$event['eventTime']; ?></span></p> 
-                            <p>Venue:<span><?php echo $event['eventLocation']; ?></span></p>
+                            <p>Date:<span><?php echo $event['eventStart']." - ".$event['eventEnd']; ?></span></p> 
+                            <p>Description:<span><?php echo $event['eventDescription']; ?></span></p>
                         </div>
                     </div>
                 </div>

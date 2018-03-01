@@ -41,13 +41,16 @@
                     <h3 class="heading_b uk-margin-bottom"><?php echo $churchname; ?> - Podcasts and media</h3>
                     <div class="uk-grid uk-grid-width-medium-1-3" data-uk-grid-margin="">
                         <?php
+                            //getting podcasts
+                        	$podcats = church_podcasts($churchID);
+
                             //Getting branches
                             $branches = churchbranches($churchID);
-                            for($n=0; $n<count($branches); $n++){
-                                $branch = $branches[$n];
+                            for($n=0; $n<count($podcats); $n++){
+                                $podcast = $podcats[$n];
 
                                 //getting representative
-                                $rep = user_details($branch['repId']);
+                                // $rep = user_details($branch['repId']);
                         ?>
                         <div class="uk-margin-bottom uk-row-first">
                             <div class="md-card md-card">
@@ -58,14 +61,13 @@
                                         <i class="md-icon material-icons md-color-green-500">people</i>
                                     </div> -->
                                     <h3 class="md-card-toolbar-heading-text">
-                                        <?php echo $branch['name']; ?>
+                                        <?php echo $podcast['name']; ?>
                                     </h3>
-                                </div>
-                                <a href="branch_profile.php?branch=<?php echo $branch['id']; ?>"><img class="img-full branch_img" src="<?php echo $branch['profile_picture']; ?>" /></a>
+                                </div>                                
                                 <div class="md-card-content">
-                                    <p>Representative:<span><?php echo $rep['name'] ?></span></p> 
-                                    <p>Phone:<span><?php echo $branch['phone']; ?></span></p>
-                                    <p>Email:<span><?php echo $branch['mail']; ?></span></p>
+                                	<audio style="height: 30px" src="<?php echo $podcast['file']; ?>" controls></audio>
+                                    <p>Intro:<span><?php echo $podcast['intro'] ?></span></p> 
+                                    <p>Uploaded:<span><?php echo $podcast['date_uploaded']; ?></span></p>
                                 </div>
                             </div>
                         </div>
@@ -86,12 +88,12 @@
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="md-input-wrapper">
-                                    <label>Name</label>
+                                    <label>Title</label>
                                     <input type="text" id="podcast-name" class="md-input" required="required">
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    <label>Introduce the podcast</label>
+                                    <label>Description</label>
                                     <input type="text" id="podcast-intro" class="md-input">
                                     <span class="md-input-bar "></span>
                                 </div>

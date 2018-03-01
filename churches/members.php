@@ -32,8 +32,8 @@
                     <div class="md-card">
                         <div class="md-card-content">
                             <h4 class="heading_c uk-margin-bottom">Members attendance</h4>
-                            <!-- <div id="chartist_line_area" class="chartist"></div> -->
-                            <div id="mem_attendance" class="attendance"></div>
+                            <canvas id="mem_attendance" class="attendance" width="400" height="80"></canvas>
+                            <div ></div>
                         </div>
                     </div>
                     <div class="md-card">
@@ -86,33 +86,36 @@
             </div>
         </div>
         <div class="modals">            
-            <div class="uk-modal" id="modal_default" aria-hidden="true" style="display: none; overflow-y: auto;">
+            <div class="uk-modal" id="add_member_modal" aria-hidden="true" style="display: none; overflow-y: auto;">
                 <div class="uk-modal-dialog" style="top: 339.5px;">
                     <div class="uk-modal-header uk-tile uk-tile-default">
                         <h3 class="d_inline">New Member</h3>
                     </div>
-                    <form method="POST">
+                    <form id="add_member_form">
                         <div class="md-card">
                             <div class="md-card-content">
                                 <div class="md-input-wrapper">
                                     <label>Full Name</label>
-                                    <input type="text" name="membername" class="md-input" required="required">
+                                    <input type="text" name="membername" id="name_input" class="md-input" required="required">
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>Phone</label>
-                                    <input type="text" name="memberphone" class="md-input">
+                                    <input type="number" name="memberphone" id="phone_input" class="md-input">
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>E-mail</label>
-                                    <input type="email" name="memberemail" class="md-input">
+                                    <input type="email" name="memberemail" id="email_input" class="md-input">
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
                                     <label>Address</label>
-                                    <input type="text" name="memberaddress" class="md-input">
-                                    <select name="memberlocation" class="md-input" required="required">
+                                    <input type="text" name="memberaddress" id="address_input" class="md-input">
+                                    <span class="md-input-bar "></span>
+                                </div>
+                                <div class="md-input-wrapper">
+                                    <select name="memberlocation" class="md-input" required="required" id="branch_input">
                                         <option value="">Branch...</option>
                                         <?php
                                             //Getting branches
@@ -129,7 +132,7 @@
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    <select name="membertype" class="md-input"  required="required">
+                                    <select name="membertype" class="md-input"  required="required" id="type_input">
                                         <option value="">Type...</option>
                                         <?php
                                             //getting types
@@ -144,14 +147,19 @@
                                     </select>
                                     <span class="md-input-bar "></span>
                                 </div>
-                            </div>
-                            
-                        </div>
-                        <div class="uk-modal-footer uk-text-right">
-                            <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
-                            <button class="md-btn md-btn-success pull-right">Save</button>
+                            </div>                            
                         </div>
                     </form>
+                    <div id="addStatus" class="card mt-3" style="margin-top:20px"></div>
+
+                    <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
+                        <button class="md-btn md-btn-danger pull-left uk-modal-close">Cancel</button>
+                        <button class="md-btn md-btn-success pull-right" id="add_member_btn">Save</button>
+                    </div>
+
+                    <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
+                        <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Adddig member...</button>
+                    </div>
 
                 </div>
             </div>
@@ -265,7 +273,7 @@
     <div class="md-fab-wrapper md-fab-speed-dial-horizontal">
         <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">add</i><i class="material-icons md-fab-action-close" style="display:none"></i></a>
         <div class="md-fab-wrapper-small">
-            <button class="md-fab md-fab-small md-fab-warning d_inline" href="javascript:void(0)" data-uk-modal="{target:'#modal_default'}"><i class="material-icons">person_add</i></button>
+            <button class="md-fab md-fab-small md-fab-warning d_inline" href="javascript:void(0)" data-uk-modal="{target:'#add_member_modal'}"><i class="material-icons">person_add</i></button>
             <a class="md-fab md-fab-small md-fab-danger d_inline" href="javascript:void(0)" data-uk-modal="{target:'#modal_upload_members'}"><i class="material-icons">file_upload</i></a>
             <a class="md-fab md-fab-small md-fab-success d_inline" href="javascript:void(0)" data-uk-modal="{target:'#head_counts_modal'}"><i class="material-icons">account_circle</i></a>
         </div>
@@ -300,16 +308,52 @@
 
     <!--  datatables functions -->
     <script src="assets/js/pages/plugins_datatables.min.js"></script>
-    
-    <!-- d3 -->
-    <script src="bower_components/d3/d3.min.js"></script>
-    <!-- metrics graphics (charts) -->
-    <!-- <script src="bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script> -->
-    <!-- c3.js (charts) -->
-    <script src="bower_components/c3js-chart/c3.min.js"></script>
+
 
     <!-- Dropify -->
     <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
+
+    <script type="text/javascript" src="js/Chart.min.js"></script>
+    <?php
+    //Gettig data for chart
+    $query = $db->query("SELECT SUM(num) as num, church_service.name as servicename FROM `attendance` JOIN church_service ON attendance.service = church_service.id JOIN branches ON attendance.branch = branches.id WHERE branches.church = \"$churchID\" GROUP BY servicename ") or die("Can'te get chart data $db->error");
+
+    $chart_data = array();
+    while ($data = $query->fetch_assoc()) {
+        $chart_data[$data['servicename']] = $data['num'];
+    }
+    var_dump($chart_data);
+    ?>
+    <script>
+
+    var ctx = document.getElementById("mem_attendance").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <?php echo json_encode(array_keys($chart_data)); ?>,
+            datasets: [{
+                label: '# of members(headcounts)',
+                data: <?php echo json_encode(array_values($chart_data)); ?>,
+                backgroundColor: [
+                    'rgba(0, 150, 136, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(0,150,136,1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
 
     <script src="js/uploadFile.js"></script>
     <script type="text/javascript">
@@ -355,20 +399,48 @@
             }            
         });
 
-        
-    var chart = c3.generate({
-        bindto: "#mem_attendance",
-        data: {
-            columns: [
-                ['data1', 300, 350, 300, 0, 0, 0],
-                ['data2', 130, 100, 140, 200, 150, 50]
-            ],
-            types: {
-                data1: 'line',
-                data2: 'line'
+        $("#add_member_btn").on('click', function(e){
+            e.preventDefault();
+            //add individual user
+            name = $("#name_input").val();
+            phone = $("#phone_input").val();
+            email = $("#email_input").val();
+            branch = $("#branch_input").val();
+            address = $("#address_input").val();
+            type = $("#type_input").val();
+
+            alert();
+
+            if(name && branch && type){
+
+                //Marking the progress
+                //Marking the sending process
+                $("#add_member_modal .act-dialog[data-role=init]").hide();
+                $("#add_member_modal .act-dialog[data-role=done]").removeClass('display-none');
+
+                //USer can be submitted
+                $.post('api/index.php', {action:'add_member', church:<?php echo $churchID; ?>, name:name, phone:phone, email:email, address:address, branch:branch, type:type}, function(data){
+                    try{
+                        ret = JSON.parse(data);
+                        if(ret.status){
+                            //User done
+                            //create successfully(Giving notification and closing the modal);
+                            $("#addStatus").html("<p class='uk-text-success'>Member added successfully!</p>");
+                            
+                            setTimeout(function(){
+                                UIkit.modal($("#add_member_modal")).hide();
+                                window.location = 'members.php';
+                            }, 5000);
+                        }
+                    }catch(e){
+                        alert("error"+e)
+                    }
+                })
+            }else{
+                alert("Provide user details")
             }
-        }
-    });
+
+        })
 
     </script>
 

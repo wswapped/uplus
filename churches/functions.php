@@ -19,6 +19,15 @@
         $user = $user->fetch_assoc();
         return $user;
     }
+    function church_event($churchID){
+      global $conn;
+      $events = array();
+      $query = $conn->query("SELECT * FROM event WHERE church = \"$churchID\" ORDER BY eventStart DESC LIMIT 20") or die("$conn->error");
+      while ($data = $query->fetch_assoc()) {
+          $events[] = $data;
+      }
+      return $events;
+    }
 
     function member_types(){
       global $conn;
@@ -433,6 +442,19 @@
         {
             return "No";
         }
+    }
+    function church_podcasts($church){
+      //Get all the podcasts of a church
+      global $conn;
+
+      $church = $conn->real_escape_string($church);
+      $query = $conn->query("SELECT * FROM podcasts WHERE church =\"$church\" ") or die("Error getting church podcats $conn->error");
+      $pods = array();
+
+      while ($data = $query->fetch_assoc()) {
+        $pods[] = $data;
+      }
+      return $pods;
     }
 
     function addMessage($sender, $message, $channel, $subject){

@@ -1,7 +1,7 @@
 <aside id="sidebar_main">        
     <div class="sidebar_main_header">
         <div class="sidebar_logo">
-            <a href="index-2.html" class="sSidebar_hide sidebar_logo_large">
+            <a href="index.php" class="sSidebar_hide sidebar_logo_large">
                 <img class="logo_regular" src="assets/img/logo_main.png" alt="" height="15" width="71"/>
                 <img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>
             </a>

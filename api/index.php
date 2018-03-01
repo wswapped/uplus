@@ -1,4 +1,5 @@
 <?php
+echo "string";
 // START INITIATE
 	include ("db.php");
 	// var_dump($_SERVER["REQUEST_METHOD"]);
@@ -1518,12 +1519,16 @@
 		$event		= mysqli_real_escape_string($db, $_POST['eventId']);
 		$property	= mysqli_real_escape_string($db, $_POST['seatCode']);
 		$userid		= mysqli_real_escape_string($db, $_POST['userId']);
+
+		//these details are sent by free events
+		$userName = $db->real_escape_string($_POST['name']??"");
+		$email = $db->real_escape_string($_POST['email']??"");
 		
 		$selectprice = $eventDb->query("SELECT price  FROM pricing WHERE pricing_id LIKE '$property'");
 		$fetchrow = mysqli_fetch_assoc($selectprice);
 		$price = $fetchrow['price'];
-		$eventDb->query("INSERT INTO transaction (cust_event_choose, cust_pay_phone, amount, cust_event_seats,user_id, createdBy, paidStatus, status) 
-			VALUES('$event','$phone','$price','$property','$userid','$userid', 'PAID', 'UNUSED')") or die("error please in inserting".mysqli_error($eventDb));
+		$eventDb->query("INSERT INTO transaction (cust_event_choose, cust_pay_phone, cust_name, cust_email, amount, cust_event_seats,user_id, createdBy, paidStatus, status) 
+			VALUES('$event','$phone', '$userName', '$email', '$price','$property','$userid','$userid', 'PAID', 'UNUSED')") or die("error please in inserting".mysqli_error($eventDb));
 		if($eventDb)
 		{
 			$ticketId 	= mysqli_insert_id($eventDb);

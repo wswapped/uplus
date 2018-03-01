@@ -3,7 +3,6 @@
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
 
 
-<!-- Mirrored from altair_html.tzdthemes.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Feb 2018 11:09:01 GMT -->
 <head>
     <!-- additional styles for plugins -->
         <!-- weather icons -->
@@ -13,6 +12,8 @@
         <!-- chartist -->
         <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
         <?php include_once "head.php" ?>
+        <!-- dropify -->
+    <link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">
 
 </head>
 <body class="disable_transitions sidebar_main_open sidebar_main_swipe">
@@ -59,7 +60,7 @@
                     <div class="md-card">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_orders peity_data">64/100</span></div>
-                            <span class="uk-text-muted uk-text-small">SMS Remaining</span>
+                            <span class="uk-text-muted uk-text-small">Remaining SMS</span>
                             <h2 class="uk-margin-remove"><span class="countUpMe">0<noscript><?php echo(smsbalance($churchID)); ?></noscript></span></h2>
                         </div>
                     </div>
@@ -526,24 +527,21 @@
                 <div class="uk-width-large-1-2">
                     <div class="md-card">
                         <div id="clndr_events" class="clndr-wrapper">
+                            <?php
+                                $events = church_event($churchID);
+
+                                // for($n=0; $n<count($events); )
+
+                                //getting calendar data
+                                $cal_data = array();
+                                foreach ($events as $key => $event) {
+                                    $cal_data[] = array('date'=>strftime("%Y-%m-%d", strtotime($event['eventStart'])), 'title'=>$event['eventName'], 'url'=>'javascript:void(0)', 'timeStart'=>strftime("%H:%S", strtotime($event['eventStart'])), 'timeEnd'=>strftime("%H:%S", strtotime($event['eventEnd'])));
+                                }
+
+                            ?>
                             <script data-cfasync="false" src="cdn-cgi/scripts/d07b1474/cloudflare-static/email-decode.min.js"></script><script>
                                 // calendar events
-                                clndrEvents = [
-                                    { date: '2018-01-08', title: 'Doctor appointment', url: 'javascript:void(0)', timeStart: '10:00', timeEnd: '11:00' },
-                                    { date: '2018-01-09', title: 'John\'s Birthday', url: 'javascript:void(0)' },
-                                    { date: '2018-01-09', title: 'Party', url: 'javascript:void(0)', timeStart: '08:00', timeEnd: '08:30' },
-                                    { date: '2018-01-13', title: 'Meeting', url: 'javascript:void(0)', timeStart: '18:00', timeEnd: '18:20' },
-                                    { date: '2018-01-18', title: 'Work Out', url: 'javascript:void(0)', timeStart: '07:00', timeEnd: '08:00' },
-                                    { date: '2018-01-18', title: 'Business Meeting', url: 'javascript:void(0)', timeStart: '11:10', timeEnd: '11:45' },
-                                    { date: '2018-01-23', title: 'Meeting', url: 'javascript:void(0)', timeStart: '20:25', timeEnd: '20:50' },
-                                    { date: '2018-01-26', title: 'Haircut', url: 'javascript:void(0)' },
-                                    { date: '2018-01-26', title: 'Lunch with Katy', url: 'javascript:void(0)', timeStart: '08:45', timeEnd: '09:45' },
-                                    { date: '2018-01-26', title: 'Concept review', url: 'javascript:void(0)', timeStart: '15:00', timeEnd: '16:00' },
-                                    { date: '2018-01-27', title: 'Swimming Poll', url: 'javascript:void(0)', timeStart: '13:50', timeEnd: '14:20' },
-                                    { date: '2018-01-29', title: 'Team Meeting', url: 'javascript:void(0)', timeStart: '17:25', timeEnd: '18:15' },
-                                    { date: '2018-02-02', title: 'Dinner with John', url: 'javascript:void(0)', timeStart: '16:25', timeEnd: '18:45' },
-                                    { date: '2018-02-13', title: 'Business Meeting', url: 'javascript:void(0)', timeStart: '10:00', timeEnd: '11:00' }
-                                ]
+                                clndrEvents = <?php echo json_encode($cal_data); ?>
                             </script>
                             <script id="clndr_events_template" type="text/x-handlebars-template">
                                 <div class="md-card-toolbar">
@@ -592,45 +590,69 @@
                             </script>
                         </div>
                         <div class="uk-modal" id="modal_clndr_new_event">
-                            <div class="uk-modal-dialog">
-                                <div class="uk-modal-header">
-                                    <h3 class="uk-modal-title">New Event</h3>
-                                </div>
-                                <div class="uk-margin-bottom">
-                                    <label for="clndr_event_title_control">Event Title</label>
-                                    <input type="text" class="md-input" id="clndr_event_title_control" />
-                                </div>
-                                <div class="uk-margin-medium-bottom">
-                                    <label for="clndr_event_link_control">Event Link</label>
-                                    <input type="text" class="md-input" id="clndr_event_link_control" />
-                                </div>
-                                <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-large-bottom" data-uk-grid-margin>
-                                    <div>
-                                        <div class="uk-input-group">
-                                            <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
-                                            <label for="clndr_event_date_control">Event Date</label>
-                                            <input class="md-input" type="text" id="clndr_event_date_control" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '2018-01-16' }">
+                            <form id="clndr_add_event" enctype="multipart/form-data">
+                                <div class="uk-modal-dialog">
+                                    <div class="uk-modal-header">
+                                        <h3 class="uk-modal-title">New Event</h3>
+                                    </div>
+                                    <div class="uk-margin-bottom">
+                                        <label for="clndr_event_title_control">Event Title</label>
+                                        <input type="text" class="md-input" id="clndr_event_title_control" />
+                                    </div>
+                                    <div class="uk-margin-medium-bottom">
+                                        <label for="clndr_event_link_control">Event Description</label>
+                                        <input type="text" class="md-input" id="clndr_event_description" />
+                                    </div>
+                                    <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-large-bottom" data-uk-grid-margin>
+                                        <div>
+                                            <div class="uk-input-group">
+                                                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                                <label for="clndr_event_date_control">Start Date</label>
+                                                <input class="md-input" type="text" id="clndr_event_date_control" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '<?php echo date("Y-m-d") ?>' }">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="uk-input-group">
+                                                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-clock-o"></i></span>
+                                                <label for="clndr_event_start_control">Start Time</label>
+                                                <input class="md-input" type="text" id="clndr_event_start_time" data-uk-timepicker>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div class="uk-input-group">
-                                            <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-clock-o"></i></span>
-                                            <label for="clndr_event_start_control">Event Start</label>
-                                            <input class="md-input" type="text" id="clndr_event_start_control" data-uk-timepicker>
+                                    <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-large-bottom" data-uk-grid-margin>
+                                        <div>
+                                            <div class="uk-input-group">
+                                                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                                <label for="clndr_event_date_control">End Date</label>
+                                                <input class="md-input" type="text" id="clndr_event_end_date" data-uk-datepicker="{format:'YYYY-MM-DD', minDate: '<?php echo date("Y-m-d") ?>' }">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="uk-input-group">
+                                                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-clock-o"></i></span>
+                                                <label for="clndr_event_start_control">End Time</label>
+                                                <input class="md-input" type="text" id="clndr_event_end_time" data-uk-timepicker>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div class="uk-input-group">
-                                            <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-clock-o"></i></span>
-                                            <label for="clndr_event_end_control">Event End</label>
-                                            <input class="md-input" type="text" id="clndr_event_end_control" data-uk-timepicker>
-                                        </div>
+                                    <div class="md-input-wrapper">
+                                        <label>Event Cover</label>
+                                        <input type="file" id="event_image_upload" class="dropify" data-allowed-file-extensions="png jpg"/>
+                                        <span class="md-input-bar "></span>
+                                    </div>
+                                    <div class="uk-modal-footer uk-text-right act-dialog" data-role='init'>
+                                        <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button>
+                                        <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary" id="submit_event">Add Event</button>
+                                        <!-- <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary" id="clndr_new_event_submit">Add Event</button> -->
+                                    </div>
+                                    <div id="addStatus">
+                                        
+                                    </div>
+                                    <div class="uk-modal-footer uk-text-right act-dialog display-none" data-role='done'>
+                                        <button type="button" class="md-btn md-btn-flat uk-modal-close"><img src="assets/img/rot_loader.gif" style="max-height: 50px"> Sending...</button>
                                     </div>
                                 </div>
-                                <div class="uk-modal-footer uk-text-right">
-                                    <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="button" class="md-btn md-btn-flat md-btn-flat-primary" id="clndr_new_event_submit">Add Event</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -661,43 +683,6 @@
                                         <?php
                                     }
                                 ?>
-                                
-                                <!-- <li data-gmap-lat="37.379267"  data-gmap-lon="-122.02148" data-gmap-user="Prof. Davin Huels" data-gmap-user-company="Bartoletti LLC">
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_02_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Prof. Davin Huels</span>
-                                        <span class="uk-text-small uk-text-muted">Bartoletti LLC</span>
-                                    </div>
-                                </li>
-                                <li data-gmap-lat="37.410267"  data-gmap-lon="-122.11048" data-gmap-user="Mozell Kris" data-gmap-user-company="Johnson, Wilderman and Gottlieb">
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_03_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Mozell Kris</span>
-                                        <span class="uk-text-small uk-text-muted">Johnson, Wilderman and Gottlieb</span>
-                                    </div>
-                                </li>
-                                <li data-gmap-lat="37.397267"  data-gmap-lon="-122.084417" data-gmap-user="Lorna Bednar Jr." data-gmap-user-company="Miller, Haley and Zulauf">
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_04_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Lorna Bednar Jr.</span>
-                                        <span class="uk-text-small uk-text-muted">Miller, Haley and Zulauf</span>
-                                    </div>
-                                </li>
-                                <li data-gmap-lat="37.372267"  data-gmap-lon="-122.090417" data-gmap-user="Johnson Stoltenberg" data-gmap-user-company="Reynolds, Blanda and Nader">
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_05_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Johnson Stoltenberg</span>
-                                        <span class="uk-text-small uk-text-muted">Reynolds, Blanda and Nader</span>
-                                    </div>
-                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -994,6 +979,10 @@
     <script src="assets/js/common.min.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
+
+    <!-- uikit icons -->
+    <!-- <script src="assets/js/uikit-icons.min.js"></script> -->
+
     <!-- altair common functions/helpers -->
     <script src="assets/js/altair_admin_common.min.js"></script>
 
@@ -1018,6 +1007,71 @@
         <script src="assets/js/custom/handlebars_helpers.min.js"></script>
         <!-- CLNDR -->
         <script src="bower_components/clndr/clndr.min.js"></script>
+
+        <!-- Dropify -->
+        <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
+        <script type="text/javascript">
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Drag and drop event image here or click',
+            }
+        });
+
+        $("#clndr_add_event").on('submit', function(e){
+            e.preventDefault();
+
+            //Marking the sending process
+            $("#clndr_add_event .act-dialog[data-role=init]").hide();
+            $("#clndr_add_event .act-dialog[data-role=done]").removeClass('display-none');
+
+            event_name = $("#clndr_event_title_control").val();
+            event_description = $("#clndr_event_description").val();
+
+            start_date = $("#clndr_event_date_control").val();
+            start_time = $("#clndr_event_start_time").val();
+
+            event_start = start_date+" "+start_time;
+
+            end_date = $("#clndr_event_end_date").val();
+            end_time = $("#clndr_event_end_time").val();
+            event_end = end_date+" "+end_time;
+
+            event_image = document.querySelector("#event_image_upload").files[0];
+
+            var formdata = new FormData();
+
+            fields = {action:'add_event', church:<?php echo $churchID; ?>, name:event_name, description:event_description, event_start:event_start, event_end:event_end, image:event_image};
+
+                for (var prop in fields) {
+                    formdata.append(prop, fields[prop]);
+                }
+
+                var ajax = new XMLHttpRequest();
+                ajax.addEventListener("load", function(){
+                    response = this.responseText;
+                    try{
+                        ret = JSON.parse(response);
+                        if(ret.status){
+                            //create successfully(Giving notification and closing the modal);
+                            $("#addStatus").html("<p class='uk-text-success'>Event created successfully!</p>");
+                            
+                            setTimeout(function(){
+                                UIkit.modal($("#modal_clndr_new_event")).hide();
+                                window.location = 'events.php';
+                            }, 1000);
+
+                        }else{
+                            msg = ret.msg;
+                        }
+                    }catch(e){
+                        console.log(e);
+                    }
+
+                }, false);
+                ajax.open("POST", "api/index.php");
+                ajax.send(formdata);
+            })
+        </script>
 
         <!--  dashbord functions -->
         <script src="assets/js/pages/dashboard.min.js"></script>

@@ -8,32 +8,46 @@
 	$action = $request['action']??"";
 
 	if($action == "export_members"){
-		$church_id = $request['church'];
-		// $branch = $request['branch'];
-		$user = $request['user'];
+        $church_id = $request['church'];
+        // $branch = $request['branch'];
+        $user = $request['user'];
 
 
-		//checking file
-		if($_FILES['members-file']['size']>0){
+        //checking file
+        if($_FILES['members-file']['size']>0){
 
-			$target_dir = "uploads/churchmembers/";
-			$tmp_file = basename($_FILES["members-file"]['tmp_name']);
-			$target_file = $target_dir.basename($_FILES["members-file"]['name']);
-			$uploadOk = 1;
-			$FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-			move_uploaded_file(basename($_FILES["members-file"]['tmp_name']), $target_file);
-		}else{
-			echo "No file uploaded";
-		}
-		
-	}else if($action == "prayer_request"){
-		$member = $request['member']??"";
-		$sender = $request['sender']??"admin";
-		$message = $request['message']??"";
+            $target_dir = "uploads/churchmembers/";
+            $tmp_file = basename($_FILES["members-file"]['tmp_name']);
+            $target_file = $target_dir.basename($_FILES["members-file"]['name']);
+            $uploadOk = 1;
+            $FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            move_uploaded_file(basename($_FILES["members-file"]['tmp_name']), $target_file);
+        }else{
+            echo "No file uploaded";
+        }       
+    }else if($action == "add_member"){
+        $church_id = $request['church'];
+        $name = $request['name']??"";
+        $phone = $request['phone']??0;
+        $email = $request['email']??"";
+        $address = $request['address']??"";
+        $branch = $request['branch']??"";
+        $type = $request['type']??"";
 
+        if(!empty($name) && !empty($branch) && !empty($type)){
+            $sql = "INSERT INTO members(name, phone, email, branchid, address, type) VALUES (\"$name\", \"$phone\", \"$email\", \"$branch\" \"$address\", \"$type\") ";
+            $sql = "INSERT INTO members(name, phone, email, branchid, address, type) VALUES(\"hak placide\", '078', 'jdas@me.com', 1, 'aga', 'Full')";
+            // echo "$sql";
+            $query = $db->query($sql);
+            if($query){
+                $response = array('status'=>true);
+            }else{
+                $response = array('status'=>false, 'msg'=>"Error $db->error");
+            }
+        }else{
+            $response = array('status'=>false, 'msg'=>"Please provide info to create church member");
+        }
 
-        $sql = "INSERT INTO prayer_requests(member, message, sender) VALUES(\"$member\", \"$message\", \"$sender\") ";
-		$query = $db->query($sql) or die($db->error);
 	}else if($action == 'buy'){
         $phonenumber = $request['phone'];
         $count = $request['count'];
@@ -55,7 +69,16 @@
     	$query = $db->query("SELECT *, status as transaction_status FROM transactions WHERE id = \"$transaction\" LIMIT 1 ") or die("Can't get transaction details ".$db->conn);
     	$data = $query->fetch_assoc();
     	$data['status'] =1;
-    	echo json_encode($data);
+        $response = $data;
+    }else if($action == 'send_sms'){
+            //Getting data on field
+            $phone = $request['phone']??0;
+            $message = $request['message']??"";
+
+            if($phone && $message){
+                //Sending the message
+                $sms = sendsms($phone, $message);
+            }
     }else if($action == 'create_group'){
     	//api route for group creatinon
     	$name = $request['name'];
@@ -136,7 +159,6 @@
         $groupid = $request['group']??0;
 
         $conn->query("DELETE FROM groups WHERE id = \"$groupid\" ");
-
     }else if($action == 'invoice'){        
     }else if($action == "create_branch"){
         //creating branch
@@ -194,7 +216,62 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
+    }else if($action == "add_event"){
+        //creating church event
+        $name  = $request['name']??"";
+        $church = $request['church']??"";
+        $description = $request['description']??"";
+        $event_start = $request['event_start']??"";
+        $event_end = $request['event_end']??"";
 
+        if(!empty($name) && !empty($church) && !empty($description) && !empty($event_start) ){
+            //checking file
+            if(!empty($_FILES)){
+                $pic = $_FILES['image'];
+                if($pic['error'] == 0){
+                    //Image has no error
+                    //checking if it's image
+                    $ext = strtolower(pathinfo($pic['name'], PATHINFO_EXTENSION));
+                    if($ext == 'png' || $ext == 'jpg'){
+                        //moving file to disk
+                        $filename = "gallery/branches/$name"."_".time().".$ext";
+                        if(move_uploaded_file($pic['tmp_name'], "../$filename")){
+                            //adding the event
+
+                            $insert = $conn->query("INSERT INTO event(eventName, eventStart, eventEnd, church, eventDescription, picture) VALUES(\"$name\", \"$event_start\", \"$event_end\", \"$church\", \"$description\", \"$filename\") ");
+
+                            if($insert){
+                                $response = array('status'=>true, 'msg'=>"Created");
+                            }else{
+                                $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
+                            }
+
+                            $response = array('status'=>true, 'msg'=>"Success");
+
+                        }else $response = array('status'=>false, 'msg'=>"Error keeping file on server\nPlease try again");
+                    }else{
+                        //We dont recognize this file format
+                        $response = array('status'=>false, 'msg'=>"The file uploaded seems to be not an image, $ext only png and jpeg are allowed\nPlease try again");
+                    }
+                }else{
+                    $response = array('status'=>false, 'msg'=>"Error uploading group image\nPlease try again");
+                }
+            }else{
+                //here we can create branch in db
+                $insert = $conn->query("INSERT INTO branches(name, location, repId, church) VALUES(\"$name\", \"$location\", \"$representative\", \"$church\") ");
+
+                if($insert){
+                    $response = array('status'=>true, 'msg'=>"Created");
+                }else{
+                    $response = array('status'=>false, 'msg'=>"Can't create: $conn->error");
+                }
+            }
+
+            
+
+        }else{
+            $response = array('status'=>false, 'message'=>'fillin all the details');
+        }
     }else if($action == "add_podcast"){
         //adding podcast
         $name  = $request['name']??"";
@@ -243,7 +320,6 @@
         }else{
             $response = array('status'=>false, 'message'=>'fillin all the details');
         }
-
     }else if($action == "listBaskets"){
         //listing the baskets
         $church = $request['church']??"";
@@ -257,7 +333,6 @@
         }else{
           $response = array('status'=>false, 'msg'=>"Error: $conn->error");  
         }
-
     }else if($action == "addDonation"){
         //adding donation
         $church = $request['church']??"";
@@ -274,7 +349,6 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Error: $conn->error"); 
         }
-
     }else if($action == "record_headcount"){
         //head counts recording
         $church = $request['church']??"";
@@ -297,7 +371,6 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Provide all the details");
         }
-
     }else{
     	$response = array('status'=>false, 'msg'=>"Provide action");
     }
