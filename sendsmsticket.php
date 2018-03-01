@@ -19,7 +19,7 @@ while ($data = $query->fetch_assoc()) {
 	Ticket code: $ticket_code
 	Any inquiry call 0785054743";
 
-	echo "<div>To: $phone<br />$message</div>";
+	echo "<div>To: $phone<br />message:$message</div>";
 
 	// sendsms($phone, $message);
 }
