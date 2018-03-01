@@ -1,5 +1,5 @@
 <?php
-
+die("remember ");
 include 'db.php';
 
 //get registrants
