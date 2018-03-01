@@ -270,7 +270,6 @@ $social_media_message = "";
 									<?php
 										for($n=0; $n<count($tickets); $n++){
 											$ticket = $tickets[$n];
-											var_dump($ticket);
 											$ticket_name = $ticket['event_property'];
 											$ticket_price = $ticket['price'];
 											$ticket_numer = $ticket['event_seats'];
