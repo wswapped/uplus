@@ -270,6 +270,7 @@ $social_media_message = "";
 									<?php
 										for($n=0; $n<count($tickets); $n++){
 											$ticket = $tickets[$n];
+											var_dump($ticket);
 											$ticket_name = $ticket['event_property'];
 											$ticket_price = $ticket['price'];
 											$ticket_numer = $ticket['event_seats'];
@@ -282,7 +283,7 @@ $social_media_message = "";
 												    		$remaining_tickets = ($ticket_numer -(mysqli_num_rows($eventDb->query("SELECT * FROM free_tickets_buy"))) );
 												    	?>
 												      <span><?php echo $ticket_name." - ".number_format($ticket_price); ?> RWF</span>
-												      <span class="mdl-list__item-sub-title"><?php echo  $remaining_tickets; ?> remaining</span>
+												      <span class="mdl-list__item-sub-title"><?php echo  $remaining_tickets<0?0:$remaining_tickets; ?> remaining</span>
 												    </span>
 												    <span class="mdl-list__item-secondary-content">
 												    	<?php
