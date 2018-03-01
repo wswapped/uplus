@@ -286,11 +286,11 @@ $social_media_message = "";
 												    </span>
 												    <span class="mdl-list__item-secondary-content">
 												    	<?php
-												    		if($ticket_price == 0 || $remaining_tickets>0){
+												    		if($ticket_price == 0 && $remaining_tickets>0){
 												    			?>
 												    			<button class="getTicket btn" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">REGISTER</button>
 												    			<?php
-												    		}else{
+												    		}else if($remaining_tickets>0){
 												    	?>
 												    	<button href="#sendMoney" class="mdl-button mdl-button--raised getTicket fancybox" data-eventname="<?php echo $eventName; ?>" data-price="<?php echo $ticket_price; ?>" data-ticket="<?php echo $ticket_name ?>" id="contbtn">REGISTER</button>
 												    	<?php } ?>
