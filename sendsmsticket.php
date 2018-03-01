@@ -8,6 +8,10 @@ $query = $eventDb->query("SELECT * FROM free_tickets_buy");
 while ($data = $query->fetch_assoc()) {
 	//adding people to transaction database
 	$phone = $data['phone'];
+
+	$phone  = preg_replace( '/[^0-9]/', '', $phone );
+	$phone  = substr($phone, -10);
+
 	$send_data = array('action'=>'eventBook', 'pullNumber'=>$data['phone'], 'name'=>$data['name'], 'email'=>$data['email'], 'eventId'=>9, 'seatCode'=>1, 'userId'=>2);
 	$ret_data = curl('https://uplus.rw/api/index.php', $send_data);
 	$ret = json_decode($ret_data, 1);
@@ -20,7 +24,9 @@ while ($data = $query->fetch_assoc()) {
 
 	echo "<div>To: $phone<br />message:$message</div>";
 
-	// sendsms($phone, $message);
+	sendsms($phone, $message);
+
+	die();
 }
 function curl($url, $data, $method = "POST"){
 	// Get cURL resource
