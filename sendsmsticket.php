@@ -18,13 +18,13 @@ while ($data = $query->fetch_assoc()) {
 	$ticket_code = $ret[0]['ticketCode'];
 
 	$message = "Congratulations!
-	Your registration for Youth Financial Literacy Seminar has been confirmed.
+	Your registration for Youth Financial Literacy Seminar on 03rd March has been approved.
 	Ticket code: $ticket_code
 	Any inquiry call 0785054743";
 
 	echo "<div>To: $phone<br />message:$message</div>";
 
-	sendsms($phone, $message);
+	// sendsms($phone, $message);
 
 	die();
 }
