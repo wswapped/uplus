@@ -7,9 +7,21 @@ $query = $eventDb->query("SELECT * FROM free_tickets_buy");
 
 while ($data = $query->fetch_assoc()) {
 	//adding people to transaction database
-	$data = array('action'=>'eventBook', 'pullNumber'=>$data['phone'], 'name'=>$data['name'], 'email'=>$data['email'], 'eventId'=>9, 'seatCode'=>1, 'userId'=>2);
+	$phone = $data['phone'];
+	$send_data = array('action'=>'eventBook', 'pullNumber'=>$data['phone'], 'name'=>$data['name'], 'email'=>$data['email'], 'eventId'=>9, 'seatCode'=>1, 'userId'=>2);
+	$ret_data = curl('http://uplus.com/api/index.php', $send_data);
+	$ret = json_decode($ret_data, 1);
+	var_dump($ret);
+	$ticket_code = $ret[0]['ticketCode'];
 
-	var_dump(curl('http://uplus.com/api/index.php', $data));
+	$message = "Congratulations!
+	Your registration for Youth Financial Literacy Seminal has been confirmed.
+	Ticket code: $ticket_code
+	Any inquiry call 0785054743";
+
+	echo "To: $phone<br />$message";
+
+	// sendsms($phone, $message);
 }
 function curl($url, $data, $method = "POST"){
 	// Get cURL resource
@@ -29,4 +41,35 @@ function curl($url, $data, $method = "POST"){
 
 	return $resp;
 }
+function sendsms($phone, $message, $subject=""){
+        $recipients     = $phone;
+        $data = array(
+            "sender"        =>'Uplus',
+            "recipients"    =>$recipients,
+            "message"       =>$message,
+        );
+        $url = "https://www.intouchsms.co.rw/api/sendsms/.json";
+        $data = http_build_query ($data);
+        $username="cmuhirwa";
+        $password="clement123";
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+        $result = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+                
+        if($httpcode == 200)
+        {
+            return "Yes";
+        }
+        else
+        {
+            return "No";
+        }
+    }
 ?>

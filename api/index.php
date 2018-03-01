@@ -1,5 +1,4 @@
 <?php
-echo "string";
 // START INITIATE
 	include ("db.php");
 	// var_dump($_SERVER["REQUEST_METHOD"]);
