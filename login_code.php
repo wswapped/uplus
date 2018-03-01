@@ -1,4 +1,5 @@
-<?php ob_start(); session_start(); include('db.php');?>
+<?php
+ob_start(); session_start(); include('db.php');?>
 <?php // 1 Get the sent password and code from login_password 2.2 and save them into the db
 if (isset($_POST['phone3'])){	
 	$results = "";
