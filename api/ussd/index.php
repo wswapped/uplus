@@ -130,7 +130,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 									$response.="1. Tanga umusanzu\n2. Bikuza\n3. Abanyamuryango\n4. Amakuru ya gurupe\n# Ahabanza";
 								}else if($smenu == 0){
 									//Joining a group
-									$response.="CON Mushyiremo umubare uranga gurupe\nComing soon";
+									$response.="CON Mushyiremo umubare uranga gurupe";
 								}else{
 									$response.="Ibyo mwahisemo sibyo\n# Gutangira";
 								}
@@ -221,6 +221,8 @@ $phoneNumber  = substr($phoneNumber, -10);
 									//Wrong choice
 									$response.="CON Mwashyizemo ibitari byo.\n#.Ahabanza\n";
 								}
+							}else{
+								$response.='kabisa $smenu';
 							}
 						}else{
 							$fomenu = $requests[3]; //Fourth menu item

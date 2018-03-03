@@ -1427,7 +1427,6 @@
 		echo $events;
 	}
 
-	
 	function eventUpdate()
 	{
 		global $eventDb;
@@ -3025,4 +3024,5 @@
 		}
 	}
 // END PARTNERS
+	
 ?>
