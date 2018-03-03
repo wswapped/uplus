@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="icon" type="image/png" href="../frontassets/img/favicon-32x32.png" sizes="32x32">
 </head>
 <body>
   <div class="container">
