@@ -17,7 +17,7 @@ $(document).ready(function() {
 					}
 				}
 			}catch(e){
-				alert(e);
+				console.log(e);
 			}
 		});
 
@@ -36,7 +36,7 @@ $(document).ready(function() {
 					}
 				}
 			}catch(e){
-				alert(e);
+				console.log(e);
 			}
 		})	
 	},4000)
