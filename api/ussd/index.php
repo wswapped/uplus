@@ -142,17 +142,18 @@ $phoneNumber  = substr($phoneNumber, -10);
 						}else{
 							//The user is new and might have put the group code
 							//Checking if group exists
+							$group_id= $smenu;
 							$groupname = is_group($smenu);
 							if($groupname){
 								//The group requested to join exists
 								$response.="CON Mwasabye kwinjira muri gurupe '$groupname'\n";
-								
+
 								//The group id exists so we can invite the user
 								$ret = curl('https://uplus.rw/api/index.php', array('action'=>'inviteMember', 'groupId'=>$group_id, 'invitorId'=>1, 'invitedPhone'=>$phoneNumber));
 								$response.="END Ikifuzo cyanyu cyakiriwe\nUrabona ubutumwa bw'ikaze mukanya $ret";
+							}else{
+								$response.="END Numero siyo cyangwa yanditse nabi, wasaba umuyobozi wa gurupe kuguha code yanyayo";
 							}
-						}else{
-							$response.="END Numero siyo cyangwa yanditse nabi, wasaba umuyobozi wa gurupe kuguha code yanyayo";
 						}
 
 							
