@@ -24,7 +24,7 @@
 	}else if ($action == 'get_contributions'){
 		//returns top contributing groups in time
 		$sql = "SELECT COUNT(*) AS num, SUM(t.amount) as amount, g.groupName as group FROM rtgs.grouptransactions t JOIN uplus.groups g ON t.groupId = g.id WHERE t.status = 'Successfull' ";
-		$sql = "SELECT COUNT(*) AS num, SUM(t.amount) as amount, g.groupName as name FROM rtgs.grouptransactions t JOIN uplus.groups g ON t.groupId = g.id WHERE t.status = 'Successfull' GROUP BY g.id";
+		$sql = "SELECT COUNT(*) AS num, SUM(t.amount) as amount, g.groupName as name FROM rtgs.grouptransactions t JOIN uplus.groups g ON t.groupId = g.id WHERE t.status = 'Successfull' GROUP BY g.id ORDER BY num DESC";
 		// echo $sql;
 		$query = $outCon->query($sql);
 		if($query){
