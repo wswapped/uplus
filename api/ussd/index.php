@@ -170,8 +170,10 @@ $phoneNumber  = substr($phoneNumber, -10);
 								$groupname = is_group($group_id);
 								if($groupname){
 									//The group id exists so we can invite the user
-									curl('api/index.php', array('action'=>'inviteMember', 'groupId'=>$group_id, 'invitorId'=>1, 'invitedPhone'=>$phoneNumber));
-									$response.="END Ikifuzo cyanyu cyakiriwe\nUrabona ubutumwa bw'ikaze mukanya";
+									echo "$_SERVER[HOST]";
+									die();
+									$ret = curl('https://uplus.rw/api/index.php', array('action'=>'inviteMember', 'groupId'=>$group_id, 'invitorId'=>1, 'invitedPhone'=>$phoneNumber));
+									$response.="END Ikifuzo cyanyu cyakiriwe\nUrabona ubutumwa bw'ikaze mukanya $ret";
 								}else{
 									$response.="END Numero siyo cyangwa yanditse nabi, wasaba umuyobozi wa gurupe kuguha code yanyayo";
 								}							
