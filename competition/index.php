@@ -36,7 +36,7 @@
 				      <th>#</th>
 				      <th>Group name</th>
 				      <th>Contributed</th>
-				      <th>Total amount</th>
+				      <th>Amount</th>
 				    </tr>
 				  </thead>
 				  <tbody id="contribution_groups">
