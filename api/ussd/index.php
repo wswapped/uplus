@@ -1,5 +1,6 @@
 <?php
 require('../db.php');
+require('functions.php');
 header("Content-Type: text/plain");
 session_start(); //For web testing only
 
@@ -107,7 +108,6 @@ $phoneNumber  = substr($phoneNumber, -10);
 				}else{
 					//Further requests were issued
 					$smenu = $requests[1];
-
 					if($nrequests == 2){
 
 						//Checking if user belongs
@@ -155,74 +155,93 @@ $phoneNumber  = substr($phoneNumber, -10);
 						//Group was chose or group code was input
 						$tmenu = $requests[2]; //Third menu choice
 
-						$tdata = json_decode(gettempdata($sessionId, 'groups'), true);
-						$groupid = $tdata[$smenu];
-						$groupname = is_group($groupid);
+						//Accessing groups which the usere belongs in unless he's joining menu
+						if($smenu != 0){
+							$tdata = json_decode(gettempdata($sessionId, 'groups'), true);
+							$groupid = $tdata[$smenu];
+							$groupname = is_group($groupid);
+						}
 
 						if($nrequests == 3){
-							$groups = usergroups($phoneNumber);
-
-							//Group chose earlier
-							$groupId = json_decode(gettempdata($sessionId, 'groups'), true)[$requests[1]];
-							$groupname = is_group($groupId);
-
-							if(!empty($groups)){
-								//User chose from the group menu
-								if($tmenu == 1){
-									//gutanga umusanzu
-									$response.="CON $groupname\nShyiramo amafaranga(FRW) ushaka kwitanga\n";
-								}else if($tmenu == 2){
-									//Kubikuza
-									$response.="CON $groupname\nShyiramo amafaranga(FRW) ushaka kubikuza\n";
-								}elseif ($tmenu == 3) {
-									# members
-									$members = groupmembers($groupId);																		
-									$response.="CON $groupname\nUrutonde rw'abanyamuryango\n";
-									$n=0;
-									$tdata = array(); //To keep temparary dta
-									foreach ($members as $memberid => $membername) {
-										$n++;
-										$response.="$n. $membername\n";
-										$tdata[$n]= $memberid;
-									}
-									$response.="#. Ahabanza\n";
-									keeptempdata($sessionId, $tdata, '$groupname members');
-
-								}elseif ( $tmenu == 4) {
-									// group info
-									$api_call = api(array('action'=>'listGroups', 'memberId'=>$userId));
-
-									$groupdata=0; //init
-									$groups_data = json_decode($api_call, true);
-									foreach ($groups_data as $key => $value) {
-										if($value['groupId'] == $groupId){
-											$groupdata = $value;
-											break;
-										}
-									}
-
-									//Group admins
-									$query = mysqli_query($conn, "SELECT COALESCE(memberName, memberPhone) as admin FROM members WHERE memberType = \"Group treasurer\" AND groupId = \"$groupId\"") or die("END Error: ".mysqli_error($conn));
-									$admins = array();
-									while ($temp = mysqli_fetch_assoc($query)) {
-										$admins[] = $temp['admin']; 
-									}
-									$admins = implode($admins, ', ');
-									$response.="CON Ibyerekeye gurupe '$groupname'\n";
-									$groupinfo = groupinfo($groupId);									
-									$response.="Amafaranga ifite:".number_format($groupdata['groupBalance'])."FRW\n";
-									$response.="Ayo ishaka kugeraho: ".number_format($groupinfo['targetAmount'])."FRW\n";
-									$response.="Yatangiye: ".date("d-m-Y", strtotime($groupinfo['createdDate']))."\n";
-									// $response.="Itangizwa: \n";
-									$response.="Iyobowe: $admins\n";
-									$response.="#.Ahabanza\n";
-
+							if($smenu == 0){
+								//Joining a group
+								$group_id = $tmenu; //third input is group ID
+								//Checking if this is a valid group
+								$groupname = is_group($group_id);
+								if($groupname){
+									//The group id exists so we can invite the user
+									curl('api/index.php', array('action'=>'inviteMember', 'groupId'=>$group_id, 'invitorId'=>1, 'invitedPhone'=>$phoneNumber));
+									$response.="END Ikifuzo cyanyu cyakiriwe\nUrabona ubutumwa bw'ikaze mukanya";
 								}else{
-									//Wrong choice
-									$response.="CON Mwashyizemo ibitari byo.\n#.Ahabanza\n";
-								}
+									$response.="END Numero siyo cyangwa yanditse nabi, wasaba umuyobozi wa gurupe kuguha code yanyayo";
+								}							
+								
+
 							}else{
-								$response.='kabisa $smenu';
+								$groups = usergroups($phoneNumber);
+
+								//Group chose earlier
+								$groupId = json_decode(gettempdata($sessionId, 'groups'), true)[$requests[1]];
+								$groupname = is_group($groupId);
+
+								if(!empty($groups)){
+									//User chose from the group menu
+									if($tmenu == 1){
+										//gutanga umusanzu
+										$response.="CON $groupname\nShyiramo amafaranga(FRW) ushaka kwitanga\n";
+									}else if($tmenu == 2){
+										//Kubikuza
+										$response.="CON $groupname\nShyiramo amafaranga(FRW) ushaka kubikuza\n";
+									}elseif ($tmenu == 3) {
+										# members
+										$members = groupmembers($groupId);																		
+										$response.="CON $groupname\nUrutonde rw'abanyamuryango\n";
+										$n=0;
+										$tdata = array(); //To keep temparary dta
+										foreach ($members as $memberid => $membername) {
+											$n++;
+											$response.="$n. $membername\n";
+											$tdata[$n]= $memberid;
+										}
+										$response.="#. Ahabanza\n";
+										keeptempdata($sessionId, $tdata, '$groupname members');
+
+									}elseif ( $tmenu == 4) {
+										// group info
+										$api_call = api(array('action'=>'listGroups', 'memberId'=>$userId));
+
+										$groupdata=0; //init
+										$groups_data = json_decode($api_call, true);
+										foreach ($groups_data as $key => $value) {
+											if($value['groupId'] == $groupId){
+												$groupdata = $value;
+												break;
+											}
+										}
+
+										//Group admins
+										$query = mysqli_query($conn, "SELECT COALESCE(memberName, memberPhone) as admin FROM members WHERE memberType = \"Group treasurer\" AND groupId = \"$groupId\"") or die("END Error: ".mysqli_error($conn));
+										$admins = array();
+										while ($temp = mysqli_fetch_assoc($query)) {
+											$admins[] = $temp['admin']; 
+										}
+										$admins = implode($admins, ', ');
+										$response.="CON Ibyerekeye gurupe '$groupname'\n";
+										$groupinfo = groupinfo($groupId);									
+										$response.="Amafaranga ifite:".number_format($groupdata['groupBalance'])."FRW\n";
+										$response.="Ayo ishaka kugeraho: ".number_format($groupinfo['targetAmount'])."FRW\n";
+										$response.="Yatangiye: ".date("d-m-Y", strtotime($groupinfo['createdDate']))."\n";
+										// $response.="Itangizwa: \n";
+										$response.="Iyobowe: $admins\n";
+										$response.="#.Ahabanza\n";
+
+									}else{
+										//Wrong choice
+										$response.="CON Mwashyizemo ibitari byo.\n#.Ahabanza\n";
+									}
+								}else{
+									
+								}
 							}
 						}else{
 							$fomenu = $requests[3]; //Fourth menu item
