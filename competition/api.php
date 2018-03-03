@@ -3,10 +3,10 @@
 	$request = $_POST;
 
 	$action = $request['action']??"";
-	$competion_start = "2015-01-01 00:00:00";
+	$competion_start = "2018-01-01 00:00:00";
 	$response = array();
 	if($action ==  'get_groups'){
-		$sql = "SELECT groups.groupName as name, groups.createdDate as createdDate, COUNT(adminId) as num FROM groups JOIN groupuser ON groupuser.groupId = groups.id WHERE groups.createdDate >= \"$competion_start\" GROUP BY groups.id ORDER BY num DESC, createdDate ASC LIMIT 10";
+		$sql = "SELECT groups.groupName as name, groups.createdDate as createdDate, COUNT(adminId) as num FROM groups JOIN groupuser ON groupuser.groupId = groups.id WHERE groups.createdDate >= \"$competion_start\" GROUP BY groups.id ORDER BY num DESC, groupuser.createdDate ASC LIMIT 10";
 		// echo $sql;
 		$query = $db->query($sql);
 		if($query){
@@ -24,7 +24,7 @@
 	}else if ($action == 'get_contributions'){
 		//returns top contributing groups in time
 		$sql = "SELECT COUNT(*) AS num, SUM(t.amount) as amount, g.groupName as group FROM rtgs.grouptransactions t JOIN uplus.groups g ON t.groupId = g.id WHERE t.status = 'Successfull' ";
-		$sql = "SELECT COUNT(*) AS num, SUM(t.amount) as amount, g.groupName as name FROM rtgs.grouptransactions t JOIN uplus.groups g ON t.groupId = g.id WHERE t.status = 'Successfull' GROUP BY g.id ORDER BY num DESC LIMIT 10 ";
+		$sql = "SELECT COUNT(*) AS num, SUM(t.amount) as amount, g.groupName as name FROM rtgs.grouptransactions t JOIN uplus.groups g ON t.groupId = g.id WHERE t.status = 'Successfull' AND g.createdDate >= \"$competion_start\" GROUP BY g.id ORDER BY num DESC, t.transaction_date ASC LIMIT 10 ";
 		// echo $sql;
 		$query = $outCon->query($sql);
 		if($query){
