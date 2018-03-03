@@ -6,7 +6,7 @@
 	$competion_start = "2018-01-01 00:00:00";
 	$response = array();
 	if($action ==  'get_groups'){
-		$sql = "SELECT groups.groupName as name, groups.createdDate as createdDate, COUNT(adminId) as num FROM groups JOIN groupuser ON groupuser.groupId = groups.id WHERE groups.createdDate >= \"$competion_start\" GROUP BY groups.id ORDER BY num DESC, groupuser.createdDate ASC LIMIT 10";
+		$sql = "SELECT groups.groupName as name, groups.createdDate as createdDate, COUNT(adminId) as num FROM groups JOIN groupuser ON groupuser.groupId = groups.id WHERE groups.createdDate >= \"$competion_start\" GROUP BY groups.id ORDER BY num DESC";
 		// echo $sql;
 		$query = $db->query($sql);
 		if($query){
