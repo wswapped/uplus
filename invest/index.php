@@ -30,63 +30,76 @@
 <!---->
 <div class="content-page">
     <div class="container">
-        <div class="product-single main-product">
-            <div class="navbar nav-menu">
-                <div class="navbar-label"><h3 class="title"><span class="icon fa fa-star"></span><span class="label-prod">INVESTMENTS IN RWANDA</span></h3></div>
-            </div>
-            <div class="tab-container">
-                <div id="tab-1" class="tab-panel active">
-                    <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"480":{"items":2}, "991":{"items":3},"1200":{"items":4}}'>
-                     <?php
-							include ("db.php");
-							$sql2 = $db->query("SELECT * FROM `items1` ORDER BY itemId DESC");
-							while($row = mysqli_fetch_array($sql2))
-								{
-									$postTitle = $row['itemName'];
-									//$priceStatus = $row['unit'];
-									$price = $row['unitPrice'];
-									//$postDeadline = $row['postDeadline'];
-									echo'   <li class="item">
-															<div class="left-block">
-                                <a href="post.php?postId='.$row['itemId'].'">
-                                    <img class="img-responsive" alt="'.$postTitle.'" src="products/'.$row['itemId'].'.jpg"/>
-                                </a>
-                                <br/><br/>
-                                <div class="add-to-cart">
-                                    <a title="Add to Cart" class="" href="post.php?postId='.$row['itemId'].'">View</a>
-                                </div>
-                            </div>
-                            <div class="right-block">
-                                <div class="left-p-info">
-                                    <h5 class="product-name"><a href="post.php?postId='.$row['itemId'].'">'.$postTitle.'</a></h5>
-                                    <div class="product-star">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                </div>
-                                <div class="content_price">
-                                    <span class="price product-price">'.number_format($price).' Rwf</span>
-                                </div>
-                            </div>
-							<div class="right-block">
-                                <div class="left-p-info">
-                                    <h5 class="product-name">Ending:</h5>
-                                    
-                                </div>
-                                <div class="content_price">
-                                    
-                                </div>
-                            </div>
-                        </li>';}
-					 ?>
-                     </ul>
+        <?php
+            if(!empty($_GET['c'])){
+                //Let's bring page for displaying the company details and just facilitate sales
+                $company = $_GET['c'];
 
+                $query = $db->query("SELECT * FROM items1 WHERE abrev = \"$company\" LIMIT 1") or die("Can't get companies $db->error");
+                
+            }else{
+                //No special route requested, so let's show all companies
+                ?>
+                <div class="product-single main-product">
+                    <div class="navbar nav-menu">
+                        <div class="navbar-label"><h3 class="title"><span class="icon fa fa-star"></span><span class="label-prod">INVESTMENTS IN RWANDA</span></h3></div>
+                    </div>
+                    <div class="tab-container">
+                        <div id="tab-1" class="tab-panel active">
+                            <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"480":{"items":2}, "991":{"items":3},"1200":{"items":4}}'>
+                             <?php
+        							include ("db.php");
+        							$sql2 = $db->query("SELECT * FROM `items1` ORDER BY itemId DESC");
+        							while($row = mysqli_fetch_array($sql2))
+        								{
+        									$postTitle = $row['itemName'];
+        									//$priceStatus = $row['unit'];
+        									$price = $row['unitPrice'];
+        									//$postDeadline = $row['postDeadline'];
+        									echo'   <li class="item">
+        															<div class="left-block">
+                                        <a href="post.php?postId='.$row['itemId'].'">
+                                            <img class="img-responsive" alt="'.$postTitle.'" src="products/'.$row['itemId'].'.jpg"/>
+                                        </a>
+                                        <br/><br/>
+                                        <div class="add-to-cart">
+                                            <a title="Add to Cart" class="" href="post.php?postId='.$row['itemId'].'">View</a>
+                                        </div>
+                                    </div>
+                                    <div class="right-block">
+                                        <div class="left-p-info">
+                                            <h5 class="product-name"><a href="post.php?postId='.$row['itemId'].'">'.$postTitle.'</a></h5>
+                                            <div class="product-star">
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                            </div>
+                                        </div>
+                                        <div class="content_price">
+                                            <span class="price product-price">'.number_format($price).' Rwf</span>
+                                        </div>
+                                    </div>
+        							<div class="right-block">
+                                        <div class="left-p-info">
+                                            <h5 class="product-name">Ending:</h5>
+                                            
+                                        </div>
+                                        <div class="content_price">
+                                            
+                                        </div>
+                                    </div>
+                                </li>';}
+        					 ?>
+                             </ul>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+                <?php
+            }
+        ?>
        
      </div>
 </div>

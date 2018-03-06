@@ -635,14 +635,16 @@ elseif($_GET['calltab'] == 3){
     font-size: 18px;
     color: #4bac43;
 "></i>';
-						}																
-			?><tr>
-											<td><a><?php echo $row['abrev'];?></a></td>
-											<td><?php echo $currentPrice;?></td>
-											<td><?php echo $sign?></td><td>
-<a href="invest">More</a>
-</td>
-		</tr><?php }
+	}																
+			?>
+			<tr>
+				<td><a><?php echo $row['abrev'];?></a></td>
+				<td><?php echo $currentPrice;?></td>
+				<td><?php echo $sign?></td>
+				<td><a href="invest?c=<?php echo strtolower($row['abrev']);?>" class="buySharess">More</a>
+				</td>
+			</tr>
+			<?php }
 		} ?>
 								</tbody>
 							</table>

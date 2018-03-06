@@ -1249,7 +1249,11 @@ function raiseBack(){
 			}
 		}
 
-
+		//Shares
+		$(".buySharess").on('click', function(e){
+			e.preventDefault();
+			alert()
+		})
 	</script>
 </body>
 </html>
