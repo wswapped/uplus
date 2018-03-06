@@ -467,7 +467,7 @@
 					$loopg 		= mysqli_fetch_array($gnamesql);
 					$groupName 	= $loopg['groupName'];
 					$recipients = '+25'.$invitedPhone;
-					$message    = 'You have been invited to join '.$groupName.' (a contribution group on UPlus). for more info, click here. https://xms9d.app.goo.gl/PeSx';
+					$message    = 'You have been invited to join '.$groupName.' id: $groupId (a contribution group on UPlus). for more info, click here. https://xms9d.app.goo.gl/PeSx or *801*2#';
 					
 					$data = array(
 								"sender"		=>'UPLUS',
