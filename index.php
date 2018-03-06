@@ -15,8 +15,8 @@
 	
 
 	<link rel="stylesheet" href="frontassets/css/bootstrap.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+	<script src="frontassets/js/jquery.min.js"></script>
+	<script src="frontassets/js/bootstrap.min.js"></script>	
   	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="frontassets/css/style.css" media="all">
@@ -742,16 +742,16 @@
 			 <div id="passage1"></div>
 			 <div id="passage"></div>
             <div id="typed-strings">
-								<p><span style="color: #13a89e;">For</span> Anything</p>
-								<p><span style="color: #13a89e;">Like</span> A Wedding Party</p>
-								<p><span style="color: #13a89e;">Like</span> A Saving group</p>
-								<p><span style="color: #13a89e;">From</span> Anycountry</p>
-								<p><span style="color: #13a89e;">Using</span> <span style="color: #ffbe00;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">MTN mobile money</span></p>
-								<p><span style="color: #13a89e;">Using</span> <span style="color: #6f91ef;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">Tigo Cash</span></p>
-								<p><span style="color: #13a89e;">Using</span> Visa cards</p>
-								<p><span style="color: #13a89e;">Or Using</span> Master Cards</p>
-								<p>And Receive it all in <span style="color: #13a89e;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">RWF</span></p>
-							</div>
+				<p><span style="color: #13a89e;">For</span> Anything</p>
+				<p><span style="color: #13a89e;">Like</span> A Wedding Party</p>
+				<p><span style="color: #13a89e;">Like</span> A Saving group</p>
+				<p><span style="color: #13a89e;">From</span> Anycountry</p>
+				<p><span style="color: #13a89e;">Using</span> <span style="color: #ffbe00;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">MTN mobile money</span></p>
+				<p><span style="color: #13a89e;">Using</span> <span style="color: #6f91ef;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">Tigo Cash</span></p>
+				<p><span style="color: #13a89e;">Using</span> Visa cards</p>
+				<p><span style="color: #13a89e;">Or Using</span> Master Cards</p>
+				<p>And Receive it all in <span style="color: #13a89e;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);">RWF</span></p>
+			</div>
       	
        <!--  </div>
     </section>

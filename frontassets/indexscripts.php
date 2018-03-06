@@ -546,7 +546,7 @@ elseif($_GET['calltab'] == 3){
                Investment Opportunities <a href="javascript:void()" onclick="csd()">CSD</a>
             </h2> 
 	<ul id="csdback" class="uk-grid uk-grid-small  uk-grid-width-medium-1-3 uk-grid-width-large-1-3">
-				<?php $sql1 = $investdb->query("SELECT * FROM `productcategory`");
+				<?php $sql1 = $investdb->query("SELECT * FROM `productcategory` JOIN items1");
 												
 							while($rowcats = mysqli_fetch_array($sql1))	
 							{?>
@@ -640,7 +640,7 @@ elseif($_GET['calltab'] == 3){
 											<td><a><?php echo $row['abrev'];?></a></td>
 											<td><?php echo $currentPrice;?></td>
 											<td><?php echo $sign?></td><td>
-<a href="javascript:void()">More</a>
+<a href="invest">More</a>
 </td>
 		</tr><?php }
 		} ?>
