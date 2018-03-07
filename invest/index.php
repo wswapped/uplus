@@ -36,7 +36,26 @@
                 $company = $_GET['c'];
 
                 $query = $db->query("SELECT * FROM items1 WHERE abrev = \"$company\" LIMIT 1") or die("Can't get companies $db->error");
-                
+
+                $company_data = $query->fetch_assoc();
+                $company_name = $company_data['itemName'];
+                ?>
+                    <div class="product-single main-product">
+                        <div class="navbar nav-menu">
+                            <div class="navbar-label"><h3 class="title"><span class="icon fa fa-star"></span><span class="label-prod"><?php echo $company_data['itemName']; ?></span></h3></div>
+                        </div>
+                        <div class="tab-container">
+                            <div id="tab-2" class="tab-panel active">
+                                <div id="container" style="height: 400px; min-width: 310px"></div>
+                                <div class="">
+                                    <button type="button" class="btn btn-success pull-right" id="buybtn" data-toggle="modal" data-target="#buyModal">BUY</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php
             }else{
                 //No special route requested, so let's show all companies
                 ?>
@@ -103,11 +122,102 @@
        
      </div>
 </div>
+<div class="modal fade" id="buyModal" tabindex="-1" role="dialog" aria-labelledby="buyModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Request CSD Account</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="title">Title</label>
+                    <select name="title" id="title" class="form-control" required="required">
+                        <option value="">[--Select--]</option>
+                        <option value="H.E.">H.E. </option>
+                        <option value="Hon.">Hon. </option>
+                        <option value="Prof.">Prof. </option>
+                        <option value="Dr.">Dr. </option>
+                        <option value="Mr.">Mr. </option>
+                        <option value="Mrs.">Mrs. </option>
+                        <option value="Ms.">Ms. </option>
+                        <option value="Military">Military </option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Surname</label>
+                        <input type="text" class="form-control" id="sname_input" aria-describedby="emailHelp" placeholder="Enter your name">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Other name</label>
+                        <input type="text" class="form-control" id="oname_input" aria-describedby="emailHelp" placeholder="Enter your name">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="exampleInputEmail1">National ID/Passport</label>
+                <input type="number" class="form-control" id="id_input" aria-describedby="emailHelp" placeholder="Enter your national ID card number">
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="gender_input">Gender</label>
+                    <select name="title" id="gender_input" class="form-control" required="required">
+                        <option value="">[--Select--]</option>
+                        <option value="F">Female </option>
+                        <option value="M">Male </option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="dob_input">Date of birth</label>
+                        <input type="date" class="form-control" id="dob_input" aria-describedby="emailHelp" placeholder="Enter your name">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="nationality_input">Nationality</label>
+                        <input type="text" class="form-control" id="nationality_input" aria-describedby="emailHelp" placeholder="Enter your name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone_input">Phone number</label>
+                <input type="number" class="form-control" id="phone_input" aria-describedby="emailHelp" placeholder="Enter your phone number">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="shares_input">Shares</label>
+                        <input type="number" class="form-control" id="shares_input" aria-describedby="emailHelp" placeholder="Number of shares">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    Here comes me
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="comfirm_buy">SUBMIT</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <a href="#" class="scroll_top" title="Scroll to Top" style="display: inline;">Scroll</a>
 <!-- Script-->
-<script type="text/javascript" src="assets/lib/jquery/jquery-1.11.2.min.js"></script>
+<!-- <script type="text/javascript" src="assets/lib/jquery/jquery-1.11.2.min.js"></script> -->
+<script type="text/javascript" src="../frontassets/js/jquery.min.js"></script>
 <script type="text/javascript" src="assets/lib/bootstrap/js/bootstrap.min.js"></script>
+
 <script type="text/javascript" src="assets/lib/select2/js/select2.min.js"></script>
 <script type="text/javascript" src="assets/lib/jquery.bxslider/jquery.bxslider.min.js"></script>
 <script type="text/javascript" src="assets/lib/owl.carousel/owl.carousel.min.js"></script>
@@ -116,8 +226,80 @@
 <script type="text/javascript" src="assets/lib/jquery.elevatezoom.js"></script>
 <script type="text/javascript" src="assets/js/theme-script.js"></script>
 <script type="text/javascript" src="assets/js/equalheight.js"></script>
-<script src="js/jquery.js"></script>
+
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<!-- <script src="js/jquery.js"></script> -->
 <script>
+
+$("#comfirm_buy").on('click', function(){
+    //Let's get inputs
+    title = $("#title").val();
+    surname = name = $("#sname_input").val();
+    othername = $("#oname_input").val();
+    phone = $("#phone_input").val();
+    id_input = $("#id_input").val();
+
+    gender = $("#gender_input").val();
+    dob = $("#dob_input").val();
+    nationality = $("#nationality_input").val();
+
+    shares = $("#shares_input").val();
+
+
+    
+
+    if(title && surname && othername && phone && id_input && gender && dob && nationality){
+        //Validating user
+        $.post('api/index.php', {action:'share_buy_request', title:title, surname:surname, oname:othername, phone:phone, id:id_input, gender:gender, dob:dob, nationality:nationality, number:shares}, function(data){
+            console.log(data)
+        });
+    }else{
+        //User has not filed in everyrhing
+        alert("Please fill in everything")
+    }
+
+    
+})
+
+
+$.getJSON('aapl-c.json', function (data) {
+
+    // Create the chart
+    Highcharts.stockChart('container', {
+
+
+        rangeSelector: {
+            selected: 1
+        },
+
+        title: {
+            text: '<?php echo $company_name; ?> Stock Price'
+        },
+
+        series: [{
+            name: '<?php echo $company_name; ?> Stock Price',
+            data: data,
+            type: 'areaspline',
+            threshold: null,
+            tooltip: {
+                valueDecimals: 2
+            },
+            fillColor: {
+                linearGradient: {
+                    x1: 0,
+                    y1: 0,
+                    x2: 0,
+                    y2: 1
+                },
+                stops: [
+                    [0, Highcharts.getOptions().colors[0]],
+                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                ]
+            }
+        }]
+    });
+});
+$("")
 (function cart(){ 
 var cart = '1';
 	$.ajax({
