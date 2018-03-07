@@ -56,8 +56,7 @@ if ($existCount > 0) {
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no"/>
 
-    <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="../assets/images/cdh.png">
 
     <title>Invest</title>
 
@@ -121,12 +120,12 @@ if ($existCount > 0) {
         <div class="sidebar_main_header">
             <div class="sidebar_logo">
                 <a href="index.html" class="sSidebar_hide sidebar_logo_large">
-                    <img class="logo_regular" src="assets/img/logo_main.png" alt="" height="15" width="71"/>
-                    <img class="logo_light" src="assets/img/logo_main_white.png" alt="" height="15" width="71"/>
+                    <img class="logo_regular" src="../assets/images/cdh.png" alt="" height="25" width="71"/>
+                    <img class="logo_light" src="../assets/images/cdh.png" alt="" height="15" width="71"/>
                 </a>
                 <a href="index.html" class="sSidebar_show sidebar_logo_small">
-                    <img class="logo_regular" src="assets/img/logo_main_small.png" alt="" height="32" width="32"/>
-                    <img class="logo_light" src="assets/img/logo_main_small_light.png" alt="" height="32" width="32"/>
+                    <img class="logo_regular" src="../assets/images/cdh.png" alt="" height="32" width="32"/>
+                    <img class="logo_light" src="../assets/images/cdh.png" alt="" height="32" width="32"/>
                 </a>
             </div>
         </div>

@@ -18,6 +18,7 @@
     <![endif]--> 
     <link rel="stylesheet" type="text/css" href="assets/css/quick-view.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/responsive9.css" />
+     <link rel="stylesheet" type="text/css" href="assets/css/layout.css" />
     <title>Uplus INVEST</title>
 </head>
 <body class="home market-home">
@@ -204,10 +205,19 @@
             </div>
         </form>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" data-role='init'>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="comfirm_buy">SUBMIT</button>
       </div>
+      <div class="modal-footer display-none" data-role='sending'>
+        <img src="assets/images/rot_loader.gif"> Sending
+      </div>
+      <div class="modal-footer display-none" data-role='done'>
+        <div class="status">
+        </div>
+        <button class="btn btn-primary">DONE</button>
+      </div>
+
     </div>
   </div>
 </div>
@@ -245,13 +255,43 @@ $("#comfirm_buy").on('click', function(){
 
     shares = $("#shares_input").val();
 
-
-    
-
     if(title && surname && othername && phone && id_input && gender && dob && nationality){
         //Validating user
+
+        //Showing progress
+        $(".modal-footer[data-role='init']").addClass('display-none');
+
+        //Display progress
+        $(".modal-footer[data-role='sending']").removeClass('display-none');
+
+        setTimeout(function(){
+            //Just waste some time to user
+            ;
+        }, 1000);
+
         $.post('api/index.php', {action:'share_buy_request', title:title, surname:surname, oname:othername, phone:phone, id:id_input, gender:gender, dob:dob, nationality:nationality, number:shares}, function(data){
-            console.log(data)
+            
+            //Interpretting the results of the query
+            try{
+                $(".modal-footer").addClass('display-none');
+                $(".modal-footer[data-role='done']").removeClass('display-none');
+                log_elem = $(".modal-footer[data-role='done'] .status");               
+                ret = JSON.parse(data);
+                if(ret.status)
+                {
+                    //Successfully saved the request
+                    log_elem.addClass('alert alert-success')
+                    log_elem.html("<h4 class='alert-heading'>Your request was submitted!</h4><hr /><div class='mb-0'>"+ret.msg+"</div>")
+
+                }else{
+                    //Successfully saved the request
+                    log_elem.addClass('alert alert-warning')
+                    log_elem.html("<h4 class='alert-heading'>Error processsing your request!</h4><hr /><div class='mb-0'>"+ret.msg+"</div>")
+                }
+            }catch(e){
+                log_elem.addClass('alert alert-warning')
+                log_elem.html("<h4 class='alert-heading'>Error with server, try soon later or contact the administrator!</h4><hr /><div class='mb-0'>"+e+"</div>")
+            }
         });
     }else{
         //User has not filed in everyrhing
