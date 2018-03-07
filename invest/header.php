@@ -4,9 +4,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 logo">
-                    <a href="#">
-                        <!-- <img alt="Cavada market" src="assets/images/logo9.png" /> -->
-                        U+ Invest
+                    <a href="/invest">
+                        <img alt="Cavada market" src="assets/images/cdh.png" style="max-width: 100px; max-height: 80px" />
                     </a>
                 </div>
                 <div class="tool-header">
