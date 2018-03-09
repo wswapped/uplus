@@ -96,7 +96,7 @@
               <p>
                 <i class="fa fa-whatsapp" aria-hidden="true"></i>
               Conctacts: +250784848236 / info@uplus.rw</p>
-                <p>Uplus stands for you + me = wealth, A digital contribution platform which enables people to pool money togather in a group and make something happen like a Savings group,
+                <p>Uplus stands for you + me = wealth. A digital crowdfunding platform for africa which enables people to pool funds togather in a group and make something happen like a Savings group,
                 a Wedding party, Investment vehicles, etc...
                 </p>
               <div class="aboutSubTitle">Why uplus</div>
@@ -104,8 +104,7 @@
                   <li><i class="fa-li fa fa-shield "></i> Security: All transaction are secured by a blockchain technology</li>
                   <li><i class="fa-li fa fa-mobile fa-lg"></i> Smarter & Faster: It takes less than a minute to create a group and start recieving your first cashless contribution.</li>
                   <li><i class="fa-li fa fa-credit-card"></i>CrossBorder: With uplus you can accept contributions from any country any currency into your local currency</li>
-                  <li><i class="fa-li fa fa-connectdevelop"></i>CrossNetwork: With uplus, money is just money, you dont have to worry about using mtn mobile money or tigo cash, 
-                  You just contribute as easy as sending an sms.</li>
+                  <li><i class="fa-li fa fa-connectdevelop"></i>CrossNetwork: With uplus, money is just money, you dont have to worry about using mtn mobile money or tigo cash, You just contribute as easy as sending an sms.</li>
                 </ul>
             </div>
           </div>
@@ -123,7 +122,6 @@
                   <p>With your smartphone, collect money in a group and make something happen!
                   <br/>Like: Wedding, birthday party.</p>
                 </div>
-              
             </div>
           </div>
           <div class="col-md-4">
@@ -138,9 +136,7 @@
             <div class="thumbnail">
               <div class="thumbTitle" style="background: #870e4e;">Churches</div>
               <div class="caption">
-                <p>Churches use uplus to accept donations from any source easly 
-                  and stay connected whith thier church members.
-                </p>
+                <p>Churches use uplus to accept donations from any source easly and stay connected whith thier church members.</p>
               </div>
             </div>
           </div>
@@ -159,7 +155,7 @@
           </div> 
           <div class="md-card-content" style="min-height: 74px;    padding: 10px;">
             <a href="http://inyarwanda.com/articles/show/BusinessNews/urubyiruko-rukomeje-kugaragaza-udushya-mu-kwihangira-imirimo-79343.html" class="cardTitle">Best Mobile App</a>
-            <div class="cardSubTitle" style="font-size: 13px;">On 25 sept 2017 at smart services awards, uplus wan the best mobile app awrd</div>
+            <div class="cardSubTitle" style="font-size: 13px;">Uplus was awarded as the 2017 best mobile app at Smart Services Awards</div>
           </div>
         </div>
       </li>
@@ -185,7 +181,7 @@
           </div> 
           <div class="md-card-content" style="min-height: 74px;    padding: 10px;">
             <a target="blank"  class="cardTitle">Introducing USSD</a>
-            <div class="cardSubTitle" style="font-size: 13px;">You can use uplus on a simple phone witought intenet by *801*2#</div>
+            <div class="cardSubTitle" style="font-size: 13px;">You can use uplus on a simple phone witought internet by *801*2#</div>
           </div>
         </div>
       </li>
@@ -250,7 +246,7 @@
           </div> 
           <div class="md-card-content" style="min-height: 74px;    padding: 10px;">
             <a href="http://www.igihe.com/ikoranabuhanga/article/ibigo-12-by-ikoranabuhanga-mu-rwanda-bifite-udushya-dushobora-guhangwa-amaso-mu" target="blank" class="cardTitle">Listed in Rwanda top Startups</a>
-            <div class="cardSubTitle" style="font-size: 13px;">Uplus was listed in the top Rwandan Startups</div>
+            <div class="cardSubTitle" style="font-size: 13px;">Uplus was listed in the top Rwandan Upcoming Startups</div>
           </div>
         </div>
       </li>
