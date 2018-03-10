@@ -35,9 +35,7 @@
         $type = $request['type']??"";
 
         if(!empty($name) && !empty($branch) && !empty($type)){
-            $sql = "INSERT INTO members(name, phone, email, branchid, address, type) VALUES (\"$name\", \"$phone\", \"$email\", \"$branch\" \"$address\", \"$type\") ";
-            $sql = "INSERT INTO members(name, phone, email, branchid, address, type) VALUES(\"hak placide\", '078', 'jdas@me.com', 1, 'aga', 'Full')";
-            // echo "$sql";
+            $sql = "INSERT INTO members(name, phone, email, branchid, address, type) VALUES (\"$name\", \"$phone\", \"$email\", \"$branch\", \"$address\", \"$type\") ";
             $query = $db->query($sql);
             if($query){
                 $response = array('status'=>true);

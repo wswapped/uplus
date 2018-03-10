@@ -389,8 +389,11 @@
                             if(ret.status){
                                 //Saved
                                 $("#head_counts_form").html("Saved successfully!");
+                                setTimeout(function(){
+                                    location.reload();
+                                }, 700);
                             }else{
-                                $("#head_counts_form").html("Error recording!"+data.msg);
+                                $("#head_counts_form").html("Error recording!<br />"+data.msg);
                             }
                         }catch(err){
                             log(err)
@@ -408,8 +411,6 @@
             branch = $("#branch_input").val();
             address = $("#address_input").val();
             type = $("#type_input").val();
-
-            alert();
 
             if(name && branch && type){
 
