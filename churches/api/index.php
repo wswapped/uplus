@@ -296,7 +296,6 @@
                         if(move_uploaded_file($pic['tmp_name'], "../$filename")){
                             //Creating podcast
                             $sql = "INSERT INTO podcasts(name, file, intro, church) VALUES(\"$name\", \"$filename\", \"$intro\", \"$church\") ";
-                            echo "$sql";
                             $insert = $conn->query($sql);
 
                             if($insert){
