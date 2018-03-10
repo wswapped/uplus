@@ -34,8 +34,11 @@
         $branch = $request['branch']??"";
         $type = $request['type']??"";
 
+        $date = date("Y-m-d H:i:s");
+
+
         if(!empty($name) && !empty($branch) && !empty($type)){
-            $sql = "INSERT INTO members(name, phone, email, branchid, address, type) VALUES (\"$name\", \"$phone\", \"$email\", \"$branch\", \"$address\", \"$type\") ";
+            $sql = "INSERT INTO members(name, phone, email, branchid, address, type, createdDate) VALUES (\"$name\", \"$phone\", \"$email\", \"$branch\", \"$address\", \"$type\", '$date')";
             $query = $db->query($sql);
             if($query){
                 $response = array('status'=>true);
