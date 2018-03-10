@@ -29,7 +29,7 @@
       return $events;
     }
 
-    function member_types(){
+    function member_types($church = ''){
       global $conn;
       //Function to help us get member types
       $query = $conn->query("SELECT * FROM member_types") or die("Can't get mtypes $conn->error");

@@ -291,10 +291,13 @@
                     if($ext == 'mp3' || $ext == 'aac'){
                         //moving file to disk
                         $filename = "gallery/podcasts/$name"."_".time().".$ext";
+                        // $filename = "../api/podcasts/$name"."_".time().".$ext";
+
                         if(move_uploaded_file($pic['tmp_name'], "../$filename")){
                             //Creating podcast
-
-                            $insert = $conn->query("INSERT INTO podcasts(name, file, intro, church) VALUES(\"$name\", \"$filename\", \"$intro\", \"$church\") ");
+                            $sql = "INSERT INTO podcasts(name, file, intro, church) VALUES(\"$name\", \"$filename\", \"$intro\", \"$church\") ";
+                            echo "$sql";
+                            $insert = $conn->query($sql);
 
                             if($insert){
                                 $response = array('status'=>true, 'msg'=>"Created");

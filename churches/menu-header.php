@@ -172,7 +172,7 @@
                         <a href="#" class="user_action_image"><img class="md-user-image" src="<?php echo  $adminImage; ?>" alt=""/></a>
                         <div class="uk-dropdown uk-dropdown-small">
                             <ul class="uk-nav js-uk-prevent">
-                                <li><a href="page_user_profile.html">My profile</a></li>
+                                <li><a href="#">My profile</a></li>
                                 <li><a href="settings.php">Settings</a></li>
                                 <li><a href="logout.php">Logout</a></li>
                             </ul>

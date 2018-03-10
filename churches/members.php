@@ -322,7 +322,6 @@
     while ($data = $query->fetch_assoc()) {
         $chart_data[$data['servicename']] = $data['num'];
     }
-    var_dump($chart_data);
     ?>
     <script>
 
