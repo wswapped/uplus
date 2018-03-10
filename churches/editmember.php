@@ -1,151 +1,315 @@
 <!doctype html>
 <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
-<?php include("header.php");?>
-<?php 
-    if(isset($_POST['mname'])){
-    	$mname		=  $_POST['mname'];
-    	$mlocation	=  $_POST['mlocation'];
-    	$mmail    	=  $_POST['mmail'];
-        $mcontact   =  $_POST['mcontact'];
-        $maddress   =  $_POST['maddress'];
-    	$mtype 	    =  $_POST['mtype'];
-    	$mid        =  $_POST['mid'];
-    	$sql        = $db->query("UPDATE  members SET name = '$mname', locationId = '$mlocation', address = '$maddress', type = '$mtype', email = '$mmail', phone = '$mcontact' WHERE id='$mid'");
-    	?>
-    	<script type="text/javascript">
-    		window.location.href="allmembers.php";
-    	</script>
-    	<?php
-    }
-?>
-<?php
-    if (isset($_GET['memberid'])) {
-        $memberid = $_GET['memberid'];
-        $selectmemberinfo = $db ->query("SELECT * FROM members WHERE id = '$memberid'");
-        while ($memberinfo = mysqli_fetch_array($selectmemberinfo)) {
-            $oldmname      =  $memberinfo['name'];
-            $oldmaddress   =  $memberinfo['address'];
-            $oldmmail      =  $memberinfo['email'];
-            $oldmcontact   =  $memberinfo['phone']; 
-            $oldmid        =  $memberinfo['id']; 
+<head>
+    <?php
+
+        include_once 'functions.php';
+        $memberid = $_GET['id']??"";
+
+        $user_data = user_details($memberid);
+        if(!$user_data){
+            //here member does not exist
+            header("location:members.php");
         }
-?>
-	<div id="page_content">
+
+        $member_name = $user_data['name'];
+        $member_phone = $user_data['phone'];
+        $member_email = $user_data['email'];
+        $member_address = $user_data['address'];
+        $member_branch = $user_data['branchid'];
+        $member_type = $user_data['type'];
+        
+
+        $title = "Editing $member_name";
+        //Including common head configuration
+        include_once "head.php";
+    ?>
+     <!-- dropify -->
+    <link rel="stylesheet" href="assets/skins/dropify/css/dropify.css">
+</head>
+<body class="disable_transitions sidebar_main_open sidebar_main_swipe">
+    <!-- main header -->
+    <?php
+        include_once "menu-header.php";
+    ?>
+    <!-- main sidebar -->
+    <?php
+        include_once "sidebar.php";
+        $church_services = church_services($churchID);
+        $branches = church_branches($churchID);
+
+        //Getting possible church types
+        $types = member_types($churchID);
+    ?>
+
+    <div id="page_content">
         <div id="page_content_inner">
-			<h4 class="heading_a uk-margin-bottom">Edit Member <?php echo $oldmname; ?></h4>
-			<div class="uk-grid uk-grid-medium" data-uk-grid-margin>
-				<div class="uk-width-large-4-6">
-					<div class="md-card">
-						<div class="md-card-content">
-							<form action="editmember.php" method="post" enctype="multipart/form-data">
+            <div class="heading_a uk-grid uk-margin-bottom uk-grid-width-large-1-2">
+                <div class="uk-row-first">
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="md-card-title">
+                                <h4 class="">Member editing</h4>
+                            </div>
+                            <div class="draft">
+                                <?php
+                                    if($_SERVER['REQUEST_METHOD'] == 'POST' && 1){
+                                        $new_name = $_POST['name']??"";
+                                        $new_phone = $_POST['phone']??"";
+                                        $new_email = $_POST['email']??"";
+                                        $new_address = $_POST['address']??"";
+                                        $new_branch = $_POST['branchid']??"";
+                                        $new_type = $_POST['type']??"";
+
+                                        $sql = "UPDATE members SET name = \"$new_name\", phone = \"$new_phone\", email = \"$new_email\", address = \"$new_address\", branchid = \"$new_branch\", type = \"$new_type\" WHERE id = \"$memberid\" ";
+                                        $query = $db->query($sql) or die(" Can't update $db->error");
+                                        if($query){
+                                            echo "Updated successfully";
+                                        }
+
+                                        //HERE WE HAVE TO RE-LOAD THE DETAILS(bad code)\
+                                        $user_data = user_details($memberid);
+                                        $member_name = $user_data['name'];
+                                        $member_phone = $user_data['phone'];
+                                        $member_email = $user_data['email'];
+                                        $member_address = $user_data['address'];
+                                        $member_branch = $user_data['branchid'];
+                                        $member_type = $user_data['type'];
+                                    }
+                                ?>
+                            </div>
+
+                            <form action="editmember.php?id=<?php echo $memberid; ?>" method="post" enctype="multipart/form-data">
                                 <div class="md-input-wrapper">
-                                    Member Name:<input type="text" name="mname" class="md-input" required value="<?php echo $oldmname; ?>">
-									<input type="hidden" name="mid" class="md-input" required value="<?php echo $oldmid; ?>">
+                                    Member Name:<input type="text" name="name" class="md-input" required value="<?php echo $member_name; ?>">
+                                    <input type="hidden" name="mid" class="md-input" required value="<?php echo $memberid; ?>">
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    <select name="mlocation" data-md-selectize>
+                                    <select name="branch" data-md-selectize required="required">
                                         <option value="">Branch</option>
                                         <?php
-                                            $selectbra = $db -> query("SELECT * FROM branches");
-                                            while ($brainfo = mysqli_fetch_array($selectbra)) {
-                                                echo '
-                                                    <option value="'.$brainfo['id'].'">'.$brainfo['name'].'</option>
+                                            for ($n=0; $n<count($branches); $n++) {
+                                                $branch = $branches[$n];
+                                                if($branch['id'] == $member_branch){
+                                                    echo '
+                                                    <option value="'.$branch['id'].'" selected>here'.$branch['name'].'</option>
                                                 ';
+                                                }else{
+                                                    echo '
+                                                    <option value="'.$branch['id'].'">'.$branch['name'].'</option>
+                                                ';
+                                                }
+                                                
                                             }
                                         ?>
                                     </select>
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    Member Phone:<input type="number" name="mcontact" class="md-input" required value="<?php echo $oldmcontact; ?>"/>
+                                    Member Phone:<input type="number" name="phone" class="md-input" required value="<?php echo $member_phone; ?>"/>
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-									Member Email:<input type="email" name="mmail" class="md-input" required value="<?php echo $oldmmail; ?>"/>
+                                    Member Email:<input type="email" name="email" class="md-input" required value="<?php echo $member_email; ?>"/>
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-									Member Address:<input type="text" name="maddress" class="md-input" required value="<?php echo $oldmaddress; ?>"/>
+                                    Member Address:<input type="text" name="address" class="md-input" required value="<?php echo $member_address; ?>"/>
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    <select name="mtype" data-md-selectize>
-                                        <option value="VISITOR">VISITOR</option>
-                                        <option value="FULL">FULL</option>
+                                    <select name="type" data-md-selectize required="required">
+                                        <option value="">Member type ..</option>
+                                        <?php
+                                            for($n=0; $n<count($types); $n++){
+                                                $type = $types[$n];
+                                                if($member_type == $type['name']){
+                                                    ?>
+                                                       <option value="<?php echo $type['name'] ?>" selected><?php echo $type['name'] ?></option> 
+                                                    <?php
+                                                }else{
+                                                    ?>
+                                                       <option value="<?php echo $type['name'] ?>"><?php echo $type['name'] ?></option> 
+                                                    <?php
+                                                }
+                                            }
+                                        ?>
                                     </select>
                                     <span class="md-input-bar "></span>
                                 </div>
-								<input type="submit" class="md-btn md-btn-success" value="UPDATE">
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    
-<?php
-    }
-?>
-    <!-- google web fonts -->
-    <script>
-        WebFontConfig = {
-            google: {
-                families: [
-                    'Source+Code+Pro:400,700:latin',
-                    'Roboto:400,300,500,700,400italic:latin'
-                ]
-            }
-        };
-        (function() {
-            var wf = document.createElement('script');
-            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-            wf.type = 'text/javascript';
-            wf.async = 'true';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(wf, s);
-        })();
-    </script>
+                                <div class="md-input-wrapper">
+                                    <button class="md-btn md-btn-danger">Cancel</button>
+                                    <button type="submit" class="md-btn md-btn-success" value="UPDATE">UPDATE</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery.js"></script>
 
     <!-- common functions -->
     <script src="assets/js/common.min.js"></script>
+
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.min.js"></script>
     <!-- altair common functions/helpers -->
     <script src="assets/js/altair_admin_common.min.js"></script>
 
     <!-- page specific plugins -->
-        <!-- d3 -->
-        <script src="bower_components/d3/d3.min.js"></script>
-        <!-- metrics graphics (charts) -->
-        <script src="bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
-        <!-- chartist (charts) -->
-        <script src="bower_components/chartist/dist/chartist.min.js"></script>
-        <!-- maplace (google maps) -->
-        <script src="http://maps.google.com/maps/api/js"></script>
-        <script src="bower_components/maplace-js/dist/maplace.min.js"></script>
-        <!-- peity (small charts) -->
-        <script src="bower_components/peity/jquery.peity.min.js"></script>
-        <!-- easy-pie-chart (circular statistics) -->
-        <script src="bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
-        <!-- countUp -->
-        <script src="bower_components/countUp.js/dist/countUp.min.js"></script>
-        <!-- handlebars.js -->
-        <script src="bower_components/handlebars/handlebars.min.js"></script>
-        <script src="assets/js/custom/handlebars_helpers.min.js"></script>
-        <!-- CLNDR -->
-        <script src="bower_components/clndr/clndr.min.js"></script>
-
-        <!--  dashbord functions -->
-        <script src="assets/js/pages/dashboard.min.js"></script>
+    <!-- datatables -->
+    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <!-- datatables buttons-->
+    <script src="bower_components/datatables-buttons/js/dataTables.buttons.js"></script>
+    <script src="assets/js/custom/datatables/buttons.uikit.js"></script>
+    <script src="bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="bower_components/datatables-buttons/js/buttons.colVis.js"></script>
+    <script src="bower_components/datatables-buttons/js/buttons.html5.js"></script>
+    <script src="bower_components/datatables-buttons/js/buttons.print.js"></script>
     
+      <!-- datatables custom integration -->
+    <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
+
+    <!--  datatables functions -->
+    <script src="assets/js/pages/plugins_datatables.min.js"></script>
+
+
+    <!-- Dropify -->
+    <script src="bower_components/dropify/dist/js/dropify.min.js"></script>
+
+    <script type="text/javascript" src="js/Chart.min.js"></script>
+    <script>
+    var ctx = document.getElementById("mem_attendance").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <?php echo json_encode(array_keys($chart_data)); ?>,
+            datasets: [{
+                label: '# of members(headcounts)',
+                data: <?php echo json_encode(array_values($chart_data)); ?>,
+                backgroundColor: [
+                    'rgba(0, 150, 136, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(0,150,136,1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+    <script src="js/uploadFile.js"></script>
+    <script type="text/javascript">
+        var churchID  = <?php echo $churchID; ?>;
+        $('.dropify').dropify();
+
+        $("#memExport").on('submit', function(e){
+            e.preventDefault();
+            uploadFile();
+
+        });
+
+        $(".selectize").selectize();
+
+        function log(data){
+            console.log(data)
+        }
+
+        $("#head_counts_form").on('submit', function(e){
+            e.preventDefault();
+
+            //head counts modal on submission
+            service = $("#service-input").val();
+            date = $("#date-input").val();
+            number = $("#number-input").val();
+            branch = $("#branch-input").val();
+
+            if(service && date && number){
+                //sending the data
+                $.post('api/index.php', {action:'record_headcount', church:<?php echo $churchID; ?>, branch:branch, service:service, date:date, number:number}, function(data){
+                        try{
+                            ret = JSON.parse(data);
+                            if(ret.status){
+                                //Saved
+                                $("#head_counts_form").html("Saved successfully!");
+                                setTimeout(function(){
+                                    location.reload();
+                                }, 700);
+                            }else{
+                                $("#head_counts_form").html("Error recording!<br />"+data.msg);
+                            }
+                        }catch(err){
+                            log(err)
+                        }
+                })
+            }            
+        });
+
+        $("#add_member_btn").on('click', function(e){
+            e.preventDefault();
+            //add individual user
+            name = $("#name_input").val();
+            phone = $("#phone_input").val();
+            email = $("#email_input").val();
+            branch = $("#branch_input").val();
+            address = $("#address_input").val();
+            type = $("#type_input").val();
+
+            if(name && branch && type){
+
+                //Marking the progress
+                //Marking the sending process
+                $("#add_member_modal .act-dialog[data-role=init]").hide();
+                $("#add_member_modal .act-dialog[data-role=done]").removeClass('display-none');
+
+                //USer can be submitted
+                $.post('api/index.php', {action:'add_member', church:<?php echo $churchID; ?>, name:name, phone:phone, email:email, address:address, branch:branch, type:type}, function(data){
+                    try{
+                        ret = JSON.parse(data);
+                        if(ret.status){
+                            //User done
+                            //create successfully(Giving notification and closing the modal);
+                            $("#addStatus").html("<p class='uk-text-success'>Member added successfully!</p>");
+                            
+                            setTimeout(function(){
+                                UIkit.modal($("#add_member_modal")).hide();
+                                window.location = 'members.php';
+                            }, 5000);
+                        }
+                    }catch(e){
+                        alert("error"+e)
+                    }
+                })
+            }else{
+                alert("Provide user details")
+            }
+
+        })
+
+    </script>
+
     <script>
         $(function() {
             if(isHighDensity()) {
-                $.getScript( "bower_components/dense/src/dense.js", function() {
+                $.getScript( "assets/js/custom/dense.min.js", function(data) {
                     // enable hires images
                     altair_helpers.retina_images();
                 });
@@ -160,16 +324,5 @@
             altair_helpers.ie_fix();
         });
     </script>
-
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-65191727-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-
 </body>
 </html>
-<!-- Localized -->

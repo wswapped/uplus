@@ -73,7 +73,7 @@
                                             <td>'.$rowMember['address'].'</td>
                                             <td>'.$rowMember['type'].'</td>
                                             <td>'.$rowMember['createdDate'].'</td>
-                                            <td><a href="editmember.php?memberid='.$rowMember['id'].'"><i class="material-icons">mode_edit</i></a></td>
+                                            <td><a href="editmember.php?id='.$rowMember['id'].'"><i class="material-icons">mode_edit</i></a></td>
                                             </tr>';
                                         }
                                     ?> 
