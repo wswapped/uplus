@@ -145,7 +145,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <td class="uk-width-1-3">Group name</td>
-                                                            <td class="uk-width-2-3"><a href="#" id="username" data-type="text" data-pk="1" data-title="Enter username" class="editable editable-click"><?php echo $groupname; ?></a></td>
+                                                            <td class="uk-width-2-3"><a href="#" id="username" data-type="text" data-pk="1" data-title="Enter group name" class="editable editable-click"><?php echo $groupname; ?></a></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Group type</td>
@@ -157,7 +157,9 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Representative</td>
-                                                            <td><a href="#" id="group" data-type="select" data-pk="1" data-value="5" data-source="/groups" data-title="Select group" class="editable editable-click">Admin</a></td>
+                                                            <td>
+                                                                <a href="#" id="select_rep" data-type="select" data-pk="1" data-value="5" data-source="/groups" data-title="Select group representative" class="editable editable-click">Admin</a>
+                                                            </td>
                                                         </tr>
                                                         <tr></tr>
                                                         <tr>
@@ -601,6 +603,14 @@
 
             }
         }
+
+        $("#select_rep").editable({
+            source:[
+                {
+                    value:1, text:'Admin admin'
+                }
+            ]
+        })
     </script>
 
     <!-- Google maps -->
