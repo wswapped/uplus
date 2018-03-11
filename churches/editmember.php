@@ -94,7 +94,7 @@
                                                 $branch = $branches[$n];
                                                 if($branch['id'] == $member_branch){
                                                     echo '
-                                                    <option value="'.$branch['id'].'" selected>here'.$branch['name'].'</option>
+                                                    <option value="'.$branch['id'].'" selected>'.$branch['name'].'</option>
                                                 ';
                                                 }else{
                                                     echo '
@@ -112,7 +112,7 @@
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    Member Email:<input type="email" name="email" class="md-input" required value="<?php echo $member_email; ?>"/>
+                                    Member Email:<input type="email" name="email" class="md-input" value="<?php echo $member_email; ?>"/>
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
