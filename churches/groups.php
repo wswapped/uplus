@@ -308,16 +308,18 @@
                                                     </div>
                                                 </div>
                                                 <div class="uk-text-center">
-                                                    <img class="md-card-head-avatar" src="<?php echo $group_img;?>" alt=""/>
+                                                    <a href="groups.php?group=<?php echo $group['id']; ?>">
+                                                        <img class="md-card-head-avatar" src="<?php echo $group_img;?>" alt=""/>
+                                                    </a>
                                                 </div>
                                                 <h3 class="md-card-head-text uk-text-center">
                                                     <?php echo $groupname; ?>                                <span class="uk-text-truncate"><?php echo $branchname; ?> </span>
                                                 </h3>
                                                 <div class="md-card-head-footmenu">
                                                     <div class="uk-grid">
-                                                        <div class="uk-width-medium-1-3">
+                                                        <!-- <div class="uk-width-medium-1-3">
                                                             <a class="md-btn md-btn-edit md-btn-wave-light waves-effect waves-button waves-light" href="groups.php?group=<?php echo $group['id']; ?>">GOTO</a>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
