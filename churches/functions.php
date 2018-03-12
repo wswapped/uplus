@@ -97,6 +97,16 @@
       }
       var_dump($query);
     }
+    function group_members($group){
+      //members details
+      global $conn;
+      $query = $conn->query("SELECT * FROM group_members as gm JOIN members as m ON gm.member = m.id WHERE gm.groupid = \"$group\"") or die("Can;t get group members $conn->error");
+      $members = array();
+      while ($data = $query->fetch_assoc()) {
+        $members[] = $data;
+      }
+      return $members;
+    }
 
     function branch_leader($branch, $position=''){
       //getting all branch leaders
@@ -110,16 +120,7 @@
       return $leaders;
     }
 
-    function group_members($group){
-      //members details
-      global $conn;
-      $query = $conn->query("SELECT * FROM group_members WHERE group_members.groupid = \"$group\"") or die("Can;t get group members $conn->error");
-      $members = array();
-      while ($data = $query->fetch_assoc()) {
-        $members[] = $data;
-      }
-      return $members;
-    }
+    
     function church_branches($church){
 		//Getting branches
 		global $conn;
