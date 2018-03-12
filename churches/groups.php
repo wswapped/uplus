@@ -234,66 +234,71 @@
                                         </div>
                                         <div>
                                             <div class="group_map" data-location="<?php echo $grp_location; ?>" data-group-id="<?php echo $group_id; ?>"></div>
+                                            <div class="">                                                
+                                                <div style="position: absolute;bottom:15px; right: 2%">
+                                                    <a class="md-fab md-fab-success md-fab-wave-light waves-effect waves-button waves-light" href="javascript:void(0)"><i class="material-icons">message</i></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>  
-                                    </div>
-                                </div>
-                                <div class="md-card uk-margin-medium-bottom">
-                                    <div class="md-card-content">
-                                        <?php
-                                            //Showing group members                                            
-                                            if($gmembers){
-                                            ?>
-                                                <div class="uk-overflow-container" style="max-width: 1000px;">
-                                                    <table id="dt_tableExport" class="uk-table memtable" data-group="<?php echo $group_id; ?>" cellspacing="0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>
-                                                                    <input class="uk-checkbox checkall" type="checkbox">
-                                                                </th>
-                                                                <th>#</th>
-                                                                <th>Image</th>
-                                                                <th>Name</th>
-                                                                <th>Join date</th>
-                                                                <th>Action</th>
-                                                                <
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php 
-                                                            
-                                                            for($n=0; $n<count($gmembers); $n++ )
-                                                                {
-                                                                    $member = $gmembers[$n];
-                                                                    // $member = user_details($gmember['member']);
-                                                                    $ppic=!empty($member['profile_picture'])?$member['profile_picture']:'gallery/members/default.png';                                                                    
-                                                                    ?>
-                                                                    <tr data-member="<?php echo $member['id']; ?>">
-                                                                        <td><input class="uk-checkbox" type="checkbox"></td>
-                                                                        <td><?php echo $n+1; ?></td>
-                                                                        <td><img class="md-user-image" src="<?php echo $ppic; ?>" alt="img"></td>
-                                                                        <td><?php echo $member['name']; ?></td>
-                                                                        <td><?php echo $member['join_date']; ?></td>
-                                                                        <td style="cursor: pointer;" class="removemember"><i class="material-icons">indeterminate_check_box</i></td>
-                                                                    </tr>
-                                                                    <?php
-                                                                }
-                                                            ?> 
-                                                            
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            <?php
-                                            }else{
-                                                //No members
-                                                ?>
-                                                    No members in group yet. Start adding members
-                                                <?php
-                                            }
-                                        ?>
-                                    </div>
                                 </div>
                             </div>
+                            <div class="md-card uk-margin-medium-bottom">
+                                <div class="md-card-content">
+                                    <?php
+                                        //Showing group members                                            
+                                        if($gmembers){
+                                        ?>
+                                            <div class="uk-overflow-container" style="max-width: 1000px;">
+                                                <table id="dt_tableExport" class="uk-table memtable" data-group="<?php echo $group_id; ?>" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <input class="uk-checkbox checkall" type="checkbox">
+                                                            </th>
+                                                            <th>#</th>
+                                                            <th>Image</th>
+                                                            <th>Name</th>
+                                                            <th>Join date</th>
+                                                            <th>Action</th>
+                                                            <
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php 
+                                                        
+                                                        for($n=0; $n<count($gmembers); $n++ )
+                                                            {
+                                                                $member = $gmembers[$n];
+                                                                // $member = user_details($gmember['member']);
+                                                                $ppic=!empty($member['profile_picture'])?$member['profile_picture']:'gallery/members/default.png';                                                                    
+                                                                ?>
+                                                                <tr data-member="<?php echo $member['id']; ?>">
+                                                                    <td><input class="uk-checkbox" type="checkbox"></td>
+                                                                    <td><?php echo $n+1; ?></td>
+                                                                    <td><img class="md-user-image" src="<?php echo $ppic; ?>" alt="img"></td>
+                                                                    <td><?php echo $member['name']; ?></td>
+                                                                    <td><?php echo $member['join_date']; ?></td>
+                                                                    <td style="cursor: pointer;" class="removemember"><i class="material-icons">indeterminate_check_box</i></td>
+                                                                </tr>
+                                                                <?php
+                                                            }
+                                                        ?> 
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        <?php
+                                        }else{
+                                            //No members
+                                            ?>
+                                                No members in group yet. Start adding members
+                                            <?php
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
                         </div>
                         <!-- Add member fab -->
                         <div class="md-fab-wrapper ">

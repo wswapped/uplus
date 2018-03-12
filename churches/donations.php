@@ -216,7 +216,7 @@
                                             <div class="uk-form-row">
                                                 <div class="uk-grid" data-uk-grid-margin="">
                                                     <div class="uk-width-medium-2-2 uk-row-first">
-                                                        <div class="md-input-wrapper" id="servname-cont"><label>Service name</label><input type="text" id="servname" class="md-input"><span class="md-input-bar "></span></div>                                       
+                                                        <div class="md-input-wrapper" id="servname-cont"><label>Basket name</label><input type="text" id="servname" class="md-input"><span class="md-input-bar "></span></div>                                       
                                                     </div>
                                                 </div>
                                             </div>
