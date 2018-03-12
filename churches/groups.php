@@ -614,7 +614,7 @@
     </script>
 
     <!-- Google maps -->
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyAlKttaE2WuI1xKpvt-f7dBOzcBEHRaUBA&libraries=places&callback=loadmaps"></script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyAlKttaE2WuI1xKpvt-f7dBOzcBEHRaUBA&libraries=places&callback=loadmaps"></script>
 
     <script>
         $(function() {
