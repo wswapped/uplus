@@ -1606,70 +1606,68 @@
 	function addAgent()
 	{
 		include 'db.php';
-		include '../event/functions.php';
-		//adding agent to the event
-		$agentPhone = $_POST['phone']??"";
-		$event = $_POST['event']??""; 
-		$tickets = $_POST['tickets'];
+		$eventId			= mysqli_real_escape_string($db, $_POST['eventId']);
+		$ticketId			= mysqli_real_escape_string($db, $_POST['ticketId']);
+		$invitedPhone		= mysqli_real_escape_string($db, $_POST['phone']);
+		$givenTickets		= mysqli_real_escape_string($db, $_POST['givenTickets']);
+		$invitorId			= mysqli_real_escape_string($db, $_POST['invitorId']);
 
-		$response = array();
+		//CLEAN PHONE
+		$invitedPhone 	= preg_replace( '/[^0-9]/', '', $invitedPhone );
+		$invitedPhone 	= substr($invitedPhone, -10); 
 
-		if($agentPhone && $event && $tickets){
-			//checking if the event exist
-			$query = $eventDb->query("SELECT * FROM events WHERE id = \"$event\" ");
-			if($query){
-				if($query->num_rows){
-					//Here the event exist
-					//let's check member and invite
+		//CHECK FOR POISON
+		$sqlPoison = $eventDb->query("SELECT id_event FROM events WHERE id_event =  '$eventId'") or (mysqli_error($db));
+		if(mysqli_num_rows($sqlPoison) > 0)
+		{
 
-					//CLEAN PHONE
-					$agentPhone = $invitedPhone 	= preg_replace( '/[^0-9]/', '', $agentPhone );
-					$agentPhone = $invitedPhone 	= substr($agentPhone, -10); 
-
-					//CHECKING USER EXISTENCE
-					$sql = $db->query("SELECT id FROM users WHERE phone =  $agentPhone LIMIT 1") or (mysqli_error());
-
-					$countUsers = mysqli_num_rows($sql);
-					if($sql->num_rows)
-					{
-						//GET EXISTING USER
-						$invitedArray = mysqli_fetch_array($sql);
-						$userid = $invitedId = $invitedArray['id'];
-					}
-					else
-					{
-						//CREATE THE NEW USER
-						$code = rand(0000, 9999);
-						$db->query("INSERT INTO 
-							users (phone,createdBy,createdDate, password, updatedBy, updatedDate) 
-							VALUES  ('$invitedPhone', '$invitorId', now(), '$code', '$invitorId', now() )
-							");
-
-
-						if($db)
-						{
-							$userid = $invitedId = $db->insert_id;
-						}
-					}
-
-					//Adding user as an agent and tickets
-					addAgentTickets($user, $event, $tickets);
-
-					mysqli_close($db);
-					mysqli_close($outCon);
-
-
-					
-				}else{
-					$response = array('status'=>true, 'msg'=>'Event does not exist');
+			$sql = $db->query("SELECT id FROM users WHERE phone =  $invitedPhone") or (mysqli_error());
+			$countUsers = mysqli_num_rows($sql);
+			if($countUsers > 0)
+			{
+				//GET EXISTING USER
+				$invitedArray = mysqli_fetch_array($sql);
+				$invitedId = $invitedArray['id'];
+			}
+			else
+			{
+				//CREATE THE NEW USER
+				$code = rand(0000, 9999);
+				$db->query("INSERT INTO 
+					users (phone,createdBy,createdDate, password, updatedBy, updatedDate) 
+					VALUES  ('$invitedPhone', '$invitorId', now(), '$code', '$invitorId', now() )
+					");
+				if($db)
+				{
+					$sql 			= $db->query("SELECT id FROM users ORDER BY id DESC LIMIT 1");
+					$invitedArray 	= mysqli_fetch_array($sql);
+					$invitedId 		= $invitedArray['id'];
 				}
-			}else{
-				$response = array('status'=>true, 'msg'=>'Error checking event $eventDb->error');
 			}
 
-		}else{
-			$response = array('status'=>true, 'msg'=>'Provide all required paramenters');
+			// CHECK IF THE USER IS ALREADY IN THE GROUP
+			$sql = $eventDb->query("SELECT * FROM agent_tickets WHERE eventId ='$eventId' AND agent='$invitedId'");
+			$checkExits = mysqli_num_rows($sql);
+			if($checkExits > 0)
+			{
+				$sql = $eventDb->query("UPDATE agent_tickets SET number = (number+ $givenTickets) WHERE agent = $invitedId AND ticket = $ticketId ");
+				// ADD ON WHAT HE HAD 
+				echo "We added ".$givenTickets;
+			}
+			else
+			{
+				// ADD MEMBER FOR THE FIRST TIME IN THIS GROUP
+				$sql = $eventDb->query("INSERT INTO `agent_tickets`(`agent`, `ticket`, `eventId`, `number`) VALUES ('$invitedId', '$ticketId', '$eventId', '$givenTickets' )")or die(mysqli_error($db));
+
+				echo "Added";
+			}
 		}
+		else
+		{
+			echo "Poison Detected: ".$groupId;
+		}
+		mysqli_close($db);
+		mysqli_close($eventDb);		
 	}
 
 	function eventSeatsList()

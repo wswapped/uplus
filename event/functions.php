@@ -16,8 +16,12 @@ function get_event($event){
 
 		$tic = $eventDb->query("SELECT * FROM pricing JOIN eventing_pricing ON pricing.pricing_id =  eventing_pricing.pricing_code WHERE event_code = \"$event\" ");
 		$eventData['tickets'] = array();
+		// $eventData['tickets']['number'] = $eventData['tickets']['price'] = 0;
 		while ($ticket = $tic->fetch_assoc()) {
-			# code...
+			//Adding event details
+			// $eventData['tickets']['number']+=$ticket['event_seats'];
+			// $eventData['tickets']['price']+=$ticket['price'];
+
 			$eventData['tickets'][] = $ticket;
 		}
 
@@ -30,43 +34,23 @@ function get_event($event){
 	$eventData['agents'] = get_agents($event);
 	return $eventData;
 }
-function get_agents($event){
+function get_agents($eventId){
 	//returns the agents of the event
-	global $eventDb, $db;
-	$agents = array();
-
-	//get event agents
-	$query = $eventDb->query("SELECT * FROM agent_tickets JOIN event_agents ON agent_tickets.agent = event_agents.id WHERE event_agents.event = \"$event\" ") or die("Error with agents retrieval $eventDb->error");
-	while ($data = $query->fetch_assoc()) {
-		//getting details on user table
-		$userid = $data['agent'];
-		$userq = $db->query("SELECT name as agentName, phone as agentPhone FROM users WHERE id = \"$userid\" LIMIT 1 ") or die("Error with the userss $db->error");
-		$user_data = $userq->fetch_assoc();
-
-		$agents[] = array_merge($data, $user_data);		
-	}
-	return $agents;
+	require "db.php";
+	// global $eventDb, $db;
+	$sqlAgents = $eventDb->query("SELECT `agentName`, sum(`givenTickets`) givenTickets FROM `ticketsview` WHERE eventId =  '$eventId' GROUP BY `agentId` ") or die(mysqli_error($eventDb));
+		$ticketsPerAgent 	= array();
+		$NumOfAgents 		= mysqli_num_rows($sqlAgents);
+		$n=0;
+		while($agent = mysqli_fetch_array($sqlAgents))
+		{
+			   
+			$ticketsPerAgent[] = array(
+			   "agentName"		=> $agent['agentName'],
+			   "givenTickets"	=> $agent['givenTickets']
+			);
+		}
+		return $ticketsPerAgent;
 }
-function addAgentTickets($user, $event, $tickets){
-	//Adding event agent
-	global $eventDb, $db;
 
-	//checking if the agent exists
-	$check = $eventDb->query("SELECT * FROM event_agents as agent WHERE agent.event = \"$event\" ") or die("Error checking agent $eventDb->error");
-
-	if(!$chech->num_rows){
-		$query = $eventDb->query("INSERT INTO event_agent(user, event) VALUES(\"$user\", \"$event\") ") or die("Cant insert $eventDb->error");
-		$agentId = $eventDb->insert_id;
-	}else{
-		//getting agent id
-		$agent = $check->fetch_assoc();
-		$agentId = $agent['id'];
-	}
-	echo "string";
-
-	//Attaching tickets to agent
-	var_dump($tickets);
-
-	
-}
 ?>

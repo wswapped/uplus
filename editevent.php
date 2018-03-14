@@ -52,7 +52,6 @@ if (!isset($_SESSION["phone1"])) {
     $eventImage = $eventData['Event_Cover'];
 
     $tickets = $eventData['tickets'];
-
 ?>
 
 <!DOCTYPE html>
@@ -268,9 +267,7 @@ if (!isset($_SESSION["phone1"])) {
         <div class="col-lg-12 col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <?php echo $eventName; ?>
-                    </h3>
+                    
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -278,24 +275,19 @@ if (!isset($_SESSION["phone1"])) {
                             <img  class="img-responsive"  src="<?php echo $eventImage; ?>">
                         </div>
                         <div class="col-md-6">
+
                             <ul class="list-group">
+                              <li class="list-group-item">
+                                <h3><?php
+                                        echo $eventName;
+                                      ?>
+                                  </h3>
+                              </li>
                                 <li class="list-group-item">Location: <?php echo $eventLocation; ?></li>
                                 <li class="list-group-item">Starting time: <?php echo $eventStart; ?></li>
                             </ul>
                         </div>
                     </div>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Details
-                    </h3>
-                </div>
-                <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                           <thead>
@@ -313,6 +305,7 @@ if (!isset($_SESSION["phone1"])) {
                           <tbody>
                             <?php
                               $n=0;
+
                               $sql = $eventDb->query("
                                 SELECT SUM(P.event_seats) seats, SUM(P.price*P.event_seats) price, E.Event_Name, E.id_event
                                 FROM pricing P 
@@ -347,7 +340,7 @@ if (!isset($_SESSION["phone1"])) {
                         </table>
                     </div>
                 </div>
-            </div>            
+            </div>           
         </div>
         <div class="col-lg-12 col-sm-12">
         <div class="panel">
@@ -378,11 +371,12 @@ if (!isset($_SESSION["phone1"])) {
                         <?php                  
                           for($n=0; $n<$n_agents; $n++)
                           {
-                            $ag = $agents[$n];
-                            $agentName      = $ag['agentName'];
-                            $totalTickets     = $ag['number'];
+                            $ag               = $agents[$n];
+                            $agentName        = $ag['agentName'];
+                            $totalTickets     = $ag['givenTickets'];
                             $totalSoldTickets = 10;
-                            $ticketPrice    = $row['price'];
+                            $ticketPrice      = $row['price'];
+
                             $rowSold      = mysqli_fetch_array($eventDb->query("SELECT SUM(amount) soldAmount, COUNT(amount) soldTickets FROM transaction WHERE cust_event_choose = '$eventId'"));
                             $totalSoldTickets = $rowSold['soldTickets'];
                             $totalSoldAmount  = $rowSold['soldAmount'];
@@ -485,11 +479,11 @@ if (!isset($_SESSION["phone1"])) {
                 <?php
                     for($n=0; $n<count($tickets); $n++){
                         $ticket = $tickets[$n];
-                        $ticketmax = $ticket['number'];
+                        $ticketmax = $ticket['event_seats'];
                         ?>
                         <div class="mt3"></div>
                         <div class="col-md-3 alloc-col">
-                            <label><?php echo $ticket['name']; ?></label>
+                            <label><?php echo $ticket['event_property']; ?></label>
                             <input type="number" class="allocation_input" data-ticket="<?php echo $ticket['id'] ?>" data-max="<?php echo $ticketmax; ?>">
                         </div>
 
@@ -553,17 +547,17 @@ if (!isset($_SESSION["phone1"])) {
 
 	  	tickets = {};
 	  	allocation_elems = $(".alloc-col input.allocation_input");
+
 	  	for(n = 0; n<allocation_elems.length; n++){
 	  		ticket_unit = allocation_elems[n];
 	  		ticket_id = $(ticket_unit).data('ticket')
 	  		ticket_number = $(ticket_unit).val()
 
-	  		tickets.ticket_id = ticket_number
-
+	  		tickets[ticket_id] = ticket_number
+          $.post('api/index.php', {action:'addAgent', phone:agentPhone, ticketId:ticket_id, givenTickets:ticket_number, eventId:event, invitorId:<?php echo $thisid; ?>}, function(data){
+          log(data)
+        });
 	  	}
-	  	console.log("fdkslfklslsdlfksl")
-	  	$.post('api/index.php', {action:'addAgent', phone:agentPhone, tick:{tickets}, tickets:tickets,event:event})
-
 	  });
 	</script>
 

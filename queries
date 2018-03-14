@@ -1,0 +1,9 @@
+SELECT E.Event_Name eventName, E.id_event eventId, U.name agentName, U.id agentId, U.phone agentPhone, T.ticketId, T.ticketName, A.number givenTickets
+FROM events.events E
+INNER JOIN uplus.users U
+INNER JOIN events.tickets T
+ON T.eventCode = E.id_event
+INNER JOIN events.agent_tickets A
+ON A.ticket = T.ticketId
+
+select `e`.`Event_Name` AS `eventName`,`e`.`id_event` AS `eventId`, COALESCE(u.name, u.phone) agentName,`u`.`id` AS `agentId`,`u`.`phone` AS `agentPhone`,`t`.`ticketId` AS `ticketId`,`t`.`ticketName` AS `ticketName`,`a`.`number` AS `givenTickets` from (((`events`.`events` `e` join `events`.`tickets` `t` on((`t`.`eventCode` = `e`.`id_event`))) join `events`.`agent_tickets` `a` on((`a`.`ticket` = `t`.`ticketId`))) join `uplus`.`users` `u` on((`u`.`id` = `a`.`agent`)))
