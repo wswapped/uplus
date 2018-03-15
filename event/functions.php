@@ -7,21 +7,15 @@ function get_event($event){
 	if($eventData)
 	{
 		//getting tickets
-		// $tic = $eventDb->query("SELECT * FROM ticket WHERE event = \"$event\" ");
-		// $eventData['tickets'] = array();
-		// while ($ticket = $tic->fetch_assoc()) {
-		// 	# code...
-		// 	$eventData['tickets'][] = $ticket;
-		// }
 
+		//Old database way
 		$tic = $eventDb->query("SELECT * FROM pricing JOIN eventing_pricing ON pricing.pricing_id =  eventing_pricing.pricing_code WHERE event_code = \"$event\" ");
 		$eventData['tickets'] = array();
-		// $eventData['tickets']['number'] = $eventData['tickets']['price'] = 0;
-		while ($ticket = $tic->fetch_assoc()) {
-			//Adding event details
-			// $eventData['tickets']['number']+=$ticket['event_seats'];
-			// $eventData['tickets']['price']+=$ticket['price'];
 
+		$tick_details = $eventDb->query("SELECT * FROM tickets WHERE eventCode = \"$event\" ") or die("error ticket view $eventDb->error");
+
+		while ($ticket = $tick_details->fetch_assoc()) {
+			//Adding event details
 			$eventData['tickets'][] = $ticket;
 		}
 
@@ -36,8 +30,7 @@ function get_event($event){
 }
 function get_agents($eventId){
 	//returns the agents of the event
-	require "db.php";
-	// global $eventDb, $db;
+	global $eventDb, $db;
 	$sqlAgents = $eventDb->query("SELECT `agentName`, sum(`givenTickets`) givenTickets FROM `ticketsview` WHERE eventId =  '$eventId' GROUP BY `agentId` ") or die(mysqli_error($eventDb));
 		$ticketsPerAgent 	= array();
 		$NumOfAgents 		= mysqli_num_rows($sqlAgents);

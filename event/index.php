@@ -22,6 +22,7 @@ $host = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/";
 
 //Gettting data on events
 $rowEvents = $eventData = get_event($eventId);
+
 if($eventData){
 	$eventName 		= $rowEvents["Event_Name"];
 	$eventImage 	= $host.$rowEvents["Event_Cover"];
@@ -270,17 +271,14 @@ $social_media_message = "";
 									<?php
 										for($n=0; $n<count($tickets); $n++){
 											$ticket = $tickets[$n];
-											$ticket_name = $ticket['event_property'];
-											$ticket_price = $ticket['price'];
-											$ticket_numer = $ticket['event_seats'];
+											$ticket_name = $ticket['ticketName'];
+											$ticket_price = $ticket['ticketPrice'];
+											$ticket_numer = $ticket['ticketSeats'];
+											$remaining_tickets = ($ticket_numer - $ticket['soldTickets']);
 											?>
 												<li class="mdl-list__item mdl-list__item--two-line">
 												    <span class="mdl-list__item-primary-content">
 												    	<i class="fas fa-ticket-alt"></i>
-
-												    	<?php
-												    		$remaining_tickets = ($ticket_numer -(mysqli_num_rows($eventDb->query("SELECT * FROM free_tickets_buy"))) );
-												    	?>
 												      <span><?php echo $ticket_name." - ".number_format($ticket_price); ?> RWF</span>
 												      <span class="mdl-list__item-sub-title"><?php echo  $remaining_tickets<0?0:$remaining_tickets; ?> remaining</span>
 												    </span>
@@ -299,7 +297,6 @@ $social_media_message = "";
 											<?php
 										}
 									?>
-								  </li>
 								</ul>
 							</div>
 							<div id="membersMob">

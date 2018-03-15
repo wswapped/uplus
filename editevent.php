@@ -1,10 +1,14 @@
-<?php ob_start(); session_start(); include('db.php');?>
+<?php
+	ob_start();
+	session_start();
+	include('db.php');
+?>
 
 <?php
-if (!isset($_SESSION["phone1"])) {
-    header("location: logout.php");
-    exit();
-}
+	if (!isset($_SESSION["phone1"])) {
+	    header("location: logout.php");
+	    exit();
+	}
 
   $session_id = preg_replace('#[^0-9]#i', '', $_SESSION["id"]); // filter everything but numbers and letters
   $phone = preg_replace('#[^A-Za-z0-9]#i', '', $_SESSION["phone1"]); // filter everything but numbers and letters
@@ -52,6 +56,8 @@ if (!isset($_SESSION["phone1"])) {
     $eventImage = $eventData['Event_Cover'];
 
     $tickets = $eventData['tickets'];
+
+    $agents = $eventData['agents'];
 ?>
 
 <!DOCTYPE html>
@@ -245,7 +251,7 @@ if (!isset($_SESSION["phone1"])) {
     <div class="site-menubar-body">
       <ul class="site-menu">
         <li class="site-menu-item has-sub active open">
-          <a href="home">
+          <a href="events">
           <i class="site-menu-icon md-calendar" aria-hidden="true"></i>
             <span class="site-menu-title">Events</span>
           </a>
@@ -339,6 +345,37 @@ if (!isset($_SESSION["phone1"])) {
                           </tbody>
                         </table>
                     </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                      	<div class="sumbox">
+                      		<div class="sumbox-title"></div>
+                      		<div class="sumbox-subtitle"></div>
+                      	</div>
+                        <div class="panel">
+                        	<!-- <div class="panel-title"></div> -->
+                        	
+                        	<div class="panel-body">
+                        		<?php
+                        			$totalAssigned = 0;
+                        			foreach ($agents as $key => $ag_data) {
+                        				$totalAssigned +=$ag_data['givenTickets'];
+                        			}
+                        		?>
+                        		<p style="font-weight: bold;">Assigned tickets</p>
+                        		<b style="font-weight: 500; font-size: 150%"><?php echo $totalAssigned; ?></b>
+                        	</div>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="panel">                        	
+                        	<div class="panel-body">
+                        		<p style="font-weight: bold;">Unassigned tickets</p>
+                        		<b style="font-size: 150%"><?php echo ($totalTickets - $totalAssigned); ?></b>
+                        	</div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
             </div>           
         </div>
@@ -348,8 +385,7 @@ if (!isset($_SESSION["phone1"])) {
                 <h3 class="panel-title">
                   Event Agents
                   <span class="badge badge-info" style="background-color: #00897b;">
-                    <?php
-                    $agents = $eventData['agents'];
+                    <?php                    
                     echo $n_agents = count($agents);
                     ?>
                   </span>
@@ -380,9 +416,9 @@ if (!isset($_SESSION["phone1"])) {
                             $rowSold      = mysqli_fetch_array($eventDb->query("SELECT SUM(amount) soldAmount, COUNT(amount) soldTickets FROM transaction WHERE cust_event_choose = '$eventId'"));
                             $totalSoldTickets = $rowSold['soldTickets'];
                             $totalSoldAmount  = $rowSold['soldAmount'];
-                            $n++;
+
                           echo'<tr>
-                            <td>'.$n.'</td>
+                            <td>'.($n+1).'</td>
                             <td>'.$agentName.'</td>
                             <td>'.number_format($totalTickets).' ('.number_format($ticketPrice).' Rwf)</td>
                             <td>'.number_format($totalSoldTickets).' ('.number_format($totalSoldAmount).' Rwf)</td>
@@ -474,17 +510,19 @@ if (!isset($_SESSION["phone1"])) {
             </div>
             <div class="row tickets-allocation">
                 <div class="col-md-12">
-                    <p class="text-muted">Enter number of tickets you assign to agent</p>
+                    <!-- <p class="text-muted">Enter number of tickets you assign to agent</p> -->
+                    <div style="margin-top: 30px"></div>
                 </div>
                 <?php
                     for($n=0; $n<count($tickets); $n++){
                         $ticket = $tickets[$n];
-                        $ticketmax = $ticket['event_seats'];
+                        $ticketmax = $ticket['ticketSeats'] - $ticket['assignedTickets'];
                         ?>
-                        <div class="mt3"></div>
-                        <div class="col-md-3 alloc-col">
-                            <label><?php echo $ticket['event_property']; ?></label>
-                            <input type="number" class="allocation_input" data-ticket="<?php echo $ticket['id'] ?>" data-max="<?php echo $ticketmax; ?>">
+                        <div class="col-md-6">
+                            <label><?php echo $ticket['ticketName']." <i>($ticketmax)</i>"; ?></label>
+                            <div class="form-group">
+                            	<input type="number" class="allocation_input" data-ticket="<?php echo $ticket['ticketId'] ?>" data-max="<?php echo $ticketmax; ?>" max="<?php echo $ticketmax; ?>">
+                            </div>
                         </div>
 
                         <?php
@@ -546,17 +584,19 @@ if (!isset($_SESSION["phone1"])) {
 
 
 	  	tickets = {};
-	  	allocation_elems = $(".alloc-col input.allocation_input");
-
+	  	allocation_elems = $(".tickets-allocation input.allocation_input");
+	  	log(allocation_elems)
 	  	for(n = 0; n<allocation_elems.length; n++){
 	  		ticket_unit = allocation_elems[n];
 	  		ticket_id = $(ticket_unit).data('ticket')
 	  		ticket_number = $(ticket_unit).val()
 
-	  		tickets[ticket_id] = ticket_number
+	  		tickets[ticket_id] = ticket_number;
+	  		if(ticket_number){
           $.post('api/index.php', {action:'addAgent', phone:agentPhone, ticketId:ticket_id, givenTickets:ticket_number, eventId:event, invitorId:<?php echo $thisid; ?>}, function(data){
-          log(data)
-        });
+	          log(data)
+	        });
+        }	
 	  	}
 	  });
 	</script>
