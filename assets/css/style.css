@@ -5,3 +5,6 @@
 .addAgentMod .wizard-buttons {
     display: none;
 }
+.display_none{
+	display:none;
+}

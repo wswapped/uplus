@@ -1620,7 +1620,7 @@
 		$sqlPoison = $eventDb->query("SELECT id_event FROM events WHERE id_event =  '$eventId'") or (mysqli_error($db));
 		if(mysqli_num_rows($sqlPoison) > 0)
 		{
-
+			$response = array();
 			$sql = $db->query("SELECT id FROM users WHERE phone =  $invitedPhone") or (mysqli_error());
 			$countUsers = mysqli_num_rows($sql);
 			if($countUsers > 0)
@@ -1651,23 +1651,25 @@
 			if($checkExits > 0)
 			{
 				$sql = $eventDb->query("UPDATE agent_tickets SET number = (number+ $givenTickets) WHERE agent = $invitedId AND ticket = $ticketId ");
-				// ADD ON WHAT HE HAD 
-				echo "We added ".$givenTickets;
+				// ADD ON WHAT HE HAD
+				$response = array('status'=>true, 'msg'=>"We have added $givenTickets tickets to the agent");
 			}
 			else
 			{
 				// ADD MEMBER FOR THE FIRST TIME IN THIS GROUP
 				$sql = $eventDb->query("INSERT INTO `agent_tickets`(`agent`, `ticket`, `eventId`, `number`) VALUES ('$invitedId', '$ticketId', '$eventId', '$givenTickets' )")or die(mysqli_error($db));
 
-				echo "Added";
+				$response = array('status'=>true, 'msg'=>"We have added agent and gave $givenTickets tickets");
 			}
 		}
 		else
 		{
-			echo "Poison Detected: ".$groupId;
+			$response = array('status'=>false, 'msg'=>"Event does not exist :)");
 		}
 		mysqli_close($db);
-		mysqli_close($eventDb);		
+		mysqli_close($eventDb);
+
+		echo json_encode($response);
 	}
 
 	function eventSeatsList()

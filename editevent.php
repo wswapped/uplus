@@ -79,6 +79,7 @@
     <link rel="stylesheet" href="assets/global/css/bootstrap.min3f0d.css?v2.2.0">
     <link rel="stylesheet" href="assets/global/css/bootstrap-extend.min3f0d.css?v2.2.0">
     <link rel="stylesheet" href="assets/css/site.min3f0d.css?v2.2.0">
+    <link rel="stylesheet" type="text/css" href="assets/css/eventcss.css">
 
  <!-- Plugins -->
     <link rel="stylesheet" href="assets/global/vendor/animsition/animsition.min3f0d.css?v2.2.0">
@@ -423,7 +424,7 @@
                             <td>'.number_format($totalTickets).' ('.number_format($ticketPrice).' Rwf)</td>
                             <td>'.number_format($totalSoldTickets).' ('.number_format($totalSoldAmount).' Rwf)</td>
                             <td>'.number_format($totalTickets-$totalSoldTickets).' ('.number_format($ticketPrice-$totalSoldAmount).' Rwf)</td>
-                            <td><a href="editevent'.$eventId.'" class="btn btn-dark btn-xs" style="text-decoration: none;">Manage</a> | <a data-target="#addTopicForm" data-toggle="modal" class="btn btn-warning btn-xs" style="text-decoration: none;">Edit</a></td>
+                            <td><a href="editevent'.$eventId.'" class="btn btn-dark btn-xs" style="text-decoration: none;">Manage</a> | <a data-target="#addAgentModal" data-toggle="modal" class="btn btn-warning btn-xs" style="text-decoration: none;">Edit</a></td>
                           </tr>';
                           }
                           ?>
@@ -439,7 +440,7 @@
 
 
 
-<button class="site-action btn-raised btn btn-success btn-floating" data-target="#addTopicForm" data-toggle="modal" type="button" id="add">
+<button class="site-action btn-raised btn btn-success btn-floating" data-target="#addAgentModal" data-toggle="modal" type="button" id="add">
   <span style="
     position: absolute;
     background: #4caf50;
@@ -461,7 +462,7 @@
 "></i>
 </button>
   <!-- NEW EVENT POPUP -->
-<div class="modal fade" id="addTopicForm" aria-hidden="true" aria-labelledby="addTopicForm" role="dialog" tabindex="-1">
+<div class="modal fade" id="addAgentModal" aria-hidden="true" aria-labelledby="addAgentModal" role="dialog" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content" id="exampleWizardForm">
       <div class="modal-header">
@@ -470,30 +471,6 @@
         </button>
         <h4 class="modal-title" id="exampleModalTabs">Add agent</h4>
       </div>
-    <!-- Steps -->
-    <!-- <div style="margin-bottom: unset;" class="steps steps-sm row" data-plugin="matchHeight" data-by-row="true" role="tablist">
-      <div class="step col-md-4 current" data-target="#exampleAccount" role="tab">
-        <span class="step-number">1</span>
-        <div class="step-desc">
-        <span class="step-title">Info</span>
-        </div>
-      </div>
-
-      <div class="step col-md-4" data-target="#exampleBilling" role="tab">
-        <span class="step-number">2</span>
-        <div class="step-desc">
-        <span class="step-title">Finance</span>
-        </div>
-      </div>
-
-      <div class="step col-md-4" data-target="#exampleGetting" role="tab">
-        <span class="step-number">3</span>
-        <div class="step-desc">
-        <span class="step-title">Confirm</span>
-        </div>
-      </div>
-    </div> -->
-    <!-- End Steps -->
       <div class="modal-body wizard-content">
       <!-- Panel Wizard Form -->
       <div class="panel-body addAgentMod">
@@ -524,7 +501,6 @@
                             	<input type="number" class="allocation_input" data-ticket="<?php echo $ticket['ticketId'] ?>" data-max="<?php echo $ticketmax; ?>" max="<?php echo $ticketmax; ?>">
                             </div>
                         </div>
-
                         <?php
                     }
                 ?>
@@ -533,8 +509,18 @@
             <br>
           </div>
         </div>
-        <div class="form-group">
-        		<button type="submit" class="btn btn-primary pull-right">ADD</button>
+        <div class="form-states">
+          <div class="form-group pull-right" data-for="send">
+              <!-- <button type="button" class="btn btn-danger" data-dismis='modal'>CANCEL</button>&nbsp;&nbsp;&nbsp;&nbsp; -->
+              <button type="submit" class="btn btn-primary">ADD</button>
+          </div>
+          <div class="form-group pull-right display_none" data-for="progress">
+              <button type="submit" class="btn btn-primary">ADD</button>
+          </div>
+          <div class="form-group pull-right display_none" data-for="send">
+              <!-- <button type="button" class="btn btn-danger" data-dismis='modal'>CANCEL</button>&nbsp;&nbsp;&nbsp;&nbsp; -->
+              <button type="submit" class="btn btn-primary">ADD</button>
+          </div>
         </div>
       </form>
        <!-- End Wizard Content -->
@@ -594,7 +580,19 @@
 	  		tickets[ticket_id] = ticket_number;
 	  		if(ticket_number){
           $.post('api/index.php', {action:'addAgent', phone:agentPhone, ticketId:ticket_id, givenTickets:ticket_number, eventId:event, invitorId:<?php echo $thisid; ?>}, function(data){
-	          log(data)
+            try{
+              ret = JSON.parse(data);
+              if(ret.status){
+                //successfully added element
+                $("#addAgentModal").modal('hide');
+                location.reload();
+              }else{
+                //error
+              }
+            }catch(e){
+              //error decoding
+              alert("Decoding error")
+            }
 	        });
         }	
 	  	}
