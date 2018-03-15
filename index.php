@@ -486,7 +486,7 @@
 						$prog = $boockedSeats*100/$allSeats;
 						$prog = round($prog);
 						if($prog < 10){$size=10;} else{$size=$prog;}
-						echo'<li>
+						/*echo'<li>
 							<div class="md-card" style="border-radius: 5px;">
 								<a href="event/'.$eventId.'">
 								<div class="md-card-content padding-reset" style="height: 341px;">
@@ -515,6 +515,7 @@
 							</div>
 							<br>
 						</li>';
+						*/
 						
 					}
 
