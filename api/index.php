@@ -1754,7 +1754,7 @@
 			//CHECK BALANCE
 			$url = 'https://www.intouchpay.co.rw/api/getbalance/';
 
-			$userName 		= "muhirwa.clement";
+			$username 		= "muhirwa.clement";
 			$var_time 		= time();
 			$generate 		= $username.'250150000003'.'8;b%-#K2$w\J3q{^dwr'.$var_time;
 			$generate_hash 	= hash('sha256', $generate);
