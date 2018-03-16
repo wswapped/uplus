@@ -3,7 +3,7 @@
 	$request = $_POST;
 
 	$action = $request['action']??"";
-	$competion_start = "2018-03-03 00:00:00";
+	$competion_start = "2018-03-16 00:00:00";
 	$response = array();
 	if($action ==  'get_groups'){
 		$sql = "SELECT groups.groupName as name, groups.createdDate as createdDate, COUNT(adminId) as num FROM groups JOIN groupuser ON groupuser.groupId = groups.id WHERE groups.createdDate >= \"$competion_start\" GROUP BY groups.id ORDER BY num DESC";
