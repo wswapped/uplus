@@ -62,6 +62,12 @@ if(! $phoneNumber && (strlen($phoneNumber) == 10) ){
 	$nrequests = count($requests); //Number of requests
 	$temp = array('');
 
+	$stri_pos = strrpos($text, "#");
+
+	if($stri_pos !== false){
+		$text = substr($text, $stri_pos+1);	
+	}
+
 	// $ntemp = strpos("#", $text);
 
 	// var_dump($_GET);
