@@ -67,8 +67,8 @@ if(! $phoneNumber && (strlen($phoneNumber) == 10) ){
 	// 	$text = substr($text, $stri_pos+1);	
 	// }
 
-	echo("CON $text testing");
-	die();
+	// echo("CON $text testing");
+	// die();
 
 	// $ntemp = strpos("#", $text);
 
