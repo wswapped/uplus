@@ -1,8 +1,8 @@
 <?php
 require('../db.php');
 require('functions.php');
-header("Content-Type: text/plain");
-session_start(); //For web testing only
+// header("Content-Type: text/plain");
+session_start();
 
 
 //For browser-based testing
@@ -21,15 +21,16 @@ $req = array_merge($_POST, $_GET); //Keeping get and post for testing and produc
 $sessionId   = $req["sessionId"]?? session_id();
 $serviceCode = $req["serviceCode"]??"*801#";
 $phoneNumber = $req["phoneNumber"]??"";
-$text        = $req["text"];
+$text        = $req["text"]??"";
 //IN USSD phone number is always sent
 //CLEAN and sanitize PHONE
 $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
 $phoneNumber  = substr($phoneNumber, -10);
 
 //Checking phone
-if($phoneNumber && strlen($phoneNumber) == 10){
+if(! $phoneNumber && (strlen($phoneNumber) == 10) ){
 	echo "END Telephone yawe ifite ikibazo";
+	var_dump(strlen($phoneNumber));
 	die();
 }
 
@@ -57,11 +58,15 @@ if($phoneNumber && strlen($phoneNumber) == 10){
 
 	//Handling further requests
 	$requests = explode("*", $text);
+
 	$nrequests = count($requests); //Number of requests
 	$temp = array('');
 
-	$ntemp = array_search("#", $requests);
-	$ntemp = is_int($ntemp)?$ntemp:0;
+	// $ntemp = strpos("#", $text);
+
+	// var_dump($_GET);
+
+	// $ntemp = is_int($ntemp)?$ntemp:0;
 
 	// if($ntemp){
 	// 	for($n=$ntemp; ($n<$nrequests && $ntemp>0); $n++){
