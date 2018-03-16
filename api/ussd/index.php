@@ -1,7 +1,7 @@
 <?php
 require('../db.php');
 require('functions.php');
-// header("Content-Type: text/plain");
+header("Content-Type: text/plain");
 session_start();
 
 
@@ -62,11 +62,13 @@ if(! $phoneNumber && (strlen($phoneNumber) == 10) ){
 	$nrequests = count($requests); //Number of requests
 	$temp = array('');
 
-	$stri_pos = strrpos($text, "#");
+	// $stri_pos = strrpos($text, "#");
+	// if($stri_pos !== false){
+	// 	$text = substr($text, $stri_pos+1);	
+	// }
 
-	if($stri_pos !== false){
-		$text = substr($text, $stri_pos+1);	
-	}
+	echo("CON $text testing");
+	die();
 
 	// $ntemp = strpos("#", $text);
 
