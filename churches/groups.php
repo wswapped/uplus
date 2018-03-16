@@ -135,9 +135,10 @@
                                 <div class="md-card-toolbar">
                                     <h4 class="md-card-toolbar-heading-text"><?php echo $groupname; ?></h4>
                                     <div class="md-card-toolbar-actions">
-                                    <!-- <i class="md-icon material-icons md-color-blue-grey-500"></i>
-                                        <i class="md-icon material-icons md-color-light-blue-500"></i> -->
-                                        <i class="md-icon material-icons md-color-red-500" title="Add a member" id="grp_remove" data-grp = <?php echo $group_id; ?> >delete</i>
+                                        <!-- <i class="md-icon material-icons md-color-blue-grey-500"></i> -->
+                                        <!-- <i class="md-icon material-icons md-color-light-blue-500"></i> -->
+                                        <i class="md-icon material-icons md-color-light-blue-500">message</i>
+                                        <i class="md-icon material-icons md-color-red-500" title="Add a member" id="grp_remove" data-grp = <?php echo $group_id; ?> >delete</i>                                        
                                     </div>
                                 </div>
                                 <div class="md-card-content">
@@ -236,7 +237,7 @@
                                             <div class="group_map" data-location="<?php echo $grp_location; ?>" data-group-id="<?php echo $group_id; ?>"></div>
                                             <div class="">                                                
                                                 <div style="position: absolute;bottom:15px; right: 2%">
-                                                    <a class="md-fab md-fab-success md-fab-wave-light waves-effect waves-button waves-light" href="javascript:void(0)"><i class="material-icons">message</i></a>
+                                                    <button class="md-btn md-btn-info" id="saveGroupChangesBtn" data-uk-modal="{target:'#saveGroupChangesModal'}"><i class="material-icons">save</i></button>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -594,7 +595,23 @@
                 </div>
             </div>
         </div>
-        <div id="mapLoad"></div>
+        <!--  saveGroupChangesModal -->
+        <div class="uk-modal" id="saveGroupChangesModal" aria-hidden="true" style="display: none; overflow-y: auto;">
+            <div class="uk-modal-dialog" style="max-width:800px;">
+                <div class="uk-modal-header uk-tile uk-tile-default">
+                    <h3 class="d_inline">Updating group</h3>
+                </div>
+                <div class="uk-overflow-container" style="max-width: 500px;">
+                    <p>Are you sure you want to update changes on the group?</p>
+                </div>
+                    <div class="member_add_status"></div>
+                <div class="uk-modal-footer uk-text-right">
+                    <button class="md-btn md-btn-danger pull-left uk-modal-close">CANCEL</button>
+                    <button id="members_add_submit" class="md-btn md-btn-success pull-right">CONFIRM <span id="add_member_num"></span></button>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="mapLoad"></div> -->
     </div>
 
     <!-- jQuery -->
