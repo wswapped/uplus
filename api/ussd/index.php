@@ -27,10 +27,16 @@ $text        = $req["text"]??"";
 $phoneNumber  = preg_replace( '/[^0-9]/', '', $phoneNumber );
 $phoneNumber  = substr($phoneNumber, -10);
 
+//Cleaning text
+//removing text before #
+if(strrpos($text, "#") != false){
+	$text = substr($text, strrpos($text, "#")+1);
+}
+
+
 //Checking phone
-if(! $phoneNumber && (strlen($phoneNumber) == 10) ){
+if( strlen($phoneNumber) < 10 ){
 	echo "END Telephone yawe ifite ikibazo";
-	var_dump(strlen($phoneNumber));
 	die();
 }
 
