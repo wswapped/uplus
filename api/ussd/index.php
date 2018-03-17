@@ -32,6 +32,9 @@ $phoneNumber  = substr($phoneNumber, -10);
 // $text = "2#1";
 if(strrpos($text, "#") != false){
 	$text = substr($text, strrpos($text, "#")+1);
+
+	//removing trailing *
+	$text = trim($text, "*");
 }
 die("CON g $text");
 
