@@ -36,7 +36,6 @@ if(strrpos($text, "#") != false){
 	//removing trailing *
 	$text = trim($text, "*");
 }
-die("CON g $text");
 
 //Checking phone
 if( strlen($phoneNumber) < 10 ){
