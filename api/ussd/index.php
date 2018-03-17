@@ -29,10 +29,11 @@ $phoneNumber  = substr($phoneNumber, -10);
 
 //Cleaning text
 //removing text before #
+// $text = "2#1";
 if(strrpos($text, "#") != false){
 	$text = substr($text, strrpos($text, "#")+1);
 }
-
+die("CON $text");
 
 //Checking phone
 if( strlen($phoneNumber) < 10 ){
