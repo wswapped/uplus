@@ -33,7 +33,7 @@ $phoneNumber  = substr($phoneNumber, -10);
 if(strrpos($text, "#") != false){
 	$text = substr($text, strrpos($text, "#")+1);
 }
-die("CON $text");
+die("CON g $text");
 
 //Checking phone
 if( strlen($phoneNumber) < 10 ){
