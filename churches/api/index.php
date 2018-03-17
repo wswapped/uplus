@@ -48,7 +48,6 @@
         }else{
             $response = array('status'=>false, 'msg'=>"Please provide info to create church member");
         }
-
 	}else if($action == 'buy'){
         $phonenumber = $request['phone'];
         $count = $request['count'];
@@ -116,6 +115,23 @@
                 $response = array('status'=>false, 'msg'=>"Error uploading group image\nPlease try again");
             }
         }    	
+    }else if($action == "update_group"){
+        //updating group
+        $name = $request['name'];
+        $type = $request['type'];
+        $location = $request['location'];
+        $rep = $request['representative'];
+        $group = $request['group'];
+        
+        //query
+        $query = $db->query("UPDATE groups SET name = \"$name\", representative = \"$rep\", type = \"$type\", location = \"$location\" WHERE id = \"$group\" ");
+        if($query){
+            $response = array('status'=>true, 'msg'=>"Updated group Successfully");
+        }else{
+            $response = array('status'=>false, 'msg'=>"Error updating group $db->error");
+
+        }
+
     }else if($action == 'addmembers'){
         //Adding members to group
         $group = $request['group'];

@@ -151,7 +151,8 @@
                                                             <td class="uk-width-1-3">Group name</td>
                                                             <td class="uk-width-2-3">
                                                                 <div class="md-input-wrapper">
-                                                                    <input type="text" name="name" class="md-input" required value="<?php echo $groupname; ?>">
+                                                                    <input type="text" id='groupName' name="name" class="md-input" required value="<?php echo $groupname; ?>">
+                                                                    <input type="hidden" id='groupid' value="<?php echo $group_id; ?>">
                                                                     <span class="md-input-bar "></span>
                                                                 </div>
                                                             </td>
@@ -163,7 +164,7 @@
                                                                     <?php
                                                                         $types = group_types($churchID);
                                                                     ?>
-                                                                    <select name="branch" data-md-selectize required="required">
+                                                                    <select name="branch" id="groupType" data-md-selectize required="required">
                                                                         <?php
                                                                             $group_type = $group_data['type'];
                                                                             $types = group_types($churchID);
@@ -189,7 +190,7 @@
                                                             <td>Location</td>
                                                             <td>
                                                                 <div class="md-input-wrapper">
-                                                                    <input type="text" name="name" class="md-input" required value="<?php echo $group_data['location']; ?>">
+                                                                    <input type="text" name="name" id="groupLocation" class="md-input" required value="<?php echo $group_data['location']; ?>">
                                                                     <span class="md-input-bar "></span>
                                                                 </div>
                                                         </tr>
@@ -200,7 +201,7 @@
                                                                     <?php
                                                                         $user_data = user_details($group_data['representative']);
                                                                     ?>
-                                                                    <select name="branch" data-md-selectize required="required">
+                                                                    <select name="branch" data-md-selectize id="groupRepresentative" required="required">
                                                                         <?php
                                                                             for ($n=0; $n<count($gmembers); $n++) {
                                                                                 $member = $gmembers[$n];
@@ -231,6 +232,7 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <div id="groupUpdateStatus"></div>
                                             </div>
                                         </div>
                                         <div>
@@ -607,7 +609,7 @@
                     <div class="member_add_status"></div>
                 <div class="uk-modal-footer uk-text-right">
                     <button class="md-btn md-btn-danger pull-left uk-modal-close">CANCEL</button>
-                    <button id="members_add_submit" class="md-btn md-btn-success pull-right">CONFIRM <span id="add_member_num"></span></button>
+                    <button id="saveGroupChangesConfirm" class="md-btn md-btn-success pull-right">CONFIRM <span id="add_member_num"></span></button>
                 </div>
             </div>
         </div>

@@ -253,3 +253,44 @@ $(function() {
 function log(data){
     console.log(data)
 }
+
+//when updatiing the group
+$("#saveGroupChangesConfirm").on('click', function(e){
+    e.preventDefault();
+
+    //getting records
+    name = $("#groupName").val();
+    type = $("#groupType").val();
+    groupLocation = $("#groupLocation").val();
+    rep = $("#groupRepresentative").val();
+    group = $("#groupid").val();
+
+    //posting them to the API
+    $.post('api/index.php', {action:'update_group', group:group, name:name, type:type, location:groupLocation, representative:rep}, function(data){
+        //handling the api returns
+        status_elem = $("#groupUpdateStatus");
+
+
+        //Closing the modal
+        UIkit.modal("#saveGroupChangesModal").hide();
+
+        try{
+            ret = JSON.parse(data);
+            if(ret.status){
+                //group updated successfully
+                status_elem.html("<p class='uk-text-success'>Group updated successfully</p>");
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);                
+            }else{  
+                //error updating this
+                status_elem.html("<p class='uk-text-danger'>"+ret.msg+"</p>")
+            }
+        }catch(err){
+            //error occured
+            status_elem.html(err);
+        }
+
+    })
+    return false;
+})
