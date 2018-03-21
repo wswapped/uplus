@@ -79,6 +79,15 @@
                 //Sending the message
                 $sms = sendsms($phone, $message);
             }
+    }else if($action == 'schedule_sms'){
+            //Getting data on field
+            $phone = $request['phone']??0;
+            $message = $request['message']??"";
+
+            if($phone && $message){
+                //Sending the message
+                $sms = sendsms($phone, $message);
+            }
     }else if($action == 'create_group'){
     	//api route for group creatinon
     	$name = $request['name'];
@@ -131,7 +140,6 @@
             $response = array('status'=>false, 'msg'=>"Error updating group $db->error");
 
         }
-
     }else if($action == 'addmembers'){
         //Adding members to group
         $group = $request['group'];

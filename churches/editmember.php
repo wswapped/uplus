@@ -59,13 +59,13 @@
                                         $new_phone = $_POST['phone']??"";
                                         $new_email = $_POST['email']??"";
                                         $new_address = $_POST['address']??"";
-                                        $new_branch = $_POST['branchid']??"";
+                                        $new_branch = $_POST['branch']??"";
                                         $new_type = $_POST['type']??"";
 
                                         $sql = "UPDATE members SET name = \"$new_name\", phone = \"$new_phone\", email = \"$new_email\", address = \"$new_address\", branchid = \"$new_branch\", type = \"$new_type\" WHERE id = \"$memberid\" ";
                                         $query = $db->query($sql) or die(" Can't update $db->error");
                                         if($query){
-                                            echo "Updated successfully";
+                                            echo "<p class='uk-alert uk-alert-success'>Updated successfully</p>";
                                         }
 
                                         //HERE WE HAVE TO RE-LOAD THE DETAILS(bad code)\
@@ -140,7 +140,7 @@
                                     <span class="md-input-bar "></span>
                                 </div>
                                 <div class="md-input-wrapper">
-                                    <button class="md-btn md-btn-danger">Cancel</button>
+                                    <button type="button" class="md-btn md-btn-danger"><a href="members.php" style="color: inherit;">Cancel</a></button>
                                     <button type="submit" class="md-btn md-btn-success" value="UPDATE">UPDATE</button>
                                 </div>
                             </form>
@@ -187,33 +187,7 @@
 
     <script type="text/javascript" src="js/Chart.min.js"></script>
     <script>
-    var ctx = document.getElementById("mem_attendance").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: <?php echo json_encode(array_keys($chart_data)); ?>,
-            datasets: [{
-                label: '# of members(headcounts)',
-                data: <?php echo json_encode(array_values($chart_data)); ?>,
-                backgroundColor: [
-                    'rgba(0, 150, 136, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(0,150,136,1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
+    
     </script>
 
     <script src="js/uploadFile.js"></script>

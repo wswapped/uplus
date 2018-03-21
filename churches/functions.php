@@ -458,10 +458,10 @@
       return $pods;
     }
 
-    function addMessage($sender, $message, $channel, $subject){
+    function addMessage($sender, $message, $channel, $subject, $scheduleTime=""){
         //$time = $time??date('Y-m-d h:m:s');
         global $conn;
-        $sql = "INSERT INTO message(sender, message, channel, subject) VALUES (\"$sender\", \"$message\", \"$channel\", \"$subject\")";
+        $sql = "INSERT INTO message(sender, message, channel, subject, scheduleTime) VALUES (\"$sender\", \"$message\", \"$channel\", \"$subject\", \"$scheduleTime\")";
 
         $query = mysqli_query($conn, $sql) or die("Okay".$conn->error);
         return mysqli_insert_id($conn);

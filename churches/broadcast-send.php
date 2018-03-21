@@ -49,10 +49,10 @@
                     </div>
 
                     <div class="uk-grid uk-margin-top">
-                        <div class="uk-row-first">
+                        <div class="uk-row-first" id="formSubmitBtnGroup">
                             <input type="hidden" name="mode" value="SMS">
-                            <button type="submit" id="sendBtn" class="md-btn md-btn-success" value="Send">Send </button>
-                            <button type="button" id="contributeBtn" class="md-btn md-btn-primary" value="Send"><i class="material-icons">schedule</i> </button>
+                            <button type="submit" id="sendBtn" class="messageActionButton md-btn md-btn-success" value="Send">Send </button>
+                            <button type="button" id="scheduleBtn" class="messageActionButton md-btn md-btn-primary" value="Send"><i class="material-icons">schedule</i> </button>
                         </div>
                         <div class="">
                             <div class="pull-right">    
@@ -103,7 +103,7 @@
                             while ($data = mysqli_fetch_assoc($sql)) {
                                 ?>
                                 <div class="inlineb list-sep">
-                                    <input type="checkbox" data-target="<?php echo $data['name']; ?>" id="check<?php echo strtolower($data['name']); ?>" class="controlOption uk-checkbox" value="<?php echo $data['id']; ?>" name="group"> 
+                                    <input type="checkbox" data-target="<?php echo str_ireplace(" ", "_", $data['name']); ?>" id="check<?php echo strtolower($data['name']); ?>" class="controlOption uk-checkbox" value="<?php echo $data['id']; ?>" name="group"> 
                                     <label for="check<?php echo strtolower($data['name']); ?>"><?php echo $data['name']; ?>&nbsp;</label>
                                 </div>
 
@@ -144,7 +144,7 @@
                                         ?>
                                             <tr>
                                                 <td><?php echo $n; ?></td>
-                                                <td><input value="<?php echo $data['id']; ?>" class="all <?php echo $data['bname']; ?> uk-checkbox" type="checkbox"></td>
+                                                <td><input type="checkbox" value="<?php echo $data['id']; ?>" class="all <?php echo str_ireplace(" ", "_", $data['bname']); ?> uk-checkbox" id="check<?php echo strtolower($data['bname']); ?>"></td>
                                                 <td><?php echo $data['name'] ?></td>
                                                 <td><?php echo $data['bname'] ?></td>
                                                 <td><?php echo $data['phone'] ?></td>

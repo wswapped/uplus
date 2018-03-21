@@ -88,7 +88,7 @@ function indicateSendProgress(){
     // });
 
 function logFormError(error){
-    $(".md-card-content.errorHandle").append("<li>"+error+"</li>");
+    $(".md-card-content.errorHandle").append("<li class='uk-alert uk-alert-warning' data-uk-alert>"+error+"<a href='#' class='uk-alert-close uk-close'></a></li>");
 }
 $("#buyform").on('submit', function(e){
     e.preventDefault(); 

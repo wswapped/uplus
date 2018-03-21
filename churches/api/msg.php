@@ -15,27 +15,35 @@
 
     $req = array_merge($_POST, $_GET);
 
-    if(!empty($req['act']) && $req['act']== 'save'){
+    //desired action
+    $action = $req['act']??$req['action']??"";
+
+    if($action == 'save'){
         $members = $req['members']??"";
         $message = $req['message']??"";
         $mode = $req['mode'];
         $subject = $req['subject']??"";
 
-        //Addnig message in DB as reference
-        $messageID = addMessage($user, $message, $mode, $subject);
+        $scheduleTime = $req['scheduleTime']??false;
+        
+
+        //Adding message in DB as reference
+        $messageID = addMessage($user, $message, $mode, $subject, $scheduleTime);
 
         //Queing messages for sending
         $questat = logMessages($messageID, $members);
 
         
-        echo json_encode(array('status'=>1, 'data'=>'Messages are being sent successifully', 'messageID'=>$messageID));
-    }else if(!empty($req['act']) && $req['act']=='det'){
+        echo json_encode(array('status'=>1, 'data'=>'Messages are being sent successfully', 'messageID'=>$messageID));
+    }else if($action == 'det'){
         //Checking all the details for message
         $messageID = $req['id'];
         if(!empty($messageID)){
             $details = $Broad->detMessage($messageID);
             echo json_encode(array('status'=>1, 'data'=>$details));
         }else echo json_encode(array('status'=>0, 'data'=>"Provide message ID"));
+    }else{
+        echo json_encode(array());
     }
    
 ?>

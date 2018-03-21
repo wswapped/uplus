@@ -11,11 +11,13 @@ $('textarea#broadcastMsg').keyup(function(event){
         $('textarea#broadcastMsg').trigger('keypress');
 })
 
+//button group for contribute and sending
+$(".messageActionButton").on('click', function(e){
+	target = $(this).attr('id'); //getting the id of clicked button
 
-$("#comform").on('submit', function(e){ 
-    e.preventDefault();
 
-    message = $("#broadcastMsg").val();
+	//Getting the message
+	message = $("#broadcastMsg").val();
     if(message.length<1){
         logFormError("Please provide message")
         return false;
@@ -28,10 +30,164 @@ $("#comform").on('submit', function(e){
         arr[index] = $(data).val();
     });
 
+    comode = $("input[name='mode']").val(); //chose mode for communication
+
     if(recps.length<1){
         logFormError("Select people to broadcast a message");
         return false;
     }
+
+
+    //Sending the logic to different function for sending and scheduling
+    if(target == 'sendBtn'){
+    	//Asking before sending messages
+	    confmodal = UIkit.modal("#sendMessageModal");
+
+	    
+	    recpcount = checkNRecpts();
+	    if(comode == "sms" || comode == "SMS")
+	    {
+	        smscount = checkSMSCount();
+	        ttlSMScount = smscount.msg+""+(smscount.char!=0?1:0);
+	        $(".transDet").html("Broadcasting to "+recpcount+" people in "+(smscount.msg == 0?"":smscount.msg)+" msg and "+smscount.char+' characters');
+	        $(".transDet").append("<br />You will be charged for "+ttlSMScount+" SMS costing "+13*ttlSMScount*recpcount+"FRW");
+	        oj = confmodal.show();
+	        var me = 0;
+
+	        $(".broadcastMsg").on('click', function(){
+	            modal = UIkit.modal('#sendMessageModal');
+	            modal.hide();
+	            $.post('api/msg.php', {act:'save', mode:"sms", message:message, members:arr}, function(data){
+	               //Parsing return data
+	               try{
+	                    ret = JSON.parse(data);
+	                    if(ret.status){
+	                        //Preparing the user to see more actions
+	                        //Indicating the message send progress
+	                        messageID = ret.messageID;
+	                        indicateSendProgress();
+	                    }else{  
+	                        log(ret.data);
+	                    }
+	               }catch(err){
+	                    log('Failed in parsing JSON');
+	                    log(err);
+	               }
+	            })
+	            return true;
+	        }) 
+	    }else if(comode == "app")
+	    {
+	        
+	        $(".transDet").html("Broadcasting to "+recpcount+" App users<br />Free of Charge!");
+	        oj = confmodal.show();
+	        var me = 0;
+
+	        $(".broadcastMsg").on('click', function(){
+	            modal = UIkit.modal('#sendMessageModal');
+	            modal.hide();
+	            $.post('api/msg.php', {act:'save', mode:"app", message:message, members:arr}, function(data){
+	               //Parsing return data
+	               try{
+	                    ret = JSON.parse(data);
+
+	                    if(ret.status){
+	                        //Preparing the user to see more actions
+	                        //Indicating the message send progress
+	                        messageID = ret.messageID;
+	                        indicateSendProgress();
+	                    }else{  
+	                        log(ret.data);
+	                    }
+	               }catch(err){
+	                    log('Failed in parsing JSON');
+	                    log(err);
+	               }
+	            })
+	            return true;
+	        }) 
+	    }else if(comode == "email")
+	    {
+	        subject = $("#broadcastSubj").val();
+	        
+	        $(".transDet").html("Broadcasting to "+recpcount+" emails<br />Free of Charge!");
+	        oj = confmodal.show();
+	        var me = 0;
+
+	        $(".broadcastMsg").on('click', function(){
+	            modal = UIkit.modal('#sendMessageModal');
+	            modal.hide();
+	            $.post('api/msg.php', {act:'save', mode:"email", subject:subject, message:message, members:arr}, function(data){
+	               //Parsing return data
+	               try{
+	                    ret = JSON.parse(data);
+
+	                    if(ret.status){
+	                        //Preparing the user to see more actions
+	                        //Indicating the message send progress
+	                        messageID = ret.messageID;
+	                        indicateSendProgress();
+	                    }else{  
+	                        log(ret.data);
+	                    }
+	               }catch(err){
+	                    log('Failed in parsing JSON');
+	                    log(err);
+	               }
+	            })
+	            return true;
+	        }) 
+	    } 
+    }else if(target == 'scheduleBtn'){
+    	//scheduling a message
+
+    	//Asking for time to send the message
+    	confmodal = UIkit.modal("#scheduleMessageModal");
+    	oj = confmodal.show();
+
+
+    	//getting schedule details
+    	 $("#scheduleMessage").on('submit', function(e){
+    	 		e.preventDefault();
+    	 		//Date and time when message will be sent
+    	 		date = $("#schedDate").val();
+    	 		time = $("#schedTime").val();
+	            // modal.hide();
+	            $.post('api/msg.php', {act:'save', mode:comode, message:message, members:arr, scheduleTime:date+" "+time}, function(data){
+	               //Parsing return data
+	               try{
+	                    ret = JSON.parse(data);
+	                    if(ret.status){
+	                        //Preparing the user to see more actions
+	                        //Indicating the message send progress
+	                        messageID = ret.messageID;
+	                    }else{  
+	                        log(ret.data);
+	                    }
+	               }catch(err){
+	                    log('Failed in parsing JSON');
+	                    log(err);
+	               }
+	            })
+	            return true;
+	        }) 
+
+    }else{
+    	alert("This could be wrong"+target)
+    }
+})
+
+
+$("#comform").on('submit', function(e){ 
+    e.preventDefault();
+
+    message = $("#broadcastMsg").val();
+    if(message.length<1){
+        logFormError("Please provide message")
+        return false;
+    }
+
+    
 
     //Asking before sending messages
     confmodal = UIkit.modal("#sendMessageModal");

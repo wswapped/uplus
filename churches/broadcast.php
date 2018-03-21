@@ -54,6 +54,57 @@
                 </div>
             </div>
         </div>
+
+        <!-- Scheduling modal -->
+        <div class="uk-modal uk-modal-dialog-large" id="scheduleMessageModal">
+            <div class="uk-modal-dialog">
+                <div class="uk-modal-header uk-tile uk-tile-default"><p class="sendMessageModalTitle">Scheduling message</p></div>
+
+                <div class="">
+                    <form id="scheduleMessage">
+                        <div class="uk-grid" data-uk-grid-margin>
+                            <div class="uk-width-medium-1-2">
+                                <div class="md-card">
+                                    <div class="md-card-content">
+                                        <h3 class="heading_a">Date</h3>
+                                        <div class="uk-grid">
+                                            <div class="uk-width-large-2-3 uk-width-1-1">
+                                                <div class="uk-input-group">
+                                                    <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                                    <label for="uk_dp_1">Select date</label>
+                                                    <input class="md-input" type="text" id="schedDate" data-uk-datepicker="{format:'DD.MM.YYYY'}" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-width-medium-1-2">
+                                <div class="md-card">
+                                    <div class="md-card-content">
+                                        <h3 class="heading_a">Time</h3>
+                                        <div class="uk-grid">
+                                            <div class="uk-width-large-2-3 uk-width-1-1">
+                                                <div class="uk-input-group">
+                                                    <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-clock-o"></i></span>
+                                                    <label for="uk_tp_1">Select time</label>
+                                                    <input class="md-input" type="text" id="schedTime" data-uk-timepicker required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-modal-footer uk-text-right">
+                            <button type="button" class="md-btn md-btn-danger uk-modal-close">Cancel</button>
+                            <button type="submit" class="md-btn md-btn-success broadcastMsg">SCHEDULE</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
     </div>
     <!-- jQuery -->
     <script type="text/javascript" src="js/jquery.js"></script>
