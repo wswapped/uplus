@@ -1,5 +1,4 @@
-<?php ob_start(); session_start(); include('db.php');?>
-<?php
+<?php ob_start(); session_start(); include('db.php');
 $_SESSION = array();
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
